@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>crypto on Blog by grhkm</title>
+    <link>https://grhkm21.github.io/tags/crypto/</link>
+    <description>Recent content in crypto on Blog by grhkm</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Wed, 09 Feb 2022 16:15:44 +0100</lastBuildDate>
+    <atom:link href="https://grhkm21.github.io/tags/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Learning Without Errors (396 pts, 6 solves, upsolve)</title>
+      <link>https://grhkm21.github.io/posts/dice-learning-without-errors/</link>
+      <pubDate>Wed, 09 Feb 2022 16:15:44 +0100</pubDate>
+      <guid>https://grhkm21.github.io/posts/dice-learning-without-errors/</guid>
+      <description>Chosen Plaintext Ring-LWE (CKKS) Attack</description>
+    </item>
+    <item>
+      <title>Algebra (831 pts, 14 solves)</title>
+      <link>https://grhkm21.github.io/posts/tet-algebra/</link>
+      <pubDate>Sun, 02 Jan 2022 22:53:00 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/tet-algebra/</guid>
+      <description>Recovering a curve from a point addition group law defined on it.</description>
+    </item>
+    <item>
+      <title>Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</title>
+      <link>https://grhkm21.github.io/posts/tet-shares/</link>
+      <pubDate>Sun, 02 Jan 2022 20:00:00 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/tet-shares/</guid>
+      <description>Recovering information within what appears to be randomness.</description>
+    </item>
+    <item>
+      <title>pppp (117 pts, 70 solves)</title>
+      <link>https://grhkm21.github.io/posts/seccon-pppp/</link>
+      <pubDate>Sun, 12 Dec 2021 05:59:38 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/seccon-pppp/</guid>
+      <description>Finding nth root of certain upper triangular matrix.</description>
+    </item>
+  </channel>
+</rss>

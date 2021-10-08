@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog by grhkm</title>
+    <link>https://grhkm21.github.io/</link>
+    <description>Recent content on Blog by grhkm</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Mon, 29 Jan 2024 23:08:55 +0000</lastBuildDate>
+    <atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hacktm Ddlp</title>
+      <link>https://grhkm21.github.io/posts/hacktm-ddlp/</link>
+      <pubDate>Mon, 29 Jan 2024 23:08:55 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/hacktm-ddlp/</guid>
+      <description>DDLP (Upsolve) Discussion at y011d4.&#xA;Source of this problem: HackTM Finals&#xA;Challenge Source import os import signal from random import SystemRandom random = SystemRandom() flag = os.getenv(&amp;#34;FLAG&amp;#34;, &amp;#34;FAKEFLAG{THIS_IS_FAKE}&amp;#34;) if __name__ == &amp;#34;__main__&amp;#34;: signal.alarm(60) try: # parameter setup p = int(input(&amp;#34;p = &amp;#34;)) assert p.bit_length() &amp;gt;= 256 assert is_prime(p) a = int(input(&amp;#34;a = &amp;#34;)) b = int(input(&amp;#34;b = &amp;#34;)) E = EllipticCurve(GF(p), [a, b]) assert not E.is_singular() assert 0 &amp;lt; a &amp;lt; p assert 0 &amp;lt; b &amp;lt; p # DLP in GF(p) g = GF(p)(input(&amp;#34;g = &amp;#34;)) x = random.</description>
+    </item>
+    <item>
+      <title>Modular Forms</title>
+      <link>https://grhkm21.github.io/posts/modular-forms/</link>
+      <pubDate>Mon, 29 Jan 2024 14:37:00 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/modular-forms/</guid>
+      <description>Brief notes on modular forms</description>
+    </item>
+    <item>
+      <title>Finite Realm of Random (498 points, 4 solves)</title>
+      <link>https://grhkm21.github.io/posts/finite-realm-of-random/</link>
+      <pubDate>Mon, 10 Jul 2023 18:57:21 +0300</pubDate>
+      <guid>https://grhkm21.github.io/posts/finite-realm-of-random/</guid>
+      <description>Nice math problem involving field theory.</description>
+    </item>
+    <item>
+      <title>Learning Without Errors (396 pts, 6 solves, upsolve)</title>
+      <link>https://grhkm21.github.io/posts/dice-learning-without-errors/</link>
+      <pubDate>Wed, 09 Feb 2022 16:15:44 +0100</pubDate>
+      <guid>https://grhkm21.github.io/posts/dice-learning-without-errors/</guid>
+      <description>Chosen Plaintext Ring-LWE (CKKS) Attack</description>
+    </item>
+    <item>
+      <title>Algebra (831 pts, 14 solves)</title>
+      <link>https://grhkm21.github.io/posts/tet-algebra/</link>
+      <pubDate>Sun, 02 Jan 2022 22:53:00 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/tet-algebra/</guid>
+      <description>Recovering a curve from a point addition group law defined on it.</description>
+    </item>
+    <item>
+      <title>Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</title>
+      <link>https://grhkm21.github.io/posts/tet-shares/</link>
+      <pubDate>Sun, 02 Jan 2022 20:00:00 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/tet-shares/</guid>
+      <description>Recovering information within what appears to be randomness.</description>
+    </item>
+    <item>
+      <title>pppp (117 pts, 70 solves)</title>
+      <link>https://grhkm21.github.io/posts/seccon-pppp/</link>
+      <pubDate>Sun, 12 Dec 2021 05:59:38 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/seccon-pppp/</guid>
+      <description>Finding nth root of certain upper triangular matrix.</description>
+    </item>
+    <item>
+      <title>The Hardest Path (300 pts, 9 solves)</title>
+      <link>https://grhkm21.github.io/posts/hkcert-the-hardest-path/</link>
+      <pubDate>Mon, 15 Nov 2021 06:42:15 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/hkcert-the-hardest-path/</guid>
+      <description>Shortest path on a slightly obfuscated graph structure.</description>
+    </item>
+    <item>
+      <title>Unobserved Box (250 pts, 6 solves)</title>
+      <link>https://grhkm21.github.io/posts/hkcert-unobserved-box/</link>
+      <pubDate>Sun, 14 Nov 2021 23:24:27 +0000</pubDate>
+      <guid>https://grhkm21.github.io/posts/hkcert-unobserved-box/</guid>
+      <description>Straightforward blind format string exploit followed by simple reverse engineering.</description>
+    </item>
+    <item>
+      <title>About Me</title>
+      <link>https://grhkm21.github.io/about-me/</link>
+      <pubDate>Sat, 09 Oct 2021 10:16:49 +0100</pubDate>
+      <guid>https://grhkm21.github.io/about-me/</guid>
+      <description>Hi! I&amp;rsquo;m Gareth 🐙, also known as grhkm online. Warwick Maths BSc&#39;24, ??? Maths MSc&#39;25. I play CTF in my (drastically decreasing) spare time.&#xA;As of July 2023, I am currently doing an internship with Russell Lai from Aalto University on lattice-based cryptography.&#xA;I like isogenies, heavily inspired by yx7 / Lorenz and his CTF challenges. Also jo_k_er / Jonathan&amp;rsquo;s, challenge at KalmarCTF 2024.&#xA;I am now looking for a Masters position!</description>
+    </item>
+  </channel>
+</rss>

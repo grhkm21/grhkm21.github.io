@@ -1,0 +1,21 @@
+.spoiler_block
+{
+  border-left: 1px solid cyan;
+  padding-left: 10px;
+  margin-bottom: 1em;
+}
+
+.spoiler_block_head
+{
+  padding: 3px;
+  background: #eee;
+  margin-bottom: 0;
+}
+
+.spoiler-block-icon {
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+<title>Modular Forms | Blog by grhkm</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.121.2">
+<meta name="description" content="grhkm blog">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/minimal.css">
+
+<style type="text/css"> .notice { --root-color: #444; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #c33; --error-content: #fee; --warning-title: #fb7; --warning-content: #fec; --info-title: #6be; --info-content: #e7f2fa; --success-title: #5a5; --success-content: #efe } @media (prefers-color-scheme:dark) {} { .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121 } } body.dark .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121; } .notice { padding: 18px; line-height: 24px; margin-bottom: 24px; border-radius: 4px; color: var(--root-color); background: var(--root-background); align-items: center; } .notice p:last-child { margin-bottom: 0 } .notice-title { margin: -18px -18px 12px; padding: 4px 18px; border-radius: 4px 4px 0 0; font-weight: 700; color: var(--title-color); background: var(--title-background); } .notice.error .notice-title { background: var(--error-title) } .notice.error { background: var(--error-content) } .notice.warning .notice-title { background: var(--warning-title) } .notice.warning { background: var(--warning-content) } .notice.info .notice-title { background: var(--info-title) } .notice.info { background: var(--info-content) } .notice.success .notice-title { background: var(--success-title) } .notice.success { background: var(--success-content) } .icon-notice { margin-right: 8px; margin-top: 2px; } .icon-notice img, .icon-notice svg { height: 1em; width: 1em; fill: currentColor; display: inline-block; position: relative; vertical-align: middle; } </style>
+<div><svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="success-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="error-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg></div>
+
+<link rel="canonical" href="https://grhkm21.github.io/posts/modular-forms/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm">
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/css/spoiler.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/main.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/variables.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/hint.css">
+
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me">About Me</a>
+    
+      <a href="/posts">Posts</a>
+    
+      <a href="/isogenies">Isogenies</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Modular Forms</h1>
+    <time datetime="2024-01-29T14:37:00Z">January 29, 2024</time>
+  </header>
+  <p>I have decided to take on the topic of Modular Forms. I don’t intend to dive too in depth into the topic, since it is obviously a rich theory and has many prerequisites. However, I will try to get a basic understanding of what is it about and what the theory tries to answer.</p>
+<p>References: <a href="https://www.amazon.co.uk/Modular-Forms-Classical-Computational-Introduction/dp/1783265450">Kilford (Book)</a>, <a href="https://ctnt-summer.math.uconn.edu/wp-content/uploads/sites/1632/2016/02/CTNTmodularforms.pdf">Conrad (Notes)</a>, <a href="https://www.youtube.com/watch?v=LolxzYwN1TQ">Conrad (Videos)</a>, <a href="https://www.youtube.com/watch?v=f8pjt9ivjjc&amp;list=PL8yHsr3EFj51HisRtNyzHX-Xyg6I3Wl2F">Borcherds (Videos)</a>.</p>
+<h1 id="prerequisites">Prerequisites</h1>
+<p>We begin by considering the <strong>modular group</strong> \(\mathrm{SL}_2(\mathbb{Z})\), defined as all \(2 \times 2\) matrices with determinant \(1\):</p>
+<p>\[
+\mathrm{SL}_2(\mathbb{Z}) = \left\{ \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix} : a, b, c, d \in \mathbb{Z}, ad - bc = 1 \right\}
+\]</p>
+<p>Here, \(\mathrm{SL}\) stands for the Special Linear Group. It is also common to denote the group by \(\Gamma\) and elements of \(\mathrm{SL}_2(\mathbb{Z})\) by \(\gamma\).</p>
+<p>It is known that \(\mathrm{SL}_2(\mathbb{Z})\) is finitely generated by matrices \(T = \begin{pmatrix} 1 &amp; 1 \\ 0 &amp; 1 \end{pmatrix}\) and \(S = \begin{pmatrix} 0 &amp; 1 \\ -1 &amp; 0 \end{pmatrix}\).</p>
+<div class="spoiler panel panel_default"> <div class="spoiler_block"> <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_in spoiler_block_show"> Show </a>  <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_out spoiler_block_hide" style="display: none;"> Collapse </a>  <div class="spoiler_block_content" style="display: none;">   <div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p>We claim that \({S, T}\) generates \(\mathrm{SL}_2(\mathbb{Z})\).</p>
+<p>To show this, we first note that \(S^2 = \begin{pmatrix} -1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}\) and \(T^n = \begin{pmatrix} 1 &amp; n \\ 0 &amp; 1 \end{pmatrix}\). This means \(T^n \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix} = \begin{pmatrix} a + cn &amp; b + dn \\ c &amp; d \end{pmatrix}\) and \(S \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix} = \begin{pmatrix} c &amp; d \\ -a &amp; -b \end{pmatrix}\). This suggests the use of the division algorithm.</p>
+<p>Indeed, consider a matrix \(\gamma = \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}\). If \(|a| \geq |c|\), we may divide to obtain integers \(q, r\) such that \(a = cq + r\) and \(0 \leq r &lt; |c|\). Then,</p>
+<p>\[
+T^{-q}\gamma = \begin{pmatrix} a - cq &amp; b - dq \\ c &amp; d \end{pmatrix} = \begin{pmatrix} r &amp; b - dq \\ c &amp; d \end{pmatrix}
+\]</p>
+<p>Now, we apply \(S\) to swap the rows:</p>
+<p>\[
+ST^{-q}\gamma = \begin{pmatrix} c &amp; d \\ -r &amp; -b + dq \end{pmatrix}
+\]</p>
+<p>Where we have \(|c| &gt; |r|\). We can repeat the process to get a matrix word \(M \in \langle S, T \rangle\) satisfying</p>
+<p>\[
+M\gamma = \begin{pmatrix} a&rsquo; &amp; b&rsquo; \\ 0 &amp; d&rsquo; \end{pmatrix}
+\]</p>
+<p>Now, note that \(\det(M\gamma) = a&rsquo;d&rsquo; = 1\), so \(M\gamma = \begin{pmatrix} \pm 1 &amp; b&rsquo; \\ 0 &amp; \pm 1 \end{pmatrix} = T^{b&rsquo;}\). By applying \(S^2 = \begin{pmatrix} -1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}\), we showed that \(\gamma \in \langle S, T \rangle\).</p></div>
+</div> </div> </div>
+<p>Next, we define the <strong>Poincaré upper half plane</strong> as \(\mathcal{H} = \{z \in \mathbb{C} : \Im(z) &gt; 0\} \cup \{\infty\}\). We note that \(\mathrm{SL}_2(\mathbb{Z})\) acts on \(\mathcal{H}\) by</p>
+<p>\[
+\begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}(z) = \frac{az + b}{cz + d}, \quad \text{for } z \in \mathbb{C}
+\]</p>
+<p>And the extended definitions \(\gamma(-d / c) = \infty\) and \(\gamma(\infty) = a / c\). These are the <strong>Möbius transformations</strong> or <strong>linear fractional transformations</strong>. Of course, we have to verify that \(z \in \mathcal{H}\) implies \(\gamma(z) \in \mathcal{H}\). This follows from the identity</p>
+<p>\[
+\Im\left(\frac{az + b}{cz + d}\right) = \Im\left(\frac{(ac)\|z\|^2 + (ad)z + (bc)\overline{z} + bd}{\|cz + d\|^2}\right) = \frac{(ad - bc)\Im(z)}{\|cz + d\|^2} &gt; 0
+\]</p>
+<hr>
+<h1 id="basic-definitions">Basic Definitions</h1>
+<p>Next, we present the important definitions.</p>
+<p><strong>Definition:</strong> If \(f : \mathcal{H} \to \mathbb{C}\) is a <span class="hint--html hint--top">
+<span class="hint__element">meromorphic
+</span>
+<span class="hint__content">
+holomorphic in all but a discrete finite subset </span>
+</span> function which satisfies the transformation formula</p>
+<p>\[
+f\left(\frac{az + b}{cz + d}\right) = (cz + d)^k f(z), \quad \text{for } \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix} \in \mathrm{SL}_2(\mathbb{Z}), z \in \mathcal{H}
+\]</p>
+<p>Thne we say that \(f\) is <strong>weakly modular of weight</strong> \(k\) (for \(\mathrm{SL}_2(\mathbb{Z})\). In particular, by considering the matrices \(T, S\) and \(S^2\), we obtain the following equations:</p>
+<p>\begin{align}
+f(z + 1) &amp;= f(z) \\
+af\left(-\frac{1}{z}\right) &amp;= (-z)^k f(z) \\
+f(z) &amp;= (-1)^k f(z)
+\end{align}</p>
+<p>In particular, by (3) we know that there are no weakly modular forms of odd weight. It can also be shown that if \(f\) satisfies \(1\) and \(2\), then it is weakly modular for \(\mathrm{SL}_2(\mathbb{Z})\), following from that \(S\) and \(T\) generate \(\mathrm{SL}_2(\mathbb{Z})\).</p>
+<div class="spoiler panel panel_default"> <div class="spoiler_block"> <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_in spoiler_block_show"> Proof </a>  <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_out spoiler_block_hide" style="display: none;"> Proof </a>  <div class="spoiler_block_content" style="display: none;"> <p>Suppose that \(\gamma = \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}\) and \(\tau = \begin{pmatrix} a&rsquo; &amp; b&rsquo; \\ c&rsquo; &amp; d&rsquo; \end{pmatrix}\). We have \(\tau\gamma = \begin{pmatrix} aa&rsquo; + bc&rsquo; &amp; ab&rsquo; + bd&rsquo; \\ a&rsquo;c + c&rsquo;d &amp; b&rsquo;c + dd&rsquo; \end{pmatrix}\) and \(\gamma^{-1} = \begin{pmatrix} d &amp; -b \\ -c &amp; a \end{pmatrix}\) due to \(\det(\gamma) = 1\). Suppose that \(f(\gamma z) = (cz + d)^k f(z)\) and \(f(\tau z) = (c&rsquo;z + d&rsquo;)^k f(z)\). Then,</p>
+<p>\begin{align*}
+f(\tau \gamma z)
+&amp;= (c&rsquo; \gamma z + d&rsquo;)^k f(\gamma z) \\
+&amp;= (c&rsquo; \gamma z + d&rsquo;)^k (cz + d)^k f(z) \\
+&amp;= \left(\left(c&rsquo; \cdot \frac{az + b}{cz + d} + d&rsquo;\right)(cz + d)\right)^k f(z) \\
+&amp;= (c&rsquo;(az + b) + d&rsquo;(cz + d))^k f(z) \\
+&amp;= ((a&rsquo;c + c&rsquo;d)z + (b&rsquo;c + dd&rsquo;))^k f(z) \\
+&amp;= (\tau \gamma)z
+\end{align*}</p>
+<p>Similarly, we also have \(f(\gamma^{-1}z) = (-cz + a)^k f(z)\), since</p>
+<p>\begin{align*}
+f(z)
+&amp;= f(\gamma \gamma^{-1} z) \\
+&amp;= (c\gamma^{-1} z + d)^k f(\gamma^{-1} z) \\
+&amp;= \left(c \cdot \frac{dz - b}{-cz + a} + d\right)^k f(\gamma^{-1}z) \\
+&amp;= \left(\frac{(cdz - bc) + (-cdz + ad)}{-cz + a}\right)^k f(\gamma^{-1}z) \\
+&amp;= \left(\frac{ad - bc}{-cz + a}\right)^k f(\gamma^{-1}z) \\
+&amp;= (-cz + a)^{-k} f(\gamma^{-1}z)
+\end{align*}</p>
+<p>The rest follows from \(\mathrm{SL}_2(\mathbb{Z}) = \langle S, T \rangle\).</p>
+</div> </div> </div>
+<p><strong>Definition:</strong> We say that a meromorphic function \(f: \mathcal{H} \to \mathbb{C}\) is a <strong>modular form of weight</strong> \(k\) (for \(\mathrm{SL}_2(\mathbb{Z})\)) if it satisfies the following:</p>
+<ol>
+<li>
+<p>\(f\) is weakly modular of weight \(k\) for \(\mathrm{SL}_2(\mathbb{Z})\).</p>
+</li>
+<li>
+<p>\(f\) is holomorphic on \(\mathcal{H}\).</p>
+</li>
+<li>
+<p>The values \(f(\gamma)\) are bounded as \(\Im(\gamma) \to \infty\).</p>
+</li>
+</ol>
+<p>We denote the set of modular form sof weight \(k\) for \(\mathrm{SL}_2(\mathbb{Z})\) by \(M_k(\mathrm{SL}_2(\mathbb{Z}))\).</p>
+<p>Furthermore, we define the value of \(f(z)\) at \(\infty\) to be \(f(\infty) := \lim_{z \to i\infty} f(z)\). If \(f(\infty) = 0\), then we say that \(f\) is a <strong>cusp form of weight</strong> \(k\) (for \(\mathrm{SL}_2(\mathbb{Z})\)). The set of cusp forms is written as \(S_k(\mathrm{SL}_2(\mathbb{Z}))\).</p>
+<p>The third condition above, also called the modularity condition, can be written as \(\gamma \to i\infty\), or that \(f\) is holomorphic at \(i\infty\). Now, since \(f\) is periodic with period \(1\), it has a Fourier series</p>
+<p>\[
+f(q) = \sum_{n \geq 0} a_n q^n, \quad \text{with } q := \exp(2\pi iz)
+\]</p>
+<p>(There is an abuse of notation denoting both \(f(z)\) and \(f(q)\) with \(f\).) This is called the \(q\)-<strong>expansion</strong> of \(f\), and the coefficients \(a_n\) are called the <strong>Fourier coefficients</strong> of \(f\). Moreover, one can prove that the sum converges for every \(z \in \mathcal{H}\) - see <a href="https://ctnt-summer.math.uconn.edu/wp-content/uploads/sites/1632/2016/02/CTNTmodularforms.pdf">Conrad, 4.5 &amp; 4.6</a>.</p>
+<div class="notice error" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#error-notice"></use></svg></span>[ERROR] 唉屌又error</p><p>Clarify the proof of \(q\)-expansion from Conrad&rsquo;s notes.</p></div>
+<p>Normally, such a Fourier series is indexed by \(n \in \mathbb{Z}\). However, since \(f\) is holomorphic at \(i\infty\), for every negative \(n\) we have \(a_n = 0\). Also, note that \(a_0 = f(q = 0) = f(z = i\infty)\). As such, if \(a_0 = 0\), we say that \(f\) <strong>vanishes</strong> at \(\infty\), which also means that \(f\) is a cusp form.</p>
+<hr>
+<h1 id="eisenstein-series">Eisenstein Series</h1>
+<p>It is useless to write down random definitions without usage. Therefore, it is natural to ask whether modular forms actually exist. By definition, we see that all constant functions are modular forms of weight \(0\), meaning \(M_0(\mathrm{SL}_2(\mathbb{Z})) \supseteq \mathbb{C}\). We will later see that this is an inequality. However, now we should focus on finding modular forms of nonzero weights.</p>
+<p><strong>Definition:</strong> For even \(k \geq 4\), we define the <strong>weight</strong> \(k\) <strong>Eisenstein series</strong> as</p>
+<p>\[
+G_k(z) := \sum_{(m, n) \in \mathbb{Z}^2 \setminus \{(0, 0)\}} (mz + n)^{-k}
+\]</p>
+<p>We shall show that this is a nonzero modular form of weight \(k\) for \(\mathrm{SL}_2(\mathbb{Z})\). The proof boils down to checking each of the three conditions in the definition is satisfied.</p>
+<p>Actually, before we do that, let&rsquo;s look at our definition. Firstly, why do we require \(k \geq 4\)? As we will see later, this is because for \(k = 2\), the sum does not converge absolutely, which means the sum is not well defined. Why do we require \(k\) to be even then? Well, the definition makes sense for \(k \geq 3\), but when \(k\) is odd, the terms for \((m, n)\) and \((-m, -n)\) cancel out, meaning the series vanishes and \(G_k(z) = 0\). This matches our observation above that there are no modular forms of odd weight.</p>
+<p><strong>Proposition:</strong> Let \(\Lambda \subseteq \mathbb{Z}^n\) be a lattice. The series</p>
+<p>\[
+L := \sum_{0 \neq \rho \in \Lambda} \|\rho\|^{-t}
+\]</p>
+<p>is absolutely convergent for \(t &gt; k\).</p>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p><em>Proof 1:</em> We follow <a href="https://link.springer.com/book/10.1007/978-1-4684-9884-4">Serre, Chapter VII</a> with assistance from <a href="https://jschnei.github.io/">jschnei</a> and <a href="http://affine.group/">hellman</a>. We first prove that for integer \(n\), the number of elements of \(\Lambda\) such that \(k \leq \|\rho\| &lt; k + 1\) is \(\mathcal{O}_{\Lambda}(k^{n - 1})\). To do this, we first define \(d := \min\{\|z_1 - z_2\| : z_1 \neq z_2 \in \Lambda\}\). We then draw a hypersphere of radius \(d / 2\), denoted \(\mathcal{B}_z(d / 2)\), around each point \(z\) of the lattice. By definition, the hyperspheres don&rsquo;t overlap. Next, we define the belt \(\mathcal{C} := \{z : k \leq \|z\| &lt; k + 1\} = \mathcal{B}_{k + 1} \setminus \mathcal{B}_k\). We note that the hypervolume of \(\mathcal{C}\) is</p>
+<p>\[
+\mathrm{Vol}(\mathcal{C}) = \frac{\pi^{n / 2}}{\Gamma\left(\frac{n}{2} + 1\right)} \left((k + 1)^n - k^n\right) = \mathcal{O}_{\Lambda}(k^{n - 1})
+\]</p>
+<p>To finish off the proof, note that there are at most \(\mathrm{Vol}(\mathcal{C}) / \min\{|\mathcal{C} \cap \mathcal{B}_z(d / 2)| : z \in \Lambda\}\) lattice points in \(\mathcal{C}\), which is again \(\mathcal{O}_{\Lambda}(k^{n - 1})\). This means that there is a constant \(C_{\Lambda}\) such that the number of lattice pints in \(\mathcal{C}\) is at most \(C_{\Lambda}k^{n - 1}\). We can now obtain the upper bound</p>
+<p>\[
+L &lt; \sum_{k \geq 0} \frac{C_{\Lambda}k^{n - 1}}{k^t} = C_{\Lambda} \sum_{k \geq 0} k^{n - 1 - t}
+\]</p>
+<p>which converges for \(t &gt; k\).</p></div>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p><em>Proof 2:</em> We follow <a href="https://math.stackexchange.com/a/4147483/948125">C-RAM&rsquo;s answer</a>. Write \(\Lambda = \mathbb{Z}\vec{v_1} + \cdots + \mathbb{Z}\vec{v_n}\) and \(\vec{\mathbf{x}} = (x_1, \cdots, x_n)\). We note that \(\|\cdot\|_{\Lambda} : \vec{\mathbf{x}} \mapsto \left\|\sum_{i = 1}^n x_i\vec{v_i}\right\|\) is a norm on \(\mathbb{R}^n\). Now, since any two norms on \(\mathbb{R}^n\) are equivalent, there exists a constant \(M\) such that \(M\|(x, y)\|_{\Lambda} \geq \max \vec{\mathbf{x}}\). Therefore,</p>
+<p>\begin{align*}
+L
+&amp;= \sum_{\vec{\mathbf{x}} \in \mathbb{Z}^n \setminus \{0\}} \frac{1}{\|\vec{\mathbf{x}}\|_{\Lambda}^t} \\
+&amp;\leq \frac{1}{M^t} \sum_{1}{M^t} \sum_{\vec{\mathbf{x}} \in \mathbb{Z}^n \setminus \{0\}} \frac{1}{(\max \vec{\mathbf{x}})^t} \\
+&amp;= \frac{1}{M^t} \sum_{k = 1}^{\infty} \frac{(2k + 1)^n - (2k - 1)^n}{k^t} \\
+&amp;= \frac{1}{M^t} \sum_{k = 1}^{\infty} \frac{n 2^n k^{n - 1} + \mathcal{O}(k^{n - 3})}{k^t}
+\end{align*}</p>
+<p>Which again converges for \(t &gt; k\).</p></div>
+<hr>
+<p>Back to the task of proving that \(G_k(z)\) is a nonzero modular form of weight \(k\) for \(\mathrm{SL}_2(\mathbb{Z})\). We are now ready to prove that it is holomorphic!</p>
+<p>Suppose that \(z \in \mathbb{C}\) satisfies \(\|z\| \geq 1\) and \(|\Re(z)| \leq \frac{1}{2}\), as shaded blue below. This region \(F\) is a <strong>fundamental domain</strong> of \(\mathrm{SL}_2(\mathbb{Z})\), which we will rigorously define later. For now, we see that for \(z \in F\), we have</p>
+<p>\[
+\|mz + n\|^2 = m^2 z\overline{z} + 2mn\Re(z) + n^2 \geq m^2 - mn + n^2 = \|m\omega - w\|^2
+\]</p>
+<p><img src="/images/modular-forms-fundamental-domain-1.png" width="100%"></img></p>
+<p>Next, we show that \(G_k(z)\) is holomorphic at \(i\infty\). Consider the series definition when \(z \to i\infty\). When \(m \neq 0\), the term \((mz + n)^{-k}\) contributes \(0\) to the sum, while when \(m = 0\), it contributes \(n^{-k}\). Therefore, we have \(\lim_{z \to i\infty} G_k(z) = 2\zeta(k)\). Neat!</p>
+<p>Finally, we show that \(G_k(z)\) is weakly modular for \(\mathrm{SL}_2(\mathbb{Z})\), which requires showing that \(G_k(z + 1) = G_k(z)\) and \(G_k\left(-\frac{1}{z}\right) = z^k G_k(z)\). Here, \(G_k(z)\) being absolutely convergent allows us to rearrange the terms. For the first condition, note that</p>
+<p>\begin{align*}
+G_k(z + 1)
+&amp;= \sum_{(m, n) \neq (0, 0)} \left(m(z + 1) + n\right)^{-k} \\
+&amp;= \sum_{(m, n) \neq (0, 0)} \left(mz + (m + n)\right)^{-k} \\
+&amp;= \sum_{(m, n&rsquo;) \neq (0, 0)} \left(mz + n&rsquo;\right)^{-k} \\
+&amp;= G_k(z)
+\end{align*}</p>
+<p>For the second condition, we expand</p>
+<p>\begin{align*}
+G_k\left(-\frac{1}{z}\right)
+&amp;= \sum_{(m, n) \neq (0, 0)} \left(-\frac{m}{z} + n\right)^{-k} \\
+&amp;= \sum_{(m, n) \neq (0, 0)} z^k(-m + nz)^{-k} \\
+&amp;= z^k \sum_{(m&rsquo;, n) \neq (0, 0)} (nz + m&rsquo;)^{-k} \\
+&amp;= z^k G_k(z)
+\end{align*}</p>
+<div class="notice info" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#info-notice"></use></svg></span>[INFO] 李家超提提你</p><p>Starting from here, one can expand to get the \(q\)-expansion of \(G_k(z)\). Also, by observing the first few coefficients of the first few Eisenstein series, one can deduce and prove that the set of modular forms actually form a <em>graded ring</em>. Finally, there is a simple characterisation of the dimension of \(M_n(\mathrm{SL}_2(\mathbb{Z}))\), which can be proven by applying the Residue theorem.</p></div>
+
+</article>
+
+
+
+</html>
+
+<footer class="footer">
+
+</footer>
+</div>
+
+</body>
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+
+</html>
+

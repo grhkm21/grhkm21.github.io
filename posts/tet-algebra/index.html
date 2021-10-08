@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+<title>Algebra (831 pts, 14 solves) | Blog by grhkm</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.121.2">
+<meta name="description" content="grhkm blog">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/minimal.css">
+
+<style type="text/css"> .notice { --root-color: #444; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #c33; --error-content: #fee; --warning-title: #fb7; --warning-content: #fec; --info-title: #6be; --info-content: #e7f2fa; --success-title: #5a5; --success-content: #efe } @media (prefers-color-scheme:dark) {} { .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121 } } body.dark .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121; } .notice { padding: 18px; line-height: 24px; margin-bottom: 24px; border-radius: 4px; color: var(--root-color); background: var(--root-background); align-items: center; } .notice p:last-child { margin-bottom: 0 } .notice-title { margin: -18px -18px 12px; padding: 4px 18px; border-radius: 4px 4px 0 0; font-weight: 700; color: var(--title-color); background: var(--title-background); } .notice.error .notice-title { background: var(--error-title) } .notice.error { background: var(--error-content) } .notice.warning .notice-title { background: var(--warning-title) } .notice.warning { background: var(--warning-content) } .notice.info .notice-title { background: var(--info-title) } .notice.info { background: var(--info-content) } .notice.success .notice-title { background: var(--success-title) } .notice.success { background: var(--success-content) } .icon-notice { margin-right: 8px; margin-top: 2px; } .icon-notice img, .icon-notice svg { height: 1em; width: 1em; fill: currentColor; display: inline-block; position: relative; vertical-align: middle; } </style>
+<div><svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="success-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="error-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg></div>
+
+<link rel="canonical" href="https://grhkm21.github.io/posts/tet-algebra/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm">
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/css/spoiler.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/main.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/variables.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/hint.css">
+
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me">About Me</a>
+    
+      <a href="/posts">Posts</a>
+    
+      <a href="/isogenies">Isogenies</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Algebra (831 pts, 14 solves)</h1>
+    <time datetime="2022-01-02T22:53:00Z">January 02, 2022</time>
+  </header>
+  <h2 id="introduction">Introduction</h2>
+<p>Our team Black Bauhinia participated in the TetCTF 2022 which spans two days.  <code>Algebra</code> is the hardest Crypto challenge in the CTF. Mystiz and I (grhkm) together spent around 7 hours on this challenge.</p>
+<h2 id="problem-statement">Problem Statement</h2>
+<blockquote>
+<p>Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!</p>
+<p>Service: nc 139.162.61.222 13374</p>
+<p>Binary: <a href="https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing">https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing</a></p>
+</blockquote>
+<h2 id="solution-outline">Solution Outline</h2>
+<p>$x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.monic()}\right]\ \text{mod}\ (x^2 + 2Cx + 1)$, where $[x^0]P(x)$ is the constant term of the polynomial after reduction. From this, we obtain $c = f^m(a)f^n(b) = [x^0]\left[\big(x - a^{-1}\big)^m\big(x - b^{-1}\big)^n\right]\ \text{mod}\ (x^2 + 2Cx + 1)$. Realizing that $\sqrt{C^2 - 1}$ exists in $\mathbb{F}_p$, we apply CRT to get two relations $(r_i - a^{-1})^m(r_i - b^{-1})^n \equiv k(r_i - c^{-1})$ where $k$ is the linear coefficient. Dividing the two equations gives the desired <code>fa</code>, <code>fb</code> and <code>fc</code>.</p>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>There was quite a lot of luck, random guessing, looking through irrelevant papers and ranting on Twitter. Instead of showing all that, I will first go through the final solution with proof. I will then show how one might approach future similar problems i.e. how one could have solved the problem semi-systematically. That way, everyone learns instead of seeing an IMO-inequality-like solution!</p>
+<h2 id="problem-objective">Problem Objective</h2>
+<p>We are given a single script <code>algebra.py</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> randint
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">50824208494214622675210983238467313009841434758617398532295301998201478298245257311594403096942992643947506323356996857413985105233960391416730079425326309</span>
+</span></span><span style="display:flex;"><span>C <span style="color:#f92672">=</span> <span style="color:#ae81ff">803799120267736039902689148809657862377959420031713529926996228010552678684828445053154435325462622566051992510975853540073683867248578880146673607388918</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>INFINITY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INF&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">op</span>(x1, x2):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Returns (x1 + x2 + 2 * C * x1 * x2) / (1 - x1 * x2)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> x2 <span style="color:#f92672">==</span> INFINITY:
+</span></span><span style="display:flex;"><span>        x1, x2 <span style="color:#f92672">=</span> x2, x1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> x1 <span style="color:#f92672">==</span> INFINITY:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> x2 <span style="color:#f92672">==</span> INFINITY:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> C) <span style="color:#f92672">%</span> p
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> x2 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> INFINITY
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> C <span style="color:#f92672">*</span> x2) <span style="color:#f92672">*</span> pow(x2, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, p) <span style="color:#f92672">%</span> p
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> x1 <span style="color:#f92672">*</span> x2 <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> INFINITY
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (x1 <span style="color:#f92672">+</span> x2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> C <span style="color:#f92672">*</span> x1 <span style="color:#f92672">*</span> x2) <span style="color:#f92672">*</span> pow(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> x1 <span style="color:#f92672">*</span> x2, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, p) <span style="color:#f92672">%</span> p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">repeated_op</span>(x, k):
+</span></span><span style="display:flex;"><span>    s <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> k <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> k <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>            s <span style="color:#f92672">=</span> op(s, x)
+</span></span><span style="display:flex;"><span>        k <span style="color:#f92672">=</span> k <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> op(x, x)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> op(op(<span style="color:#ae81ff">2020</span>, <span style="color:#ae81ff">2021</span>), <span style="color:#ae81ff">2022</span>) <span style="color:#f92672">==</span> op(<span style="color:#ae81ff">2020</span>, op(<span style="color:#ae81ff">2021</span>, <span style="color:#ae81ff">2022</span>)) <span style="color:#75715e"># associativity</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> repeated_op(<span style="color:#ae81ff">2022</span>, p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># order p - 1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a, b <span style="color:#f92672">=</span> [randint(<span style="color:#ae81ff">0</span>, p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>)]
+</span></span><span style="display:flex;"><span>m, n <span style="color:#f92672">=</span> [randint(<span style="color:#ae81ff">0</span>, p <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>)]
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> op(repeated_op(a, m), repeated_op(b, n))
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>print(b)
+</span></span><span style="display:flex;"><span>print(c)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># give me f(a), f(b), f(c)</span>
+</span></span><span style="display:flex;"><span>fa <span style="color:#f92672">=</span> int(input())
+</span></span><span style="display:flex;"><span>fb <span style="color:#f92672">=</span> int(input())
+</span></span><span style="display:flex;"><span>fc <span style="color:#f92672">=</span> int(input())
+</span></span><span style="display:flex;"><span>print(pow(fa, m, p), pow(fb, n, p), fc)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> pow(fa, m, p) <span style="color:#f92672">*</span> pow(fb, n, p) <span style="color:#f92672">%</span> p <span style="color:#f92672">==</span> fc:
+</span></span><span style="display:flex;"><span>    flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;FLAG&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    print(flag[:pow(fc, <span style="color:#ae81ff">4</span>, p)])
+</span></span></code></pre></div><ul>
+<li>A prime modulo $p$ and a <s>random</s> constant $C$ is fixed.</li>
+<li>A binary operator is defined as $f(x_1, x_2) := \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2}$</li>
+<li>$f^n(x_1) = f(f^{n - 1}(x_1), x_1)$</li>
+<li>Four secret variables are then chosen randomly
+<ul>
+<li>$a, b\in [0, p - 1]$</li>
+<li>$m, n\in [0, p - 2]$</li>
+</ul>
+</li>
+<li>We are given the values of $a, b$ and $f(f^m(a), f^n(b))$</li>
+<li>We have to provide three non-trivial values $f_a$, $f_b$ and $f_c$ such that $f_a^mf_b^n\equiv f_c\ \text{mod}\ p$.</li>
+</ul>
+<p>Interestingly, the assertion statements hint at that the operator is associative and has order $p - 1$.</p>
+<h2 id="solution">Solution</h2>
+<p>From this point onwards, all arithmetic are under $\mathbb{F}_p[x]$. First, investigating the operator in Sage shows the operator is indeed associative and commutative.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sage: f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x, y: (x <span style="color:#f92672">+</span> y <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> C <span style="color:#f92672">*</span> x <span style="color:#f92672">*</span> y) <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> x <span style="color:#f92672">*</span> y)
+</span></span><span style="display:flex;"><span>sage: C <span style="color:#f92672">=</span> var(<span style="color:#e6db74">&#39;C&#39;</span>)
+</span></span><span style="display:flex;"><span>sage: x, y, z <span style="color:#f92672">=</span> var(<span style="color:#e6db74">&#39;x, y, z&#39;</span>)
+</span></span><span style="display:flex;"><span>sage: (f(f(x, y), z) <span style="color:#f92672">-</span> f(x, f(y, z)))<span style="color:#f92672">.</span>full_simplify()
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>sage: (f(x, y) <span style="color:#f92672">-</span> f(y, x))<span style="color:#f92672">.</span>full_simplify()
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>This means that the notation $f(x_1, x_2, \ldots, x_n)$ is not ambiguous.</p>
+<p>Here, there is a theorem that seems to be unknown to the public. It is called the Mystiz God Theorem, which states that</p>
+<blockquote>
+<p>Given the correct time of the day (preferably 3-6am), a hard enough problem and that no one is observing him on Discord, Mystiz will turn into a God and solve every Crypto challenge.</p>
+</blockquote>
+<p>Here, the theorem&rsquo;s conditions are satisfied, and he proposed the following. Consider the polynomial $\big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big)\ \text{mod}\ (x^2 + 2Cx + 1)$. We have</p>
+<p>$$\begin{align*} \big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big) &amp;\equiv x^2 - \frac{x_1 + x_2}{x_1x_2}x + \frac{1}{x_1x_2} \\ &amp;\equiv -(2C + \frac{x_1 + x_2}{x_1x_2}\big)x + \big(\frac{1}{x_1x_2} - 1\big) \\ &amp;\equiv -\frac{x_1 + x_2 + 2Cx_1x_2}{x_1x_2}x + \frac{1 - x_1x_2}{x_1x_2} \\ &amp;\equiv -\frac{x_1 + x_2 + 2Cx_1x_2}{x_1x_2}\big(x - \frac{1 - x_1x_2}{x_1 + x_2 + 2Cx_1x_2}\big) \\ &amp;\equiv k(x - \frac{1}{f(x_1, x_2)})\ \text{for some}\ k. \end{align*}$$</p>
+<p><img src="/images/tet-algebra-mystiz-god.png" alt="Mystiz God Theorem Use Case"></p>
+<p>From this, it is easy to see that</p>
+<p>$$\big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big)\big(x - \frac{1}{x_3}\big)\equiv k_1\big(x - \frac{1}{f(x_1, x_2)}\big)\big(x - \frac{1}{x_3}\big)\equiv k_2\big(x - \frac{1}{f(x_1, x_2, x_3)}\big)\ \text{mod}\ (x^2 + 2Cx + 1)$$</p>
+<p>$$\prod_{i=1}^n \big(x - \frac{1}{x_i}\big)\equiv k\big(x - \frac{1}{f(x_1, x_2, \ldots, x_n)})\ \text{mod}\ (x^2 + 2Cx + 1)$$</p>
+<p>In particular, we have</p>
+<p>$$k\Big(x - \frac{1}{f(f^m(a), f^n(b))}\Big)\equiv\Big(x - \frac{1}{a}\Big)^m\Big(x - \frac{1}{b}\Big)^n\ \text{mod}\ (x^2 + 2Cx + 1)$$</p>
+<p>From this it is hard to get any information, as $k$ is a complicated expression dependent on $a$ and $b$. Instead, we hope to factor $x^2 + 2Cx + 1$ into linear factors. Going back to Sage, we see that this is indeed possible:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sage: p <span style="color:#f92672">=</span> <span style="color:#ae81ff">50824208494214622675210983238467313009841434758617398532295301998201478298245257311594403096942992643947506323356996857413985105233960391416730079425326309</span>
+</span></span><span style="display:flex;"><span>sage: C <span style="color:#f92672">=</span> <span style="color:#ae81ff">803799120267736039902689148809657862377959420031713529926996228010552678684828445053154435325462622566051992510975853540073683867248578880146673607388918</span>
+</span></span><span style="display:flex;"><span>sage: x <span style="color:#f92672">=</span> PolynomialRing(GF(p), <span style="color:#e6db74">&#39;x&#39;</span>)<span style="color:#f92672">.</span>gen(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>sage: (x<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> C <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>factor()
+</span></span><span style="display:flex;"><span>(x <span style="color:#f92672">+</span> <span style="color:#ae81ff">22028781193260601150215372852743243072534054369034373355826026755141703972839605913903845829450804221333172177888152011390316978343515577032315535048272856</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">*</span> (x <span style="color:#f92672">+</span> <span style="color:#ae81ff">30403025541489493604800988683343385662063299229646452236323267699080879682775308287796866138143113667746438130490796553103815494624941972144707891591831289</span>)
+</span></span></code></pre></div><p>Denote the two roots be $r_1$ and $r_2$ i.e. $x^2 + 2Cx + 1\equiv(x - r_1)(x - r_2)\ \text{mod}\ p$. Taking the modulo relation above modulo each of the linear factors, we have</p>
+<p>$$k\Big(x - \frac{1}{c}\Big)\equiv\Big(x - \frac{1}{a}\Big)^m\Big(x - \frac{1}{b}\Big)^n\ \text{mod}\ (x - r_i).$$</p>
+<p>Notice that $x - a\equiv r - a\ \text{mod}\ (x - r)$. Therefore, we have</p>
+<p>$$\begin{cases}k\Big(r_1 - \frac{1}{c}\Big)\equiv\Big(r_1 - \frac{1}{a}\Big)^m\Big(r_1 - \frac{1}{b}\Big)^n\ \text{mod}\ (x - r_1) \\ k\Big(r_2 - \frac{1}{c}\Big)\equiv\Big(r_2 - \frac{1}{a}\Big)^m\Big(x - \frac{1}{b}\Big)^n\ \text{mod}\ (x - r_2).\end{cases}$$</p>
+<p>Since all the terms are numbers i.e. constant polynomials, we can conveniently get rid of the modulo&rsquo;s:</p>
+<p>$$\begin{cases}k\Big(r_1 - \frac{1}{c}\Big)\equiv\Big(r_1 - \frac{1}{a}\Big)^m\Big(r_1 - \frac{1}{b}\Big)^n\ \text{mod}\ p \\ k\Big(r_2 - \frac{1}{c}\Big)\equiv\Big(r_2 - \frac{1}{a}\Big)^m\Big(r_2 - \frac{1}{b}\Big)^n\ \text{mod}\ p.\end{cases}$$</p>
+<p>Finally, recall that our goal is to</p>
+<blockquote>
+<p>Provide three non-trivial values $f_a$, $f_b$ and $f_c$ such that $f_a^mf_b^n\equiv f_c\ \text{mod}\ p$.</p>
+</blockquote>
+<p>Do you see it?</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>Dividing the equations, we get</p>
+<p>$$\frac{cr_1 - 1}{cr_2 - 1}\equiv\Big(\frac{ar_1 - 1}{ar_2 - 1}\Big)^m\Big(\frac{br_1 - 1}{br_2 - 1}\Big)^n\ \text{mod}\ p$$</p>
+<p>That&rsquo;s it!</p>
+<p><img src="/images/tet-algebra-flag.png" alt="I was so excited and I SHOULD BE"></p>
+<h2 id="code">Code</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;139.162.61.222&#39;</span>, <span style="color:#ae81ff">13374</span>)
+</span></span><span style="display:flex;"><span>INFINITY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INF&#34;</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">50824208494214622675210983238467313009841434758617398532295301998201478298245257311594403096942992643947506323356996857413985105233960391416730079425326309</span>
+</span></span><span style="display:flex;"><span>C <span style="color:#f92672">=</span> <span style="color:#ae81ff">803799120267736039902689148809657862377959420031713529926996228010552678684828445053154435325462622566051992510975853540073683867248578880146673607388918</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send</span>(s):
+</span></span><span style="display:flex;"><span>    r<span style="color:#f92672">.</span>sendline(str(s)<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> PolynomialRing(GF(p), <span style="color:#e6db74">&#39;a&#39;</span>)<span style="color:#f92672">.</span>gen(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>r1, r2 <span style="color:#f92672">=</span> [GF(p)(<span style="color:#f92672">-</span>u<span style="color:#f92672">.</span>coefficients()[<span style="color:#ae81ff">0</span>]) <span style="color:#66d9ef">for</span> u, _ <span style="color:#f92672">in</span> factor(a <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> C <span style="color:#f92672">*</span> a <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> PolynomialRing(GF(p), <span style="color:#e6db74">&#39;x&#39;</span>)<span style="color:#f92672">.</span>quotient(x <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> C <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>gen(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>a, b, c <span style="color:#f92672">=</span> [ZZ(r<span style="color:#f92672">.</span>recvline()) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>)]
+</span></span><span style="display:flex;"><span>a, b, c <span style="color:#f92672">=</span> Mod(a, p), Mod(b, p), Mod(c, p)
+</span></span><span style="display:flex;"><span>r<span style="color:#f92672">.</span>sendline(str((a <span style="color:#f92672">*</span> r1 <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> (a <span style="color:#f92672">*</span> r2 <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>r<span style="color:#f92672">.</span>sendline(str((b <span style="color:#f92672">*</span> r1 <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> (b <span style="color:#f92672">*</span> r2 <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>r<span style="color:#f92672">.</span>sendline(str((c <span style="color:#f92672">*</span> r1 <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> (c <span style="color:#f92672">*</span> r2 <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>print(r<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>decode()<span style="color:#f92672">.</span>strip())
+</span></span></code></pre></div><p>Flag: <code>TetCTF{1_just_l0v3_th3_un1t_c1rcl3_s0_much}</code></p>
+<hr>
+<h2 id="motivation">Motivation</h2>
+<p>Here, I suggest a path one might try to systematically find the form above. The thing I like about this approach is most of this is doable on paper apart from the final computations.</p>
+<p>Firstly, it is natural to look for fixed point of the function. So let&rsquo;s try!</p>
+<p>$$\begin{align*} f(x_1, x_2) &amp;= x_1 \\\\ \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2} &amp;= x_1 \\\\ x_1 + x_2 + 2Cx_1x_2 &amp;= x_1 - x_1^2x_2 \\\\ x_2(x_1^2 + 2Cx_1 + 1) &amp;= 0 \end{align*}$$</p>
+<p>We see that the roots of $x_1^2 + 2Cx_1 + 1$ are fixed points. In Sage, we can further verify that $\left(\frac{C^2 - 1}{p}\right) = 1$, so such $x_1$ indeed exists. It is then natural to guess that the group structure might be a quotient ring, and that $M(x) = x^2 + 2Cx + 1$ is the quotient.</p>
+<p><img src="/images/tet-algebra-quotient-ring.png" alt="Mystiz suggesting ideas"></p>
+<p>Now let&rsquo;s take a look at $f(x_1, x_2)$ under our assumption.</p>
+<p>$$\begin{align*} f(x_1, x_2) &amp;\equiv \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2} \\\ f(x_1, x_2) &amp;\equiv \frac{\frac{1}{x_1} + \frac{1}{x_2} + 2C}{\frac{1}{x_1x_2} - 1} \\\ \left(\frac{1}{x_1x_2} - 1\right)f(x_1, x_2) &amp;\equiv \frac{1}{x_1} + \frac{1}{x_2} + 2C \\\ (x_1x_2 - 1)f(\frac{1}{x_1}, \frac{1}{x_2}) &amp;\equiv x_1 + x_2 + 2C \end{align*}$$</p>
+<p>We see that the right-hand side has a linear expression $x_1 + x_2 + 2C$, while the left-hand side has a product $x_1x_2 - 1$. We might think of something like Vieta&rsquo;s Theorem or quadratic factoring in general, where we have $(x - x_1)(x - x_2) = x^2 - (x_1 + x_2)x + x_1x_2$. What if we try it here?</p>
+<p>$$\begin{align*} (x_1 + x_2 + 2C)x &amp;\equiv x_1x_2 - 1 &amp;\mod{x^2 + 2Cx + 1} \\\ (x^2 + 2Cx + 1) - (x_1 + x_2 + 2C)x + (x_1x_2 - 1) &amp;\equiv 0 &amp;\mod{x^2 + 2Cx + 1} \\\ x^2 - (x_1 + x_2)x + x_1x_2 &amp;\equiv 0 &amp;\mod{x^2 + 2Cx + 1} \\\ (x - x_1)(x - x_2) &amp;\equiv 0 &amp;\mod{x^2 + 2Cx + 1}\end{align*}$$</p>
+<p>Woah! So to summarise, we have that</p>
+<p>$$(x_1 + x_2 + 2C)x - (x_1x_2 - 1)\equiv (x - x_1)(x - x_2)\mod{x^2 + 2Cx + 1}.$$</p>
+<p>Now notice that the root of the linear term is $\frac{x_1x_2 - 1}{x_1 + x_2 + 2C} = \frac{1}{f(\frac{1}{x_1}, \frac{1}{x_2})}$, which means we can write the relation as</p>
+<p>$$\begin{align*}k(x - \frac{1}{f(\frac{1}{x_1}, \frac{1}{x_2})}) &amp;\equiv (x - x_1)(x - x_2) &amp;\mod{x^2 + 2Cx + 1} \\\ k(x - \frac{1}{f(x_1, x_2)}) &amp;\equiv (x - \frac{1}{x_1})(x - \frac{1}{x_2}) &amp;\mod{x^2 + 2Cx + 1}\end{align*}$$</p>
+<p>The rest is the same as above.</p>
+<h2 id="other-methods">Other Methods</h2>
+<p>In our Solution section, we found that $x\mapsto\frac{r_1x - 1}{r_2x - 1}$ is the desired map. Indeed, many people (such as @hellman and @rkm0959) solved it by letting the map be $x\mapsto\frac{ax + b}{cx + d}$ and looked at fixed points / points with small orders.</p>
+<p>In the CTF, Mystiz and I also found that when we change $C$ to random values, sometimes points have order $p^2 - 1$ instead of $p - 1$. This is now explained, as $x^2 + 2Cx + 1 = (x - r_1)(x - r_2)$ have roots in $\mathbb{F}_{p^2}$ when $C^2 - 1$ is a quadratic non-residue, which the field has order $p^2 - 1$.</p>
+
+</article>
+
+
+
+</html>
+
+<footer class="footer">
+
+</footer>
+</div>
+
+</body>
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+
+</html>
+

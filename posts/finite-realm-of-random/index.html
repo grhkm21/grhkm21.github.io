@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+<title>Finite Realm of Random (498 points, 4 solves) | Blog by grhkm</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.121.2">
+<meta name="description" content="grhkm blog">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/minimal.css">
+
+<style type="text/css"> .notice { --root-color: #444; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #c33; --error-content: #fee; --warning-title: #fb7; --warning-content: #fec; --info-title: #6be; --info-content: #e7f2fa; --success-title: #5a5; --success-content: #efe } @media (prefers-color-scheme:dark) {} { .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121 } } body.dark .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121; } .notice { padding: 18px; line-height: 24px; margin-bottom: 24px; border-radius: 4px; color: var(--root-color); background: var(--root-background); align-items: center; } .notice p:last-child { margin-bottom: 0 } .notice-title { margin: -18px -18px 12px; padding: 4px 18px; border-radius: 4px 4px 0 0; font-weight: 700; color: var(--title-color); background: var(--title-background); } .notice.error .notice-title { background: var(--error-title) } .notice.error { background: var(--error-content) } .notice.warning .notice-title { background: var(--warning-title) } .notice.warning { background: var(--warning-content) } .notice.info .notice-title { background: var(--info-title) } .notice.info { background: var(--info-content) } .notice.success .notice-title { background: var(--success-title) } .notice.success { background: var(--success-content) } .icon-notice { margin-right: 8px; margin-top: 2px; } .icon-notice img, .icon-notice svg { height: 1em; width: 1em; fill: currentColor; display: inline-block; position: relative; vertical-align: middle; } </style>
+<div><svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="success-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="error-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg></div>
+
+<link rel="canonical" href="https://grhkm21.github.io/posts/finite-realm-of-random/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm">
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/css/spoiler.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/main.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/variables.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/hint.css">
+
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me">About Me</a>
+    
+      <a href="/posts">Posts</a>
+    
+      <a href="/isogenies">Isogenies</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Finite Realm of Random (498 points, 4 solves)</h1>
+    <time datetime="2023-07-10T18:57:21&#43;03:00">July 10, 2023</time>
+  </header>
+  <h2 id="introduction">Introduction</h2>
+<p>Our team Black Bauhinia participated in the idekCTF 2023 which spaces two days. <code>Finite Realm of Random</code> was an interesting math / crypto puzzle. In the end, only 3 teams solved it the intended way, and we were the second.</p>
+<h2 id="problem-statement">Problem Statement</h2>
+<blockquote>
+<p>Description: I took a flag, and shuffled it. I took a part, and randomized it. I took the bits and pieces, and scattered them across the field. Now, only an haphazard mess remains.</p>
+<p>Author: A~Z</p>
+<p>Binary: <a href="/files/finite-realm-of-random.tar.gz">finite-realm-of-random.tar.gz</a></p>
+</blockquote>
+<h2 id="solution-outline">Solution Outline</h2>
+<p>By observing that the code maps the original flag-encoded polynomial to its Galois conjugates, we try all 32 possibilities and retrieve the flag.</p>
+<h2 id="a-bit-of-math">A Bit of Math</h2>
+<p>Let $L = \mathbb{F}_{127^32}$ and $g$ be a fixed generator of $L$. The flag is splitted into character blocks and the following operation is performed:</p>
+<ol>
+<li>The block is encoded by $\vec{c} = (c_0, c_1, \cdots, c_{31}) \mapsto f = c_0 + c_1g + \cdots + c_{31}g^{31}$</li>
+<li>For at most $5$ times:
+<ul>
+<li>Two elements $r_1$ and $r_2$ are chosen with the same minimal polynomial in $L$</li>
+<li>Find a polynomial $g(X) \in \mathbb{F}_{127}[X]$ satisfying $\deg(g) \leq 31$ and $g(r_1) = f$</li>
+<li>Replace $f$ by $g(r_2)$</li>
+</ul>
+</li>
+<li>We receive the resulting $f$</li>
+</ol>
+<p>Let us first analyse the curious code in 2(a) by recalling the following fact.</p>
+<div class="notice info" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#info-notice"></use></svg></span>[INFO] 李家超提提你</p><p><strong>Lemma</strong> Let $L / K$ be a Galois extension. Then, the minimal polynomial of any $\alpha \in L / K$ is</p>
+<p>$$
+f_{\alpha}(x) = \prod_{\sigma \in \mathrm{Gal}(L / K)} x - \sigma(\alpha)
+$$</p></div>
+<p>In fancy math terms, we say that the minimal polynomial of $\alpha$ are precisely the <a href="https://www.wikiwand.com/en/Conjugate_element_(field_theory)">Galois conjugates</a> of $\alpha$. Applying this to our problem, we see that $r_2 = \sigma(r_1)$ for some $\sigma \in \mathrm{Gal}(L / K)$. Moreover, recall that the Galois group of a finite field is generated by the <a href="https://www.wikiwand.com/en/Frobenius_endomorphism">Frobenius endomorphism</a> $\mathrm{Frob}_p$, defined by the map $x \mapsto x^p$. That is,</p>
+<p>$$
+\mathrm{Gal}(\mathbb{F}_{p^n} / \mathbb{F}_p) = {\mathrm{Frob}_p^i : 0 \leq i &lt; n} \cong \mathbb{Z} / n\mathbb{Z}
+$$</p>
+<p>In fact, we can check this in Sage:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sage: GF(<span style="color:#ae81ff">17</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>)<span style="color:#f92672">.</span>galois_group()
+</span></span><span style="display:flex;"><span>Galois group C16 of GF(<span style="color:#ae81ff">17</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>)
+</span></span></code></pre></div><p>This implies that $r_2$ and $r_1$ are Galois conjugates of each other, or more concretely, $r_2 = r_1^{p^k}$ for some $k$. Now, let us move on to the rest of the algorithm. The provided code then computes a polynomial that maps $g: r_1 \mapsto f$ and correspondingly maps $r_2 \mapsto g(r_2)$. Since $g$ is a polynomial, we can apply Freshman&rsquo;s Dream for the following transformation:</p>
+<p>$$
+\begin{align*}
+g(r_1)^{p^k}
+&amp;= \left(\sum_{i = 0}^{31} g_i r_1^i\right)^{p^k} \
+&amp;= \sum_{i = 0}^{31} (g_i r_1^i)^{p^k} \
+&amp;= \sum_{i = 0}^{31} g_i r_1^{ip^k} \
+&amp;= g(r_1^{p^k}) \
+&amp;= g(r_2)
+\end{align*}
+$$</p>
+<p>Where we used the fact that $\forall \sigma \in \mathrm{Gal}(L / K), x \in K, \sigma(x) = x$, which gives $g_i \in \mathbb{F}_p \implies g_i^{p^k} = g_i$. Finally, this means that step 2 of the code just maps $f \mapsto g(r_2) = g(r_1)^{p^k} = f^{p^k} = \mathrm{Frob}_p^k(f)$. Therefore, to recover the original $f$, we simply look at all 32 conjugates of the given $f$.</p>
+<h2 id="code">Code</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Curiously, random is not random</span>
+</span></span><span style="display:flex;"><span>L <span style="color:#f92672">=</span> GF(<span style="color:#ae81ff">127</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> L[<span style="color:#e6db74">&#39;x&#39;</span>]<span style="color:#f92672">.</span>irreducible_element(<span style="color:#ae81ff">2</span>, algorithm<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;random&#39;</span>)<span style="color:#f92672">.</span>splitting_field(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;t</span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Parses resulting f</span>
+</span></span><span style="display:flex;"><span>ct <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>fromhex(open(<span style="color:#e6db74">&#39;out.txt&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>)<span style="color:#f92672">.</span>read())
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> len(ct) <span style="color:#f92672">%</span> L<span style="color:#f92672">.</span>degree() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>blocks <span style="color:#f92672">=</span> [L(list(map(int, ct[i:i <span style="color:#f92672">+</span> L<span style="color:#f92672">.</span>degree()]))) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(ct), L<span style="color:#f92672">.</span>degree())]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert</span>(poly):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> bytes(map(int, poly<span style="color:#f92672">.</span>polynomial()<span style="color:#f92672">.</span>coefficients()))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> blocks:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">32</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Checks conjugates by f -&gt; f^(p^i)</span>
+</span></span><span style="display:flex;"><span>        r <span style="color:#f92672">=</span> bytes(vector(c<span style="color:#f92672">^</span>(<span style="color:#ae81ff">127</span><span style="color:#f92672">^</span>i)))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> all(<span style="color:#ae81ff">32</span> <span style="color:#f92672">&lt;=</span> t <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">127</span> <span style="color:#f92672">or</span> t <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> r):
+</span></span><span style="display:flex;"><span>            print(r<span style="color:#f92672">.</span>decode())
+</span></span></code></pre></div><p>Flag: <code>idek{4nd_7hu5_5p0k3_G4!015:_7h3_f1n1t3_r34Lm_sh4ll_n07_h4rb0ur_r4nd0mn355,_0n!y_7h3_fr0b3n1u5__}</code></p>
+
+</article>
+
+
+
+</html>
+
+<footer class="footer">
+
+</footer>
+</div>
+
+</body>
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+
+</html>
+
