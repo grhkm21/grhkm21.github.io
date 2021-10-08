@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<title>grhkm21&#39;s first post | grhkm21&#39;s blog</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.87.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="http://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="http://grhkm21.github.io/posts/first-post/">
+<link rel="alternate" type="application/rss+xml" href="" title="grhkm21&#39;s blog">
+
+<header>
+  
+    <a href="http://grhkm21.github.io/" class="title">grhkm21&#39;s blog</a>
+  
+  
+</header>
+
+<article>
+  <header>
+    <h1>grhkm21&#39;s first post</h1>
+    <time datetime="2021-10-08T23:05:00&#43;01:00">October 08, 2021</time>
+  </header>
+  <p>This is some content</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> lru_cache
+
+<span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(n):
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">return</span> fib(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> fib(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>)
+
+print (fib(<span style="color:#ae81ff">10</span>))
+</code></pre></div>
+</article>
+
+
+
+</html>
