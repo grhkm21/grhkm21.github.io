@@ -132,7 +132,7 @@ class ParseError {
 
       error += left + underlined + right;
     } // Some hackery to make ParseError a prototype of Error
-    // See http://stackoverflow.com/a/8460753
+    // See https://stackoverflow.com/a/8460753
 
 
     var self = new Error(error);
@@ -1302,7 +1302,7 @@ class SvgNode {
   }
 
   toNode() {
-    var svgNS = "http://www.w3.org/2000/svg";
+    var svgNS = "https://www.w3.org/2000/svg";
     var node = document.createElementNS(svgNS, "svg"); // Apply attributes
 
     for (var attr in this.attributes) {
@@ -1347,7 +1347,7 @@ class PathNode {
   }
 
   toNode() {
-    var svgNS = "http://www.w3.org/2000/svg";
+    var svgNS = "https://www.w3.org/2000/svg";
     var node = document.createElementNS(svgNS, "path");
 
     if (this.alternate) {
@@ -1375,7 +1375,7 @@ class LineNode {
   }
 
   toNode() {
-    var svgNS = "http://www.w3.org/2000/svg";
+    var svgNS = "https://www.w3.org/2000/svg";
     var node = document.createElementNS(svgNS, "line"); // Apply attributes
 
     for (var attr in this.attributes) {
@@ -6437,7 +6437,7 @@ class MathNode {
 
 
   toNode() {
-    var node = document.createElementNS("http://www.w3.org/1998/Math/MathML", this.type);
+    var node = document.createElementNS("https://www.w3.org/1998/Math/MathML", this.type);
 
     for (var attr in this.attributes) {
       if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
@@ -6577,7 +6577,7 @@ class SpaceNode {
     if (this.character) {
       return document.createTextNode(this.character);
     } else {
-      var node = document.createElementNS("http://www.w3.org/1998/Math/MathML", "mspace");
+      var node = document.createElementNS("https://www.w3.org/1998/Math/MathML", "mspace");
       node.setAttribute("width", this.width + "em");
       return node;
     }
@@ -6838,7 +6838,7 @@ function buildMathML(tree, texExpression, options, isDisplayMode, forMathmlOnly)
   annotation.setAttribute("encoding", "application/x-tex");
   var semantics = new mathMLTree.MathNode("semantics", [wrapper, annotation]);
   var math = new mathMLTree.MathNode("math", [semantics]);
-  math.setAttribute("xmlns", "http://www.w3.org/1998/Math/MathML");
+  math.setAttribute("xmlns", "https://www.w3.org/1998/Math/MathML");
 
   if (isDisplayMode) {
     math.setAttribute("display", "block");
@@ -6965,7 +6965,7 @@ var mathMLnode = function mathMLnode(label) {
 // Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
 // Copyright (c) 2014-2017 Khan Academy (<www.khanacademy.org>)
 // Licensed under the SIL Open Font License, Version 1.1.
-// See \nhttp://scripts.sil.org/OFL
+// See \nhttps://scripts.sil.org/OFL
 // Very Long SVGs
 //    Many of the KaTeX stretchy wide elements use a long SVG image and an
 //    overflow: hidden tactic to achieve a stretchy image while avoiding
@@ -15020,7 +15020,7 @@ defineMacro("\\lrcorner", "\\html@mathml{\\@lrcorner}{\\mathop{\\char\"231f}}");
 defineMacro("\\vdots", "\\mathord{\\varvdots\\rule{0pt}{15pt}}");
 defineMacro("\u22ee", "\\vdots"); //////////////////////////////////////////////////////////////////////
 // amsmath.sty
-// http://mirrors.concertpass.com/tex-archive/macros/latex/required/amsmath/amsmath.pdf
+// https://mirrors.concertpass.com/tex-archive/macros/latex/required/amsmath/amsmath.pdf
 // Italic Greek capital letters.  AMS defines these with \DeclareMathSymbol,
 // but they are equivalent to \mathit{\Letter}.
 
@@ -15491,7 +15491,7 @@ defineMacro("\\argmin", "\\DOTSB\\operatorname*{arg\\,min}");
 defineMacro("\\argmax", "\\DOTSB\\operatorname*{arg\\,max}");
 defineMacro("\\plim", "\\DOTSB\\mathop{\\operatorname{plim}}\\limits"); //////////////////////////////////////////////////////////////////////
 // braket.sty
-// http://ctan.math.washington.edu/tex-archive/macros/latex/contrib/braket/braket.pdf
+// https://ctan.math.washington.edu/tex-archive/macros/latex/contrib/braket/braket.pdf
 
 defineMacro("\\bra", "\\mathinner{\\langle{#1}|}");
 defineMacro("\\ket", "\\mathinner{|{#1}\\rangle}");
