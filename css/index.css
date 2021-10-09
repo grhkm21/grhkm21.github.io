@@ -148,6 +148,7 @@ article header h1 {
   margin: 0 0 0.1em;
 }
 
+/*
 nav {
   margin: 0.5em -1em;
 }
@@ -155,6 +156,7 @@ nav {
 nav a {
   margin: 0.5em 1em;
 }
+*/
 
 @media (prefers-color-scheme: dark) {
   html, body, body > header, body > footer {
