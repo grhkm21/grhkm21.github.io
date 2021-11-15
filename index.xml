@@ -232,7 +232,7 @@ s[8] == s[18]
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;❯ &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; printf_is_dangerous &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
 hkcert21&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;l3akinG_the_world_giVE_U_7H3_FLAG&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Flag: &lt;code&gt;hkcert21{l3akinG_the_world_giVE_U_7H3_FLAG}&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;extra-material&#34;&gt;Extra Material&lt;/h2&gt;
+&lt;h2 id=&#34;remarks&#34;&gt;Remarks&lt;/h2&gt;
 &lt;p&gt;If this is your first time seeing blind format string, here are some good writeups from previous challenges:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=XuzuFUGuQv0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
