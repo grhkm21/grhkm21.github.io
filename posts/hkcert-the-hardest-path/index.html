@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Shortest path on a slightly obfuscated graph structure.'><title>[Rev/Misc] The Hardest Path (300 pts, 9 solves)</title>
+
+<link rel='canonical' href='https://grhkm21.github.io/posts/hkcert-the-hardest-path/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='[Rev/Misc] The Hardest Path (300 pts, 9 solves)'>
+<meta property='og:description' content='Shortest path on a slightly obfuscated graph structure.'>
+<meta property='og:url' content='https://grhkm21.github.io/posts/hkcert-the-hardest-path/'>
+<meta property='og:site_name' content='Blog by grhkm21'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2021-11-15T06:42:15&#43;00:00'/><meta property='article:modified_time' content='2021-11-15T06:42:15&#43;00:00'/>
+<meta name="twitter:title" content="[Rev/Misc] The Hardest Path (300 pts, 9 solves)">
+<meta name="twitter:description" content="Shortest path on a slightly obfuscated graph structure.">
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar"><base href="https://grhkm21.github.io/">z
+            <a href="https://grhkm21.github.io/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/posts/hkcert-the-hardest-path/">[Rev/Misc] The Hardest Path (300 pts, 9 solves)</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Shortest path on a slightly obfuscated graph structure.
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 15, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>Source of the problem: <a class="link" href="https://platform.ctf.hkcert.org/challenges/17"  target="_blank" rel="noopener"
+    >HKCERT CTF 2021</a>.</p>
+<h2 id="summary-of-problem-statement">Summary of Problem Statement</h2>
+<blockquote>
+<p>寧願不揀最易的路 行極還未到</p>
+<p>寧願你最後未傾慕 但信念安好</p>
+<p>在意的 不再是 愛的煩惱</p>
+<p>是哪樣做人 更清高</p>
+<p>餘生那段旅途</p>
+<p>與哪類人共舞</p>
+<p>When you think reverse engineering is hard, try working on reverse engineering challenges &gt; those need your algorithmic thinking skills!</p>
+<p><code>nc chalp.hkcert21.pwnable.hk 28117</code></p>
+<p><strong>Attachments</strong></p>
+<ul>
+<li><a class="link" href="/files/the-hardest-path.zip" >the-hardest-path_e00c6aa7b64b8dc2a06e577937b5b07c.zip</a></li>
+</ul>
+</blockquote>
+<h2 id="solution-outline">Solution Outline</h2>
+<p>We have to find a path (represented by NEWS - North, East, West, South) from source <code>_328518a497015157</code> to <code>_8b0eb6f195ae182a</code>, which is done by constructing call relationship graph and performing shortest path algorithm (such as Dijkstra&rsquo;s).</p>
+<h2 id="understanding-our-goal">Understanding our goal</h2>
+<p>We are given two python files:</p>
+<ul>
+<li><code>chall.py</code>, which is essentially a wrapper for the problem and</li>
+<li><code>lost.py</code>, the actual code containing the logic.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># File: chall.py</span>
+<span class="c1"># code has been rewritten</span>
+
+<span class="c1"># proof of concept</span>
+<span class="n">challenge</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;🔧 </span><span class="si">{</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">challenge</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;🔩 &#39;</span><span class="p">))</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">challenge</span> <span class="o">+</span> <span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+<span class="k">return</span> <span class="n">h</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># calling lost._328518a497015157(data)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;🥺 &#39;</span><span class="p">)</span>
+    <span class="n">lost</span><span class="o">.</span><span class="n">_328518a497015157</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;FLAG&#39;</span><span class="p">))</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no good!&#39;</span><span class="p">)</span>
+</code></pre></div><p>Reading <code>chall.py</code>, we first have to solve a proof of concept which can easily be bruteforced. We then supply the input string <code>data</code> and call the function <code>_328518a497015157</code>, which I shall refer to as <code>src</code> for reasons I will explain soon. The flag is returned only if the function call does not raise an Exception. That is interesting&hellip;</p>
+<h2 id="understanding-the-logic">Understanding the logic</h2>
+<p><code>test.py</code>, however, is a completely different beast. Let&rsquo;s analyze the file slowly. First, we are presented with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># File: test.py</span>
+<span class="c1"># original</span>
+<span class="k">def</span> <span class="nf">_29aa7a86665899ed</span><span class="p">(</span><span class="n">_050ca071ab51aece</span><span class="p">):</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;😵‍💫💫🧱&#39;</span><span class="p">)</span>
+
+<span class="c1"># deobfuscate</span>
+<span class="k">def</span> <span class="nf">fail</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">()</span>
+</code></pre></div><p>This function simply raises an Exception. Remember that the flag condition is for this function to <strong>not</strong> be called. Onto the next one:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># File: test.py</span>
+<span class="c1"># original</span>
+<span class="n">mystery</span> <span class="o">=</span> <span class="s1">&#39;NEWS&#39;</span>
+<span class="k">def</span> <span class="nf">_f42fb5e137443877</span><span class="p">(</span><span class="n">_a78810bb76cc7d70</span><span class="p">,</span> <span class="o">*</span><span class="n">_ab1bbf35017f4f42</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_e6aea2db2242b19f</span><span class="p">(</span><span class="n">_41d28eb8c27952c3</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_41d28eb8c27952c3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_a78810bb76cc7d70</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;🤷🏁😕&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">_03d38fa3a589db14</span><span class="p">,</span> <span class="n">_41d28eb8c27952c3</span> <span class="o">=</span> <span class="n">_41d28eb8c27952c3</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_41d28eb8c27952c3</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">_ab1bbf35017f4f42</span><span class="p">[</span><span class="n">mystery</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">_03d38fa3a589db14</span><span class="p">)]](</span><span class="n">_41d28eb8c27952c3</span><span class="p">)</span> <span class="k">if</span> <span class="n">_03d38fa3a589db14</span> <span class="ow">in</span> <span class="n">mystery</span> <span class="k">else</span> <span class="n">_e6aea2db2242b19f</span><span class="p">(</span><span class="n">_41d28eb8c27952c3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_e6aea2db2242b19f</span>
+
+<span class="c1"># deobfuscate (variable name change)</span>
+<span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">is_end</span><span class="p">,</span> <span class="o">*</span><span class="n">func_list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_end</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;🤷🏁😕&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">flag</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">func_list</span><span class="p">[</span><span class="n">mystery</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">flag</span><span class="p">)]](</span><span class="n">arg</span><span class="p">)</span> <span class="k">if</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">mystery</span> <span class="k">else</span> <span class="n">step</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">step</span>
+
+<span class="c1"># deobfuscate (styling)</span>
+<span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">is_end</span><span class="p">,</span> <span class="o">*</span><span class="n">func_list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_end</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;🤷🏁😕&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">first_char</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">first_char</span> <span class="ow">in</span> <span class="s1">&#39;NEWS&#39;</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;NEWS&#39;</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">first_char</span><span class="p">)</span>
+            <span class="n">function</span> <span class="o">=</span> <span class="n">func_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="n">function</span><span class="p">)(</span><span class="n">arg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">step</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">step</span>
+</code></pre></div><p>In short, <code>process(is_end, *func_list)</code> returns a function which can then be called. Let&rsquo;s say we call it with <code>arg</code> i.e. we have <code>process(is_end, *func_list)(arg)</code>. Then there are three outcomes:</p>
+<ul>
+<li>If <code>arg</code> is empty, we further have</li>
+<li>
+<ul>
+<li>✅ <code>is_end</code> is True: the function returns normally.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>❌ <code>is_end</code> is False: the function raises an error, causing us to lose.</li>
+</ul>
+</li>
+<li>If the first character of <code>arg</code> is one of <code>N, E, W, S</code>:</li>
+<li>
+<ol>
+<li>We determine its <code>index</code> i.e. <code>'N' = 0</code>, <code>'E' = 1</code>, etc.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>We get the function name at <code>func_list[index]</code> and call it with <code>arg[1:]</code> as a parameter.</li>
+</ol>
+</li>
+<li>Otherwise, the first character is none of <code>N, E, W, S</code>:</li>
+<li>
+<ul>
+<li>We skip the character and move on, essentially calling <code>process(is_end, *func_list)(arg[1:])</code>.</li>
+</ul>
+</li>
+</ul>
+<p>If you don&rsquo;t understand, reread the code and follow through with <code>process(False, ('f1', 'f2', 'f3', 'f4'))('EW')</code>. You should arrive at <code>f2('W')</code> as a result.</p>
+<p><figure 
+	>
+	<a href="/images/the-hardest-path-call-graph.png" >
+		<img src="/images/the-hardest-path-call-graph.png"
+			
+			
+			
+			loading="lazy"
+			alt="Call graph representation. Entering WEE at the start will give us the flag.">
+	</a>
+	
+	<figcaption>Call graph representation. Entering WEE at the start will give us the flag.</figcaption>
+	
+</figure></p>
+<p>At this point, we should still have many questions, such as:</p>
+<ul>
+<li>How many arguments are there in <code>func_list</code>? (Well, the image is a spoiler&hellip;)</li>
+<li>Is there any halting condition apart from the Exception calls?</li>
+<li>How is this worth 300 pts?</li>
+</ul>
+<p>Let&rsquo;s keep these questions in mind and move on to the rest of the code.</p>
+<h2 id="understanding-our-goal-1">Understanding our goal</h2>
+<p>The remaining of the code contains 40,401 lines of code, many of which seems similar. In fact, we can categorize the functions into three main categories:</p>
+<ul>
+<li><code>_func = fail</code></li>
+<li><code>_func = process(False, func1, func2, func3, func4)</code></li>
+<li><code>_8b0eb6f195ae182a = process(True, &quot;_92ccf583b1b065ea&quot;, &quot;_d3084505a4a12123&quot;, &quot;_e335a503c47e5243&quot;, &quot;_ebff1548ca6e8dbd&quot;)</code></li>
+</ul>
+<p><figure 
+	>
+	<a href="/images/the-hardest-path-dest.png" >
+		<img src="/images/the-hardest-path-dest.png"
+			
+			
+			
+			loading="lazy"
+			alt="The unique process(True, &hellip;) call">
+	</a>
+	
+	<figcaption>The unique process(True, …) call</figcaption>
+	
+</figure></p>
+<p>Yes, the final one is a category on its own. That is because it is the only <code>process</code> function call that has <code>is_end = True</code>! This means that we must reach and end our function here at <code>_8b0eb6f195ae182a</code>, which I will call <code>dest</code> from now. To briefly summarize, we start from <code>src</code> and must supply a direction string made up of <code>N, E, W, S</code>, reaching the <code>dest</code> function at the end.</p>
+<h2 id="parsing-the-source-file">Parsing the source file</h2>
+<p>Finally, we can start solving the challenge! To begin, we will construct the <em>adjacency list</em> of the <em>call graph</em> out of the function calls in <code>lost.py</code>, which is a fancy way of saying &ldquo;for each function <code>_func</code>, what are the four functions supplied into <code>process</code>?&rdquo; In the process, we also handle when <code>_func = fail</code> by setting its entry to be empty, meaning it cannot reach any other node and is hence useless. Here is a short script:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">source</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;lost.py&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="mi">16</span>  <span class="c1"># might have to change this if you deobfuscated lost.py</span>
+<span class="n">call_graph</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dictionary, storing {node: [reachable from node]}</span>
+<span class="n">src</span> <span class="o">=</span> <span class="s1">&#39;_328518a497015157&#39;</span>
+<span class="n">dest</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source</span><span class="p">[</span><span class="n">offset</span><span class="p">:]:</span>
+    <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; = &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">right</span> <span class="o">==</span> <span class="s1">&#39;_29aa7a86665899ed&#39;</span><span class="p">:</span>
+        <span class="n">call_graph</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;True&#39;</span> <span class="ow">in</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">dest</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="c1"># right == _f42fb5e137443877(is_flag, ...)</span>
+        <span class="n">funcs</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;_[0-9a-f]{1,16}&#39;</span><span class="p">,</span> <span class="n">right</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">call_graph</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">=</span> <span class="n">funcs</span>
+
+<span class="c1"># len(call_graph) = 40401</span>
+</code></pre></div><p>All there is left is to find a path from <code>src</code> to <code>dest</code>. The naive algorithm of bruteforcing all possible paths won&rsquo;t work, as there are $4^{40401}$ such paths. Instead, let&rsquo;s apply an algorithm called <strong>Breadth-First Search</strong> (BFS). The algorithm is very simple to understand with a few steps only:</p>
+<ol>
+<li>Start an array <code>queue</code> that will store which functions to visit (&ldquo;nodes&rdquo;), as well as its distance.</li>
+<li>Start another array <code>visited</code> storing which nodes we have visited.</li>
+<li>Initialize our queue with <code>(src, 0)</code>, our starting point and the distance travelled.</li>
+<li>While the queue is not empty,<br>
+4.1. Mark the first element of the queue as visited by appending it to <code>visited</code>.<br>
+4.2. Push all unvisited functions reachable from it onto our queue.<br>
+4.3. Remove the element from the queue</li>
+<li>Done!</li>
+</ol>
+<p><figure 
+	>
+	<a href="/images/the-hardest-path-call-graph.gif" >
+		<img src="/images/the-hardest-path-call-graph.gif"
+			
+			
+			
+			loading="lazy"
+			alt="Demonstration of BFS.">
+	</a>
+	
+	<figcaption>Demonstration of BFS.</figcaption>
+	
+</figure></p>
+<p>Intuitively speaking, the <code>queue</code> will keep track of the nodes in chronological order: the earlier the node is visited, the shorter the distance and the earlier it will be processed in (4.). You can also think of the nodes as lining up in a queue, where the earlier you arrive, the earlier you will leave! Hence, this algorithm will give us the shortest distance from <code>src</code> to <code>dest</code>, or in fact to any reachable node. Here is a simple line-by-line implementation:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>                                       <span class="c1"># 1.</span>
+<span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>                                  <span class="c1"># 2.</span>
+<span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">src</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>                           <span class="c1"># 3.</span>
+<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>                            <span class="c1"># 4.0</span>
+    <span class="n">first</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">first</span> <span class="o">==</span> <span class="n">dest</span><span class="p">:</span>                            <span class="c1"># Handle reaching dest</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>                           <span class="c1"># 4.1</span>
+    <span class="k">for</span> <span class="n">reachable</span> <span class="ow">in</span> <span class="n">call_graph</span><span class="p">[</span><span class="n">first</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">reachable</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">reachable</span><span class="p">,</span> <span class="n">dist</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># 4.2</span>
+    <span class="k">del</span> <span class="n">queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div><p>Running this code will print <code>996</code>. Well, that&rsquo;s useless! We want the full path with <code>NEWS</code>! Luckily, we simply store <code>(node, path)</code> instead of <code>(node, dist)</code>, which is straightforward to implement:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>                                          <span class="c1"># 1.</span>
+<span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>                                     <span class="c1"># 2.</span>
+<span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">src</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>                             <span class="c1"># 3.</span>
+<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>                               <span class="c1"># 4.0</span>
+    <span class="n">first</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">first</span> <span class="o">==</span> <span class="n">dest</span><span class="p">:</span>                               <span class="c1"># Handle reaching dest</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>                              <span class="c1"># 4.1</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">call_graph</span><span class="p">[</span><span class="n">first</span><span class="p">])):</span>     <span class="c1"># Require index</span>
+        <span class="n">reachable</span> <span class="o">=</span> <span class="n">call_graph</span><span class="p">[</span><span class="n">first</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">reachable</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+            <span class="n">char</span> <span class="o">=</span> <span class="s1">&#39;NEWS&#39;</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>                    <span class="c1"># To get NEWS[index] for path</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">reachable</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="n">char</span><span class="p">))</span>  <span class="c1"># 4.2</span>
+    <span class="k">del</span> <span class="n">queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div><p>Finally, running this code gives</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">SSSSEENNEESSSSEENNEEEEEEEESSSSEESSSSWWSSSSEESSEESSSSWWSSSSWWWWWWSSWWSSSSSSEEEESSSSEESSEESSSSSSSSEENNEESSEEEESSEESSSSEESSEEEEEEEESSEEEESSSSEEEEEENNNNNNEENNWWNNEEEENNNNEEEENNEEEEEESSSSWWSSWWSSSSEEEESSWWSSEESSEEEESSSSEENNNNNNEEEESSEESSEESSEEEESSEENNEENNWWNNEEEEEESSEEEEEENNNNWWWWNNWWNNNNWWNNEEEEEENNEENNWWWWNNWWNNEENNEEEEEEEESSEESSEESSSSEESSEEEEEENNEESSSSSSEEEEEENNNNNNNNNNNNNNNNEEEEEEEEEEEESSEESSSSWWWWSSSSSSWWSSEESSEEEEEENNNNEESSEESSEEEENNEENNNNEEEEEENNEENNWWWWWWNNNNWWSSSSWWSSSSWWWWNNNNNNNNNNEENNEENNEENNEEEESSEESSSSEEEEEESSEEEEEEEENNNNEENNNNWWNNEEEENNNNEEEEEESSSSSSSSSSSSSSSSSSSSSSEESSSSEEEEEESSEESSWWSSSSEESSSSEEEENNEEEESSWWSSSSSSSSWWSSWWWWWWSSWWWWSSWWNNNNWWWWWWSSEESSWWSSWWSSEESSSSSSSSSSWWSSEEEESSSSSSEEEESSSSEESSEESSSSEEEESSEENNEEEESSSSWWSSEESSWWSSSSWWWWNNWWSSSSEESSEEEESSWWSSSSWWWWNNWWNNWWSSSSWWWWWWWWWWWWWWSSSSSSWWWWSSEESSWWSSWWWWWWSSWWWWWWWWSSSSEESSEEEEEESSSSSSEEEESSSSEEEEEESSWWWWSSSSSSSSSSSSEEEEEESSEEEENNEEEENNEEEENNEEEENNEEEESSEENNEEEESSSSSSSSWWSSWWSSSSWWSSSSSSEESSSSEEEESSEENNEESSEEEE</span>
+</code></pre></div><p>We can then submit to the remote server for the flag.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">❯ python3 <span class="s2">&#34;python3 solve.py&#34;</span>
+<span class="o">[</span>+<span class="o">]</span> Opening connection to chalp.hkcert21.pwnable.hk on port 28117: Done
+hkcert21<span class="o">{</span>4lw4ys_l0ok_4t_s74ck_0verf1ow_wh3n_y0u_w4nt_t0_4v01d_s7ack_0v3rfl0ws<span class="o">}</span>
+<span class="o">[</span>*<span class="o">]</span> Closed connection to chalp.hkcert21.pwnable.hk port <span class="m">28117</span>
+</code></pre></div><p>Flag: <code>hkcert21{4lw4ys_l0ok_4t_s74ck_0verf1ow_wh3n_y0u_w4nt_t0_4v01d_s7ack_0v3rfl0ws}</code></p>
+<h2 id="remarks">Remarks</h2>
+<p>If the graph is weighted, other algorithms would have to be used.</p>
+<p>Thank you <a class="link" href="https://mystiz.hk/about-me/"  target="_blank" rel="noopener"
+    >Mystiz</a> for the challenge!</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 Blog by grhkm21
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#summary-of-problem-statement">Summary of Problem Statement</a></li>
+    <li><a href="#solution-outline">Solution Outline</a></li>
+    <li><a href="#understanding-our-goal">Understanding our goal</a></li>
+    <li><a href="#understanding-the-logic">Understanding the logic</a></li>
+    <li><a href="#understanding-our-goal-1">Understanding our goal</a></li>
+    <li><a href="#parsing-the-source-file">Parsing the source file</a></li>
+    <li><a href="#remarks">Remarks</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
