@@ -49,6 +49,10 @@ h1 {
   font-weight: 300;
 }
 
+html, body {
+    scroll-padding-top: 100px;
+}
+
 /* Page layout */
 
 main {

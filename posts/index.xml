@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on grhkm21&#39;s blog</title>
+    <title>Posts on Blog by grhkm21</title>
     <link>https://grhkm21.github.io/posts/</link>
-    <description>Recent content in Posts on grhkm21&#39;s blog</description>
+    <description>Recent content in Posts on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sat, 09 Oct 2021 06:30:27 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-uk</language>
+    <lastBuildDate>Sun, 14 Nov 2021 23:24:27 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>[NT] Little Ashish&#39;s Huge Donation</title>
-      <link>https://grhkm21.github.io/posts/little-ashishs-huge-donation/</link>
-      <pubDate>Sat, 09 Oct 2021 06:30:27 +0100</pubDate>
+      <title>[Pwn/Reverse] Unobserved Box (200 pts, 6 solves)</title>
+      <link>https://grhkm21.github.io/posts/hkcert-unobserved-box/</link>
+      <pubDate>Sun, 14 Nov 2021 23:24:27 +0000</pubDate>
       
-      <guid>https://grhkm21.github.io/posts/little-ashishs-huge-donation/</guid>
-      <description>Source of problem: HackerRank.
-1. Summary of Problem Statement To briefly summarise, there are $T\leq 10^5$ test cases.
-For each test case, we are given an integer $X\leq 10^{16}$. We are required to calculate the largest integer $n$ such that the sum of (square of each integer $\leq n$) is at most $X$.
-2. First approach Testing. $\sum_{i=1}^n i=\frac{n(n+1)}{2}$.
-3. Lagrange Interpolation If you haven&amp;rsquo;t read my blog yet, please go on codeforces.</description>
+      <guid>https://grhkm21.github.io/posts/hkcert-unobserved-box/</guid>
+      <description>Source of the problem: HKCERT CTF 2021
+Problem Statement  All codes are uncertain before the measurement, and you will never make it.
+Observe the code to get the flag.
+nc chalp.hkcert21.pwnable.hk 28132
+ Solution Outline We dump the binary from 0x400000 to 0x405000 using format string and %8$s, then reverse engineer the check function for the flag.
+Initial Discoveries Let&amp;rsquo;s have a look at the server:
+❯ nc chalp.hkcert21.pwnable.hk 28132 AAAAAAAA AAAAAAAA is not the correct answer.</description>
     </item>
     
   </channel>
