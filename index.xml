@@ -6,7 +6,58 @@
         <description>Recent content on Blog by grhkm21</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Sun, 12 Dec 2021 05:59:38 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 22 Dec 2021 02:28:45 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>ECC Notes 1 - Divisors</title>
+        <link>https://grhkm21.github.io/posts/ecc-notes-1/</link>
+        <pubDate>Wed, 22 Dec 2021 02:28:45 +0000</pubDate>
+        
+        <guid>https://grhkm21.github.io/posts/ecc-notes-1/</guid>
+        <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;After my absolute failure attempt to solve &lt;code&gt;zipfel&lt;/code&gt; in &amp;lt;hxp CTF 2021&amp;gt;(&lt;a class=&#34;link&#34; href=&#34;https://ctftime.org/event/1447%29,&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://ctftime.org/event/1447),&lt;/a&gt; I have decided for the $n^{\text{th}}$ time to seriously learn Elliptic Curve Cryptography. This time, hopefully I will finally understand pairings, supersingular curves and isogeny crypto. After all, I want to be a &lt;em&gt;cool guy&lt;/em&gt; too!&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Isogeny crypto is what cool guys do these days: walking around graphs of supersingular elliptic curves.&lt;br&gt;&lt;br&gt;I&amp;#39;ve written yet another brief introduction to it, using the many great resources available.&lt;br&gt;&lt;br&gt;We talk about SIDH and CSIDH, but for now we will only use the second.&lt;/p&gt;&amp;mdash; Riccardo Zanotto (@Drago1729) &lt;a href=&#34;https://twitter.com/Drago1729/status/1473004035129159685?ref_src=twsrc%5Etfw&#34;&gt;December 20, 2021&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;h2 id=&#34;disclaimer&#34;&gt;Disclaimer&lt;/h2&gt;
+&lt;p&gt;This blog post is NOT a tutorial starting from scratch. The main purpose of the blog will be to organize the material into a format I can easily review and learn, based on MY previous knowledge on the topic. I cannot even guarantee the material to be 100% correct, though I constantly cross-reference my understanding with multiple resources. Despite this, I still hope the blog provides a starting point, especially if you know nothing apart from &lt;code&gt;P.tate_pairing(Q, P.order(), 1)&lt;/code&gt;. If you have any questions, feel free to reach out to me on grhkm#4429!&lt;/p&gt;
+&lt;h2 id=&#34;elliptic-curves&#34;&gt;Elliptic Curves&lt;/h2&gt;
+&lt;p&gt;Let $K = \mathbb{F}_q = \mathbb{F}_{p^k}$ be a finite field and $E(K)$ be the elliptic curve&lt;/p&gt;
+&lt;p&gt;$$E: \{(x, y)\in K^2\cup\{\infty\}\ |\ y^2 + a_1xy + a_3y = x^3 + a_2x^2 + a_4x + a_6\}$$&lt;/p&gt;
+&lt;p&gt;with $a_i\in K$, also known as the &lt;em&gt;long Weierstra$\beta$ equation&lt;/em&gt;. As it turns out, when $p\geq 5$ the curve can be transformed into a short Weierstra$\beta$ form, where all coefficients vanish except $a_4$ and $a_6$. That is, we shall work with curves&lt;/p&gt;
+&lt;p&gt;$$E: y^2 = x^3 + a_4x + a_6.$$&lt;/p&gt;
+&lt;p&gt;In Sage, the class is straightforward to understand and use:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;sage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;17&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;sage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a_4&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;sage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a_6&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# = 14 mod 17&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;sage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;E&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;EllipticCurve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GF&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a_4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a_6&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;sage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;E&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;Elliptic&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Curve&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;defined&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;by&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;14&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;over&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Finite&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Field&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;size&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;17&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;divisors&#34;&gt;Divisors&lt;/h2&gt;
+&lt;p&gt;Back when we were in high school, we learned that for the field $\mathbb{C}$, we are able to factor every non-constant polynomial into a product of linear factors. $$P = \sum a_ix^i = a_0\prod (x - \alpha_i)^{\beta_i}.$$ Moreover, we were taught that polynomials are uniquely determined by its roots &lt;em&gt;up to a constant factor&lt;/em&gt;. For example, the polynomial $f(x) = x^4 - 9x^3 + 29x^2 - 39x + 18 = (x - 1)(x - 2)(x - 3)^2$ can be stored as its roots $v = \{1, 2, 3, 3\}$. If we assign each number $x$ a special symbol $&lt;x&gt;$, we can then write $f(x) {\ \color{cyan} =\ } &amp;lt;1&amp;gt; + &amp;lt;2&amp;gt; + 2&amp;lt;3&amp;gt;$. More generally, we can write every polynomial $$P = \sum a_ix^i {\ \color{cyan} =\ } \sum \alpha_i&amp;lt;r_i&amp;gt;.$$&lt;/p&gt;
+&lt;p&gt;Furthermore, there is a natural extension of this notation for rational functions $\frac{P(x)}{Q(x)}$ - we simply subtract the special symbols of $Q(x)$ from $P(x)$. For example, $\frac{x^2 - x + 6}{x^3 + 4x^2 - 4x - 16} {\ \color{cyan} =\ } \frac{(x + 3)(x - 2)}{(x + 4)(x + 2)(x - 2)} = &amp;lt;-3&amp;gt; + &amp;lt;2&amp;gt; - &amp;lt;-4&amp;gt; - &amp;lt;-2&amp;gt; - &amp;lt;2&amp;gt; = &amp;lt;-3&amp;gt; - &amp;lt;-4&amp;gt; - &amp;lt;-2&amp;gt;$.&lt;/p&gt;
+&lt;p&gt;Of course, it is not clear what the symbols mean or what we can do with them, as shown by the cyan equal sign. However, the idea is clear: roots uniquely identify polynomials, and vice versa.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Here comes the interesting part: this is also possible for rational functions on elliptic curves! First, let&amp;rsquo;s define what those square bracket symbols are:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A &lt;em&gt;divisor&lt;/em&gt; $D$ on an elliptic curve $E$ is a (finite) &lt;strong&gt;formal sum&lt;/strong&gt; of points on $E$, written as $$D = \sum a_i&amp;lt;P_i&amp;gt;.$$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Here, the term formal sum means that the points are merely symbols with no actual meaning - most importantly, they do not add like elliptic curve points.&lt;/p&gt;
+&lt;p&gt;For example, suppose we use the Elliptic Curve $E(\mathbb{F}_{17}) : y^2 = x^3 + x - 3$. It is easy to verify that $P = (1, 4), (5, 5), (10, 15)$ and $\infty$ are all on the curve. Some examples of divisors on $E$ are $&amp;lt;1, 4&amp;gt; + 2&amp;lt;5, 5&amp;gt; - 3&amp;lt;10, 15&amp;gt;$, $&amp;lt;1, 4&amp;gt; + &amp;lt;\infty&amp;gt;$ and $-&amp;lt;5, 5&amp;gt; + 5&amp;lt;1, 4&amp;gt; - &amp;lt;10, 15&amp;gt;$. Notice that we actually have $(1, 4) + (5, 5) = (10, 15)$ on the curve. However, that does not imply $&amp;lt;1, 4&amp;gt; + &amp;lt;5, 5&amp;gt; = &amp;lt;10, 15&amp;gt;$. Remember, they are merely symbols, not points on the curve.&lt;/p&gt;
+&lt;p&gt;Now similar to what we did to complex polynomials, let&amp;rsquo;s see the usage of divisors:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Define the &lt;strong&gt;function field&lt;/strong&gt; of $E : y^2 = x^3 + a_4x + a_6$ to be
+$$K(E) := K[x](y) / (y^2 - x^3 - a_4x - a_6).$$
+Let $P = (a, b)$ be a point on $E$ not of order $2$ and $g(x, y)\in K(E)$ be a function.&lt;/p&gt;
+&lt;p&gt;If $\exists h\in K(E), k\in\mathbb{Z}^{\times}$ such that $g(x, y) = (x - a)^k h(x, y)$ and $h(a, b)\neq 0, \infty$, we write $\text{ord}_P(g) = k$ and say&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$g$ has a &lt;strong&gt;zero&lt;/strong&gt; at $P$ of multiplicity $k$ if $k &amp;gt; 0$, and&lt;/li&gt;
+&lt;li&gt;$g$ has a &lt;strong&gt;pole&lt;/strong&gt; at $P$ of multiplicity $-k$ if $k &amp;lt; 0$.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally, we write $g {\ \color{cyan} =\ } \sum_{P\in E} \text{ord}_P(g)[P]$.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The notation is quite a bit to digest. Intuitively speaking, $K(E)$ is the set of all polynomial functions in terms of $x$ and $y$, where we replace all $y^2$ with $x^3 - a_4x - a_6$. This has a natural consequence that all elements $g(x, y)\in K(E)$ can be written as $A(x) + B(x)y$, where $A, B$ are single-variable polynomials in $x$.&lt;/p&gt;
+&lt;p&gt;TODO: examples of divisor notations, some results about $&amp;lt;\prod (x - a_j)^{c_j}&amp;gt;$ and constructing function with given divisor.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>[Crypto/Warmup] pppp (117 pts, 70 solves)</title>
         <link>https://grhkm21.github.io/posts/seccon-pppp/</link>
         <pubDate>Sun, 12 Dec 2021 05:59:38 +0000</pubDate>

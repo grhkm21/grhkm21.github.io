@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Sun, 12 Dec 2021 05:59:38 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 22 Dec 2021 02:28:45 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ECC Notes 1 - Divisors</title>
+      <link>https://grhkm21.github.io/posts/ecc-notes-1/</link>
+      <pubDate>Wed, 22 Dec 2021 02:28:45 +0000</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/ecc-notes-1/</guid>
+      <description>Introduction After my absolute failure attempt to solve zipfel in &amp;lt;hxp CTF 2021&amp;gt;(https://ctftime.org/event/1447), I have decided for the $n^{\text{th}}$ time to seriously learn Elliptic Curve Cryptography. This time, hopefully I will finally understand pairings, supersingular curves and isogeny crypto. After all, I want to be a cool guy too!
+Isogeny crypto is what cool guys do these days: walking around graphs of supersingular elliptic curves.
+I&amp;#39;ve written yet another brief introduction to it, using the many great resources available.</description>
+    </item>
+    
     <item>
       <title>[Crypto/Warmup] pppp (117 pts, 70 solves)</title>
       <link>https://grhkm21.github.io/posts/seccon-pppp/</link>
