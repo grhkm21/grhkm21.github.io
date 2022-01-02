@@ -10,7 +10,8 @@
 <meta property='og:url' content='https://grhkm21.github.io/posts/ecc-notes-1/'>
 <meta property='og:site_name' content='Blog by grhkm21'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2021-12-22T02:28:45&#43;00:00'/><meta property='article:modified_time' content='2021-12-22T02:28:45&#43;00:00'/>
-<meta name="twitter:title" content="ECC Notes 1 - Divisors">
+<meta name="twitter:site" content="@grhkm2023">
+    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="ECC Notes 1 - Divisors">
 <meta name="twitter:description" content="Attempting to learn Elliptic Curve Cryptography.">
     </head>
     <body class="
@@ -44,7 +45,7 @@
     
 ">
     
-        <div id="article-toolbar"><base href="https://grhkm21.github.io/">z
+        <div id="article-toolbar">
             <a href="https://grhkm21.github.io/" class="back-home">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
@@ -113,48 +114,54 @@
 
     <section class="article-content">
     <h2 id="introduction">Introduction</h2>
-<p>After my absolute failure attempt to solve <code>zipfel</code> in &lt;hxp CTF 2021&gt;(<a class="link" href="https://ctftime.org/event/1447%29,"  target="_blank" rel="noopener"
+<p>After my absolute failure attempt to solve <code>zipfel</code> in \langlehxp CTF 2021\rangle(<a class="link" href="https://ctftime.org/event/1447%29,"  target="_blank" rel="noopener"
     >https://ctftime.org/event/1447),</a> I have decided for the $n^{\text{th}}$ time to seriously learn Elliptic Curve Cryptography. This time, hopefully I will finally understand pairings, supersingular curves and isogeny crypto. After all, I want to be a <em>cool guy</em> too!</p>
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Isogeny crypto is what cool guys do these days: walking around graphs of supersingular elliptic curves.<br><br>I&#39;ve written yet another brief introduction to it, using the many great resources available.<br><br>We talk about SIDH and CSIDH, but for now we will only use the second.</p>&mdash; Riccardo Zanotto (@Drago1729) <a href="https://twitter.com/Drago1729/status/1473004035129159685?ref_src=twsrc%5Etfw">December 20, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>\langleblockquote class=&ldquo;twitter-tweet&rdquo;\rangle\langlep lang=&ldquo;en&rdquo; dir=&ldquo;ltr&rdquo;\rangleIsogeny crypto is what cool guys do these days: walking around graphs of supersingular elliptic curves.\langlebr\rangle\langlebr\rangleI've written yet another brief introduction to it, using the many great resources available.\langlebr\rangle\langlebr\rangleWe talk about SIDH and CSIDH, but for now we will only use the second.\langle/p\rangle— Riccardo Zanotto (@Drago1729) \langlea href=&ldquo;<a class="link" href="https://twitter.com/Drago1729/status/1473004035129159685?ref_src=twsrc%5Etfw%22"  target="_blank" rel="noopener"
+    >https://twitter.com/Drago1729/status/1473004035129159685?ref_src=twsrc%5Etfw"</a>\rangleDecember 20, 2021\langle/a\rangle\langle/blockquote\rangle \langlescript async src=&ldquo;<a class="link" href="https://platform.twitter.com/widgets.js%22"  target="_blank" rel="noopener"
+    >https://platform.twitter.com/widgets.js"</a> charset=&ldquo;utf-8&rdquo;\rangle\langle/script\rangle</p>
 <h2 id="disclaimer">Disclaimer</h2>
 <p>This blog post is NOT a tutorial starting from scratch. The main purpose of the blog will be to organize the material into a format I can easily review and learn, based on MY previous knowledge on the topic. I cannot even guarantee the material to be 100% correct, though I constantly cross-reference my understanding with multiple resources. Despite this, I still hope the blog provides a starting point, especially if you know nothing apart from <code>P.tate_pairing(Q, P.order(), 1)</code>. If you have any questions, feel free to reach out to me on grhkm#4429!</p>
 <h2 id="elliptic-curves">Elliptic Curves</h2>
 <p>Let $K = \mathbb{F}_q = \mathbb{F}_{p^k}$ be a finite field and $E(K)$ be the elliptic curve</p>
-<p>$$E: \{(x, y)\in K^2\cup\{\infty\}\ |\ y^2 + a_1xy + a_3y = x^3 + a_2x^2 + a_4x + a_6\}$$</p>
+<p>$$E: \{(x, y)\in K^2 |\ y^2 + a_1xy + a_3y = x^3 + a_2x^2 + a_4x + a_6\} \cup \{\infty\}$$</p>
 <p>with $a_i\in K$, also known as the <em>long Weierstra$\beta$ equation</em>. As it turns out, when $p\geq 5$ the curve can be transformed into a short Weierstra$\beta$ form, where all coefficients vanish except $a_4$ and $a_6$. That is, we shall work with curves</p>
 <p>$$E: y^2 = x^3 + a_4x + a_6.$$</p>
 <p>In Sage, the class is straightforward to understand and use:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">a_4</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">a_6</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span> <span class="c1"># = 14 mod 17</span>
-<span class="n">sage</span><span class="p">:</span> <span class="n">E</span> <span class="o">=</span> <span class="n">EllipticCurve</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="o">&lt;</span><span class="n">a_4</span><span class="p">,</span> <span class="n">a_6</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">E</span> <span class="o">=</span> <span class="n">EllipticCurve</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> \<span class="n">langlea_4</span><span class="p">,</span> <span class="n">a_6</span>\<span class="n">rangle</span><span class="p">)</span>
 <span class="n">sage</span><span class="p">:</span> <span class="n">E</span>
 <span class="n">Elliptic</span> <span class="n">Curve</span> <span class="n">defined</span> <span class="n">by</span> <span class="n">y</span><span class="o">^</span><span class="mi">2</span> <span class="o">=</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">14</span> <span class="n">over</span> <span class="n">Finite</span> <span class="n">Field</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">17</span>
 </code></pre></div><h2 id="divisors">Divisors</h2>
-<p>Back when we were in high school, we learned that for the field $\mathbb{C}$, we are able to factor every non-constant polynomial into a product of linear factors. $$P = \sum a_ix^i = a_0\prod (x - \alpha_i)^{\beta_i}.$$ Moreover, we were taught that polynomials are uniquely determined by its roots <em>up to a constant factor</em>. For example, the polynomial $f(x) = x^4 - 9x^3 + 29x^2 - 39x + 18 = (x - 1)(x - 2)(x - 3)^2$ can be stored as its roots $v = \{1, 2, 3, 3\}$. If we assign each number $x$ a special symbol $<x>$, we can then write $f(x) {\ \color{cyan} =\ } &lt;1&gt; + &lt;2&gt; + 2&lt;3&gt;$. More generally, we can write every polynomial $$P = \sum a_ix^i {\ \color{cyan} =\ } \sum \alpha_i&lt;r_i&gt;.$$</p>
-<p>Furthermore, there is a natural extension of this notation for rational functions $\frac{P(x)}{Q(x)}$ - we simply subtract the special symbols of $Q(x)$ from $P(x)$. For example, $\frac{x^2 - x + 6}{x^3 + 4x^2 - 4x - 16} {\ \color{cyan} =\ } \frac{(x + 3)(x - 2)}{(x + 4)(x + 2)(x - 2)} = &lt;-3&gt; + &lt;2&gt; - &lt;-4&gt; - &lt;-2&gt; - &lt;2&gt; = &lt;-3&gt; - &lt;-4&gt; - &lt;-2&gt;$.</p>
+<p>Back when we were in high school, we learned that for the field $\mathbb{C}$, we are able to factor every non-constant polynomial into a product of linear factors. $$P = \sum a_ix^i = a_0\prod (x - \alpha_i)^{\beta_i}.$$ Moreover, we were taught that polynomials are uniquely determined by its roots <em>up to a constant factor</em>. For example, the polynomial $f(x) = x^4 - 9x^3 + 29x^2 - 39x + 18 = (x - 1)(x - 2)(x - 3)^2$ can be stored as its roots $v = \{1, 2, 3, 3\}$. If we assign each number $x$ a special symbol $\langlex\rangle$, we can then write $f(x) {\ \color{cyan} =\ } \langle1\rangle + \langle2\rangle + 2\langle3\rangle$. More generally, we can write every polynomial $$P = \sum a_ix^i {\ \color{cyan} =\ } \sum \alpha_i\langler_i\rangle.$$</p>
+<p>Furthermore, there is a natural extension of this notation for rational functions $\frac{P(x)}{Q(x)}$ - we simply subtract the special symbols of $Q(x)$ from $P(x)$. For example, $\frac{x^2 - x + 6}{x^3 + 4x^2 - 4x - 16} {\ \color{cyan} =\ } \frac{(x + 3)(x - 2)}{(x + 4)(x + 2)(x - 2)} = \langle-3\rangle + \langle2\rangle - \langle-4\rangle - \langle-2\rangle - \langle2\rangle = \langle-3\rangle - \langle-4\rangle - \langle-2\rangle$.</p>
 <p>Of course, it is not clear what the symbols mean or what we can do with them, as shown by the cyan equal sign. However, the idea is clear: roots uniquely identify polynomials, and vice versa.</p>
 <hr>
 <p>Here comes the interesting part: this is also possible for rational functions on elliptic curves! First, let&rsquo;s define what those square bracket symbols are:</p>
-<blockquote>
-<p>A <em>divisor</em> $D$ on an elliptic curve $E$ is a (finite) <strong>formal sum</strong> of points on $E$, written as $$D = \sum a_i&lt;P_i&gt;.$$</p>
-</blockquote>
+<p>\rangle A <em>divisor</em> $D$ on an elliptic curve $E$ is a (finite) <strong>formal sum</strong> of points on $E$, written as $$D = \sum a_i\langleP_i\rangle.$$</p>
 <p>Here, the term formal sum means that the points are merely symbols with no actual meaning - most importantly, they do not add like elliptic curve points.</p>
-<p>For example, suppose we use the Elliptic Curve $E(\mathbb{F}_{17}) : y^2 = x^3 + x - 3$. It is easy to verify that $P = (1, 4), (5, 5), (10, 15)$ and $\infty$ are all on the curve. Some examples of divisors on $E$ are $&lt;1, 4&gt; + 2&lt;5, 5&gt; - 3&lt;10, 15&gt;$, $&lt;1, 4&gt; + &lt;\infty&gt;$ and $-&lt;5, 5&gt; + 5&lt;1, 4&gt; - &lt;10, 15&gt;$. Notice that we actually have $(1, 4) + (5, 5) = (10, 15)$ on the curve. However, that does not imply $&lt;1, 4&gt; + &lt;5, 5&gt; = &lt;10, 15&gt;$. Remember, they are merely symbols, not points on the curve.</p>
+<p>For example, suppose we use the Elliptic Curve $E(\mathbb{F}_{17}) : y^2 = x^3 + x - 3$. It is easy to verify that $P = (1, 4), (5, 5), (10, 15)$ and $\infty$ are all on the curve. Some examples of divisors on $E$ are</p>
+<ul>
+<li>$\langle1, 4\rangle + 2\langle5, 5\rangle - 3\langle10, 15\rangle$</li>
+<li>$\langle1, 4\rangle + \langle\infty\rangle$</li>
+<li>$-\langle5, 5\rangle + 5\langle1, 4\rangle - \langle10, 15\rangle$.</li>
+</ul>
+<p>Notice that we actually have $(1, 4) + (5, 5) = (10, 15)$ on the curve. However, that does not imply $\langle1, 4\rangle + \langle5, 5\rangle = \langle10, 15\rangle$. Remember, they are merely symbols, not points on the curve.</p>
 <p>Now similar to what we did to complex polynomials, let&rsquo;s see the usage of divisors:</p>
 <blockquote>
-<p>Define the <strong>function field</strong> of $E : y^2 = x^3 + a_4x + a_6$ to be
-$$K(E) := K[x](y) / (y^2 - x^3 - a_4x - a_6).$$
-Let $P = (a, b)$ be a point on $E$ not of order $2$ and $g(x, y)\in K(E)$ be a function.</p>
-<p>If $\exists h\in K(E), k\in\mathbb{Z}^{\times}$ such that $g(x, y) = (x - a)^k h(x, y)$ and $h(a, b)\neq 0, \infty$, we write $\text{ord}_P(g) = k$ and say</p>
+<p>Denote the set of <strong>polynomials</strong> of $E : y^2 = x^3 + a_4x + a_6$ by
+$$K[E] := K[x, y] / (y^2 - x^3 - a_4x - a_6).$$
+Let $P = (a, b)$ be a point on $E$ not of order $2$ and $g(x, y)\in K[E]$ be a function.</p>
+<p>If $\exists h\in K[E], k\in\mathbb{Z}^{\times}$ such that $g(x, y) = (x - a)^k h(x, y)$ and $h(a, b)\neq 0, \infty$, we write $\text{ord}_P(g) = k$ and say</p>
 <ul>
 <li>$g$ has a <strong>zero</strong> at $P$ of multiplicity $k$ if $k &gt; 0$, and</li>
 <li>$g$ has a <strong>pole</strong> at $P$ of multiplicity $-k$ if $k &lt; 0$.</li>
 </ul>
 <p>Finally, we write $g {\ \color{cyan} =\ } \sum_{P\in E} \text{ord}_P(g)[P]$.</p>
 </blockquote>
-<p>The notation is quite a bit to digest. Intuitively speaking, $K(E)$ is the set of all polynomial functions in terms of $x$ and $y$, where we replace all $y^2$ with $x^3 - a_4x - a_6$. This has a natural consequence that all elements $g(x, y)\in K(E)$ can be written as $A(x) + B(x)y$, where $A, B$ are single-variable polynomials in $x$.</p>
-<p>TODO: examples of divisor notations, some results about $&lt;\prod (x - a_j)^{c_j}&gt;$ and constructing function with given divisor.</p>
+<p>The notation is quite a bit to digest. Intuitively speaking, $K[E]$ is the set of all polynomial functions in terms of $x$ and $y$, where we replace all $y^2$ with $x^3 - a_4x - a_6$. This has a natural consequence that all elements $g(x, y)\in K[E]$ can be written as $A(x) + B(x)y$, where $A, B$ are single-variable polynomials in $x$.</p>
+<p>TODO: examples of divisor notations, some results about $\langle\prod (x - a_j)^{c_j}\rangle$ and constructing function with given divisor.</p>
 
 </section>
 
@@ -207,7 +214,7 @@ Let $P = (a, b)$ be a point on $E$ not of order $2$ and $g(x, y)\in K(E)$ be a f
         
             2020 - 
         
-        2021 Blog by grhkm21
+        2022 Blog by grhkm21
     </section>
     
     <section class="powerby">

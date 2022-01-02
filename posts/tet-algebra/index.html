@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Recovering a curve from a point addition group law defined on it.'><title>[Crypto] Algebra (831 pts, 14 solves)</title>
+
+<link rel='canonical' href='https://grhkm21.github.io/posts/tet-algebra/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='[Crypto] Algebra (831 pts, 14 solves)'>
+<meta property='og:description' content='Recovering a curve from a point addition group law defined on it.'>
+<meta property='og:url' content='https://grhkm21.github.io/posts/tet-algebra/'>
+<meta property='og:site_name' content='Blog by grhkm21'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2022-01-02T22:53:00&#43;00:00'/><meta property='article:modified_time' content='2022-01-02T22:53:00&#43;00:00'/>
+<meta name="twitter:site" content="@grhkm2023">
+    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="[Crypto] Algebra (831 pts, 14 solves)">
+<meta name="twitter:description" content="Recovering a curve from a point addition group law defined on it.">
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://grhkm21.github.io/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/posts/tet-algebra/">[Crypto] Algebra (831 pts, 14 solves)</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Recovering a curve from a point addition group law defined on it.
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 02, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h2 id="introduction">Introduction</h2>
+<p>Our team Black Bauhinia participated in the TetCTF 2022 which spans two days.  <code>Algebra</code> is the hardest Crypto challenge in the CTF. Mystiz and I (grhkm) together spent around 7 hours on this challenge.</p>
+<h2 id="problem-statement">Problem Statement</h2>
+<blockquote>
+<p>Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!</p>
+<p>Service: nc 139.162.61.222 13374</p>
+<p>Binary: <a class="link" href="https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing"  target="_blank" rel="noopener"
+    >https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing</a></p>
+</blockquote>
+<h2 id="solution-outline">Solution Outline</h2>
+<p>$x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.monic()}\right]\ \text{mod}\ (x^2 + 2Cx + 1)$, where $[x^0]P(x)$ is the constant term of the polynomial after reduction. From this, we obtain $c = f^m(a)f^n(b) = [x^0]\left[\big(x - a^{-1}\big)^m\big(x - b^{-1}\big)^n\right]\ \text{mod}\ (x^2 + 2Cx + 1)$. Realizing that $\sqrt{C^2 - 1}$ exists in $\mathbb{F}_p$, we apply CRT to get two relations $(r_i - a^{-1})^m(r_i - b^{-1})^n \equiv k(r_i - c^{-1})$ where $k$ is the linear coefficient. Dividing the two equations gives the desired <code>fa</code>, <code>fb</code> and <code>fc</code>.</p>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>There was quite a lot of luck, random guessing, looking through irrelevant papers and ranting on Twitter. Instead of showing all that, I will first go through the final solution with proof. I will then show how one might approach future similar problems i.e. how one could have solved the problem semi-systematically. That way, everyone learns instead of seeing an IMO-inequality-like solution!</p>
+<h2 id="problem-objective">Problem Objective</h2>
+<p>We are given a single script <code>algebra.py</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="mi">50824208494214622675210983238467313009841434758617398532295301998201478298245257311594403096942992643947506323356996857413985105233960391416730079425326309</span>
+<span class="n">C</span> <span class="o">=</span> <span class="mi">803799120267736039902689148809657862377959420031713529926996228010552678684828445053154435325462622566051992510975853540073683867248578880146673607388918</span>
+
+<span class="n">INFINITY</span> <span class="o">=</span> <span class="s2">&#34;INF&#34;</span>
+
+<span class="k">def</span> <span class="nf">op</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="c1"># Returns (x1 + x2 + 2 * C * x1 * x2) / (1 - x1 * x2)</span>
+    <span class="k">if</span> <span class="n">x2</span> <span class="o">==</span> <span class="n">INFINITY</span><span class="p">:</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x1</span>
+    <span class="k">if</span> <span class="n">x1</span> <span class="o">==</span> <span class="n">INFINITY</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x2</span> <span class="o">==</span> <span class="n">INFINITY</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">C</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span>
+        <span class="k">elif</span> <span class="n">x2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">INFINITY</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">x2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span>
+    <span class="k">if</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">INFINITY</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span>
+
+<span class="k">def</span> <span class="nf">repeated_op</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="k">assert</span> <span class="n">op</span><span class="p">(</span><span class="n">op</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">),</span> <span class="mi">2022</span><span class="p">)</span> <span class="o">==</span> <span class="n">op</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="n">op</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">))</span> <span class="c1"># associativity</span>
+<span class="k">assert</span> <span class="n">repeated_op</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="c1"># order p - 1</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">repeated_op</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">repeated_op</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># give me f(a), f(b), f(c)</span>
+<span class="n">fa</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">fb</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">fc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">fa</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="nb">pow</span><span class="p">(</span><span class="n">fb</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">fc</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">pow</span><span class="p">(</span><span class="n">fa</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="n">fb</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span> <span class="o">==</span> <span class="n">fc</span><span class="p">:</span>
+    <span class="n">flag</span> <span class="o">=</span> <span class="s1">&#39;FLAG&#39;</span> <span class="o">*</span> <span class="mi">30</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">flag</span><span class="p">[:</span><span class="nb">pow</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">p</span><span class="p">)])</span>
+</code></pre></div><ul>
+<li>A prime modulo $p$ and a <s>random</s> constant $C$ is fixed.</li>
+<li>A binary operator is defined as $f(x_1, x_2) := \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2}$</li>
+<li>$f^n(x_1) = f(f^{n - 1}(x_1), x_1)$</li>
+<li>Four secret variables are then chosen randomly
+<ul>
+<li>$a, b\in [0, p - 1]$</li>
+<li>$m, n\in [0, p - 2]$</li>
+</ul>
+</li>
+<li>We are given the values of $a, b$ and $f(f^m(a), f^n(b))$</li>
+<li>We have to provide three non-trivial values $f_a$, $f_b$ and $f_c$ such that $f_a^mf_b^n\equiv f_c\ \text{mod}\ p$.</li>
+</ul>
+<p>Interestingly, the assertion statements hint at that the operator is associative and has order $p - 1$.</p>
+<h2 id="solution">Solution</h2>
+<p>From this point onwards, all arithmetic are under $\mathbb{F}_p[x]$. First, investigating the operator in Sage shows the operator is indeed associative and commutative.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">sage</span><span class="p">:</span> <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">var</span><span class="p">(</span><span class="s1">&#39;x, y, z&#39;</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)))</span><span class="o">.</span><span class="n">full_simplify</span><span class="p">()</span>
+<span class="mi">0</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">full_simplify</span><span class="p">()</span>
+<span class="mi">0</span>
+</code></pre></div><p>This means that the notation $f(x_1, x_2, \ldots, x_n)$ is not ambiguous.</p>
+<p>Here, there is a theorem that seems to be unknown to the public. It is called the Mystiz God Theorem, which states that</p>
+<blockquote>
+<p>Given the correct time of the day (preferably 3-6am), a hard enough problem and that no one is observing him on Discord, Mystiz will turn into a God and solve every Crypto challenge.</p>
+</blockquote>
+<p>Here, the theorem&rsquo;s conditions are satisfied, and he proposed the following. Consider the polynomial $\big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big)\ \text{mod}\ (x^2 + 2Cx + 1)$. We have</p>
+<p>$$\begin{align*} \big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big) &amp;\equiv x^2 - \frac{x_1 + x_2}{x_1x_2}x + \frac{1}{x_1x_2} \\ &amp;\equiv -(2C + \frac{x_1 + x_2}{x_1x_2}\big)x + \big(\frac{1}{x_1x_2} - 1\big) \\ &amp;\equiv -\frac{x_1 + x_2 + 2Cx_1x_2}{x_1x_2}x + \frac{1 - x_1x_2}{x_1x_2} \\ &amp;\equiv -\frac{x_1 + x_2 + 2Cx_1x_2}{x_1x_2}\big(x - \frac{1 - x_1x_2}{x_1 + x_2 + 2Cx_1x_2}\big) \\ &amp;\equiv k(x - \frac{1}{f(x_1, x_2)})\ \text{for some}\ k. \end{align*}$$</p>
+<p><figure 
+	>
+	<a href="/images/tet-algebra-mystiz-god.png" >
+		<img src="/images/tet-algebra-mystiz-god.png"
+			
+			
+			
+			loading="lazy"
+			alt="Mystiz God Theorem Use Case">
+	</a>
+	
+	<figcaption>Mystiz God Theorem Use Case</figcaption>
+	
+</figure></p>
+<p>From this, it is easy to see that</p>
+<p>$$\big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big)\big(x - \frac{1}{x_3}\big)\equiv k_1\big(x - \frac{1}{f(x_1, x_2)}\big)\big(x - \frac{1}{x_3}\big)\equiv k_2\big(x - \frac{1}{f(x_1, x_2, x_3)}\big)\ \text{mod}\ (x^2 + 2Cx + 1)$$</p>
+<p>$$\prod_{i=1}^n \big(x - \frac{1}{x_i}\big)\equiv k\big(x - \frac{1}{f(x_1, x_2, \ldots, x_n)})\ \text{mod}\ (x^2 + 2Cx + 1)$$</p>
+<p>In particular, we have</p>
+<p>$$k\Big(x - \frac{1}{f(f^m(a), f^n(b))}\Big)\equiv\Big(x - \frac{1}{a}\Big)^m\Big(x - \frac{1}{b}\Big)^n\ \text{mod}\ (x^2 + 2Cx + 1)$$</p>
+<p>From this it is hard to get any information, as $k$ is a complicated expression dependent on $a$ and $b$. Instead, we hope to factor $x^2 + 2Cx + 1$ into linear factors. Going back to Sage, we see that this is indeed possible:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">50824208494214622675210983238467313009841434758617398532295301998201478298245257311594403096942992643947506323356996857413985105233960391416730079425326309</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">803799120267736039902689148809657862377959420031713529926996228010552678684828445053154435325462622566051992510975853540073683867248578880146673607388918</span>
+<span class="n">sage</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">PolynomialRing</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gen</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sage</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">factor</span><span class="p">()</span>
+<span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">22028781193260601150215372852743243072534054369034373355826026755141703972839605913903845829450804221333172177888152011390316978343515577032315535048272856</span><span class="p">)</span>
+<span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">30403025541489493604800988683343385662063299229646452236323267699080879682775308287796866138143113667746438130490796553103815494624941972144707891591831289</span><span class="p">)</span>
+</code></pre></div><p>Denote the two roots be $r_1$ and $r_2$ i.e. $x^2 + 2Cx + 1\equiv(x - r_1)(x - r_2)\ \text{mod}\ p$. Taking the modulo relation above modulo each of the linear factors, we have</p>
+<p>$$k\Big(x - \frac{1}{c}\Big)\equiv\Big(x - \frac{1}{a}\Big)^m\Big(x - \frac{1}{b}\Big)^n\ \text{mod}\ (x - r_i).$$</p>
+<p>Notice that $x - a\equiv r - a\ \text{mod}\ (x - r)$. Therefore, we have</p>
+<p>$$\begin{cases}k\Big(r_1 - \frac{1}{c}\Big)\equiv\Big(r_1 - \frac{1}{a}\Big)^m\Big(r_1 - \frac{1}{b}\Big)^n\ \text{mod}\ (x - r_1) \\ k\Big(r_2 - \frac{1}{c}\Big)\equiv\Big(r_2 - \frac{1}{a}\Big)^m\Big(x - \frac{1}{b}\Big)^n\ \text{mod}\ (x - r_2).\end{cases}$$</p>
+<p>Since all the terms are numbers i.e. constant polynomials, we can conveniently get rid of the modulo&rsquo;s:</p>
+<p>$$\begin{cases}k\Big(r_1 - \frac{1}{c}\Big)\equiv\Big(r_1 - \frac{1}{a}\Big)^m\Big(r_1 - \frac{1}{b}\Big)^n\ \text{mod}\ p \\ k\Big(r_2 - \frac{1}{c}\Big)\equiv\Big(r_2 - \frac{1}{a}\Big)^m\Big(r_2 - \frac{1}{b}\Big)^n\ \text{mod}\ p.\end{cases}$$</p>
+<p>Finally, recall that our goal is to</p>
+<blockquote>
+<p>Provide three non-trivial values $f_a$, $f_b$ and $f_c$ such that $f_a^mf_b^n\equiv f_c\ \text{mod}\ p$.</p>
+</blockquote>
+<p>Do you see it?</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>Dividing the equations, we get</p>
+<p>$$\frac{cr_1 - 1}{cr_2 - 1}\equiv\Big(\frac{ar_1 - 1}{ar_2 - 1}\Big)^m\Big(\frac{br_1 - 1}{br_2 - 1}\Big)^n\ \text{mod}\ p$$</p>
+<p>That&rsquo;s it!</p>
+<p><figure 
+	>
+	<a href="/images/tet-algebra-flag.png" >
+		<img src="/images/tet-algebra-flag.png"
+			
+			
+			
+			loading="lazy"
+			alt="I was so excited and I SHOULD BE">
+	</a>
+	
+	<figcaption>I was so excited and I SHOULD BE</figcaption>
+	
+</figure></p>
+<h2 id="code">Code</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;139.162.61.222&#39;</span><span class="p">,</span> <span class="mi">13374</span><span class="p">)</span>
+<span class="n">INFINITY</span> <span class="o">=</span> <span class="s2">&#34;INF&#34;</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">50824208494214622675210983238467313009841434758617398532295301998201478298245257311594403096942992643947506323356996857413985105233960391416730079425326309</span>
+<span class="n">C</span> <span class="o">=</span> <span class="mi">803799120267736039902689148809657862377959420031713529926996228010552678684828445053154435325462622566051992510975853540073683867248578880146673607388918</span>
+
+<span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">PolynomialRing</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gen</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">r1</span><span class="p">,</span> <span class="n">r2</span> <span class="o">=</span> <span class="p">[</span><span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">)(</span><span class="o">-</span><span class="n">u</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">factor</span><span class="p">(</span><span class="n">a</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">PolynomialRing</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">quotient</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">gen</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="n">ZZ</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Mod</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">Mod</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">Mod</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">((</span><span class="n">a</span> <span class="o">*</span> <span class="n">r1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">r2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">((</span><span class="n">b</span> <span class="o">*</span> <span class="n">r1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">r2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">((</span><span class="n">c</span> <span class="o">*</span> <span class="n">r1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">r2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</code></pre></div><p>Flag: <code>TetCTF{1_just_l0v3_th3_un1t_c1rcl3_s0_much}</code></p>
+<hr>
+<h2 id="motivation">Motivation</h2>
+<p>If you are seeing this, you are really early! I only started writing this blog an hour ago and my English writing is pretty slow, so I need a bit more time to finish it. Meanwhile, enjoy this handwritten draft of what I am going to write below!</p>
+<p><figure 
+	>
+	<a href="/images/tet-algebra-motivation.jpg" >
+		<img src="/images/tet-algebra-motivation.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="Handwriting bad">
+	</a>
+	
+	<figcaption>Handwriting bad</figcaption>
+	
+</figure></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 Blog by grhkm21
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#problem-statement">Problem Statement</a></li>
+    <li><a href="#solution-outline">Solution Outline</a></li>
+    <li><a href="#disclaimer">Disclaimer</a></li>
+    <li><a href="#problem-objective">Problem Objective</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#code">Code</a></li>
+    <li><a href="#motivation">Motivation</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

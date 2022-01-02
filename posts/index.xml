@@ -6,16 +6,42 @@
     <description>Recent content in Posts on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Wed, 22 Dec 2021 02:28:45 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Jan 2022 22:53:00 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Crypto] Algebra (831 pts, 14 solves)</title>
+      <link>https://grhkm21.github.io/posts/tet-algebra/</link>
+      <pubDate>Sun, 02 Jan 2022 22:53:00 +0000</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/tet-algebra/</guid>
+      <description>Introduction Our team Black Bauhinia participated in the TetCTF 2022 which spans two days. Algebra is the hardest Crypto challenge in the CTF. Mystiz and I (grhkm) together spent around 7 hours on this challenge.
+Problem Statement  Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!
+Service: nc 139.162.61.222 13374
+Binary: https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing
+ Solution Outline $x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.</description>
+    </item>
+    
+    <item>
+      <title>[Crypto] Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</title>
+      <link>https://grhkm21.github.io/posts/tet-shares/</link>
+      <pubDate>Sun, 02 Jan 2022 20:00:00 +0000</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/tet-shares/</guid>
+      <description>Introduction Our team Black Bauhinia participated in the TetCTF 2022 which spans two days. Shares is an interesting two-part challenge. Mystiz and I (grhkm) spent around 10 hours in total on this challenge, $4$ on the first part and $6$ on the second.
+Problem Statements  Description: Yet another secret sharing scheme.
+Service: nc 139.162.61.222 13371
+Binary: https://drive.google.com/file/d/1sP0zKSKoF6TJZ-gtaUf7rv4dQ-bGr-cp/view?usp=sharing
+  Description: A new feature is added. Check it out!
+Service: nc 139.</description>
+    </item>
+    
     <item>
       <title>ECC Notes 1 - Divisors</title>
       <link>https://grhkm21.github.io/posts/ecc-notes-1/</link>
       <pubDate>Wed, 22 Dec 2021 02:28:45 +0000</pubDate>
       
       <guid>https://grhkm21.github.io/posts/ecc-notes-1/</guid>
-      <description>Introduction After my absolute failure attempt to solve zipfel in &amp;lt;hxp CTF 2021&amp;gt;(https://ctftime.org/event/1447), I have decided for the $n^{\text{th}}$ time to seriously learn Elliptic Curve Cryptography. This time, hopefully I will finally understand pairings, supersingular curves and isogeny crypto. After all, I want to be a cool guy too!
-Isogeny crypto is what cool guys do these days: walking around graphs of supersingular elliptic curves.
-I&amp;#39;ve written yet another brief introduction to it, using the many great resources available.</description>
+      <description>Introduction After my absolute failure attempt to solve zipfel in \langlehxp CTF 2021\rangle(https://ctftime.org/event/1447), I have decided for the $n^{\text{th}}$ time to seriously learn Elliptic Curve Cryptography. This time, hopefully I will finally understand pairings, supersingular curves and isogeny crypto. After all, I want to be a cool guy too!
+\langleblockquote class=&amp;ldquo;twitter-tweet&amp;rdquo;\rangle\langlep lang=&amp;ldquo;en&amp;rdquo; dir=&amp;ldquo;ltr&amp;rdquo;\rangleIsogeny crypto is what cool guys do these days: walking around graphs of supersingular elliptic curves.\langlebr\rangle\langlebr\rangleI&#39;ve written yet another brief introduction to it, using the many great resources available.</description>
     </item>
     
     <item>

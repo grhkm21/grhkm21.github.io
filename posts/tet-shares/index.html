@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Recovering information within what appears to be randomness.'><title>[Crypto] Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</title>
+
+<link rel='canonical' href='https://grhkm21.github.io/posts/tet-shares/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='[Crypto] Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)'>
+<meta property='og:description' content='Recovering information within what appears to be randomness.'>
+<meta property='og:url' content='https://grhkm21.github.io/posts/tet-shares/'>
+<meta property='og:site_name' content='Blog by grhkm21'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2022-01-02T20:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-01-02T20:00:00&#43;00:00'/>
+<meta name="twitter:site" content="@grhkm2023">
+    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="[Crypto] Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)">
+<meta name="twitter:description" content="Recovering information within what appears to be randomness.">
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://grhkm21.github.io/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/posts/tet-shares/">[Crypto] Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Recovering information within what appears to be randomness.
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 02, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    11 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h2 id="introduction">Introduction</h2>
+<p>Our team Black Bauhinia participated in the TetCTF 2022 which spans two days.  <code>Shares</code> is an interesting two-part challenge. Mystiz and I (grhkm) spent around 10 hours in total on this challenge, $4$ on the first part and $6$ on the second.</p>
+<h2 id="problem-statements">Problem Statements</h2>
+<blockquote>
+<p>Description: Yet another secret sharing scheme.</p>
+<p>Service: nc 139.162.61.222 13371</p>
+<p>Binary: <a class="link" href="https://drive.google.com/file/d/1sP0zKSKoF6TJZ-gtaUf7rv4dQ-bGr-cp/view?usp=sharing"  target="_blank" rel="noopener"
+    >https://drive.google.com/file/d/1sP0zKSKoF6TJZ-gtaUf7rv4dQ-bGr-cp/view?usp=sharing</a></p>
+</blockquote>
+<blockquote>
+<p>Description: A new feature is added. Check it out!</p>
+<p>Service: nc 139.162.61.222 13372</p>
+<p>Binary: <a class="link" href="https://drive.google.com/file/d/1FfHxyt3mWFGzxK6DwkZ3wZ77IICYjaJA/view?usp=sharing"  target="_blank" rel="noopener"
+    >https://drive.google.com/file/d/1FfHxyt3mWFGzxK6DwkZ3wZ77IICYjaJA/view?usp=sharing</a></p>
+</blockquote>
+<h2 id="v1---solution-outline">V1 - Solution Outline</h2>
+<p>There is a high probability that there are more than $16$ singular matrices out of $2022$ matrices over $\mathbb{F}_{37}$. We are then able to eliminate the random variables and obtain more than $16$ equations on the password, which is then solved easily.</p>
+<h3 id="problem-objective">Problem Objective</h3>
+<p>We are given a single script <code>shares.py</code>. I have prettified the code below:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="mi">37</span>
+<span class="n">ALLOWED_CHARS</span> <span class="o">=</span> <span class="s2">&#34;abcdefghijklmnopqrstuvwxyz0123456789_&#34;</span>
+<span class="n">INT_TO_CHAR</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">CHAR_TO_INT</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_i</span><span class="p">,</span> <span class="n">_c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ALLOWED_CHARS</span><span class="p">):</span>
+    <span class="n">INT_TO_CHAR</span><span class="p">[</span><span class="n">_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_c</span>
+    <span class="n">CHAR_TO_INT</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">_i</span>
+
+<span class="k">def</span> <span class="nf">get_shares</span><span class="p">(</span><span class="n">pwd</span><span class="p">):</span>
+    <span class="n">ffes</span> <span class="o">=</span> <span class="p">[</span><span class="n">CHAR_TO_INT</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pwd</span><span class="p">]</span>
+    <span class="n">ffes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pwd</span><span class="p">))]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ffes</span><span class="p">))]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="n">ffes</span><span class="p">)])</span> <span class="o">%</span> <span class="n">P</span>
+        <span class="n">coeffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">INT_TO_CHAR</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">coeffs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">pwd</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">INT_TO_CHAR</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">36</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2022</span><span class="p">):</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="n">pwd</span><span class="p">:</span>
+        <span class="n">FLAG</span> <span class="o">=</span> <span class="s1">&#39;FLAG&#39;</span> <span class="o">*</span> <span class="mi">30</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">FLAG</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">get_shares</span><span class="p">(</span><span class="n">pwd</span><span class="p">))</span>
+</code></pre></div><p>From here onwards, <code>char</code> stands for one of the $37$ allowed characters, while <code>int</code> stands for an integer between $0$ and $36$.</p>
+<p>As we see in the source, a $16$-<code>char</code> password $c_1c_2\ldots c_{16}$ is fixed at the start and our goal is to guess it. We can also obtain $2021$ shares <code>get_shares(pwd)</code>, where:</p>
+<ul>
+<li>Appends $16$ random <code>char</code>s to the password
+<ul>
+<li>$P = c_1c_2\ldots c_{16}r_1r_2\ldots r_{16}$</li>
+</ul>
+</li>
+<li>Generates $16$ random 32-<code>int</code> vectors $v_1, v_2, \ldots, v_{16}\in(\mathbb{Z} / 37\mathbb{Z})^{32}$</li>
+<li>returns $\{v_1, v_2, \ldots, v_{16}\}$ as well as $\{s_i\}_i = \{v_i\cdot P\}_i$.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variable</th>
+<th style="text-align:center">Known?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$c_i \in [0, 36]$</td>
+<td style="text-align:center">Unknown, our goal</td>
+</tr>
+<tr>
+<td style="text-align:center">$r_i \in [0, 36]$</td>
+<td style="text-align:center">Unknown</td>
+</tr>
+<tr>
+<td style="text-align:center">$v_i = \{v_{i, 1}, v_{i, 2}, \ldots, v_{i, 16}\}$</td>
+<td style="text-align:center">Known</td>
+</tr>
+<tr>
+<td style="text-align:center">$s_i = \sum_{1\leq j\leq 16} v_{ij}P_j$</td>
+<td style="text-align:center">Known</td>
+</tr>
+</tbody>
+</table>
+<h3 id="beginpmatrix-a--lot--of--equations-endpmatrix">$\begin{pmatrix} A &amp; lot &amp; of &amp; equations \end{pmatrix}$</h3>
+<p>Consider a single share of <code>get_shares(pwd)</code>. Notice that although we have $16$ equations and $32$ unknowns, $16$ of the unknowns are just the password, which we will treat as constants for now. (It will be apparent why soon). However, even after this improvement we still have $16$ equations and $16$ unknowns, just short of what&rsquo;s needed to eliminate the random <code>char</code>s.</p>
+<p>$$\begin{cases}v_{1, 17}r_1 + v_{1, 18}r_2 + \cdots + v_{1, 32}r_{16} &amp;= s_1 - \big(v_{1, 1}c_1 + v_{1, 2}c_2 + \cdots + v_{1, 16}c_{16}\big) \\ v_{2, 17}r_1 + v_{2, 18}r_2 + \cdots + v_{2, 32}r_{16} &amp;= s_2 - \big(v_{1, 1}c_1 + v_{2, 2}c_2 + \cdots + v_{2, 16}c_{16}\big) \\ \cdots &amp;= \cdots \\ v_{16, 17}r_1 + v_{16, 18}r_2 + \cdots + v_{16, 32}r_{16} &amp;= s_{16} - \big(v_{16, 1}c_1 + v_{16, 2}c_2 + \cdots + v_{16, 16}c_{16}\big)\end{cases}$$</p>
+<p>As always, let&rsquo;s write it in matrix form and see what insights we get:</p>
+<p>$$\begin{pmatrix} v_{1, 17} &amp; v_{1, 18} &amp; \cdots &amp; v_{1, 32} \\ v_{2, 17} &amp; v_{2, 18} &amp; \cdots &amp; v_{2, 32} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ v_{16, 17} &amp; v_{16, 18} &amp; \cdots &amp; v_{16, 32} \end{pmatrix}\begin{pmatrix} r_1 \\ r_2 \\ \vdots \\ r_{16}\end{pmatrix} = \begin{pmatrix}s_1 - \big(v_{1, 1}c_1 + v_{1, 2}c_2 + \cdots + v_{1, 16}c_{16}\big) \\ s_1 - \big(v_{2, 1}c_1 + v_{2, 2}c_2 + \cdots + v_{2, 16}c_{16}\big) \\ \vdots \\ s_1 - \big(v_{16, 1}c_1 + v_{16, 2}c_2 + \cdots + v_{16, 16}c_{16}\big)\end{pmatrix}$$</p>
+<p>Well, since every $r_i$ and $c_j$ are unknown, there is no way we can do anything! The random <code>char</code>s are unknown and the right-hand side is unknown&hellip;</p>
+<h3 id="discord-spam-ft-random-ideas-that-worked">Discord Spam ft. Random Ideas (that worked?)</h3>
+<p><figure 
+	>
+	<a href="/images/tet-shares-realization.png" >
+		<img src="/images/tet-shares-realization.png"
+			
+			
+			
+			loading="lazy"
+			alt="I realized the trick&hellip; ft. Duality of grhkm">
+	</a>
+	
+	<figcaption>I realized the trick… ft. Duality of grhkm</figcaption>
+	
+</figure></p>
+<p><strong>WAIT!</strong> Consider the $v_{i, j}$ matrix in Row Echelon Form (i.e. after Gaussian Elimination). If the matrix does not have full-rank, there must be a zero row $(0, 0, \ldots, 0)$, which when multiplied by (the transformed) $\vec{r}$ must also give $0$.</p>
+<p>For clarity, I will provide an example. Consider the system of equations</p>
+<p>$$\begin{cases} x + y + z &amp;= 3 + t \\ 2x + y + z &amp;= 5 - 2t \\ 3x + y + z &amp;= 4 + t\end{cases},$$</p>
+<p>where $t$ is a variable like the right-hand side vector above. Transforming this into a Reduced Echelon Form:</p>
+<p>$$\begin{cases} x + y + z &amp;= 3 + t \\ y + z &amp;= 1 + 4t \\ 2y + 2z &amp;= 5 + 2t\end{cases}$$</p>
+<p>$$\begin{cases} x + y + z &amp;= 3 + t \\ y + z &amp;= 1 + 4t \\ 0 &amp;= 3 - 6t\end{cases}$$</p>
+<p>As we can see, since the original matrix $\begin{pmatrix}1 &amp; 1 &amp; 1 \\ 2 &amp; 1 &amp; 1 \\ 3 &amp; 1 &amp; 1\end{pmatrix}$ is singular, we have a zero-row at the end, giving us $3 - 6t = 0$, which is useful!!</p>
+<p>But what&rsquo;s the chance of this happening? Well, we know that $k$ linearly independent vectors span a space of $p^k$ vectors, so by a simple exclusion we have that</p>
+<p>$$P(\det V = 0) = 1 - \prod_{k=0}^n (1 - p^{k - n}) = 0.02775\ldots\approx\frac{1}{36}$$</p>
+<p>So on average, we can expect $56$ singular matrices, giving us a lot of equations in $c_1, c_2, \cdots, c_{16}$! Afterwards, it is easy to solve for $c_i$, recover the password, submit and get the flag.</p>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="c1"># local runs in 30 seconds, remote takes 20 minutes</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;139.162.61.222&#39;</span><span class="p">,</span> <span class="mi">13371</span><span class="p">)</span>
+<span class="c1"># r = process(&#39;pypy3 shares.py&#39;, shell=True)</span>
+
+<span class="n">P</span> <span class="o">=</span> <span class="mi">37</span>
+<span class="n">CHARS</span> <span class="o">=</span> <span class="s2">&#34;abcdefghijklmnopqrstuvwxyz0123456789_1&#34;</span>
+<span class="k">def</span> <span class="nf">INT_TO_CHAR</span><span class="p">(</span><span class="n">i</span><span class="p">):</span> <span class="k">return</span> <span class="n">CHARS</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">CHAR_TO_INT</span><span class="p">(</span><span class="n">c</span><span class="p">):</span> <span class="k">return</span> <span class="n">CHARS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+
+<span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="n">tq</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">))</span>
+<span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tq</span><span class="p">:</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">())</span>
+    <span class="c1"># Notice I keep the c1, c2, ..., c16 coefficients as vectors</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="p">[[</span><span class="n">CHAR_TO_INT</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">r</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rv</span><span class="p">]</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">P</span><span class="p">),</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">16</span><span class="p">:</span><span class="mi">32</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rv</span><span class="p">])</span>
+    <span class="c1"># Singular?</span>
+    <span class="k">if</span> <span class="n">cs</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">:</span>
+        <span class="n">rs</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">P</span><span class="p">),</span> <span class="p">[</span><span class="n">r</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rv</span><span class="p">])</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">augment</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span><span class="o">.</span><span class="n">rref</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># first 16 columns are the v_{i, j}</span>
+        <span class="n">lhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">16</span><span class="p">:</span><span class="mi">32</span><span class="p">])</span>
+        <span class="n">rhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">32</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">16</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">tq</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="c1"># solve for password</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">P</span><span class="p">),</span> <span class="n">lhs</span><span class="p">)</span><span class="o">.</span><span class="n">solve_right</span><span class="p">(</span><span class="n">vector</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">P</span><span class="p">),</span> <span class="n">rhs</span><span class="p">))</span>
+<span class="n">pwd</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">INT_TO_CHAR</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">ref</span><span class="p">))</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">pwd</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Flag:&#34;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+</code></pre></div><p>Flag: <code>TetCTF{m0r3_sh4r3s____m0r3_m0r3_m0r3_fun}</code></p>
+<hr>
+<h2 id="v2---solution-outline">V2 - Solution Outline</h2>
+<p>We split the coefficients' matrix into two halves and perform a Meet In The Middle (MITM) attack.</p>
+<h3 id="problem-objective-1">Problem Objective</h3>
+<p>We are given an updated script <code>shares_v2.py</code>. Here is the cleaned up code:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">get_shares_v2</span><span class="p">(</span><span class="n">pwd</span><span class="p">):</span>
+    <span class="n">ffes</span> <span class="o">=</span> <span class="p">[</span><span class="n">CHAR_TO_INT</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pwd</span><span class="p">]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ffes</span><span class="p">))]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="n">ffes</span><span class="p">)])</span> <span class="o">%</span> <span class="mi">37</span>
+        <span class="n">coeffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">INT_TO_CHAR</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">coeffs</span><span class="p">))</span>
+    
+    <span class="n">master</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">128</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">shares</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">share</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">CHAR_TO_INT</span><span class="p">(</span><span class="n">share</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">master</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="mi">18</span><span class="p">)</span> <span class="o">%</span> <span class="mi">37</span>
+        <span class="n">shares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">share</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">INT_TO_CHAR</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">shares</span>
+
+<span class="n">pwd</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">INT_TO_CHAR</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">36</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2022</span><span class="p">):</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="n">pwd</span><span class="p">:</span>
+        <span class="n">FLAG</span> <span class="o">=</span> <span class="s1">&#39;FLAG&#39;</span> <span class="o">*</span> <span class="mi">30</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">FLAG</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">get_shares_v2</span><span class="p">(</span><span class="n">pwd</span><span class="p">))</span>
+</code></pre></div><p>The structure of the code is similar to v1. However, there are three key differences:</p>
+<ul>
+<li>The random bits have been removed and password is now 32-<code>char</code>
+<ul>
+<li>$P = c_1c_2\ldots c_{32}$</li>
+</ul>
+</li>
+<li>$32$ dot products are given instead of $16$. However,</li>
+<li>Each dot product $s_i$ has a chance of having $18$ added to it
+<ul>
+<li>In other words, random bits $r_1, r_2, \ldots, r_{32} \in \{0, 1\}$ are chosen, and each $s_i \mapsto s_i + 18r_i$</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variable</th>
+<th style="text-align:center">Known?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$c_i \in [0, 36]$</td>
+<td style="text-align:center">Unknown, our goal</td>
+</tr>
+<tr>
+<td style="text-align:center">$v_i = \{v_{i, 1}, v_{i, 2}, \ldots, v_{i, 16}\}$</td>
+<td style="text-align:center">Known</td>
+</tr>
+<tr>
+<td style="text-align:center">$r_i \in \{0, 1\}$</td>
+<td style="text-align:center">Unknown</td>
+</tr>
+<tr>
+<td style="text-align:center">$s_i = 18r_i + \sum_{1\leq j\leq 16} v_{ij}P_j$</td>
+<td style="text-align:center">Known</td>
+</tr>
+</tbody>
+</table>
+<p>Writing the $32$ relations together as matrices and vectors, we have</p>
+<p>$$\vec{s} = 18\vec{r} + VP^T.$$</p>
+<p>The first thing that comes to mind is to bruteforce all possible $\vec{r}$, since there are only $2^{32}$ possibilities. We can then compute $P^T = V^{-1}(\vec{s} - 18\vec{r})$. However, how do we know if such password is correct? Well, notice that if we are given two shares:</p>
+<p>$$\begin{cases}\vec{s_1} = 18\vec{r_1} + V_1P^T \\ \vec{s_2} = 18\vec{r_2} + V_2P^T \end{cases}$$</p>
+<p>We can then substitute a particular guess into the second share to get</p>
+<p>$$\vec{s_2} = 18\vec{r_2} + V_2V_1^{-1}(\vec{s_1} - 18\vec{r_1})$$</p>
+<p>$$\fbox{$18\vec{r_2} = \vec{s_2} - V_2V_1^{-1}(\vec{s_1} - 18\vec{r_1})$}$$</p>
+<p>Where every component on the right-hand side is known (and $\vec{r_1}$ is our guess). We can then simply check if each entry in the vector is either $0$ or $18$.</p>
+<p>However, this is too slow! A rough estimate of the operations show that brute forcing has a time complexity of $O(2^n\cdot n^3)\approx 1.4\cdot 10^{14}$. Since we wasted all our money last year on other CTFs, we are unable to rent expensive $100$-core machines, and $1.4\text{e}14$ operations will definitely take too long.</p>
+<h3 id="mystiz-is-the-best-">Mystiz Is The Best 😘</h3>
+<p><figure 
+	>
+	<a href="/images/tet-shares-mystiz-rescue.png" >
+		<img src="/images/tet-shares-mystiz-rescue.png"
+			
+			
+			
+			loading="lazy"
+			alt="However, here comes Mystiz to the rescue!">
+	</a>
+	
+	<figcaption>However, here comes Mystiz to the rescue!</figcaption>
+	
+</figure></p>
+<p>It is clear that we have to do some kind of Meet In the Middle (MITM) attack. However, it is not immediately clear how to divide into sub-problems. Let&rsquo;s take a look at matrix multiplication for inspirations:</p>
+<p>$$\begin{align*} &amp;\begin{pmatrix}v_{1, 1} &amp; v_{1, 2} &amp; \cdots &amp; v_{1, 2n} \\ v_{2, 1} &amp; v_{2, 2} &amp; \cdots &amp; v_{2, 2n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ v_{2n, 1} &amp; v_{2n, 2} &amp; \cdots &amp; v_{2n, 2n}\end{pmatrix}\begin{pmatrix}r_1 \\ r_2 \\ \vdots \\ r_{2n}\end{pmatrix} \\ &amp;= \begin{pmatrix}r_1v_{1, 1} + r_2v_{1, 2} + \cdots + r_{2n}v_{1, 2n} \\ r_2v_{2, 1} + r_2v_{2, 2} + \cdots + r_{2n}v_{2, 2n} \\ \vdots \\ r_1v_{2n, 1} + r_2v_{2n, 2} + \cdots + r_{2n}v_{2n, 2n}\end{pmatrix} \\ &amp;= \begin{pmatrix}(r_1v_{1, 1} + \cdots + r_{n}v_{1, n}) + (r_{n + 1}v_{1, n + 1} + \cdots + r_{2n}v_{1, n}) \\ (r_1v_{2, 1} + \cdots + r_{n}v_{2, n}) + (r_{n + 1}v_{2, n + 1} + \cdots + r_{2n}v_{2, 2n}) \\ \vdots \\ (r_1v_{2n, 1} + \cdots + r_{n}v_{2n, n}) + (r_{n + 1}v_{2n, n + 1} + \cdots + r_{2n}v_{n, n})\end{pmatrix} \\ &amp;= \begin{pmatrix}v_{1, 1} &amp; v_{1, 2} &amp; \cdots &amp; v_{1, n} \\ v_{2, 1} &amp; v_{2, 2} &amp; \cdots &amp; v_{2, n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ v_{2n, 1} &amp; v_{2n, 2} &amp; \cdots &amp; v_{2n, n}\end{pmatrix}\begin{pmatrix}r_1 \\ r_2 \\ \vdots \\ r_n\end{pmatrix} + \begin{pmatrix}v_{1, n + 1} &amp; v_{1, n + 2} &amp; \cdots &amp; v_{1, 2n} \\ v_{2, n + 1} &amp; v_{2, n + 2} &amp; \cdots &amp; v_{2, 2n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ v_{2n, n + 1} &amp; v_{2n, n + 2} &amp; \cdots &amp; v_{2n, 2n}\end{pmatrix}\begin{pmatrix}r_{n + 1} \\ r_{n + 2} \\ \vdots \\ r_{2n}\end{pmatrix}\end{align*}$$</p>
+<p>That&rsquo;s an unnecessarily convoluted mess! Simply put, we have</p>
+<p>$$[M_L | M_R]\left(\frac{v_L}{v_R}\right) = M_Lv_L + M_Rv_R$$</p>
+<p>Where each term on the right-hand side is half the size of the original matrix and vector. Looking back at our equation:</p>
+<p>$$\vec{s_2} - V_2V_1^{-1}(\vec{s_1} - 18\vec{r_1}) = 18\vec{r_2}$$</p>
+<p>Let&rsquo;s denote $M := V_2V_1^{-1}$. Then using the same notation as above, we have:</p>
+<p>$$M_L(\vec{s_{1L}} - 18\vec{r_{1L}}) + M_R(\vec{s_{1R}} - 18\vec{r_{1R}}) = \vec{s_2} - 18\vec{r_2}.$$</p>
+<p>Now the strategy is clear:</p>
+<ul>
+<li>Iterate through all $r_{1L}$</li>
+<li>Store the $\vec{v} = M_L(\vec{s_{1L} - 18\vec{r_{1L}}})$ into a data structure.</li>
+<li>For each $\vec{r_{1R}}$,
+<ul>
+<li>Test if there is a $\vec{v}$ such that $M_R(\vec{s_{1R}} - 18\vec{r_{1R}}) = \vec{s_2} - \vec{v} - [0 / 18]$ by testing each row sequentially.</li>
+<li>If such vector is found, simply combine to get $\vec{r_1}$ and recover $P^T = V_1^{-1}(\vec{s_1} - 18\vec{r_1})$.</li>
+</ul>
+</li>
+</ul>
+<h3 id="code-1">Code</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="mi">37</span>
+<span class="n">CHARS</span> <span class="o">=</span> <span class="s2">&#34;abcdefghijklmnopqrstuvwxyz0123456789_&#34;</span>
+<span class="k">def</span> <span class="nf">INT_TO_CHAR</span><span class="p">(</span><span class="n">i</span><span class="p">):</span> <span class="k">return</span> <span class="n">CHARS</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">CHAR_TO_INT</span><span class="p">(</span><span class="n">c</span><span class="p">):</span> <span class="k">return</span> <span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">)(</span><span class="n">CHARS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;139.162.61.222&#39;</span><span class="p">,</span> <span class="mi">13372</span><span class="p">)</span>
+<span class="c1"># r = process(&#39;pypy3 shares-v2.py&#39;, shell=True)</span>
+
+<span class="c1"># parse data</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;a</span><span class="se">\n</span><span class="s1">a&#39;</span><span class="p">)</span>
+<span class="n">V1</span><span class="p">,</span> <span class="n">V2</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">row1</span><span class="p">,</span> <span class="n">row2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">readline</span><span class="p">()),</span> <span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">readline</span><span class="p">())):</span>
+    <span class="n">row1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">CHAR_TO_INT</span><span class="p">,</span> <span class="n">row1</span><span class="p">))</span>
+    <span class="n">row2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">CHAR_TO_INT</span><span class="p">,</span> <span class="n">row2</span><span class="p">))</span>
+    <span class="n">V1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row1</span><span class="p">[:</span><span class="mi">32</span><span class="p">])</span>
+    <span class="n">V2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row2</span><span class="p">[:</span><span class="mi">32</span><span class="p">])</span>
+    <span class="n">s1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row1</span><span class="p">[</span><span class="mi">32</span><span class="p">])</span>
+    <span class="n">s2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row2</span><span class="p">[</span><span class="mi">32</span><span class="p">])</span>
+
+<span class="n">V1</span><span class="p">,</span> <span class="n">V2</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">V1</span><span class="p">),</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">V2</span><span class="p">)</span>
+<span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="n">vector</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">V1</span><span class="o">.</span><span class="n">determinant</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">V2</span><span class="o">.</span><span class="n">determinant</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">V2</span> <span class="o">*</span> <span class="n">V1</span> <span class="o">**</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">sl</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span> <span class="n">s1</span><span class="p">[</span><span class="mi">16</span><span class="p">:]</span>
+<span class="n">Ml</span><span class="p">,</span> <span class="n">Mr</span> <span class="o">=</span> <span class="n">M</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">16</span><span class="p">],</span> <span class="n">M</span><span class="p">[:,</span> <span class="mi">16</span><span class="p">:]</span>
+<span class="c1"># cand[row][k] stores candidates of r where (s1l - 18 * r)[row] = k</span>
+<span class="n">cand</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">37</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">)]</span>
+
+<span class="n">tq</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="p">[[</span><span class="n">Mod</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">Mod</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">)]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)]),</span> <span class="n">total</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">r1l</span> <span class="ow">in</span> <span class="n">tq</span><span class="p">:</span>
+    <span class="c1"># prevent timeout</span>
+    <span class="k">if</span> <span class="n">tq</span><span class="o">.</span><span class="n">n</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+    <span class="c1"># storing candidates into correct slot</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">Ml</span> <span class="o">*</span> <span class="p">(</span><span class="n">sl</span> <span class="o">-</span> <span class="mi">18</span> <span class="o">*</span> <span class="n">vector</span><span class="p">(</span><span class="n">r1l</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+        <span class="n">cand</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">r1l</span><span class="p">)</span>
+
+<span class="c1"># precompute for queries pre[row][k] -&gt; (s1l - 18 * r)[row] = k OR k - 18</span>
+<span class="n">pre</span> <span class="o">=</span> <span class="p">[[</span><span class="n">cand</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">|</span> <span class="n">cand</span><span class="p">[</span><span class="n">i</span><span class="p">][(</span><span class="n">j</span> <span class="o">-</span> <span class="mi">18</span><span class="p">)</span> <span class="o">%</span> <span class="mi">37</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">37</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">)]</span>
+
+<span class="n">tq</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="p">[[</span><span class="n">Mod</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">Mod</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">)]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)]),</span> <span class="n">total</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">r1r</span> <span class="ow">in</span> <span class="n">tq</span><span class="p">:</span>
+    <span class="c1"># prevent timeout</span>
+    <span class="k">if</span> <span class="n">tq</span><span class="o">.</span><span class="n">n</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+    <span class="c1"># testing if v exists</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">s2</span> <span class="o">-</span> <span class="n">Mr</span> <span class="o">*</span> <span class="p">(</span><span class="n">sr</span> <span class="o">-</span> <span class="mi">18</span> <span class="o">*</span> <span class="n">vector</span><span class="p">(</span><span class="n">r1r</span><span class="p">))</span>
+    <span class="n">cand</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="c1"># testing rows sequentially</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">pre</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">cand</span> <span class="o">|=</span> <span class="n">st</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cand</span> <span class="o">&amp;=</span> <span class="n">st</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cand</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># recover password</span>
+        <span class="n">r1l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cand</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">r1l</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">r1r</span><span class="p">))</span>
+        <span class="n">rvec</span> <span class="o">=</span> <span class="n">V1</span> <span class="o">**</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">vector</span><span class="p">(</span><span class="n">GF</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">s1</span> <span class="o">-</span> <span class="mi">18</span> <span class="o">*</span> <span class="n">r1</span><span class="p">)</span>
+        <span class="n">rstr</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">INT_TO_CHAR</span><span class="p">,</span> <span class="n">rvec</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Sending password = </span><span class="si">{</span><span class="n">rstr</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">rstr</span><span class="p">)</span>
+        <span class="c1"># hopefully no timeout?</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Flag:&#34;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="k">break</span>
+
+</code></pre></div><p>Flag: <code>TetCTF{but_th3_m4st3r_sh4re_1s_n0t_fun_4t_4ll}</code></p>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>Thank you to the organizers of TetCTF for providing such great challenges. I don&rsquo;t understand why V2 has so few solves though&hellip;</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 Blog by grhkm21
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#problem-statements">Problem Statements</a></li>
+    <li><a href="#v1---solution-outline">V1 - Solution Outline</a>
+      <ol>
+        <li><a href="#problem-objective">Problem Objective</a></li>
+        <li><a href="#beginpmatrix-a--lot--of--equations-endpmatrix">$\begin{pmatrix} A &amp; lot &amp; of &amp; equations \end{pmatrix}$</a></li>
+        <li><a href="#discord-spam-ft-random-ideas-that-worked">Discord Spam ft. Random Ideas (that worked?)</a></li>
+        <li><a href="#code">Code</a></li>
+      </ol>
+    </li>
+    <li><a href="#v2---solution-outline">V2 - Solution Outline</a>
+      <ol>
+        <li><a href="#problem-objective-1">Problem Objective</a></li>
+        <li><a href="#mystiz-is-the-best-">Mystiz Is The Best 😘</a></li>
+        <li><a href="#code-1">Code</a></li>
+      </ol>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
