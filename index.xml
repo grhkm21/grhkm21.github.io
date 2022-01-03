@@ -187,21 +187,36 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Flag: &lt;code&gt;TetCTF{1_just_l0v3_th3_un1t_c1rcl3_s0_much}&lt;/code&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;If you are seeing this, you are really early! I only started writing this blog an hour ago and my English writing is pretty slow, so I need a bit more time to finish it. Meanwhile, enjoy this handwritten draft of what I am going to write below!&lt;/p&gt;
+&lt;p&gt;Here, I suggest a path one might try to systematically find the form above. The thing I like about this approach is most of this is doable on paper apart from the final computations.&lt;/p&gt;
+&lt;p&gt;Firstly, it is natural to look for fixed point of the function. So let&amp;rsquo;s try!&lt;/p&gt;
+&lt;p&gt;$$\begin{align*} f(x_1, x_2) &amp;amp;= x_1 \\\\ \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2} &amp;amp;= x_1 \\\\ x_1 + x_2 + 2Cx_1x_2 &amp;amp;= x_1 - x_1^2x_2 \\\\ x_2(x_1^2 + 2Cx_1 + 1) &amp;amp;= 0 \end{align*}$$&lt;/p&gt;
+&lt;p&gt;We see that the roots of $x_1^2 + 2Cx_1 + 1$ are fixed points. In Sage, we can further verify that $\left(\frac{C^2 - 1}{p}\right) = 1$, so such $x_1$ indeed exists. It is then natural to guess that the group structure might be a quotient ring, and that $M(x) = x^2 + 2Cx + 1$ is the quotient.&lt;/p&gt;
 &lt;p&gt;&lt;figure 
 	&gt;
-	&lt;a href=&#34;https://grhkm21.github.io/images/tet-algebra-motivation.jpg&#34; &gt;
-		&lt;img src=&#34;https://grhkm21.github.io/images/tet-algebra-motivation.jpg&#34;
+	&lt;a href=&#34;https://grhkm21.github.io/images/tet-algebra-quotient-ring.png&#34; &gt;
+		&lt;img src=&#34;https://grhkm21.github.io/images/tet-algebra-quotient-ring.png&#34;
 			
 			
 			
 			loading=&#34;lazy&#34;
-			alt=&#34;Handwriting bad&#34;&gt;
+			alt=&#34;Mystiz suggesting ideas&#34;&gt;
 	&lt;/a&gt;
 	
-	&lt;figcaption&gt;Handwriting bad&lt;/figcaption&gt;
+	&lt;figcaption&gt;Mystiz suggesting ideas&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;Now let&amp;rsquo;s take a look at $f(x_1, x_2)$ under our assumption.&lt;/p&gt;
+&lt;p&gt;$$\begin{align*} f(x_1, x_2) &amp;amp;\equiv \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2} \\\ f(x_1, x_2) &amp;amp;\equiv \frac{\frac{1}{x_1} + \frac{1}{x_2} + 2C}{\frac{1}{x_1x_2} - 1} \\\ \left(\frac{1}{x_1x_2} - 1\right)f(x_1, x_2) &amp;amp;\equiv \frac{1}{x_1} + \frac{1}{x_2} + 2C \\\ (x_1x_2 - 1)f(\frac{1}{x_1}, \frac{1}{x_2}) &amp;amp;\equiv x_1 + x_2 + 2C \end{align*}$$&lt;/p&gt;
+&lt;p&gt;We see that the right-hand side has a linear expression $x_1 + x_2 + 2C$, while the left-hand side has a product $x_1x_2 - 1$. We might think of something like Vieta&amp;rsquo;s Theorem or quadratic factoring in general, where we have $(x - x_1)(x - x_2) = x^2 - (x_1 + x_2)x + x_1x_2$. What if we try it here?&lt;/p&gt;
+&lt;p&gt;$$\begin{align*} (x_1 + x_2 + 2C)x &amp;amp;\equiv x_1x_2 - 1 &amp;amp;\mod{x^2 + 2Cx + 1} \\\ (x^2 + 2Cx + 1) - (x_1 + x_2 + 2C)x + (x_1x_2 - 1) &amp;amp;\equiv 0 &amp;amp;\mod{x^2 + 2Cx + 1} \\\ x^2 - (x_1 + x_2)x + x_1x_2 &amp;amp;\equiv 0 &amp;amp;\mod{x^2 + 2Cx + 1} \\\ (x - x_1)(x - x_2) &amp;amp;\equiv 0 &amp;amp;\mod{x^2 + 2Cx + 1}\end{align*}$$&lt;/p&gt;
+&lt;p&gt;Woah! So to summarise, we have that&lt;/p&gt;
+&lt;p&gt;$$(x_1 + x_2 + 2C)x - (x_1x_2 - 1)\equiv (x - x_1)(x - x_2)\mod{x^2 + 2Cx + 1}.$$&lt;/p&gt;
+&lt;p&gt;Now notice that the root of the linear term is $\frac{x_1x_2 - 1}{x_1 + x_2 + 2C} = \frac{1}{f(\frac{1}{x_1}, \frac{1}{x_2})}$, which means we can write the relation as&lt;/p&gt;
+&lt;p&gt;$$\begin{align*}k(x - \frac{1}{f(\frac{1}{x_1}, \frac{1}{x_2})}) &amp;amp;\equiv (x - x_1)(x - x_2) &amp;amp;\mod{x^2 + 2Cx + 1} \\\ k(x - \frac{1}{f(x_1, x_2)}) &amp;amp;\equiv (x - \frac{1}{x_1})(x - \frac{1}{x_2}) &amp;amp;\mod{x^2 + 2Cx + 1}\end{align*}$$&lt;/p&gt;
+&lt;p&gt;The rest is the same as above.&lt;/p&gt;
+&lt;h2 id=&#34;other-methods&#34;&gt;Other Methods&lt;/h2&gt;
+&lt;p&gt;In our Solution section, we found that $x\mapsto\frac{r_1x - 1}{r_2x - 1}$ is the desired map. Indeed, many people (such as @hellman and @rkm0959) solved it by letting the map be $x\mapsto\frac{ax + b}{cx + d}$ and looked at fixed points / points with small orders.&lt;/p&gt;
+&lt;p&gt;In the CTF, Mystiz and I also found that when we change $C$ to random values, sometimes points have order $p^2 - 1$ instead of $p - 1$. This is now explained, as $x^2 + 2Cx + 1 = (x - r_1)(x - r_2)$ have roots in $\mathbb{F}_{p^2}$ when $C^2 - 1$ is a quadratic non-residue, which the field has order $p^2 - 1$.&lt;/p&gt;
 </description>
         </item>
         <item>

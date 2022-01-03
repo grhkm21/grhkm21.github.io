@@ -103,7 +103,7 @@
 
 
                 <time class="article-time--reading">
-                    6 minute read
+                    9 minute read
                 </time>
             </div>
         
@@ -288,21 +288,36 @@
 </code></pre></div><p>Flag: <code>TetCTF{1_just_l0v3_th3_un1t_c1rcl3_s0_much}</code></p>
 <hr>
 <h2 id="motivation">Motivation</h2>
-<p>If you are seeing this, you are really early! I only started writing this blog an hour ago and my English writing is pretty slow, so I need a bit more time to finish it. Meanwhile, enjoy this handwritten draft of what I am going to write below!</p>
+<p>Here, I suggest a path one might try to systematically find the form above. The thing I like about this approach is most of this is doable on paper apart from the final computations.</p>
+<p>Firstly, it is natural to look for fixed point of the function. So let&rsquo;s try!</p>
+<p>$$\begin{align*} f(x_1, x_2) &amp;= x_1 \\\\ \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2} &amp;= x_1 \\\\ x_1 + x_2 + 2Cx_1x_2 &amp;= x_1 - x_1^2x_2 \\\\ x_2(x_1^2 + 2Cx_1 + 1) &amp;= 0 \end{align*}$$</p>
+<p>We see that the roots of $x_1^2 + 2Cx_1 + 1$ are fixed points. In Sage, we can further verify that $\left(\frac{C^2 - 1}{p}\right) = 1$, so such $x_1$ indeed exists. It is then natural to guess that the group structure might be a quotient ring, and that $M(x) = x^2 + 2Cx + 1$ is the quotient.</p>
 <p><figure 
 	>
-	<a href="/images/tet-algebra-motivation.jpg" >
-		<img src="/images/tet-algebra-motivation.jpg"
+	<a href="/images/tet-algebra-quotient-ring.png" >
+		<img src="/images/tet-algebra-quotient-ring.png"
 			
 			
 			
 			loading="lazy"
-			alt="Handwriting bad">
+			alt="Mystiz suggesting ideas">
 	</a>
 	
-	<figcaption>Handwriting bad</figcaption>
+	<figcaption>Mystiz suggesting ideas</figcaption>
 	
 </figure></p>
+<p>Now let&rsquo;s take a look at $f(x_1, x_2)$ under our assumption.</p>
+<p>$$\begin{align*} f(x_1, x_2) &amp;\equiv \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2} \\\ f(x_1, x_2) &amp;\equiv \frac{\frac{1}{x_1} + \frac{1}{x_2} + 2C}{\frac{1}{x_1x_2} - 1} \\\ \left(\frac{1}{x_1x_2} - 1\right)f(x_1, x_2) &amp;\equiv \frac{1}{x_1} + \frac{1}{x_2} + 2C \\\ (x_1x_2 - 1)f(\frac{1}{x_1}, \frac{1}{x_2}) &amp;\equiv x_1 + x_2 + 2C \end{align*}$$</p>
+<p>We see that the right-hand side has a linear expression $x_1 + x_2 + 2C$, while the left-hand side has a product $x_1x_2 - 1$. We might think of something like Vieta&rsquo;s Theorem or quadratic factoring in general, where we have $(x - x_1)(x - x_2) = x^2 - (x_1 + x_2)x + x_1x_2$. What if we try it here?</p>
+<p>$$\begin{align*} (x_1 + x_2 + 2C)x &amp;\equiv x_1x_2 - 1 &amp;\mod{x^2 + 2Cx + 1} \\\ (x^2 + 2Cx + 1) - (x_1 + x_2 + 2C)x + (x_1x_2 - 1) &amp;\equiv 0 &amp;\mod{x^2 + 2Cx + 1} \\\ x^2 - (x_1 + x_2)x + x_1x_2 &amp;\equiv 0 &amp;\mod{x^2 + 2Cx + 1} \\\ (x - x_1)(x - x_2) &amp;\equiv 0 &amp;\mod{x^2 + 2Cx + 1}\end{align*}$$</p>
+<p>Woah! So to summarise, we have that</p>
+<p>$$(x_1 + x_2 + 2C)x - (x_1x_2 - 1)\equiv (x - x_1)(x - x_2)\mod{x^2 + 2Cx + 1}.$$</p>
+<p>Now notice that the root of the linear term is $\frac{x_1x_2 - 1}{x_1 + x_2 + 2C} = \frac{1}{f(\frac{1}{x_1}, \frac{1}{x_2})}$, which means we can write the relation as</p>
+<p>$$\begin{align*}k(x - \frac{1}{f(\frac{1}{x_1}, \frac{1}{x_2})}) &amp;\equiv (x - x_1)(x - x_2) &amp;\mod{x^2 + 2Cx + 1} \\\ k(x - \frac{1}{f(x_1, x_2)}) &amp;\equiv (x - \frac{1}{x_1})(x - \frac{1}{x_2}) &amp;\mod{x^2 + 2Cx + 1}\end{align*}$$</p>
+<p>The rest is the same as above.</p>
+<h2 id="other-methods">Other Methods</h2>
+<p>In our Solution section, we found that $x\mapsto\frac{r_1x - 1}{r_2x - 1}$ is the desired map. Indeed, many people (such as @hellman and @rkm0959) solved it by letting the map be $x\mapsto\frac{ax + b}{cx + d}$ and looked at fixed points / points with small orders.</p>
+<p>In the CTF, Mystiz and I also found that when we change $C$ to random values, sometimes points have order $p^2 - 1$ instead of $p - 1$. This is now explained, as $x^2 + 2Cx + 1 = (x - r_1)(x - r_2)$ have roots in $\mathbb{F}_{p^2}$ when $C^2 - 1$ is a quadratic non-residue, which the field has order $p^2 - 1$.</p>
 
 </section>
 
@@ -472,6 +487,7 @@
     <li><a href="#solution">Solution</a></li>
     <li><a href="#code">Code</a></li>
     <li><a href="#motivation">Motivation</a></li>
+    <li><a href="#other-methods">Other Methods</a></li>
   </ol>
 </nav>
                 </div>
