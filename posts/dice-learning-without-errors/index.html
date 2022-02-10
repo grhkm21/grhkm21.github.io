@@ -13,7 +13,7 @@
 <meta name="twitter:site" content="@grhkm2023">
     <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="[Crypto] Learning Without Errors (396 pts, 6 solves, upsolve)">
 <meta name="twitter:description" content="Chosen Plaintext Ring-LWE (CKKS) Attack">
-        <link rel="stylesheet" href="https://grhkm21.github.io/css/alert.css"/>
+        <link rel="stylesheet" href="https://grhkm21.github.io/scss/alert.scss"/>
     </head>
     <body class="
     article-page has-toc
@@ -439,6 +439,8 @@ Python will now terminate.
 <p>With this, our code finally runs, at least 50% of the time (due to the polynomial being invertible 50% of the time). It takes a while, but after we recover the secret, we can compute the decrypted flag and <em>decode</em> for the flag.</p>
 
 <div class="alert alert-info" role="alert"><p>Can&rsquo;t be me who forgot to decode the flag and spent 1.5 hours trying to figure this out. Remember this?</p>
+</div>
+
 <ul>
 <li><code>encrypt_json</code> → <code>encoder.encode</code>, <code>encryptor.encrypt</code></li>
 <li><code>decrypt_ciphertext</code> → <code>decryptor.decrypt</code></li>
@@ -476,9 +478,7 @@ Python will now terminate.
 <span class="n">flag</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">real</span><span class="p">())</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">]))</span>
 <span class="n">flag</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:64x}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flag</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Flag: </span><span class="si">{</span><span class="n">flag</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>With all this done, we simply have to run our script, extract the real part of each complex number, and get the flag~</p>
+</code></pre></div><p>With all this done, we simply have to run our script, extract the real part of each complex number, and get the flag~</p>
 <p>Flag: <code>dice{this_destroyes_the_CKKS_cryptosystem_a3b31e683b82b26f}</code></p>
 <p>Thank you for reading this blog, and thank you to @ireland for the challenge. Also thank you @Mystiz for suggesting the title &ldquo;Gareth T&rdquo;, it&rsquo;s a singer in Hong Kong :D Still wish I solved this during the CTF though :3</p>
 <figure>
@@ -529,7 +529,7 @@ Python will now terminate.
 </aside>
 
 
-    <link rel="stylesheet" href="https://grhkm21.github.io/css/alert.css"/>
+    <link rel="stylesheet" href="https://grhkm21.github.io/scss/alert.scss"/>
      
     
         
