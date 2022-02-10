@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Chosen Plaintext Ring-LWE (CKKS) Attack'><title>[Crypto] Learning Without Errors (396 pts, 6 solves, upsolve)</title>
+
+<link rel='canonical' href='https://grhkm21.github.io/posts/dice-learning-without-errors/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='[Crypto] Learning Without Errors (396 pts, 6 solves, upsolve)'>
+<meta property='og:description' content='Chosen Plaintext Ring-LWE (CKKS) Attack'>
+<meta property='og:url' content='https://grhkm21.github.io/posts/dice-learning-without-errors/'>
+<meta property='og:site_name' content='Blog by grhkm21'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2022-02-09T16:15:44&#43;01:00'/><meta property='article:modified_time' content='2022-02-09T16:15:44&#43;01:00'/>
+<meta name="twitter:site" content="@grhkm2023">
+    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="[Crypto] Learning Without Errors (396 pts, 6 solves, upsolve)">
+<meta name="twitter:description" content="Chosen Plaintext Ring-LWE (CKKS) Attack">
+        <link rel="stylesheet" href="https://grhkm21.github.io/css/alert.css"/>
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://grhkm21.github.io/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/posts/dice-learning-without-errors/">[Crypto] Learning Without Errors (396 pts, 6 solves, upsolve)</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Chosen Plaintext Ring-LWE (CKKS) Attack
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 09, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>(Up-)Solved by: grhkm</p>
+<p>Source of the problem: <a class="link" href="https://ctf.dicega.ng/challs"  target="_blank" rel="noopener"
+    >Dice CTF 2022</a></p>
+<h2 id="self-reflection">Self-Reflection</h2>
+<p>I am actually very frustrated and annoyed at myself for this problem. During the CTF I was scared off by my lack of experience with this encryption scheme, and also just didn&rsquo;t believe I can solve this challenge. As a result, I spent a lot of my time watching YouTube instead.</p>
+<p>Approaching the end of the CTF, for absolutely no reason I decided I will try to take a look at the challenge. I started the biggest crossover between the CTF and the speed-running community ever and seriously attempted the challenge in the last hour and half of the CTF. I watched a video on Homomorphic Encryption while I ate dinner, and an hour before the end of CTF I found the correct paper and started tracing the given <code>fhe</code> library. At the end I had the idea of the solution and was ready to start coding. But of course, it was also the end of CTF! After the contest, I finished coding my solution in around an hour, while debugging took me around 3 hours, mainly due to my unfamiliarity with the system. Nonetheless, I would have solved this if not due to my lack of confidence and if I actually spent time on this <em>crypto</em> challenge, which I am meant to excel in&hellip;</p>
+<h2 id="problem-statement">Problem Statement</h2>
+<blockquote>
+<p>Choose Keys Karefully for Security</p>
+<p><code>nc mc.ax 31614</code></p>
+<p><a class="link" href="/files/lwe-server.py" >server.py</a></p>
+<p><a class="link" href="/files/lwe-challenge.py" >challenge.py</a></p>
+</blockquote>
+<h2 id="solution-outline">Solution Outline</h2>
+<p>The ciphertext-message pair leaks the secret key as a linear equation, and we can simply decrypt the flag. Yes, it&rsquo;s that simple.</p>
+<h2 id="understanding-the-code">Understanding the Code</h2>
+<p>Let&rsquo;s first try to understand the flow of the challenge by looking at <code>server.py</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">challenge</span> <span class="kn">import</span> <span class="n">Challenge</span>
+
+<span class="n">poly_degree</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">ciph_modulus</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">100</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Please hold, generating keys...&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">chal</span> <span class="o">=</span> <span class="n">Challenge</span><span class="p">(</span><span class="n">poly_degree</span><span class="p">,</span> <span class="n">ciph_modulus</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Welcome to the Encryption-As-A-Service Provider of the Future, powered by the latest in Fully-Homomorphic Encryption!&#39;</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Provide your complex vector as json to be encrypted: &#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">ciph</span> <span class="o">=</span> <span class="n">chal</span><span class="o">.</span><span class="n">encrypt_json</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">string_ciph</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chal</span><span class="o">.</span><span class="n">dump_ciphertext</span><span class="p">(</span><span class="n">ciph</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encryption successful, here is your ciphertext:&#39;</span><span class="p">,</span> <span class="n">string_ciph</span><span class="p">)</span>
+
+<span class="n">plain</span> <span class="o">=</span> <span class="n">chal</span><span class="o">.</span><span class="n">decrypt_ciphertext</span><span class="p">(</span><span class="n">ciph</span><span class="p">)</span>
+<span class="n">string_plain</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chal</span><span class="o">.</span><span class="n">dump_plaintext</span><span class="p">(</span><span class="n">plain</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;To verify that the encryption worked, here is the corresponding decryption:&#39;</span><span class="p">,</span> <span class="n">string_plain</span><span class="p">)</span>
+
+<span class="n">e_flag</span> <span class="o">=</span> <span class="n">chal</span><span class="o">.</span><span class="n">encrypt_flag</span><span class="p">()</span>
+<span class="n">string_flag</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chal</span><span class="o">.</span><span class="n">dump_ciphertext</span><span class="p">(</span><span class="n">e_flag</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All done, here</span><span class="se">\&#39;</span><span class="s1">s an encrypted flag as a reward:&#39;</span><span class="p">,</span> <span class="n">string_flag</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Enjoy DiceCTF!&#39;</span><span class="p">)</span>
+</code></pre></div><p>The cryptography-related functions are implemented in <code>challenge.py</code> instead.</p>
+<ul>
+<li>The server first asks for a message</li>
+<li>It then encrypts the message by <code>encrypt_json</code>, and decrypts it the message by <code>decrypt_ciphertext</code></li>
+<li>Finally, the server prints the encrypted flag from <code>encrypt_flag()</code></li>
+</ul>
+<p>In other words, we have to perform a Single Chosen Plaintext attack. Let&rsquo;s now take a look at <code>challenge.py</code>. Note that the script uses an external implementation of CKKS, which can be found at <a class="link" href="https://github.com/sarojaerabelli/py-fhe"  target="_blank" rel="noopener"
+    >sarojaerabelli/py-fhe</a>. I will refer to it as &ldquo;the library&rdquo; from now on.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># https://github.com/sarojaerabelli/py-fhe</span>
+<span class="c1"># imports omitted</span>
+
+<span class="k">class</span> <span class="nc">Challenge</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">poly_degree</span><span class="p">,</span> <span class="n">ciph_modulus</span><span class="p">):</span>
+        <span class="n">big_modulus</span> <span class="o">=</span> <span class="n">ciph_modulus</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">scaling_factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">30</span>
+        
+        <span class="n">params</span> <span class="o">=</span> <span class="n">CKKSParameters</span><span class="p">(</span><span class="n">poly_degree</span><span class="o">=</span><span class="n">poly_degree</span><span class="p">,</span>
+                                <span class="n">ciph_modulus</span><span class="o">=</span><span class="n">ciph_modulus</span><span class="p">,</span>
+                                <span class="n">big_modulus</span><span class="o">=</span><span class="n">big_modulus</span><span class="p">,</span>
+                                <span class="n">scaling_factor</span><span class="o">=</span><span class="n">scaling_factor</span><span class="p">)</span>
+
+        <span class="n">key_generator</span> <span class="o">=</span> <span class="n">CKKSKeyGenerator</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">public_key</span> <span class="o">=</span> <span class="n">key_generator</span><span class="o">.</span><span class="n">public_key</span>
+        <span class="n">secret_key</span> <span class="o">=</span> <span class="n">key_generator</span><span class="o">.</span><span class="n">secret_key</span>
+        <span class="n">encoder</span> <span class="o">=</span> <span class="n">CKKSEncoder</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">encryptor</span> <span class="o">=</span> <span class="n">CKKSEncryptor</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">public_key</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">)</span>
+        <span class="n">decryptor</span> <span class="o">=</span> <span class="n">CKKSDecryptor</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">)</span>
+        <span class="n">evaluator</span> <span class="o">=</span> <span class="n">CKKSEvaluator</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="c1"># irrelevant code omitted</span>
+
+    <span class="k">def</span> <span class="nf">encrypt_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;flag.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">poly_degree</span> <span class="o">//</span> <span class="mi">2</span>
+        
+        <span class="n">flag</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">flag</span><span class="si">:</span><span class="s2">0</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">b</span><span class="si">}</span><span class="s2">&#34;</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flag</span><span class="p">]</span>
+        
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;real_part&#34;</span><span class="p">:</span> <span class="n">flag</span><span class="p">,</span> <span class="s2">&#34;imag_part&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">}</span>
+        <span class="n">ciph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encrypt_json</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ciph</span>
+    
+    <span class="k">def</span> <span class="nf">dump_ciphertext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ciph</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;c0&#34;</span> <span class="p">:</span> <span class="n">ciph</span><span class="o">.</span><span class="n">c0</span><span class="o">.</span><span class="n">coeffs</span><span class="p">,</span>
+             <span class="s2">&#34;c1&#34;</span> <span class="p">:</span> <span class="n">ciph</span><span class="o">.</span><span class="n">c1</span><span class="o">.</span><span class="n">coeffs</span><span class="p">,</span>
+             <span class="s2">&#34;poly_degree&#34;</span> <span class="p">:</span> <span class="n">ciph</span><span class="o">.</span><span class="n">c0</span><span class="o">.</span><span class="n">ring_degree</span><span class="p">,</span>
+             <span class="s2">&#34;modulus&#34;</span> <span class="p">:</span> <span class="n">ciph</span><span class="o">.</span><span class="n">modulus</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="k">def</span> <span class="nf">dump_plaintext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plain</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;m&#34;</span> <span class="p">:</span> <span class="n">plain</span><span class="o">.</span><span class="n">poly</span><span class="o">.</span><span class="n">coeffs</span><span class="p">,</span>
+             <span class="s2">&#34;poly_degree&#34;</span> <span class="p">:</span> <span class="n">plain</span><span class="o">.</span><span class="n">poly</span><span class="o">.</span><span class="n">ring_degree</span><span class="p">,</span>
+             <span class="s2">&#34;scaling_factor&#34;</span> <span class="p">:</span> <span class="n">plain</span><span class="o">.</span><span class="n">scaling_factor</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">d</span>
+    
+    <span class="k">def</span> <span class="nf">dump_decoded_plaintext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plain</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">complex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plain</span><span class="p">]</span>
+        <span class="n">real</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">real</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plain</span><span class="p">]</span>
+        <span class="n">imag</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">imag</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plain</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;real_part&#34;</span><span class="p">:</span> <span class="n">real</span><span class="p">,</span> <span class="s2">&#34;imag_part&#34;</span><span class="p">:</span> <span class="n">imag</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="k">def</span> <span class="nf">decrypt_ciphertext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ciph</span><span class="p">):</span>
+        <span class="n">plain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decryptor</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">ciph</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">plain</span>
+
+    <span class="k">def</span> <span class="nf">decrypt_and_decode_ciphertext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ciph</span><span class="p">):</span>
+        <span class="n">plain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decryptor</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">ciph</span><span class="p">)</span>
+        <span class="n">plain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">plain</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">plain</span>
+
+    <span class="k">def</span> <span class="nf">encrypt_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="n">real</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&#34;real_part&#34;</span><span class="p">])</span>
+        <span class="n">imag</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&#34;imag_part&#34;</span><span class="p">])</span>
+        
+        <span class="n">message</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span><span class="p">)]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">poly_degree</span> <span class="o">//</span> <span class="mi">2</span>
+        
+        <span class="n">plain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling_factor</span><span class="p">)</span>
+        <span class="n">ciph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encryptor</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">plain</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ciph</span>
+</code></pre></div><p>There are quite a few functions to keep track of here. Here I highlight the library function calls.</p>
+<ul>
+<li><code>encrypt_json</code> → <code>encoder.encode</code>, <code>encryptor.encrypt</code></li>
+<li><code>decrypt_ciphertext</code> → <code>decryptor.decrypt</code></li>
+<li><code>encrypt_flag</code> → <code>encrypt_json</code> → <code>encoder.encode</code>, <code>encryptor.encrypt</code></li>
+</ul>
+<p>With this noted, let&rsquo;s try to solve the challenge. Before we do that, of course we have to know: what is CKKS???</p>
+<h2 id="fully-homomorphic-encryption-fhe">Fully Homomorphic Encryption (FHE)</h2>
+<p>To motivate the idea of <em>Fully Homomorphic Encryption</em> (FHE), imagine that you have two secret prime numbers (your crush&rsquo;s phone number and birthday!), $m_1$ and $m_2$, that you want to store in a secure cloud server. Obviously you should not trust the cloud, so you encrypted them as $c_1 := \text{enc}<em>{\text{pk}}(m_1)$ and $c_2 := \text{enc}</em>{\text{pk}}(m_2)$, and stored it into the cloud. Now suppose that you want to merge them together, which involves calculating $m_3 = m_1 \cdot m_2$. Of course, one way to do this is to decrypt both the messages, multiply them together, then encrypt and store it back. However, the cloud might intercept the decrypted messages, which is bad.</p>
+<p>Here is when FHE will help - FHE allows you to calculate $c_3 = \text{enc}_{\text{pk}}(m_3)$ directly without knowing $m_1$ and $m_2$. In particular, there are operators $\oplus$ and $\otimes$ such that</p>
+<p>$$\begin{align*} \text{enc}_{\text{pk}}(m_1)\ {\color{red}\oplus}\ \text{enc}_{\text{pk}}(m_2) &amp;= \text{enc}_{\text{pk}}(m_1\ {\color{cyan}+}\  m_2) \\ \text{enc}_{\text{pk}}(m_1)\ {\color{red}\otimes}\ \text{enc}_{\text{pk}}(m_2) &amp;= \text{enc}_{\text{pk}}(m_1\ {\color{cyan}\cdot}\ m_2) \end{align*}$$</p>
+<p><figure 
+	>
+	<a href="/images/dice-learning-with-errors-FHE.png" >
+		<img src="/images/dice-learning-with-errors-FHE.png"
+			
+			
+			
+			loading="lazy"
+			alt="Here, &ldquo;easy&rdquo; and &ldquo;hard&rdquo; refer to the third party i.e. the cloud. It is easy to go right and down, but not up.">
+	</a>
+	
+	<figcaption>Here, “easy” and “hard” refer to the third party i.e. the cloud. It is easy to go right and down, but not up.</figcaption>
+	
+</figure></p>
+<p>In other words, it allows one to perform computations over encrypted data without ever decrypting them. Notice the parallel between the <em>plaintext</em> space and the <em>ciphertext</em> space! This is why it is called a <em>homomorphic</em> scheme. This property is very useful and has practical uses, most importantly in cloud computing. I shall refer the reader to watch the first half of <a class="link" href="https://www.youtube.com/watch?v=9lTGEPJTw9M"  target="_blank" rel="noopener"
+    >this podcast</a>, which explains the concept in layman terms, and <a class="link" href="https://www.youtube.com/watch?v=TySXpV86958"  target="_blank" rel="noopener"
+    >this Eurocrypt 2019 talk</a>, which is a pretty clear talk.</p>
+<h2 id="the-ckks-cheon-kim-kim-song-scheme--some-math">The CKKS (Cheon-Kim-Kim-Song) Scheme &amp; Some Math</h2>
+<p>The CKKS Encryption Scheme, named after Jung Hee Cheon, Andrey Kim, Miran Kim and Yongsoo Song, is a <em>Fully Homomorphic Encryption</em> (FHE) scheme <a class="link" href="https://eprint.iacr.org/2016/421.pdf"  target="_blank" rel="noopener"
+    >proposed</a> in 2016 that&rsquo;s based on approximate arithmetic. The core idea comes from the difficulty of Learning With Errors (LWE), that is, the difficulty of recovering the <em>secret</em> key $\vec{s}$ given only &ldquo;approximate&rdquo; random linear equations on $\vec{s}$. For example, it is hard to recover $\vec{s}$ given equations</p>
+<p>$$\vec{b_i} = \vec{a_i}\cdot\vec{s} + \vec{e_i} \approx \vec{a_i}\cdot\vec{s}$$</p>
+<p>Where $\vec{e_i}$ is the error term sampled from a secure error distribution $\chi$, usually chosen to be the normal distribution.</p>
+<p>The scheme is fascinating and has a lot of details, but I will provide a simplified outline of the scheme to ease understanding. Hence, details such as scaling factors and relinearization will be left out. Interested readers shall refer to the original paper (linked) or <a class="link" href="https://eprint.iacr.org/2020/1533.pdf"  target="_blank" rel="noopener"
+    >[BD21, p.8]</a>.</p>
+<h3 id="data-representation">Data Representation</h3>
+<p>In the scheme, all operations are done with real polynomials of degree $\leq N$, whereas our plaintext would be a complex vector. The complex vector is chosen as the evaluation of the polynomial at the primitive $(2N)$th roots of unity $\zeta^{2j + 1}$ for a few reasons. First, notice that as these are primitive roots, they satisfy $x^N + 1 = 0$. This means that our polynomial can be reduced mod $x^N + 1$ and not affect the decoded vector. Furthermore, since we have $\zeta^{2j + 1} = \overline{\zeta^{-2j - 1}}$ as conjugate pairs and that our polynomial has real coefficients, we essentially get duplicate information: $P(\overline{x}) = \overline{P(x)}$. Hence, the scheme drops half of the roots of unity without losing information bits. Finally, evaluation at roots of unity just screams FFT! From all this, we arrive at the following <em>decoding</em> function $\phi$:</p>
+<p>$$\begin{align*} \phi : \mathbb{R}[x] / (x^N + 1) &amp;\cong \mathbb{R}^N \to \mathbb{C}^{\frac{N}{2}} \\ \phi(a(x)) &amp;\to \tilde{a} = \left(a(\zeta^{4j + 1})\right)_{j=0}^{\frac{N}{2} - 1} \end{align*}$$</p>
+<p>Where the final expression is simply a vector of the valuation results. The <em>encoding</em> function is then simply $\phi^{-1}$. This is all implemented in the <code>py-fhe</code> library and can be done in sub-$O(N^2)$ time via FFT.</p>
+<h3 id="key-generation">Key Generation</h3>
+<p>Obviously, the scheme requires a public key and a secret key. In the <em>actual</em> CKKS scheme, there are also <em>switching</em> keys and <em>relinearization</em> keys, which I think will only further confuse matters and hence will be omitted.</p>
+<p>Firstly, we choose an error distribution $\chi$ and a secret distribution $\chi'$. As mentioned, the scheme is proven to be secure for normal distributions $\chi$ and $\chi'$. However, for efficiency reasons, simpler distributions are chosen for the scheme. Here, the error distribution is</p>
+<p>$$\chi = \{-1, 0, 1\}^n$$</p>
+<p>Where for each of the $n$ entries, $-1, 0, 1$ have probability $25\%, 50\%$ and $25\%$ respectively. The secret distribution $\chi_h'$ is</p>
+<p>$$\chi_h' = \{\vec{s} \in \{0, \pm 1\}^n : \sum_{i=1}^n |s_i| = h\}$$</p>
+<p>i.e. the set of signed binary vectors where the hamming weight is exactly $h$, and each term has equal probability.</p>
+<p>From here, it is easy to describe our keys:</p>
+<ul>
+<li>Sample secret $\vec{s} \gets \chi_h'$ with $h = \frac{N}{4}$.</li>
+<li></li>
+</ul>
+<h3 id="encryption">Encryption</h3>
+<p>The encryption algorithm $\text{enc}_{\text{pk}}(m)$ first picks a random</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+
+    <link rel="stylesheet" href="https://grhkm21.github.io/css/alert.css"/>
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 Blog by grhkm21
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#self-reflection">Self-Reflection</a></li>
+    <li><a href="#problem-statement">Problem Statement</a></li>
+    <li><a href="#solution-outline">Solution Outline</a></li>
+    <li><a href="#understanding-the-code">Understanding the Code</a></li>
+    <li><a href="#fully-homomorphic-encryption-fhe">Fully Homomorphic Encryption (FHE)</a></li>
+    <li><a href="#the-ckks-cheon-kim-kim-song-scheme--some-math">The CKKS (Cheon-Kim-Kim-Song) Scheme &amp; Some Math</a>
+      <ol>
+        <li><a href="#data-representation">Data Representation</a></li>
+        <li><a href="#key-generation">Key Generation</a></li>
+        <li><a href="#encryption">Encryption</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

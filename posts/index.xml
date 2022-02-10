@@ -8,11 +8,11 @@
     <language>en-uk</language>
     <lastBuildDate>Wed, 09 Feb 2022 16:15:44 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>[Crypto] Learning With Errors (396 pts, 6 solves, upsolve)</title>
-      <link>https://grhkm21.github.io/posts/dice-learning-with-errors/</link>
+      <title>[Crypto] Learning Without Errors (396 pts, 6 solves, upsolve)</title>
+      <link>https://grhkm21.github.io/posts/dice-learning-without-errors/</link>
       <pubDate>Wed, 09 Feb 2022 16:15:44 +0100</pubDate>
       
-      <guid>https://grhkm21.github.io/posts/dice-learning-with-errors/</guid>
+      <guid>https://grhkm21.github.io/posts/dice-learning-without-errors/</guid>
       <description>(Up-)Solved by: grhkm
 Source of the problem: Dice CTF 2022
 Self-Reflection I am actually very frustrated and annoyed at myself for this problem. During the CTF I was scared off by my lack of experience with this encryption scheme, and also just didn&amp;rsquo;t believe I can solve this challenge. As a result, I spent a lot of my time watching YouTube instead.
