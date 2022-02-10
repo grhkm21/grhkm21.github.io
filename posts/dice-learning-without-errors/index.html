@@ -104,7 +104,7 @@
 
 
                 <time class="article-time--reading">
-                    8 minute read
+                    10 minute read
                 </time>
             </div>
         
@@ -248,7 +248,7 @@
 </ul>
 <p>With this noted, let&rsquo;s try to solve the challenge. Before we do that, of course we have to know: what is CKKS???</p>
 <h2 id="fully-homomorphic-encryption-fhe">Fully Homomorphic Encryption (FHE)</h2>
-<p>To motivate the idea of <em>Fully Homomorphic Encryption</em> (FHE), imagine that you have two secret prime numbers (your crush&rsquo;s phone number and birthday!), $m_1$ and $m_2$, that you want to store in a secure cloud server. Obviously you should not trust the cloud, so you encrypted them as $c_1 := \text{enc}<em>{\text{pk}}(m_1)$ and $c_2 := \text{enc}</em>{\text{pk}}(m_2)$, and stored it into the cloud. Now suppose that you want to merge them together, which involves calculating $m_3 = m_1 \cdot m_2$. Of course, one way to do this is to decrypt both the messages, multiply them together, then encrypt and store it back. However, the cloud might intercept the decrypted messages, which is bad.</p>
+<p>To motivate the idea of <em>Fully Homomorphic Encryption</em> (FHE), imagine that you have two secret prime numbers (your crush&rsquo;s phone number and birthday!), $m_1$ and $m_2$, that you want to store in a secure cloud server. Obviously you should not trust the cloud, so you encrypted them as $c_1 := \text{enc}_{\text{pk}}(m_1)$ and $c_2 := \text{enc}_{\text{pk}}(m_2)$, and stored it into the cloud. Now suppose that you want to merge them together, which involves calculating $m_3 = m_1 \cdot m_2$. Of course, one way to do this is to decrypt both the messages, multiply them together, then encrypt and store it back. However, the cloud might intercept the decrypted messages, which is bad.</p>
 <p>Here is when FHE will help - FHE allows you to calculate $c_3 = \text{enc}_{\text{pk}}(m_3)$ directly without knowing $m_1$ and $m_2$. In particular, there are operators $\oplus$ and $\otimes$ such that</p>
 <p>$$\begin{align*} \text{enc}_{\text{pk}}(m_1)\ {\color{red}\oplus}\ \text{enc}_{\text{pk}}(m_2) &amp;= \text{enc}_{\text{pk}}(m_1\ {\color{cyan}+}\  m_2) \\ \text{enc}_{\text{pk}}(m_1)\ {\color{red}\otimes}\ \text{enc}_{\text{pk}}(m_2) &amp;= \text{enc}_{\text{pk}}(m_1\ {\color{cyan}\cdot}\ m_2) \end{align*}$$</p>
 <p><figure 
@@ -259,10 +259,10 @@
 			
 			
 			loading="lazy"
-			alt="Here, &ldquo;easy&rdquo; and &ldquo;hard&rdquo; refer to the third party i.e. the cloud. It is easy to go right and down, but not up.">
+			alt="Here, &ldquo;easy&rdquo; and &ldquo;hard&rdquo; is from the perspective of the cloud. It is easy to go right and down, but not up.">
 	</a>
 	
-	<figcaption>Here, “easy” and “hard” refer to the third party i.e. the cloud. It is easy to go right and down, but not up.</figcaption>
+	<figcaption>Here, “easy” and “hard” is from the perspective of the cloud. It is easy to go right and down, but not up.</figcaption>
 	
 </figure></p>
 <p>In other words, it allows one to perform computations over encrypted data without ever decrypting them. Notice the parallel between the <em>plaintext</em> space and the <em>ciphertext</em> space! This is why it is called a <em>homomorphic</em> scheme. This property is very useful and has practical uses, most importantly in cloud computing. I shall refer the reader to watch the first half of <a class="link" href="https://www.youtube.com/watch?v=9lTGEPJTw9M"  target="_blank" rel="noopener"
@@ -276,24 +276,77 @@
 <p>The scheme is fascinating and has a lot of details, but I will provide a simplified outline of the scheme to ease understanding. Hence, details such as scaling factors and relinearization will be left out. Interested readers shall refer to the original paper (linked) or <a class="link" href="https://eprint.iacr.org/2020/1533.pdf"  target="_blank" rel="noopener"
     >[BD21, p.8]</a>.</p>
 <h3 id="data-representation">Data Representation</h3>
-<p>In the scheme, all operations are done with real polynomials of degree $\leq N$, whereas our plaintext would be a complex vector. The complex vector is chosen as the evaluation of the polynomial at the primitive $(2N)$th roots of unity $\zeta^{2j + 1}$ for a few reasons. First, notice that as these are primitive roots, they satisfy $x^N + 1 = 0$. This means that our polynomial can be reduced mod $x^N + 1$ and not affect the decoded vector. Furthermore, since we have $\zeta^{2j + 1} = \overline{\zeta^{-2j - 1}}$ as conjugate pairs and that our polynomial has real coefficients, we essentially get duplicate information: $P(\overline{x}) = \overline{P(x)}$. Hence, the scheme drops half of the roots of unity without losing information bits. Finally, evaluation at roots of unity just screams FFT! From all this, we arrive at the following <em>decoding</em> function $\phi$:</p>
-<p>$$\begin{align*} \phi : \mathbb{R}[x] / (x^N + 1) &amp;\cong \mathbb{R}^N \to \mathbb{C}^{\frac{N}{2}} \\ \phi(a(x)) &amp;\to \tilde{a} = \left(a(\zeta^{4j + 1})\right)_{j=0}^{\frac{N}{2} - 1} \end{align*}$$</p>
+<p>In the scheme, all operations are done with real polynomials of degree $\leq N$, where the coefficients are taken mod $q$. Our plaintext would be a complex vector, chosen as the evaluation of the polynomial at the primitive $(2N)$th roots of unity $\zeta^{2j + 1}$ for a few reasons.</p>
+<p>First, notice that as these are primitive roots, they satisfy $x^N + 1 = 0$. This means that our polynomial can be reduced mod $x^N + 1$ and not affect the decoded vector, which means we can compute polynomial operations mod $x^N + 1$.</p>
+<p>Furthermore, since we have $\zeta^{2j + 1} = \overline{\zeta^{-2j - 1}}$ as conjugate pairs and that our polynomial has real coefficients, we essentially get duplicate information: $P(\overline{x}) = \overline{P(x)}$. Hence, the scheme drops half of the roots of unity without losing information bits.</p>
+<p>Finally, evaluation at roots of unity just screams FFT, which will greatly accelerate the calculations! From all this, we arrive at the following <em>decoding</em> function $\phi$:</p>
+<p>$$\begin{align*} &amp;\mathcal{O} := \left(\mathbb{Z} / q\mathbb{Z}\right)[x] / (x^N + 1) \cong \left(\mathbb{Z} / q\mathbb{Z}\right)^N \\ &amp;\phi : \mathcal{O} \to \mathbb{C}^{\frac{N}{2}} \\ &amp;\phi(a(x)) \to \tilde{a} = \left(a(\zeta^{4j + 1})\right)_{j=0}^{\frac{N}{2} - 1} \end{align*}$$</p>
 <p>Where the final expression is simply a vector of the valuation results. The <em>encoding</em> function is then simply $\phi^{-1}$. This is all implemented in the <code>py-fhe</code> library and can be done in sub-$O(N^2)$ time via FFT.</p>
 <h3 id="key-generation">Key Generation</h3>
 <p>Obviously, the scheme requires a public key and a secret key. In the <em>actual</em> CKKS scheme, there are also <em>switching</em> keys and <em>relinearization</em> keys, which I think will only further confuse matters and hence will be omitted.</p>
 <p>Firstly, we choose an error distribution $\chi$ and a secret distribution $\chi'$. As mentioned, the scheme is proven to be secure for normal distributions $\chi$ and $\chi'$. However, for efficiency reasons, simpler distributions are chosen for the scheme. Here, the error distribution is</p>
 <p>$$\chi = \{-1, 0, 1\}^n$$</p>
-<p>Where for each of the $n$ entries, $-1, 0, 1$ have probability $25\%, 50\%$ and $25\%$ respectively. The secret distribution $\chi_h'$ is</p>
+<p>Where for each of the $n$ entries, $-1, 0, 1$ have probability $25\%, 50\%$ and $25\%$ respectively. On the other hand, the secret distribution $\chi_h'$ is</p>
 <p>$$\chi_h' = \{\vec{s} \in \{0, \pm 1\}^n : \sum_{i=1}^n |s_i| = h\}$$</p>
 <p>i.e. the set of signed binary vectors where the hamming weight is exactly $h$, and each term has equal probability.</p>
-<p>From here, it is easy to describe our keys:</p>
+<p>Let&rsquo;s write $a \gets \chi$ to mean &ldquo;sample the variable $a$ from $\chi$&rdquo;. From here, it is easy to describe our keys:</p>
 <ul>
-<li>Sample secret $\vec{s} \gets \chi_h'$ with $h = \frac{N}{4}$.</li>
-<li></li>
+<li>Sample a secret polynomial $s$ with coefficients $\gets \chi_h'$ with hamming weight $h = \frac{N}{4}$.</li>
+<li>Sample a polynomial $a \gets \mathcal{O}$ (uniformly), and an error term $e \gets \chi$.</li>
+<li>Then, our secret key is $\text{sk} = s \in \mathcal{O}$, and</li>
+<li>Our public key is $\text{pk} = (p_1, p_2) = (-as + e, a) \in \mathcal{O}^2$.</li>
 </ul>
 <h3 id="encryption">Encryption</h3>
-<p>The encryption algorithm $\text{enc}_{\text{pk}}(m)$ first picks a random</p>
+<p>The encryption algorithm $\text{enc}_{\text{pk}}(m)$ is also simple:</p>
+<ul>
+<li>First, sample polynomial $u \gets \chi$ and two errors $(e_1, e_2) \gets \chi^2$.</li>
+<li>Then, our encrypted message is $\text{ct} = (c_1, c_2) := (m + p_1u + e_1, p_2u + e_2)$.</li>
+</ul>
+<h3 id="approximated-decryption">Approximated Decryption</h3>
+<p>The approximated decryption algorithm $\text{dec}_{\text{sk}}(\text{ct})$ is even simpler:</p>
+<ul>
+<li>Our decrypted message is $m \approx c_1 + sc_2$.</li>
+</ul>
+<p>Notice how it&rsquo;s called approximated decryption. This is because expanding the calculation by decrypting the encrypted results, we have</p>
+<p>$$\begin{align*} m &amp;\approx c_1 + sc_2 \\ &amp;= (m + p_1u + e_1) + s(p_2u + e_2) \\ &amp;= (m + e_1 + se_2) + \underbrace{(-as + e)}_{p_1}u + \underbrace{a}_{p_2}su \\ &amp;= m + (e_1 + se_2 + eu) \mod q \end{align*}$$</p>
+<p>However, $e_1 + se_2 + eu$ is small, as $e, e_1, e_2$ and $u$ are all chosen from $\chi$ which gives small polynomials. Therefore, the decrypted results are &ldquo;close enough&rdquo; to the original message.</p>
+<hr>
+<h2 id="hidden-in-plain-sight">Hidden in Plain Sight</h2>
+<p>Phew. That was a lot of maths to unpack. However, it is a lot easier from here.</p>
+<p>Looking back at our challenge, we are able to supply $m$ and receive $$\begin{align*} \text{enc}_{\text{pk}}(m) &amp;= (c_1, c_2) = \ldots \\ \text{dec}_{sk}(\text{enc}_{pk}(m)) &amp;= c_1 + sc_2 = \ldots \\ \text{enc}_{\text{pk}}(flag) &amp;= \ldots\end{align*}$$</p>
+<p>Wait&hellip; this means that we are given $c_1, c_2, c_1 + sc_2$. Of course, we can recover $s$! Our $m$ doesn&rsquo;t even matter. Let&rsquo;s code this up and see:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python">
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
+<span class="n">q</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">100</span> <span class="c1"># ciph_modulus</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span> <span class="c1"># poly_degree</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;mc.ax&#39;</span><span class="p">,</span> <span class="mi">31614</span><span class="p">)</span>
+
+<span class="c1"># receive our data</span>
+<span class="n">zeros</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;to be encrypted: &#39;</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&#34;real_part&#34;</span><span class="p">:</span> <span class="n">zeros</span><span class="p">,</span> <span class="s2">&#34;imag_part&#34;</span><span class="p">:</span> <span class="n">zeros</span><span class="p">})</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+<span class="n">ct</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;ciphertext: &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;decryption: &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;reward: &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># these are coefficients of the actual polynomials</span>
+<span class="n">msg_c0</span><span class="p">,</span> <span class="n">msg_c1</span><span class="p">,</span> <span class="n">msg_dec</span> <span class="o">=</span> <span class="n">ct</span><span class="p">[</span><span class="s1">&#39;c0&#39;</span><span class="p">],</span> <span class="n">ct</span><span class="p">[</span><span class="s1">&#39;c1&#39;</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
+<span class="n">flag_c0</span><span class="p">,</span> <span class="n">flag_c1</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;c0&#39;</span><span class="p">],</span> <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;c1&#39;</span><span class="p">]</span>
+
+<span class="c1"># convert to our polynomials</span>
+<span class="n">R</span><span class="o">.&lt;</span><span class="n">x</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">PolynomialRing</span><span class="p">(</span><span class="n">Zmod</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">to_poly</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">arr</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)))</span>
+<span class="n">msg_c0</span><span class="p">,</span> <span class="n">msg_c1</span><span class="p">,</span> <span class="n">msg_dec</span><span class="p">,</span> <span class="n">flag_c0</span><span class="p">,</span> <span class="n">flag_c1</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">to_poly</span><span class="p">,</span> <span class="p">[</span><span class="n">msg_c0</span><span class="p">,</span> <span class="n">msg_c1</span><span class="p">,</span> <span class="n">msg_dec</span><span class="p">,</span> <span class="n">flag_c0</span><span class="p">,</span> <span class="n">flag_c1</span><span class="p">])</span>
+
+<span class="c1"># as desired, msg_dec = msg_c0 + secret * msg_c1</span>
+<span class="n">secret</span> <span class="o">=</span> <span class="p">(</span><span class="n">msg_dec</span> <span class="o">-</span> <span class="n">msg_c0</span><span class="p">)</span> <span class="o">/</span> <span class="n">msg_c1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+
+</code></pre></div>
 </section>
 
 
@@ -466,8 +519,10 @@
         <li><a href="#data-representation">Data Representation</a></li>
         <li><a href="#key-generation">Key Generation</a></li>
         <li><a href="#encryption">Encryption</a></li>
+        <li><a href="#approximated-decryption">Approximated Decryption</a></li>
       </ol>
     </li>
+    <li><a href="#hidden-in-plain-sight">Hidden in Plain Sight</a></li>
   </ol>
 </nav>
                 </div>
