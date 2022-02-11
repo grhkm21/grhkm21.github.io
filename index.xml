@@ -394,6 +394,9 @@ Python will now terminate.
 &lt;p&gt;$$\begin{align*} (x + 1)^{100N}&amp;amp;\equiv (x^N + 1)^{100} &amp;amp;\mod q \\ (x + 1)^{100N} &amp;amp;\equiv 0 &amp;amp;\mod (q, x^N + 1) \end{align*}$$&lt;/p&gt;
 &lt;p&gt;Therefore, $P(x)^{100N} = P(x)^{102400}$ will converge to $0$.&lt;/p&gt;
 &lt;p&gt;It is not clear what happens when $(x + 1)$ is not a divisor of $P(x)$.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update:&lt;/em&gt; Woohoo! @jschnei is back with another update! Thank you once again.&lt;/p&gt;
+&lt;p&gt;Apparently, having an even constant term in the polynomial doesn&amp;rsquo;t mean we can&amp;rsquo;t invert the polynomial. Example? $x^{1024} + 2$.&lt;/p&gt;
+&lt;p&gt;Motivated by this, we simply consider $P(x) + (x^{1024} + 1)$ if the constant term is even, and if $(x + 1)\mid P(x)$, then $(x + 1)\mid P(x) + (x^{1024} + 1)$ by factor theorem and we proceed as above!&lt;/p&gt;
 </description>
         </item>
         <item>
