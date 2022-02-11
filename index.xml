@@ -269,7 +269,7 @@
     &lt;span class=&#34;k&#34;&gt;assert&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;pow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now, we can try to apply this for invertible polynomials in general. It is not hard to prove that polynomials are only invertible if their constant term is odd. For such polynomials, we can write $P(x) = c_0P_1(x) = c_0(1 + Q(x))$, where $c_0$ is the constant term. Then,&lt;/p&gt;
 &lt;p&gt;$$\begin{align*} \frac{1}{P(x)} &amp;amp;= \frac{1}{c_0}\cdot\frac{1}{1 + Q(x)} \ &amp;amp;\equiv c_0^{-1}\sum_{i=0}^{\infty} (-Q(x))^i \mod (x^N + 1) \end{align*}$$&lt;/p&gt;
-&lt;p&gt;One can prove that $(-Q(x))^i$ is eventually $0$ for such polynomials, and a proof is included at the end. For now, we can notice that if $(-Q(x))^i$ is $0$ for &lt;em&gt;any&lt;/em&gt; $i$, then for all $j\geq i$, we have $(-Q(x))^j = 0$. Therefore, we can binary search for such $i$:&lt;/p&gt;
+&lt;p&gt;However, it turns out that this method doesn&amp;rsquo;t always converge for all invertible polynomials - in fact, it converges for about 50% of the time, and a proof is included at the end. Moreover, the theoretical upper-bound for the converging $j$ is $2^{111}$, which would be impossible to compute with the $O(j)$ series. However, &lt;em&gt;numerical evidence&lt;/em&gt; shows that $j$ is usually smaller. For reference, $j\leq 2^{15}$ for about 3% of the cases, and $j\leq 2^{16}$ for about 13%. (Keep in mind that it is polynomial arithmetic, and I am lazy to implement FFT). Therefore, we can assume that $j = 2^{16}$ is an upper bound and simply binary search for it.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# notice we change the definition to without quotient&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PolynomialRing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Zmod&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;q&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
@@ -384,7 +384,16 @@ Python will now terminate.
     &lt;figcaption&gt;Thank you for reading!&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;h2 id=&#34;appendix-proof&#34;&gt;Appendix: Proof&lt;/h2&gt;
-&lt;p&gt;To be added, please refer to CH Discord for now&lt;/p&gt;
+&lt;p&gt;Below, I will prove that for $N = 2^{10}$ and $q = 2^{100}$, as it is in the scheme, then&lt;/p&gt;
+&lt;p&gt;$$P(x)\equiv 0\mod (2, x + 1)\implies \lim_{n\to\infty} P(x)^{2^n}\equiv 0\mod (q, x^N + 1).$$&lt;/p&gt;
+&lt;p&gt;In other words, our geometric series converges if $(x + 1)$ is a factor of $P(x)$ mod $2$. Thank you @jschnei for the proof idea!&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Proof:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;If $(x + 1)\mid P(x)\mod 2$, then we can write $P(x) = (x + 1)Q(x)$. By Freshman&amp;rsquo;s Dream, we know that&lt;/p&gt;
+&lt;p&gt;$$(x + 1)^N\equiv x^N + 1\mod 2.$$&lt;/p&gt;
+&lt;p&gt;Raising this to the $100^{\text{th}}$ power, we have&lt;/p&gt;
+&lt;p&gt;$$\begin{align*} (x + 1)^{100N}&amp;amp;\equiv (x^N + 1)^{100} &amp;amp;\mod q \\ (x + 1)^{100N} &amp;amp;\equiv 0 &amp;amp;\mod (q, x^N + 1) \end{align*}$$&lt;/p&gt;
+&lt;p&gt;Therefore, $P(x)^{100N} = P(x)^{102400}$ will converge to $0$.&lt;/p&gt;
+&lt;p&gt;It is not clear what happens when $(x + 1)$ is not a divisor of $P(x)$.&lt;/p&gt;
 </description>
         </item>
         <item>
