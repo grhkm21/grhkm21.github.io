@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rev on Blog by grhkm21</title>
+    <link>https://grhkm21.github.io/tags/rev/</link>
+    <description>Recent content in rev on Blog by grhkm21</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Sun, 14 Nov 2021 23:24:27 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/tags/rev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unobserved Box (250 pts, 6 solves)</title>
+      <link>https://grhkm21.github.io/posts/hkcert-unobserved-box/</link>
+      <pubDate>Sun, 14 Nov 2021 23:24:27 +0000</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/hkcert-unobserved-box/</guid>
+      <description>Team Name: O0027 - UND3r 20 D53 H473r5 4ND r374K3r
+Solved by: grhkm and Kaiziron
+Source of the problem: HKCERT CTF 2021
+Problem Statement  All codes are uncertain before the measurement, and you will never make it.
+Observe the code to get the flag.
+nc chalp.hkcert21.pwnable.hk 28132
+ Solution Outline We dump the binary from 0x400000 to 0x405000 using format string and %8$s, then reverse engineer the check function for the flag.</description>
+    </item>
+    
+  </channel>
+</rss>

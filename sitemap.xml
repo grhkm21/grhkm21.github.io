@@ -2,16 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://grhkm21.github.io/posts/dice-learning-without-errors/</loc>
+    <loc>https://grhkm21.github.io/</loc>
     <lastmod>2022-02-09T16:15:44+01:00</lastmod>
   </url><url>
-    <loc>https://grhkm21.github.io/</loc>
+    <loc>https://grhkm21.github.io/tags/crypto/</loc>
+    <lastmod>2022-02-09T16:15:44+01:00</lastmod>
+  </url><url>
+    <loc>https://grhkm21.github.io/posts/dice-learning-without-errors/</loc>
     <lastmod>2022-02-09T16:15:44+01:00</lastmod>
   </url><url>
     <loc>https://grhkm21.github.io/posts/</loc>
     <lastmod>2022-02-09T16:15:44+01:00</lastmod>
   </url><url>
+    <loc>https://grhkm21.github.io/tags/</loc>
+    <lastmod>2022-02-09T16:15:44+01:00</lastmod>
+  </url><url>
     <loc>https://grhkm21.github.io/posts/tet-algebra/</loc>
+    <lastmod>2022-01-02T22:53:00+00:00</lastmod>
+  </url><url>
+    <loc>https://grhkm21.github.io/tags/maths/</loc>
     <lastmod>2022-01-02T22:53:00+00:00</lastmod>
   </url><url>
     <loc>https://grhkm21.github.io/posts/tet-shares/</loc>
@@ -26,11 +35,20 @@
     <loc>https://grhkm21.github.io/posts/hkcert-the-hardest-path/</loc>
     <lastmod>2021-11-15T06:42:15+00:00</lastmod>
   </url><url>
+    <loc>https://grhkm21.github.io/tags/pwn/</loc>
+    <lastmod>2021-11-14T23:24:27+00:00</lastmod>
+  </url><url>
+    <loc>https://grhkm21.github.io/tags/rev/</loc>
+    <lastmod>2021-11-14T23:24:27+00:00</lastmod>
+  </url><url>
     <loc>https://grhkm21.github.io/posts/hkcert-unobserved-box/</loc>
     <lastmod>2021-11-14T23:24:27+00:00</lastmod>
   </url><url>
-    <loc>https://grhkm21.github.io/categories/</loc>
+    <loc>https://grhkm21.github.io/about-me/</loc>
+    <lastmod>2021-10-09T10:16:49+01:00</lastmod>
   </url><url>
-    <loc>https://grhkm21.github.io/tags/</loc>
+    <loc>https://grhkm21.github.io/posts/canto-song-rec/</loc>
+  </url><url>
+    <loc>https://grhkm21.github.io/categories/</loc>
   </url>
 </urlset>
