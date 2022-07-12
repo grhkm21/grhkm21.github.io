@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-uk">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Short article on nonlinear regression, focusing on polynomial models. Suitable for HS students.'><title>Nonlinear Regression (1)</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Short article on nonlinear regression, focusing on polynomial models. Written for HS students.'><title>Nonlinear Regression (1)</title>
 
 <link rel='canonical' href='https://grhkm21.github.io/posts/nonlinear-regression/'>
 
 <link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Nonlinear Regression (1)'>
-<meta property='og:description' content='Short article on nonlinear regression, focusing on polynomial models. Suitable for HS students.'>
+<meta property='og:description' content='Short article on nonlinear regression, focusing on polynomial models. Written for HS students.'>
 <meta property='og:url' content='https://grhkm21.github.io/posts/nonlinear-regression/'>
 <meta property='og:site_name' content='Blog by grhkm21'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2022-07-12T23:29:12&#43;08:00'/><meta property='article:modified_time' content='2022-07-12T23:29:12&#43;08:00'/>
 <meta name="twitter:site" content="@grhkm2023">
     <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="Nonlinear Regression (1)">
-<meta name="twitter:description" content="Short article on nonlinear regression, focusing on polynomial models. Suitable for HS students.">
+<meta name="twitter:description" content="Short article on nonlinear regression, focusing on polynomial models. Written for HS students.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -78,7 +78,7 @@
 
     
     <h3 class="article-subtitle">
-        Short article on nonlinear regression, focusing on polynomial models. Suitable for HS students.
+        Short article on nonlinear regression, focusing on polynomial models. Written for HS students.
     </h3>
     
 
@@ -118,7 +118,29 @@
     
 </div>
 </header>
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
 
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function (x) {
+            x.parentElement.classList += 'has-jax'
+        })
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <section class="article-content">
     <h1 id="notes-on-non-linear-regression">Notes on Non-Linear Regression</h1>
 <h2 id="1-linear-regression">1. Linear Regression</h2>
@@ -135,18 +157,19 @@ $$</p>
 E_2(f) := \sqrt{\frac{1}{n}\sum_{i=1}^n r_i^2}
 $$</p>
 <p>The functional $E_2$ is called the Root Mean Square error, abbreviated RMS below. With this notion, we can formalise the problem of linear regression:</p>
-<p>:::success</p>
-<p><strong>Linear Regression:</strong> Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a, b$ such that for the model $f(x) = ax + b$, the RMS</p>
+
+<div class="alert alert-info" role="alert"><p><strong>Linear Regression:</strong> Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a, b$ such that for the model $f(x) = ax + b$, the RMS</p>
 <p>$$
 E_2(f) = \sqrt{\frac{1}{n}\sum_{i=1}^n (y_i - f(x_i))^2}
 $$</p>
 <p>is minimised.</p>
-<p>:::</p>
+</div>
+
 <hr>
 <h2 id="2-polynomial-regression">2. Polynomial Regression</h2>
 <p>With the formalisation, it is easy to generalise to non-linear models. For the purpose of this document, we shall focus on <em>polynomial</em> models, as follows:</p>
-<p>:::success</p>
-<p><strong>(Degree-$k$) Polynomial Regression:</strong> Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a_0, a_1, \ldots, a_k$ such that for the model</p>
+
+<div class="alert alert-success" role="alert"><p><strong>(Degree-$k$) Polynomial Regression:</strong> Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a_0, a_1, \ldots, a_k$ such that for the model</p>
 <p>$$
 f(x) = a_0 + a_1x + a_2x^2 + \ldots + a_kx^k = \sum_{i=0}^k a_ix^i
 $$</p>
@@ -154,14 +177,13 @@ $$</p>
 <p>$$
 E_2(f) = \sqrt{\frac{1}{n}\sum_{i=1}^n (y_i - f(x_i))^2}
 $$</p>
-<p>is minimised.</p>
-<p>:::</p>
+<p>is minimized.</p>
+</div>
+
 <p>To help understand, here is an example.</p>
 <p><strong>Example 1:</strong> Suppose that we have four data points $(0, 1), (1, 5), (2, 7), (4, 4)$, and we wish to closely model this with a quadratic model. Then, $k = 2$ and we wish to find coefficients $a_0, a_1, a_2$ such that</p>
 <p>$$\begin{align*}
-E_2(f) &amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \<br>
-&amp;= \sqrt{\frac{1}{4}\left((1 - f(0))^2 + (5 - f(1))^2 + (7 - f(2))^2 + (4 - f(4))^2\right)} \<br>
-&amp;= \sqrt{\frac{1}{4}(4a_0^2 + 14a_0a_1 + 21a_1^2 + 42a_0a_2 + 146a_1a_2 + 273a_2^2 - 34a_0 - 70a_1 - 194a_2 + 91)}
+E_2(f) &amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \\ &amp;= \sqrt{\frac{1}{4}\left((1 - f(0))^2 + (5 - f(1))^2 + (7 - f(2))^2 + (4 - f(4))^2\right)} \\ &amp;= \sqrt{\frac{1}{4}(4a_0^2 + 14a_0a_1 + 21a_1^2 + 42a_0a_2 + 146a_1a_2 + 273a_2^2 - 34a_0 - 70a_1 - 194a_2 + 91)}
 \end{align*}$$</p>
 <p>is minimised. Of course it looks impossible to solve right now, as we have $3$ variables and a total of $10$ terms to minimise together. However, we will solve the minimisation problem in section 4.</p>
 <p><figure 
@@ -181,23 +203,20 @@ E_2(f) &amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \<br>
 <p>To minimise the absolute mess above, we will require another tool. Recall that in normal calculus, it is find the local minimum any function, say $f(x) = x^3 + 3x^2 - 5$ - we differentiate it to get $f'(x) = 3x^2 + 6x$, then find it&rsquo;s zeroes $f'(x) = 3x(x + 2) \implies x = 0, -2$, and finally check that $f''(x) &gt; 0$ to get that $x = 0$ is a local minimum of $f$. We wish to do something like that with more than one variables!</p>
 <p>This is when Lagrange can help us. In the 18th and early 19th century, Lagrange developed a tool called the Lagrange Multiplier to solve such optimisation problems. The details of <em>when</em> it is applicable is complicated, but for our purpose, we will present a simplified version.</p>
 <p>Firstly, we need a notion of &ldquo;derivative&rdquo; when there are more than one variable. It will be simplier to demonstrate by an example than to rigorously define it. Take a function $f(x, y) = x^2 + 5xy + 3y$. We define the <em>partial derivative with respect to $x$</em>, denoted $\frac{\partial f}{\partial x}$ as taking the normal derivative, except that we treat every variable except $x$ as a constant. In this case, this means $y$ is a constant (like $2$ is), and we get</p>
-<p>$$
-\frac{\partial f}{\partial x} = \underbrace{2x}<em>{x^2} + \underbrace{5y}</em>{5xy} + \underbrace{0}_{3y}
-$$</p>
+<p>$$\frac{\partial f}{\partial x} = \underbrace{2x}_{x^2} + \underbrace{5y}_{5xy} + \underbrace{0}_{3y}$$</p>
 <p>Similarly, we can also do this for other variables:</p>
-<p>$$
-\frac{\partial f}{\partial y} = \underbrace{0}<em>{x^2} + \underbrace{5x}</em>{5xy} + \underbrace{3}_{3y}
-$$</p>
+<p>$$\frac{\partial f}{\partial y} = \underbrace{0}_{x^2} + \underbrace{5x}_{5xy} + \underbrace{3}_{3y}$$</p>
 <p>As you see, this is essentially the same as the normal derivatives - we simply fix one variable and ignore the other variables.</p>
 <p>With this, we can state what Lagrange derived:</p>
-<p>:::success</p>
-<p><strong>Theorem (Simplified):</strong> Suppose that $f$ is a function in terms of $x_1, x_2, \ldots, x_k$. Then, at where $f(x_1, x_2, \ldots, x_k)$ achieves local minimum or maximum, we must have</p>
+
+<div class="alert alert-info" role="alert"><p><strong>Theorem (Simplified):</strong> Suppose that $f$ is a function in terms of $x_1, x_2, \ldots, x_k$. Then, at where $f(x_1, x_2, \ldots, x_k)$ achieves local minimum or maximum, we must have</p>
 <p>$$
 \frac{\partial f}{\partial x_1} = \frac{\partial f}{\partial x_2} = \cdots = \frac{\partial f}{\partial x_k} = 0
 $$</p>
-<p>:::</p>
+</div>
+
 <p>For example, with our function of $f(x, y) = x^2 + 5xy + 3y$, we can find it&rsquo;s local extremas by setting $2x + 5y = 5x + 3 = 0$ and solving the equations.</p>
-<p>With this, we can go back and solve the minimisation problem in Section 2.</p>
+<p>With this, we can go back and solve the minimization problem in Section 2.</p>
 <hr>
 <h2 id="section-4-finding-the-model">Section 4: Finding the Model</h2>
 <p>In Section 2, we arrived at the formalisation of the problem, which requires us to minimise the following scary looking formula:</p>
@@ -214,11 +233,11 @@ $$</p>
 $$</p>
 <p>What does each of these terms equal to? Well, for a particular index $j$,</p>
 <p>$$
-\frac{\partial R_2}{\partial a_j} = \frac{\partial}{\partial a_j} \sum_{i=1}^n (\color{red}{y_i - f(x_i)})^{\color{blue}{2}}
+\frac{\partial R_2}{\partial a_j} = \frac{\partial}{\partial a_j} \sum_{i=1}^n (\color{red}{y_i - f(x_i)})^{\color{cyan}{2}}
 $$</p>
 <p>We can apply the chain rule on the second term. Recall that the normal chain rule states $\frac{d}{dx} f(g(x)) = f'(g(x))\cdot g'(x)$. Here, it is exactly the same. Apply $f(x) = x^2$ and $g(x) = y_i - f(x_i)$,</p>
 <p>$$
-\frac{\partial R_2}{\partial a_j} = \sum_{i=1}^n \underbrace{\color{blue}{2(\color{red}{y_i - f(x_i)})}}_{f'(g)}\cdot\underbrace{\frac{\partial}{\partial a_j}(\color{red}{y_i - f(x_i)})}_{g'} = -\sum_{i=1}^n 2(y_i - f(x_i))\cdot\frac{\partial f}{\partial a_j}(x_i)
+\frac{\partial R_2}{\partial a_j} = \sum_{i=1}^n \underbrace{\color{cyan}{2(\color{red}{y_i - f(x_i)})}}_{f'(g)}\cdot\underbrace{\frac{\partial}{\partial a_j}(\color{red}{y_i - f(x_i)})}_{g'} = -\sum_{i=1}^n 2(y_i - f(x_i))\cdot\frac{\partial f}{\partial a_j}(x_i)
 $$</p>
 <p>Finally, we know that $f(x) = a_0 + a_1x + \cdots + a_kx^k$. Therefore, if we take partial derivative w.r.t. $a_i$, which means treating every other variable as constant, then we are left with $\frac{\partial f}{\partial a_j} = \frac{\partial}{\partial a_j}(a_ix^i + \text{constant}) = x^i$. Therefore,</p>
 <p>$$
@@ -241,73 +260,73 @@ $$</p>
 <p>To aid computation, we coded up a program in a programming language called Sage. It is a library extension of Python. In Sage, solving linear equations are easy: we first transform the coefficients into a <code>Matrix</code>, then call the function <code>.solve_right</code> to solve the equations - see <a class="link" href="https://doc.sagemath.org/html/en/tutorial/tour_linalg.html"  target="_blank" rel="noopener"
     >docs</a> for more details.</p>
 <p>Anyways, here is the final code:</p>
-<pre><code class="language-python=" data-lang="python=">def find_coeffs(points, k):
-    # arguments:
-    # points: [(x_1, y_1), ..., (x_n, y_n)] in an array
-    # k: degree of the polynomial model
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">find_coeffs</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="c1"># arguments:</span>
+    <span class="c1"># points: [(x_1, y_1), ..., (x_n, y_n)] in an array</span>
+    <span class="c1"># k: degree of the polynomial model</span>
     
-    # return values:
-    # - coefficients a_0, a_1, ..., a_k in an array
-    # - also the RMS of the model, E_2(f)
+    <span class="c1"># return values:</span>
+    <span class="c1"># - coefficients a_0, a_1, ..., a_k in an array</span>
+    <span class="c1"># - also the RMS of the model, E_2(f)</span>
 
-    if len(points) &lt; k + 1:
-        raise RuntimeError(&quot;Not enough data points.&quot;)
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&#34;Not enough data points.&#34;</span><span class="p">)</span>
 
-    # computing coefficients of a_j
-    x_coeff_matrix = Matrix(QQ, k + 1, k + 1)
-    x_sum_of_powers = [sum(x^i for x, y in points) for i in range(2 * k + 1)]
-    for i in range(k + 1):
-        for j in range(k + 1):
-            x_coeff_matrix[i, j] = x_sum_of_powers[i + j]
+    <span class="c1"># computing coefficients of a_j</span>
+    <span class="n">x_coeff_matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">x_sum_of_powers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">x_coeff_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_sum_of_powers</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
 
-    # computing the constant terms of y_i
-    y_coeff_matrix = []
-    for i in range(k + 1):
-        y_coeff_matrix.append(sum(y * x^i for x, y in points))
-    y_coeff_matrix = vector(QQ, y_coeff_matrix)
+    <span class="c1"># computing the constant terms of y_i</span>
+    <span class="n">y_coeff_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">y_coeff_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">))</span>
+    <span class="n">y_coeff_matrix</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="n">y_coeff_matrix</span><span class="p">)</span>
 
-    # solving system of linear equations
-    coef = x_coeff_matrix.solve_right(y_coeff_matrix)
+    <span class="c1"># solving system of linear equations</span>
+    <span class="n">coef</span> <span class="o">=</span> <span class="n">x_coeff_matrix</span><span class="o">.</span><span class="n">solve_right</span><span class="p">(</span><span class="n">y_coeff_matrix</span><span class="p">)</span>
 
-    # computing residuals and RMS
-    f = lambda x: sum(a_i * x^i for i, a_i in enumerate(coef))
-    residuals = [y_i - f(x_i) for x_i, y_i in points]
+    <span class="c1"># computing residuals and RMS</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a_i</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coef</span><span class="p">))</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="p">[</span><span class="n">y_i</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">y_i</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
 
-    RMS = sqrt(sum(r^2 for r in residuals) / len(points))
-    return coef.n(), RMS.n()
-
-
-def main():
-    # data points
-    arr = [(0, 1), (1, 5), (2, 7), (4, 4)]
-
-    # linear regression
-    coef, RMS = find_coeffs(arr, 1)
-    print(&quot;coef =&quot;, coef)
-    print(&quot;RMS =&quot;, RMS)
-    print()
-
-    # quadratic regression
-    coef, RMS = find_coeffs(arr, 2)
-    print(&quot;coef =&quot;, coef)
-    print(&quot;RMS =&quot;, RMS)
+    <span class="n">RMS</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">r</span><span class="o">^</span><span class="mi">2</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">residuals</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">coef</span><span class="o">.</span><span class="n">n</span><span class="p">(),</span> <span class="n">RMS</span><span class="o">.</span><span class="n">n</span><span class="p">()</span>
 
 
-if __name__ == &quot;__main__&quot;:
-    main()
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># data points</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+
+    <span class="c1"># linear regression</span>
+    <span class="n">coef</span><span class="p">,</span> <span class="n">RMS</span> <span class="o">=</span> <span class="n">find_coeffs</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;coef =&#34;</span><span class="p">,</span> <span class="n">coef</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;RMS =&#34;</span><span class="p">,</span> <span class="n">RMS</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># quadratic regression</span>
+    <span class="n">coef</span><span class="p">,</span> <span class="n">RMS</span> <span class="o">=</span> <span class="n">find_coeffs</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;coef =&#34;</span><span class="p">,</span> <span class="n">coef</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;RMS =&#34;</span><span class="p">,</span> <span class="n">RMS</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
     
-&quot;&quot;&quot;
-Output:
-
-Linear Regression:
-- coef = (3.20000000000000, 0.600000000000000)
-- RMS = 1.97484176581315
-
-Quadratic Regression:
-- coef = (0.972727272727273, 5.21363636363636, -1.11363636363636)
-- RMS = 0.0476731294622796
-&quot;&quot;&quot;
-</code></pre><hr>
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">Output:
+</span><span class="s2">
+</span><span class="s2">Linear Regression:
+</span><span class="s2">- coef = (3.20000000000000, 0.600000000000000)
+</span><span class="s2">- RMS = 1.97484176581315
+</span><span class="s2">
+</span><span class="s2">Quadratic Regression:
+</span><span class="s2">- coef = (0.972727272727273, 5.21363636363636, -1.11363636363636)
+</span><span class="s2">- RMS = 0.0476731294622796
+</span><span class="s2">&#34;&#34;&#34;</span>
+</code></pre></div><hr>
 <h2 id="6-future">6. Future</h2>
 <p>It is easy to extend the work to other models or using other error measures other than $E_2$, and I would love to investigate this further in other fields such as the $p$-adic integers.</p>
 
@@ -321,28 +340,7 @@ Quadratic Regression:
 
 
     
-        <link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
-            ><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script>
-    window.addEventListener("DOMContentLoaded", () => {
-        renderMathInElement(document.querySelector(`.article-content`), {
-            delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true }
-            ]
-        });})
-</script>
+    
     
 </article>
 

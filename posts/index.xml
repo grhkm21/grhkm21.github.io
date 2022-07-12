@@ -13,7 +13,7 @@
       <pubDate>Tue, 12 Jul 2022 23:29:12 +0800</pubDate>
       
       <guid>https://grhkm21.github.io/posts/pythagorean-triplets-1/</guid>
-      <description>Notes of Pythagorean Triplets This is a short article re-deriving the Tree of (primitive) Pythogrean Triplets, as well as a few interesting generalisations.
+      <description>Notes of Pythagorean Triplets This is a short article re-deriving the Tree of (primitive) Pythagorean Triplets, as well as a few interesting generalisations.
 Firstly, let&amp;rsquo;s begin with the equation $x^2 + y^2 = z^2$. A triplet $(x, y, z)$ satisfying the equation is called a Pythagorean Triplet, abbreviated PT. If we further have that $\gcd(x, y, z) = 1$, then we say that $(x, y, z)$ is a primitive PT, abbreviated PPT.</description>
     </item>
     

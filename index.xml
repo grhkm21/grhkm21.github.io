@@ -14,97 +14,66 @@
         <guid>https://grhkm21.github.io/posts/pythagorean-triplets-1/</guid>
         <description>&lt;h1 id=&#34;notes-of-pythagorean-triplets&#34;&gt;Notes of Pythagorean Triplets&lt;/h1&gt;
 &lt;p&gt;This is a short article re-deriving the &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Tree_of_primitive_Pythagorean_triples&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Tree of (primitive) Pythogrean Triplets&lt;/a&gt;, as well as a few interesting generalisations.&lt;/p&gt;
+    &gt;Tree of (primitive) Pythagorean Triplets&lt;/a&gt;, as well as a few interesting generalisations.&lt;/p&gt;
 &lt;p&gt;Firstly, let&amp;rsquo;s begin with the equation $x^2 + y^2 = z^2$. A triplet $(x, y, z)$ satisfying the equation is called a &lt;em&gt;Pythagorean Triplet&lt;/em&gt;, abbreviated PT. If we further have that $\gcd(x, y, z) = 1$, then we say that $(x, y, z)$ is a &lt;em&gt;primitive&lt;/em&gt; PT, abbreviated PPT.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Theorem 1:&lt;/strong&gt; There are infinitely many PT.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Proof (Incomplete):&lt;/em&gt; Let $x$ be any odd number at least $3$, say $x = 13$. Square it to get $x^2 = 169$. Now, we find two consecutive integers that add up to it. We can see that $84$ and $85$ works, and hence $(x, y, z) = (13, 84, 85)$ works - indeed, $13^2 + 84^2 = 7225 = 85^2$. You can repeat this for any odd $x \geq 3$.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Theorem 2:&lt;/strong&gt; There are infinitely many PPT.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Proof:&lt;/em&gt; Take the PT constructed above, say $(x, y, y + 1)$. Notice that $\gcd(y, y + 1) = 1$, since no numbers divide $y$ and $y + 1$ at the same time other than $1$. Therefore, $\gcd(x, y, y + 1) = \gcd(x, 1) = 1$, and the PT is primitive.&lt;/p&gt;
-&lt;p&gt;However, the method above does not construct &lt;em&gt;every&lt;/em&gt; solution. For example, $(8, 15, 17)$ is missed, since $15$ and $17$ are not consecutive. Therefore, we want to find a way to enumerate all the solutions. Looking at the equation, it seems that we cannot progress further. We can try factorisation by rearranging the terms, but after $x^2 = z^2 - y^2 = (z - y)(z + y)$, we are stuck again.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s look at some of the small PPT for inspiration:&lt;/p&gt;
-&lt;p&gt;$$
-(3, 4, 5), (5, 12, 13), (7, 24, 25), (8, 15, 17), (9, 40, 41), \cdots
-$$&lt;/p&gt;
+&lt;p&gt;However, the method above does not construct &lt;em&gt;every&lt;/em&gt; solution. For example, $(8, 15, 17)$ is missed, since $15$ and $17$ are not consecutive. Therefore, we want to find a way to enumerate all the solutions. Looking at the equation, it seems that we cannot progress further. We can try factorization by rearranging the terms, but after $x^2 = z^2 - y^2 = (z - y)(z + y)$, we are stuck again.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s look at some small PPT for inspiration:&lt;/p&gt;
+&lt;p&gt;$$(3, 4, 5), (5, 12, 13), (7, 24, 25), (8, 15, 17), (9, 40, 41), \cdots$$&lt;/p&gt;
 &lt;p&gt;One observation is that $z &amp;lt; x + y$ for all of them. This is indeed true since $z^2 = x^2 + y^2 &amp;lt; (x + y)^2$. An idea we might try is to use the substitution $z \mapsto x + y - w$. Substituting, we get&lt;/p&gt;
 &lt;p&gt;$$\begin{align*}
-x^2 + y^2 &amp;amp;= z^2 \&lt;br&gt;
-x^2 + y^2 &amp;amp;= (x + y - w)^2 \&lt;br&gt;
-x^2 + y^2 &amp;amp;= x^2 + y^2 + w^2 + 2xy - 2wx - 2wy \&lt;br&gt;
-0 &amp;amp;= w^2 - 2wx - 2wy + 2xy \&lt;br&gt;
-w^2 &amp;amp;= 2w^2 - 2wx - 2wy + 2xy \&lt;br&gt;
-w^2 &amp;amp;= 2w(w - x) - 2y(w - x) \&lt;br&gt;
-w^2 &amp;amp;= 2(w - x)(w - y) \&lt;br&gt;
-w^2 &amp;amp;= 2(x - w)(y - w)
+x^2 + y^2 &amp;amp;= z^2 \\ x^2 + y^2 &amp;amp;= (x + y - w)^2 \\ x^2 + y^2 &amp;amp;= x^2 + y^2 + w^2 + 2xy - 2wx - 2wy \\ 0 &amp;amp;= w^2 - 2wx - 2wy + 2xy \\ w^2 &amp;amp;= 2w^2 - 2wx - 2wy + 2xy \\ w^2 &amp;amp;= 2w(w - x) - 2y(w - x) \\ w^2 &amp;amp;= 2(w - x)(w - y) \\ w^2 &amp;amp;= 2(x - w)(y - w)
 \end{align*}$$&lt;/p&gt;
-&lt;p&gt;Wow, we got an interesting factorisation this time! To simplify our notation, let&amp;rsquo;s do one more substitution: By substituting $x \mapsto x + w$ and $y \mapsto y + w$, our left hand side will simplify to $2xy$. Let&amp;rsquo;s rename the variable a bit, and our new substitution becomes $f: (x, y, z) \mapsto (u + w, v + w, u + v + w)$:&lt;/p&gt;
+&lt;p&gt;Wow, we got an interesting factorization this time! To simplify our notation, let&amp;rsquo;s do one more substitution: By substituting $x \mapsto x + w$ and $y \mapsto y + w$, our left-hand side will simplify to $2xy$. Let&amp;rsquo;s rename the variable a bit, and our new substitution becomes $f: (x, y, z) \mapsto (u + w, v + w, u + v + w)$:&lt;/p&gt;
 &lt;p&gt;$$\begin{align*}
-(u + w)^2 + (v + w)^2 &amp;amp;= (u + v + w)^2 \&lt;br&gt;
-w^2 &amp;amp;= 2uv
+(u + w)^2 + (v + w)^2 &amp;amp;= (u + v + w)^2 \\ w^2 &amp;amp;= 2uv
 \end{align*}$$&lt;/p&gt;
 &lt;p&gt;This is a very simple equation! Let&amp;rsquo;s try it out. For $w = 6$, we get $uv = 18$. Then if we take $(u, v) = (2, 9)$, we get $(u + w, v + w, u + v + w) = (8, 15, 17)$, which is indeed a PT!&lt;/p&gt;
 &lt;p&gt;Alright, so this is a cool equation, but it doesn&amp;rsquo;t help us construct every solution yet, so let&amp;rsquo;s investigate it further.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s take our solution of $8^2 + 15^2 = 17^2$ and $(u, v, w) = (2, 9, 6)$. How can we possibly generate more solutions from this? Here is the trick: taking the negative of any of $x, y, z$ also works. That is, we have&lt;/p&gt;
 &lt;p&gt;$$\begin{align*}
-8^2 + 15^2 &amp;amp;= 17^2 \&lt;br&gt;
-(-8)^2 + 15^2 &amp;amp;= 17^2 \&lt;br&gt;
-8^2 + (-15)^2 &amp;amp;= 17^2 \&lt;br&gt;
-(-8)^2 + (-15)^2 &amp;amp;= 17^2
+8^2 + 15^2 &amp;amp;= 17^2 \\ (-8)^2 + 15^2 &amp;amp;= 17^2 \\ 8^2 + (-15)^2 &amp;amp;= 17^2 \\ (-8)^2 + (-15)^2 &amp;amp;= 17^2
 \end{align*}$$&lt;/p&gt;
 &lt;p&gt;I know this looks trivial, but let&amp;rsquo;s continue this thought. From these PT, let&amp;rsquo;s compute the $(u, v, w)$ parameters. To do this, let&amp;rsquo;s solve the following equations:&lt;/p&gt;
-&lt;p&gt;$$\begin{cases}\begin{align*}
-u + \qquad w &amp;amp;= x \&lt;br&gt;
-v + w &amp;amp;= y \&lt;br&gt;
-u + v + w &amp;amp;= z
-\end{align*}\end{cases} \implies (u, v, w) = (-y + z, -x + z, x + y - z)$$&lt;/p&gt;
+&lt;p&gt;$$\begin{cases}\begin{align*} u + \qquad w &amp;amp;= x \\ v + w &amp;amp;= y \\ u + v + w &amp;amp;= z \end{align*}\end{cases} \implies (u, v, w) = (-y + z, -x + z, x + y - z $$&lt;/p&gt;
 &lt;p&gt;Now, what does $(x, y, z) = (\pm 8, \pm 15, \pm 17)$ give?&lt;/p&gt;
-&lt;p&gt;$$\begin{align*}
-(x, y, z) = (8, 15, 17) &amp;amp;\implies (u, v, w) = (2, 9, 6) \&lt;br&gt;
-(x, y, z) = (-8, 15, 17) &amp;amp;\implies (u, v, w) = (2, 25, -10) \&lt;br&gt;
-(x, y, z) = (8, -15, 17) &amp;amp;\implies (u, v, w) = (32, 9, -24) \&lt;br&gt;
-(x, y, z) = (-8, -15, 17) &amp;amp;\implies (u, v, w) = (32, 25, -40)
-\end{align*}$$&lt;/p&gt;
-&lt;p&gt;Well, now we are getting some new numbers. However, these still don&amp;rsquo;t help us get new solutions - recovering the $(x, y, z)$ for these values of $(u, v, w)$ will just give us the left hand side! However, there is one final trick.&lt;/p&gt;
+&lt;p&gt;$$\begin{align*} (x, y, z) = (8, 15, 17) &amp;amp;\implies (u, v, w) = (2, 9, 6) \\ (x, y, z) = (-8, 15, 17) &amp;amp;\implies (u, v, w) = (2, 25, -10) \\ (x, y, z) = (8, -15, 17) &amp;amp;\implies (u, v, w) = (32, 9, -24) \\ (x, y, z) = (-8, -15, 17) &amp;amp;\implies (u, v, w) = (32, 25, -40) \end{align*}$$&lt;/p&gt;
+&lt;p&gt;Well, now we are getting some new numbers. However, these still don&amp;rsquo;t help us get new solutions - recovering the $(x, y, z)$ for these values of $(u, v, w)$ will just give us the left-hand side! However, there is one final trick.&lt;/p&gt;
 &lt;p&gt;Recall that these values satisfy $w^2 = 2uv$. This means that if $(u, v, w)$ is a solution, then so is $(u, v, -w)$! Let&amp;rsquo;s try that on the values above:&lt;/p&gt;
-&lt;p&gt;$$\begin{align*}
-(u, v, w) &amp;amp;= (2, 9, \color{red}{-}6) \implies (x, y, z) = (-4, 3, 5) \&lt;br&gt;
-(u, v, w) &amp;amp;= (2, 25, \color{red}{+}10) \implies (x, y, z) = (12, 35, 37) \&lt;br&gt;
-(u, v, w) &amp;amp;= (32, 9, \color{red}{+}24) \implies (x, y, z) = (56, 33, 65) \&lt;br&gt;
-(u, v, w) &amp;amp;= (32, 25, \color{red}{+}40) \implies (x, y, z) = (72, 65, 97)
-\end{align*}$$&lt;/p&gt;
+&lt;p&gt;$$\begin{align*}(u, v, w) &amp;amp;= (2, 9, {\color{red}{-}} 6) \implies (x, y, z) = (-4, 3, 5) \\ (u, v, w) &amp;amp;= (2, 25, {\color{red}{+}} 10) \implies (x, y, z) = (12, 35, 37) \\ (u, v, w) &amp;amp;= (32, 9, {\color{red}{+}} 24) \implies (x, y, z) = (56, 33, 65) \\ (u, v, w) &amp;amp;= (32, 25, {\color{red}{+}} 40) \implies (x, y, z) = (72, 65, 97)\end{align*}$$&lt;/p&gt;
 &lt;p&gt;Woohoo! We got some new solutions! Note that the first row gives a &amp;ldquo;smaller&amp;rdquo; solution. This is because this method produces new solutions only when $w &amp;gt; 0$. Now, let&amp;rsquo;s generalise this technique. For a given solution of $(x, y, z)$, we do the following&lt;/p&gt;
+&lt;p&gt;$$\begin{alignat*}{5}
+(x, y, z) &amp;amp;\to (\pm x, \pm y, z) &amp;amp;&amp;amp;\to (u, v, w) &amp;amp;&amp;amp;\to (u, v, -w) &amp;amp;&amp;amp;\to (x&#39;, y&#39;, z&#39;) \\\\ \begin{pmatrix} x \\ y \\ z \end{pmatrix} &amp;amp;\to \begin{pmatrix} -x \\ y \\ z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} -y + z \\ x + z \\ -x + y - z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} -y + z  \\ x + z  \\ x - y + z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} x - 2y + 2z \\ 2x - y + 2z \\ 2x - 2y + 3z \end{pmatrix} \\\\ \begin{pmatrix} x \\ y \\ z \end{pmatrix} &amp;amp;\to \begin{pmatrix} x \\ -y \\ z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} y + z \\ -x + z \\ x - y - z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} y + z \\ -x + z \\ -x + y + z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} -x + 2y + 2z \\ -2x + y + 2z \\ -2x + 2y + 3z \end{pmatrix} \\\\\begin{pmatrix} x \\ y \\ z \end{pmatrix} &amp;amp;\to \begin{pmatrix} -x \\ -y \\ z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} y + z \\ x + z \\ -x - y - z\end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} y + z \\ x + z \\ x + y + z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} x + 2y + 2z \\ 2x + y + 2z \\ 2x + 2y + 3z \end{pmatrix}\end{alignat*}$$&lt;/p&gt;
+&lt;p&gt;Note that this gives us a way to generate new PT from old ones. We can also write this in a more compact way using matrix multiplication, which is how we summarize below:&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34;&gt;&lt;p&gt;&lt;strong&gt;Theorem:&lt;/strong&gt; Let $M_1, M_2, M_3$ be the matrices&lt;/p&gt;
 &lt;p&gt;$$
-\begin{alignat*}{5}
-(x, y, z) &amp;amp;\to (\pm x, \pm y, z) &amp;amp;&amp;amp;\to (u, v, w) &amp;amp;&amp;amp;\to (u, v, -w) &amp;amp;&amp;amp;\to (x&#39;, y&#39;, z&#39;) \\&lt;br&gt;
-\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;amp;\to \begin{pmatrix} -x \ y \ z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} -y + z \ x + z \ -x + y - z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} -y + z \ x + z \ x - y + z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} x - 2y + 2z \ 2x - y + 2z \ 2x - 2y + 3z \end{pmatrix} \\&lt;br&gt;
-\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;amp;\to \begin{pmatrix} x \ -y \ z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} y + z \ -x + z \ x - y - z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} y + z \ -x + z \ -x + y + z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} -x + 2y + 2z \ -2x + y + 2z \ -2x + 2y + 3z \end{pmatrix} \\&lt;br&gt;
-\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;amp;\to \begin{pmatrix} -x \ -y \ z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} y + z \ x + z \ -x - y - z\end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} y + z \ x + z \ x + y + z \end{pmatrix} &amp;amp;&amp;amp;\to \begin{pmatrix} x + 2y + 2z \ 2x + y + 2z \ 2x + 2y + 3z \end{pmatrix}
-\end{alignat*}
+M_1 = \begin{pmatrix} 1 &amp;amp; -2 &amp;amp; 2 \\ 2 &amp;amp; -1 &amp;amp; 2 \\ 2 &amp;amp; -2 &amp;amp; 3 \end{pmatrix}, M_2 = \begin{pmatrix} -1 &amp;amp; 2 &amp;amp; 2 \\ -2 &amp;amp; 1 &amp;amp; 2 \\ -2 &amp;amp; 2 &amp;amp; 3 \end{pmatrix}, M_3 = \begin{pmatrix} 1 &amp;amp; 2 &amp;amp; 2 \\ 2 &amp;amp; 1 &amp;amp; 2 \\ 2 &amp;amp; 2 &amp;amp; 3 \end{pmatrix}
 $$&lt;/p&gt;
-&lt;p&gt;Note that this gives us a way to generate new PT from old ones. We can also write this in a more compact way using matrix multiplication, which is how we summarise below:&lt;/p&gt;
-&lt;p&gt;:::success&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Theorem:&lt;/strong&gt; Let $M_1, M_2, M_3$ be the matrices&lt;/p&gt;
-&lt;p&gt;$$
-M_1 = \begin{pmatrix} 1 &amp;amp; -2 &amp;amp; 2 \ 2 &amp;amp; -1 &amp;amp; 2 \ 2 &amp;amp; -2 &amp;amp; 3 \end{pmatrix}, M_2 = \begin{pmatrix} -1 &amp;amp; 2 &amp;amp; 2 \ -2 &amp;amp; 1 &amp;amp; 2 \ -2 &amp;amp; 2 &amp;amp; 3 \end{pmatrix}, M_3 = \begin{pmatrix} 1 &amp;amp; 2 &amp;amp; 2 \ 2 &amp;amp; 1 &amp;amp; 2 \ 2 &amp;amp; 2 &amp;amp; 3 \end{pmatrix}
-$$&lt;/p&gt;
-&lt;p&gt;Then if $\vec{v} = \begin{pmatrix} x \ y \ z \end{pmatrix}$ is a Pythagorean Triplet, so is $M_1\vec{v}, M_2\vec{v}$ and $M_3\vec{v}$.&lt;/p&gt;
-&lt;p&gt;:::&lt;/p&gt;
+&lt;p&gt;Then if $\vec{v} = \begin{pmatrix} x \\ y \\ z \end{pmatrix}$ is a Pythagorean Triplet, so is $M_1\vec{v}, M_2\vec{v}$ and $M_3\vec{v}$.&lt;/p&gt;
+&lt;/div&gt;
+
 &lt;p&gt;Finally, I would state the following result without proof. I might add the proof in the future:&lt;/p&gt;
-&lt;p&gt;:::success&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Theorem (Berggren, 1934):&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt;&lt;p&gt;&lt;strong&gt;Theorem (Berggren, 1934):&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;If $\vec{v}$ is a primitive Pythagorean Triplet (PPT), so is $M_1\vec{v}, M_2\vec{v}$ and $M_3\vec{v}$.&lt;/li&gt;
 &lt;li&gt;For each PPT $\vec{v}$, there exists a unique finite product of the matrices, say $M = \prod_{i=1}^k M_{j_i}$, $1\leq j_i\leq 3$, such that&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;$$
-\vec{v} = M\begin{pmatrix} 3 \ 4 \ 5 \end{pmatrix}
+\vec{v} = M\begin{pmatrix} 3 \\ 4 \\ 5 \end{pmatrix}
 $$&lt;/p&gt;
-&lt;p&gt;:::&lt;/p&gt;
+&lt;/div&gt;
+
 &lt;p&gt;What this means is that these matrices generate &lt;em&gt;every&lt;/em&gt; primitive Pythagorean Triplet. Since the word of matrices is unique, this also means that the set of PPT is a partially ordered set (poset)!&lt;/p&gt;
 &lt;p&gt;Finally, here are some exercises for the reader:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Apart from the transformation $w \mapsto -w$, we also have $(u, v) \mapsto (-u, -v)$. Verify that it does not generate larger solutions.&lt;/li&gt;
 &lt;li&gt;Prove (1) of Berggren&amp;rsquo;s Theorem.&lt;/li&gt;
-&lt;li&gt;Prove (2) of Berggren&amp;rsquo;s Theorem. (&lt;em&gt;Hint: Uniqueness is easy. Prove existance by contradiction.&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;Prove (2) of Berggren&amp;rsquo;s Theorem. (&lt;em&gt;Hint: Uniqueness is easy. Prove existence by contradiction.&lt;/em&gt;)&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         </item>
@@ -129,18 +98,19 @@ $$&lt;/p&gt;
 E_2(f) := \sqrt{\frac{1}{n}\sum_{i=1}^n r_i^2}
 $$&lt;/p&gt;
 &lt;p&gt;The functional $E_2$ is called the Root Mean Square error, abbreviated RMS below. With this notion, we can formalise the problem of linear regression:&lt;/p&gt;
-&lt;p&gt;:::success&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Linear Regression:&lt;/strong&gt; Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a, b$ such that for the model $f(x) = ax + b$, the RMS&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34;&gt;&lt;p&gt;&lt;strong&gt;Linear Regression:&lt;/strong&gt; Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a, b$ such that for the model $f(x) = ax + b$, the RMS&lt;/p&gt;
 &lt;p&gt;$$
 E_2(f) = \sqrt{\frac{1}{n}\sum_{i=1}^n (y_i - f(x_i))^2}
 $$&lt;/p&gt;
 &lt;p&gt;is minimised.&lt;/p&gt;
-&lt;p&gt;:::&lt;/p&gt;
+&lt;/div&gt;
+
 &lt;hr&gt;
 &lt;h2 id=&#34;2-polynomial-regression&#34;&gt;2. Polynomial Regression&lt;/h2&gt;
 &lt;p&gt;With the formalisation, it is easy to generalise to non-linear models. For the purpose of this document, we shall focus on &lt;em&gt;polynomial&lt;/em&gt; models, as follows:&lt;/p&gt;
-&lt;p&gt;:::success&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;(Degree-$k$) Polynomial Regression:&lt;/strong&gt; Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a_0, a_1, \ldots, a_k$ such that for the model&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-success&#34; role=&#34;alert&#34;&gt;&lt;p&gt;&lt;strong&gt;(Degree-$k$) Polynomial Regression:&lt;/strong&gt; Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a_0, a_1, \ldots, a_k$ such that for the model&lt;/p&gt;
 &lt;p&gt;$$
 f(x) = a_0 + a_1x + a_2x^2 + \ldots + a_kx^k = \sum_{i=0}^k a_ix^i
 $$&lt;/p&gt;
@@ -148,14 +118,13 @@ $$&lt;/p&gt;
 &lt;p&gt;$$
 E_2(f) = \sqrt{\frac{1}{n}\sum_{i=1}^n (y_i - f(x_i))^2}
 $$&lt;/p&gt;
-&lt;p&gt;is minimised.&lt;/p&gt;
-&lt;p&gt;:::&lt;/p&gt;
+&lt;p&gt;is minimized.&lt;/p&gt;
+&lt;/div&gt;
+
 &lt;p&gt;To help understand, here is an example.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Example 1:&lt;/strong&gt; Suppose that we have four data points $(0, 1), (1, 5), (2, 7), (4, 4)$, and we wish to closely model this with a quadratic model. Then, $k = 2$ and we wish to find coefficients $a_0, a_1, a_2$ such that&lt;/p&gt;
 &lt;p&gt;$$\begin{align*}
-E_2(f) &amp;amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \&lt;br&gt;
-&amp;amp;= \sqrt{\frac{1}{4}\left((1 - f(0))^2 + (5 - f(1))^2 + (7 - f(2))^2 + (4 - f(4))^2\right)} \&lt;br&gt;
-&amp;amp;= \sqrt{\frac{1}{4}(4a_0^2 + 14a_0a_1 + 21a_1^2 + 42a_0a_2 + 146a_1a_2 + 273a_2^2 - 34a_0 - 70a_1 - 194a_2 + 91)}
+E_2(f) &amp;amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \\ &amp;amp;= \sqrt{\frac{1}{4}\left((1 - f(0))^2 + (5 - f(1))^2 + (7 - f(2))^2 + (4 - f(4))^2\right)} \\ &amp;amp;= \sqrt{\frac{1}{4}(4a_0^2 + 14a_0a_1 + 21a_1^2 + 42a_0a_2 + 146a_1a_2 + 273a_2^2 - 34a_0 - 70a_1 - 194a_2 + 91)}
 \end{align*}$$&lt;/p&gt;
 &lt;p&gt;is minimised. Of course it looks impossible to solve right now, as we have $3$ variables and a total of $10$ terms to minimise together. However, we will solve the minimisation problem in section 4.&lt;/p&gt;
 &lt;p&gt;&lt;figure 
@@ -175,23 +144,20 @@ E_2(f) &amp;amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \&lt;br&gt;
 &lt;p&gt;To minimise the absolute mess above, we will require another tool. Recall that in normal calculus, it is find the local minimum any function, say $f(x) = x^3 + 3x^2 - 5$ - we differentiate it to get $f&#39;(x) = 3x^2 + 6x$, then find it&amp;rsquo;s zeroes $f&#39;(x) = 3x(x + 2) \implies x = 0, -2$, and finally check that $f&#39;&#39;(x) &amp;gt; 0$ to get that $x = 0$ is a local minimum of $f$. We wish to do something like that with more than one variables!&lt;/p&gt;
 &lt;p&gt;This is when Lagrange can help us. In the 18th and early 19th century, Lagrange developed a tool called the Lagrange Multiplier to solve such optimisation problems. The details of &lt;em&gt;when&lt;/em&gt; it is applicable is complicated, but for our purpose, we will present a simplified version.&lt;/p&gt;
 &lt;p&gt;Firstly, we need a notion of &amp;ldquo;derivative&amp;rdquo; when there are more than one variable. It will be simplier to demonstrate by an example than to rigorously define it. Take a function $f(x, y) = x^2 + 5xy + 3y$. We define the &lt;em&gt;partial derivative with respect to $x$&lt;/em&gt;, denoted $\frac{\partial f}{\partial x}$ as taking the normal derivative, except that we treat every variable except $x$ as a constant. In this case, this means $y$ is a constant (like $2$ is), and we get&lt;/p&gt;
-&lt;p&gt;$$
-\frac{\partial f}{\partial x} = \underbrace{2x}&lt;em&gt;{x^2} + \underbrace{5y}&lt;/em&gt;{5xy} + \underbrace{0}_{3y}
-$$&lt;/p&gt;
+&lt;p&gt;$$\frac{\partial f}{\partial x} = \underbrace{2x}_{x^2} + \underbrace{5y}_{5xy} + \underbrace{0}_{3y}$$&lt;/p&gt;
 &lt;p&gt;Similarly, we can also do this for other variables:&lt;/p&gt;
-&lt;p&gt;$$
-\frac{\partial f}{\partial y} = \underbrace{0}&lt;em&gt;{x^2} + \underbrace{5x}&lt;/em&gt;{5xy} + \underbrace{3}_{3y}
-$$&lt;/p&gt;
+&lt;p&gt;$$\frac{\partial f}{\partial y} = \underbrace{0}_{x^2} + \underbrace{5x}_{5xy} + \underbrace{3}_{3y}$$&lt;/p&gt;
 &lt;p&gt;As you see, this is essentially the same as the normal derivatives - we simply fix one variable and ignore the other variables.&lt;/p&gt;
 &lt;p&gt;With this, we can state what Lagrange derived:&lt;/p&gt;
-&lt;p&gt;:::success&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Theorem (Simplified):&lt;/strong&gt; Suppose that $f$ is a function in terms of $x_1, x_2, \ldots, x_k$. Then, at where $f(x_1, x_2, \ldots, x_k)$ achieves local minimum or maximum, we must have&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34;&gt;&lt;p&gt;&lt;strong&gt;Theorem (Simplified):&lt;/strong&gt; Suppose that $f$ is a function in terms of $x_1, x_2, \ldots, x_k$. Then, at where $f(x_1, x_2, \ldots, x_k)$ achieves local minimum or maximum, we must have&lt;/p&gt;
 &lt;p&gt;$$
 \frac{\partial f}{\partial x_1} = \frac{\partial f}{\partial x_2} = \cdots = \frac{\partial f}{\partial x_k} = 0
 $$&lt;/p&gt;
-&lt;p&gt;:::&lt;/p&gt;
+&lt;/div&gt;
+
 &lt;p&gt;For example, with our function of $f(x, y) = x^2 + 5xy + 3y$, we can find it&amp;rsquo;s local extremas by setting $2x + 5y = 5x + 3 = 0$ and solving the equations.&lt;/p&gt;
-&lt;p&gt;With this, we can go back and solve the minimisation problem in Section 2.&lt;/p&gt;
+&lt;p&gt;With this, we can go back and solve the minimization problem in Section 2.&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;section-4-finding-the-model&#34;&gt;Section 4: Finding the Model&lt;/h2&gt;
 &lt;p&gt;In Section 2, we arrived at the formalisation of the problem, which requires us to minimise the following scary looking formula:&lt;/p&gt;
@@ -208,11 +174,11 @@ $$&lt;/p&gt;
 $$&lt;/p&gt;
 &lt;p&gt;What does each of these terms equal to? Well, for a particular index $j$,&lt;/p&gt;
 &lt;p&gt;$$
-\frac{\partial R_2}{\partial a_j} = \frac{\partial}{\partial a_j} \sum_{i=1}^n (\color{red}{y_i - f(x_i)})^{\color{blue}{2}}
+\frac{\partial R_2}{\partial a_j} = \frac{\partial}{\partial a_j} \sum_{i=1}^n (\color{red}{y_i - f(x_i)})^{\color{cyan}{2}}
 $$&lt;/p&gt;
 &lt;p&gt;We can apply the chain rule on the second term. Recall that the normal chain rule states $\frac{d}{dx} f(g(x)) = f&#39;(g(x))\cdot g&#39;(x)$. Here, it is exactly the same. Apply $f(x) = x^2$ and $g(x) = y_i - f(x_i)$,&lt;/p&gt;
 &lt;p&gt;$$
-\frac{\partial R_2}{\partial a_j} = \sum_{i=1}^n \underbrace{\color{blue}{2(\color{red}{y_i - f(x_i)})}}_{f&#39;(g)}\cdot\underbrace{\frac{\partial}{\partial a_j}(\color{red}{y_i - f(x_i)})}_{g&#39;} = -\sum_{i=1}^n 2(y_i - f(x_i))\cdot\frac{\partial f}{\partial a_j}(x_i)
+\frac{\partial R_2}{\partial a_j} = \sum_{i=1}^n \underbrace{\color{cyan}{2(\color{red}{y_i - f(x_i)})}}_{f&#39;(g)}\cdot\underbrace{\frac{\partial}{\partial a_j}(\color{red}{y_i - f(x_i)})}_{g&#39;} = -\sum_{i=1}^n 2(y_i - f(x_i))\cdot\frac{\partial f}{\partial a_j}(x_i)
 $$&lt;/p&gt;
 &lt;p&gt;Finally, we know that $f(x) = a_0 + a_1x + \cdots + a_kx^k$. Therefore, if we take partial derivative w.r.t. $a_i$, which means treating every other variable as constant, then we are left with $\frac{\partial f}{\partial a_j} = \frac{\partial}{\partial a_j}(a_ix^i + \text{constant}) = x^i$. Therefore,&lt;/p&gt;
 &lt;p&gt;$$
@@ -235,73 +201,73 @@ $$&lt;/p&gt;
 &lt;p&gt;To aid computation, we coded up a program in a programming language called Sage. It is a library extension of Python. In Sage, solving linear equations are easy: we first transform the coefficients into a &lt;code&gt;Matrix&lt;/code&gt;, then call the function &lt;code&gt;.solve_right&lt;/code&gt; to solve the equations - see &lt;a class=&#34;link&#34; href=&#34;https://doc.sagemath.org/html/en/tutorial/tour_linalg.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;docs&lt;/a&gt; for more details.&lt;/p&gt;
 &lt;p&gt;Anyways, here is the final code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python=&#34; data-lang=&#34;python=&#34;&gt;def find_coeffs(points, k):
-    # arguments:
-    # points: [(x_1, y_1), ..., (x_n, y_n)] in an array
-    # k: degree of the polynomial model
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;find_coeffs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;points&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# arguments:&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# points: [(x_1, y_1), ..., (x_n, y_n)] in an array&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# k: degree of the polynomial model&lt;/span&gt;
     
-    # return values:
-    # - coefficients a_0, a_1, ..., a_k in an array
-    # - also the RMS of the model, E_2(f)
+    &lt;span class=&#34;c1&#34;&gt;# return values:&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# - coefficients a_0, a_1, ..., a_k in an array&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# - also the RMS of the model, E_2(f)&lt;/span&gt;
 
-    if len(points) &amp;lt; k + 1:
-        raise RuntimeError(&amp;quot;Not enough data points.&amp;quot;)
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;points&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;raise&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;RuntimeError&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Not enough data points.&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
-    # computing coefficients of a_j
-    x_coeff_matrix = Matrix(QQ, k + 1, k + 1)
-    x_sum_of_powers = [sum(x^i for x, y in points) for i in range(2 * k + 1)]
-    for i in range(k + 1):
-        for j in range(k + 1):
-            x_coeff_matrix[i, j] = x_sum_of_powers[i + j]
+    &lt;span class=&#34;c1&#34;&gt;# computing coefficients of a_j&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;x_coeff_matrix&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Matrix&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;QQ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;x_sum_of_powers&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;points&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;x_coeff_matrix&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_sum_of_powers&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
 
-    # computing the constant terms of y_i
-    y_coeff_matrix = []
-    for i in range(k + 1):
-        y_coeff_matrix.append(sum(y * x^i for x, y in points))
-    y_coeff_matrix = vector(QQ, y_coeff_matrix)
+    &lt;span class=&#34;c1&#34;&gt;# computing the constant terms of y_i&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;y_coeff_matrix&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;y_coeff_matrix&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;points&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;y_coeff_matrix&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;QQ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y_coeff_matrix&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
-    # solving system of linear equations
-    coef = x_coeff_matrix.solve_right(y_coeff_matrix)
+    &lt;span class=&#34;c1&#34;&gt;# solving system of linear equations&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;coef&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_coeff_matrix&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;solve_right&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y_coeff_matrix&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
-    # computing residuals and RMS
-    f = lambda x: sum(a_i * x^i for i, a_i in enumerate(coef))
-    residuals = [y_i - f(x_i) for x_i, y_i in points]
+    &lt;span class=&#34;c1&#34;&gt;# computing residuals and RMS&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;f&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;lambda&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;coef&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;residuals&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;points&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
 
-    RMS = sqrt(sum(r^2 for r in residuals) / len(points))
-    return coef.n(), RMS.n()
-
-
-def main():
-    # data points
-    arr = [(0, 1), (1, 5), (2, 7), (4, 4)]
-
-    # linear regression
-    coef, RMS = find_coeffs(arr, 1)
-    print(&amp;quot;coef =&amp;quot;, coef)
-    print(&amp;quot;RMS =&amp;quot;, RMS)
-    print()
-
-    # quadratic regression
-    coef, RMS = find_coeffs(arr, 2)
-    print(&amp;quot;coef =&amp;quot;, coef)
-    print(&amp;quot;RMS =&amp;quot;, RMS)
+    &lt;span class=&#34;n&#34;&gt;RMS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sqrt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;r&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;residuals&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;points&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;coef&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RMS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 
 
-if __name__ == &amp;quot;__main__&amp;quot;:
-    main()
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# data points&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;arr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# linear regression&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;coef&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RMS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;find_coeffs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;arr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;coef =&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;coef&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;RMS =&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RMS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# quadratic regression&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;coef&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RMS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;find_coeffs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;arr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;coef =&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;coef&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;RMS =&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RMS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;__name__&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
     
-&amp;quot;&amp;quot;&amp;quot;
-Output:
-
-Linear Regression:
-- coef = (3.20000000000000, 0.600000000000000)
-- RMS = 1.97484176581315
-
-Quadratic Regression:
-- coef = (0.972727272727273, 5.21363636363636, -1.11363636363636)
-- RMS = 0.0476731294622796
-&amp;quot;&amp;quot;&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;Output:
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;Linear Regression:
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;- coef = (3.20000000000000, 0.600000000000000)
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;- RMS = 1.97484176581315
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;Quadratic Regression:
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;- coef = (0.972727272727273, 5.21363636363636, -1.11363636363636)
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;- RMS = 0.0476731294622796
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h2 id=&#34;6-future&#34;&gt;6. Future&lt;/h2&gt;
 &lt;p&gt;It is easy to extend the work to other models or using other error measures other than $E_2$, and I would love to investigate this further in other fields such as the $p$-adic integers.&lt;/p&gt;
 </description>

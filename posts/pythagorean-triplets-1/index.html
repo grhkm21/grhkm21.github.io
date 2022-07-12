@@ -177,7 +177,7 @@
 
 
                 <time class="article-time--reading">
-                    8 minute read
+                    7 minute read
                 </time>
             </div>
         
@@ -185,101 +185,92 @@
     
 </div>
 </header>
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
 
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function (x) {
+            x.parentElement.classList += 'has-jax'
+        })
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <section class="article-content">
     <h1 id="notes-of-pythagorean-triplets">Notes of Pythagorean Triplets</h1>
 <p>This is a short article re-deriving the <a class="link" href="https://en.wikipedia.org/wiki/Tree_of_primitive_Pythagorean_triples"  target="_blank" rel="noopener"
-    >Tree of (primitive) Pythogrean Triplets</a>, as well as a few interesting generalisations.</p>
+    >Tree of (primitive) Pythagorean Triplets</a>, as well as a few interesting generalisations.</p>
 <p>Firstly, let&rsquo;s begin with the equation $x^2 + y^2 = z^2$. A triplet $(x, y, z)$ satisfying the equation is called a <em>Pythagorean Triplet</em>, abbreviated PT. If we further have that $\gcd(x, y, z) = 1$, then we say that $(x, y, z)$ is a <em>primitive</em> PT, abbreviated PPT.</p>
 <p><strong>Theorem 1:</strong> There are infinitely many PT.</p>
 <p><em>Proof (Incomplete):</em> Let $x$ be any odd number at least $3$, say $x = 13$. Square it to get $x^2 = 169$. Now, we find two consecutive integers that add up to it. We can see that $84$ and $85$ works, and hence $(x, y, z) = (13, 84, 85)$ works - indeed, $13^2 + 84^2 = 7225 = 85^2$. You can repeat this for any odd $x \geq 3$.</p>
 <p><strong>Theorem 2:</strong> There are infinitely many PPT.</p>
 <p><em>Proof:</em> Take the PT constructed above, say $(x, y, y + 1)$. Notice that $\gcd(y, y + 1) = 1$, since no numbers divide $y$ and $y + 1$ at the same time other than $1$. Therefore, $\gcd(x, y, y + 1) = \gcd(x, 1) = 1$, and the PT is primitive.</p>
-<p>However, the method above does not construct <em>every</em> solution. For example, $(8, 15, 17)$ is missed, since $15$ and $17$ are not consecutive. Therefore, we want to find a way to enumerate all the solutions. Looking at the equation, it seems that we cannot progress further. We can try factorisation by rearranging the terms, but after $x^2 = z^2 - y^2 = (z - y)(z + y)$, we are stuck again.</p>
-<p>Let&rsquo;s look at some of the small PPT for inspiration:</p>
-<p>$$
-(3, 4, 5), (5, 12, 13), (7, 24, 25), (8, 15, 17), (9, 40, 41), \cdots
-$$</p>
+<p>However, the method above does not construct <em>every</em> solution. For example, $(8, 15, 17)$ is missed, since $15$ and $17$ are not consecutive. Therefore, we want to find a way to enumerate all the solutions. Looking at the equation, it seems that we cannot progress further. We can try factorization by rearranging the terms, but after $x^2 = z^2 - y^2 = (z - y)(z + y)$, we are stuck again.</p>
+<p>Let&rsquo;s look at some small PPT for inspiration:</p>
+<p>$$(3, 4, 5), (5, 12, 13), (7, 24, 25), (8, 15, 17), (9, 40, 41), \cdots$$</p>
 <p>One observation is that $z &lt; x + y$ for all of them. This is indeed true since $z^2 = x^2 + y^2 &lt; (x + y)^2$. An idea we might try is to use the substitution $z \mapsto x + y - w$. Substituting, we get</p>
 <p>$$\begin{align*}
-x^2 + y^2 &amp;= z^2 \<br>
-x^2 + y^2 &amp;= (x + y - w)^2 \<br>
-x^2 + y^2 &amp;= x^2 + y^2 + w^2 + 2xy - 2wx - 2wy \<br>
-0 &amp;= w^2 - 2wx - 2wy + 2xy \<br>
-w^2 &amp;= 2w^2 - 2wx - 2wy + 2xy \<br>
-w^2 &amp;= 2w(w - x) - 2y(w - x) \<br>
-w^2 &amp;= 2(w - x)(w - y) \<br>
-w^2 &amp;= 2(x - w)(y - w)
+x^2 + y^2 &amp;= z^2 \\ x^2 + y^2 &amp;= (x + y - w)^2 \\ x^2 + y^2 &amp;= x^2 + y^2 + w^2 + 2xy - 2wx - 2wy \\ 0 &amp;= w^2 - 2wx - 2wy + 2xy \\ w^2 &amp;= 2w^2 - 2wx - 2wy + 2xy \\ w^2 &amp;= 2w(w - x) - 2y(w - x) \\ w^2 &amp;= 2(w - x)(w - y) \\ w^2 &amp;= 2(x - w)(y - w)
 \end{align*}$$</p>
-<p>Wow, we got an interesting factorisation this time! To simplify our notation, let&rsquo;s do one more substitution: By substituting $x \mapsto x + w$ and $y \mapsto y + w$, our left hand side will simplify to $2xy$. Let&rsquo;s rename the variable a bit, and our new substitution becomes $f: (x, y, z) \mapsto (u + w, v + w, u + v + w)$:</p>
+<p>Wow, we got an interesting factorization this time! To simplify our notation, let&rsquo;s do one more substitution: By substituting $x \mapsto x + w$ and $y \mapsto y + w$, our left-hand side will simplify to $2xy$. Let&rsquo;s rename the variable a bit, and our new substitution becomes $f: (x, y, z) \mapsto (u + w, v + w, u + v + w)$:</p>
 <p>$$\begin{align*}
-(u + w)^2 + (v + w)^2 &amp;= (u + v + w)^2 \<br>
-w^2 &amp;= 2uv
+(u + w)^2 + (v + w)^2 &amp;= (u + v + w)^2 \\ w^2 &amp;= 2uv
 \end{align*}$$</p>
 <p>This is a very simple equation! Let&rsquo;s try it out. For $w = 6$, we get $uv = 18$. Then if we take $(u, v) = (2, 9)$, we get $(u + w, v + w, u + v + w) = (8, 15, 17)$, which is indeed a PT!</p>
 <p>Alright, so this is a cool equation, but it doesn&rsquo;t help us construct every solution yet, so let&rsquo;s investigate it further.</p>
 <p>Let&rsquo;s take our solution of $8^2 + 15^2 = 17^2$ and $(u, v, w) = (2, 9, 6)$. How can we possibly generate more solutions from this? Here is the trick: taking the negative of any of $x, y, z$ also works. That is, we have</p>
 <p>$$\begin{align*}
-8^2 + 15^2 &amp;= 17^2 \<br>
-(-8)^2 + 15^2 &amp;= 17^2 \<br>
-8^2 + (-15)^2 &amp;= 17^2 \<br>
-(-8)^2 + (-15)^2 &amp;= 17^2
+8^2 + 15^2 &amp;= 17^2 \\ (-8)^2 + 15^2 &amp;= 17^2 \\ 8^2 + (-15)^2 &amp;= 17^2 \\ (-8)^2 + (-15)^2 &amp;= 17^2
 \end{align*}$$</p>
 <p>I know this looks trivial, but let&rsquo;s continue this thought. From these PT, let&rsquo;s compute the $(u, v, w)$ parameters. To do this, let&rsquo;s solve the following equations:</p>
-<p>$$\begin{cases}\begin{align*}
-u + \qquad w &amp;= x \<br>
-v + w &amp;= y \<br>
-u + v + w &amp;= z
-\end{align*}\end{cases} \implies (u, v, w) = (-y + z, -x + z, x + y - z)$$</p>
+<p>$$\begin{cases}\begin{align*} u + \qquad w &amp;= x \\ v + w &amp;= y \\ u + v + w &amp;= z \end{align*}\end{cases} \implies (u, v, w) = (-y + z, -x + z, x + y - z $$</p>
 <p>Now, what does $(x, y, z) = (\pm 8, \pm 15, \pm 17)$ give?</p>
-<p>$$\begin{align*}
-(x, y, z) = (8, 15, 17) &amp;\implies (u, v, w) = (2, 9, 6) \<br>
-(x, y, z) = (-8, 15, 17) &amp;\implies (u, v, w) = (2, 25, -10) \<br>
-(x, y, z) = (8, -15, 17) &amp;\implies (u, v, w) = (32, 9, -24) \<br>
-(x, y, z) = (-8, -15, 17) &amp;\implies (u, v, w) = (32, 25, -40)
-\end{align*}$$</p>
-<p>Well, now we are getting some new numbers. However, these still don&rsquo;t help us get new solutions - recovering the $(x, y, z)$ for these values of $(u, v, w)$ will just give us the left hand side! However, there is one final trick.</p>
+<p>$$\begin{align*} (x, y, z) = (8, 15, 17) &amp;\implies (u, v, w) = (2, 9, 6) \\ (x, y, z) = (-8, 15, 17) &amp;\implies (u, v, w) = (2, 25, -10) \\ (x, y, z) = (8, -15, 17) &amp;\implies (u, v, w) = (32, 9, -24) \\ (x, y, z) = (-8, -15, 17) &amp;\implies (u, v, w) = (32, 25, -40) \end{align*}$$</p>
+<p>Well, now we are getting some new numbers. However, these still don&rsquo;t help us get new solutions - recovering the $(x, y, z)$ for these values of $(u, v, w)$ will just give us the left-hand side! However, there is one final trick.</p>
 <p>Recall that these values satisfy $w^2 = 2uv$. This means that if $(u, v, w)$ is a solution, then so is $(u, v, -w)$! Let&rsquo;s try that on the values above:</p>
-<p>$$\begin{align*}
-(u, v, w) &amp;= (2, 9, \color{red}{-}6) \implies (x, y, z) = (-4, 3, 5) \<br>
-(u, v, w) &amp;= (2, 25, \color{red}{+}10) \implies (x, y, z) = (12, 35, 37) \<br>
-(u, v, w) &amp;= (32, 9, \color{red}{+}24) \implies (x, y, z) = (56, 33, 65) \<br>
-(u, v, w) &amp;= (32, 25, \color{red}{+}40) \implies (x, y, z) = (72, 65, 97)
-\end{align*}$$</p>
+<p>$$\begin{align*}(u, v, w) &amp;= (2, 9, {\color{red}{-}} 6) \implies (x, y, z) = (-4, 3, 5) \\ (u, v, w) &amp;= (2, 25, {\color{red}{+}} 10) \implies (x, y, z) = (12, 35, 37) \\ (u, v, w) &amp;= (32, 9, {\color{red}{+}} 24) \implies (x, y, z) = (56, 33, 65) \\ (u, v, w) &amp;= (32, 25, {\color{red}{+}} 40) \implies (x, y, z) = (72, 65, 97)\end{align*}$$</p>
 <p>Woohoo! We got some new solutions! Note that the first row gives a &ldquo;smaller&rdquo; solution. This is because this method produces new solutions only when $w &gt; 0$. Now, let&rsquo;s generalise this technique. For a given solution of $(x, y, z)$, we do the following</p>
+<p>$$\begin{alignat*}{5}
+(x, y, z) &amp;\to (\pm x, \pm y, z) &amp;&amp;\to (u, v, w) &amp;&amp;\to (u, v, -w) &amp;&amp;\to (x', y', z') \\\\ \begin{pmatrix} x \\ y \\ z \end{pmatrix} &amp;\to \begin{pmatrix} -x \\ y \\ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -y + z \\ x + z \\ -x + y - z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -y + z  \\ x + z  \\ x - y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} x - 2y + 2z \\ 2x - y + 2z \\ 2x - 2y + 3z \end{pmatrix} \\\\ \begin{pmatrix} x \\ y \\ z \end{pmatrix} &amp;\to \begin{pmatrix} x \\ -y \\ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \\ -x + z \\ x - y - z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \\ -x + z \\ -x + y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -x + 2y + 2z \\ -2x + y + 2z \\ -2x + 2y + 3z \end{pmatrix} \\\\\begin{pmatrix} x \\ y \\ z \end{pmatrix} &amp;\to \begin{pmatrix} -x \\ -y \\ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \\ x + z \\ -x - y - z\end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \\ x + z \\ x + y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} x + 2y + 2z \\ 2x + y + 2z \\ 2x + 2y + 3z \end{pmatrix}\end{alignat*}$$</p>
+<p>Note that this gives us a way to generate new PT from old ones. We can also write this in a more compact way using matrix multiplication, which is how we summarize below:</p>
+
+<div class="alert alert-info" role="alert"><p><strong>Theorem:</strong> Let $M_1, M_2, M_3$ be the matrices</p>
 <p>$$
-\begin{alignat*}{5}
-(x, y, z) &amp;\to (\pm x, \pm y, z) &amp;&amp;\to (u, v, w) &amp;&amp;\to (u, v, -w) &amp;&amp;\to (x', y', z') \\<br>
-\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;\to \begin{pmatrix} -x \ y \ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -y + z \ x + z \ -x + y - z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -y + z \ x + z \ x - y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} x - 2y + 2z \ 2x - y + 2z \ 2x - 2y + 3z \end{pmatrix} \\<br>
-\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;\to \begin{pmatrix} x \ -y \ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \ -x + z \ x - y - z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \ -x + z \ -x + y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -x + 2y + 2z \ -2x + y + 2z \ -2x + 2y + 3z \end{pmatrix} \\<br>
-\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;\to \begin{pmatrix} -x \ -y \ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \ x + z \ -x - y - z\end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \ x + z \ x + y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} x + 2y + 2z \ 2x + y + 2z \ 2x + 2y + 3z \end{pmatrix}
-\end{alignat*}
+M_1 = \begin{pmatrix} 1 &amp; -2 &amp; 2 \\ 2 &amp; -1 &amp; 2 \\ 2 &amp; -2 &amp; 3 \end{pmatrix}, M_2 = \begin{pmatrix} -1 &amp; 2 &amp; 2 \\ -2 &amp; 1 &amp; 2 \\ -2 &amp; 2 &amp; 3 \end{pmatrix}, M_3 = \begin{pmatrix} 1 &amp; 2 &amp; 2 \\ 2 &amp; 1 &amp; 2 \\ 2 &amp; 2 &amp; 3 \end{pmatrix}
 $$</p>
-<p>Note that this gives us a way to generate new PT from old ones. We can also write this in a more compact way using matrix multiplication, which is how we summarise below:</p>
-<p>:::success</p>
-<p><strong>Theorem:</strong> Let $M_1, M_2, M_3$ be the matrices</p>
-<p>$$
-M_1 = \begin{pmatrix} 1 &amp; -2 &amp; 2 \ 2 &amp; -1 &amp; 2 \ 2 &amp; -2 &amp; 3 \end{pmatrix}, M_2 = \begin{pmatrix} -1 &amp; 2 &amp; 2 \ -2 &amp; 1 &amp; 2 \ -2 &amp; 2 &amp; 3 \end{pmatrix}, M_3 = \begin{pmatrix} 1 &amp; 2 &amp; 2 \ 2 &amp; 1 &amp; 2 \ 2 &amp; 2 &amp; 3 \end{pmatrix}
-$$</p>
-<p>Then if $\vec{v} = \begin{pmatrix} x \ y \ z \end{pmatrix}$ is a Pythagorean Triplet, so is $M_1\vec{v}, M_2\vec{v}$ and $M_3\vec{v}$.</p>
-<p>:::</p>
+<p>Then if $\vec{v} = \begin{pmatrix} x \\ y \\ z \end{pmatrix}$ is a Pythagorean Triplet, so is $M_1\vec{v}, M_2\vec{v}$ and $M_3\vec{v}$.</p>
+</div>
+
 <p>Finally, I would state the following result without proof. I might add the proof in the future:</p>
-<p>:::success</p>
-<p><strong>Theorem (Berggren, 1934):</strong></p>
+
+<div class="alert alert-success" role="alert"><p><strong>Theorem (Berggren, 1934):</strong></p>
 <ol>
 <li>If $\vec{v}$ is a primitive Pythagorean Triplet (PPT), so is $M_1\vec{v}, M_2\vec{v}$ and $M_3\vec{v}$.</li>
 <li>For each PPT $\vec{v}$, there exists a unique finite product of the matrices, say $M = \prod_{i=1}^k M_{j_i}$, $1\leq j_i\leq 3$, such that</li>
 </ol>
 <p>$$
-\vec{v} = M\begin{pmatrix} 3 \ 4 \ 5 \end{pmatrix}
+\vec{v} = M\begin{pmatrix} 3 \\ 4 \\ 5 \end{pmatrix}
 $$</p>
-<p>:::</p>
+</div>
+
 <p>What this means is that these matrices generate <em>every</em> primitive Pythagorean Triplet. Since the word of matrices is unique, this also means that the set of PPT is a partially ordered set (poset)!</p>
 <p>Finally, here are some exercises for the reader:</p>
 <ul>
 <li>Apart from the transformation $w \mapsto -w$, we also have $(u, v) \mapsto (-u, -v)$. Verify that it does not generate larger solutions.</li>
 <li>Prove (1) of Berggren&rsquo;s Theorem.</li>
-<li>Prove (2) of Berggren&rsquo;s Theorem. (<em>Hint: Uniqueness is easy. Prove existance by contradiction.</em>)</li>
+<li>Prove (2) of Berggren&rsquo;s Theorem. (<em>Hint: Uniqueness is easy. Prove existence by contradiction.</em>)</li>
 </ul>
 
 </section>
@@ -292,28 +283,7 @@ $$</p>
 
 
     
-        <link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
-            ><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script>
-    window.addEventListener("DOMContentLoaded", () => {
-        renderMathInElement(document.querySelector(`.article-content`), {
-            delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true }
-            ]
-        });})
-</script>
+    
     
 </article>
 
