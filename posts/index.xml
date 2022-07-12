@@ -6,7 +6,28 @@
     <description>Recent content in Posts on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Wed, 09 Feb 2022 16:15:44 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Jul 2022 23:29:12 +0800</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Investigating Pythagorean Triplets (1)</title>
+      <link>https://grhkm21.github.io/posts/pythagorean-triplets-1/</link>
+      <pubDate>Tue, 12 Jul 2022 23:29:12 +0800</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/pythagorean-triplets-1/</guid>
+      <description>Notes of Pythagorean Triplets This is a short article re-deriving the Tree of (primitive) Pythogrean Triplets, as well as a few interesting generalisations.
+Firstly, let&amp;rsquo;s begin with the equation $x^2 + y^2 = z^2$. A triplet $(x, y, z)$ satisfying the equation is called a Pythagorean Triplet, abbreviated PT. If we further have that $\gcd(x, y, z) = 1$, then we say that $(x, y, z)$ is a primitive PT, abbreviated PPT.</description>
+    </item>
+    
+    <item>
+      <title>Nonlinear Regression (1)</title>
+      <link>https://grhkm21.github.io/posts/nonlinear-regression/</link>
+      <pubDate>Tue, 12 Jul 2022 23:29:12 +0800</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/nonlinear-regression/</guid>
+      <description>Notes on Non-Linear Regression 1. Linear Regression To begin, let&amp;rsquo;s recall how linear regression is done. We are given $n$ data points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, and we are to make a linear model
+$$ f(x) = ax + b $$
+Such that the model &amp;ldquo;closely approximates&amp;rdquo; the data points, that is, to have $y_i \sim f(x_i)$. The residual is defined as the absolute difference between the interpolated data and the actual data:</description>
+    </item>
+    
     <item>
       <title>Learning Without Errors (396 pts, 6 solves, upsolve)</title>
       <link>https://grhkm21.github.io/posts/dice-learning-without-errors/</link>
@@ -103,15 +124,6 @@ Problem Statement  All codes are uncertain before the measurement, and you will 
 Observe the code to get the flag.
 nc chalp.hkcert21.pwnable.hk 28132
  Solution Outline We dump the binary from 0x400000 to 0x405000 using format string and %8$s, then reverse engineer the check function for the flag.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://grhkm21.github.io/posts/canto-song-rec/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://grhkm21.github.io/posts/canto-song-rec/</guid>
-      <description></description>
     </item>
     
   </channel>

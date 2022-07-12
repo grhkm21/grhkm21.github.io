@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Short article on nonlinear regression, focusing on polynomial models. Suitable for HS students.'><title>Nonlinear Regression (1)</title>
+
+<link rel='canonical' href='https://grhkm21.github.io/posts/nonlinear-regression/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Nonlinear Regression (1)'>
+<meta property='og:description' content='Short article on nonlinear regression, focusing on polynomial models. Suitable for HS students.'>
+<meta property='og:url' content='https://grhkm21.github.io/posts/nonlinear-regression/'>
+<meta property='og:site_name' content='Blog by grhkm21'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2022-07-12T23:29:12&#43;08:00'/><meta property='article:modified_time' content='2022-07-12T23:29:12&#43;08:00'/>
+<meta name="twitter:site" content="@grhkm2023">
+    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="Nonlinear Regression (1)">
+<meta name="twitter:description" content="Short article on nonlinear regression, focusing on polynomial models. Suitable for HS students.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6BP6QGT61V');
+</script>
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://grhkm21.github.io/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/posts/nonlinear-regression/">Nonlinear Regression (1)</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Short article on nonlinear regression, focusing on polynomial models. Suitable for HS students.
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 12, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="notes-on-non-linear-regression">Notes on Non-Linear Regression</h1>
+<h2 id="1-linear-regression">1. Linear Regression</h2>
+<p>To begin, let&rsquo;s recall how linear regression is done. We are given $n$ <strong>data points</strong> $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, and we are to make a linear <strong>model</strong></p>
+<p>$$
+f(x) = ax + b
+$$</p>
+<p>Such that the model &ldquo;closely approximates&rdquo; the data points, that is, to have $y_i \sim f(x_i)$. The <strong>residual</strong> is defined as the absolute difference between the interpolated data and the actual data:</p>
+<p>$$
+r_i := y_i - f(x_i) = y_i - (ax_i + b)
+$$</p>
+<p>To mathematically define &ldquo;closely approximates&rdquo;, we will need the notion of error measures. There are many types of such measures, such as averaging the absolute value of the residuals or using the maximum residual. However, in this page we will use the following measure, analogous to <em>standard deviation</em> in Statistics:</p>
+<p>$$
+E_2(f) := \sqrt{\frac{1}{n}\sum_{i=1}^n r_i^2}
+$$</p>
+<p>The functional $E_2$ is called the Root Mean Square error, abbreviated RMS below. With this notion, we can formalise the problem of linear regression:</p>
+<p>:::success</p>
+<p><strong>Linear Regression:</strong> Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a, b$ such that for the model $f(x) = ax + b$, the RMS</p>
+<p>$$
+E_2(f) = \sqrt{\frac{1}{n}\sum_{i=1}^n (y_i - f(x_i))^2}
+$$</p>
+<p>is minimised.</p>
+<p>:::</p>
+<hr>
+<h2 id="2-polynomial-regression">2. Polynomial Regression</h2>
+<p>With the formalisation, it is easy to generalise to non-linear models. For the purpose of this document, we shall focus on <em>polynomial</em> models, as follows:</p>
+<p>:::success</p>
+<p><strong>(Degree-$k$) Polynomial Regression:</strong> Given $n$ points $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find coefficients $a_0, a_1, \ldots, a_k$ such that for the model</p>
+<p>$$
+f(x) = a_0 + a_1x + a_2x^2 + \ldots + a_kx^k = \sum_{i=0}^k a_ix^i
+$$</p>
+<p>, the RMS</p>
+<p>$$
+E_2(f) = \sqrt{\frac{1}{n}\sum_{i=1}^n (y_i - f(x_i))^2}
+$$</p>
+<p>is minimised.</p>
+<p>:::</p>
+<p>To help understand, here is an example.</p>
+<p><strong>Example 1:</strong> Suppose that we have four data points $(0, 1), (1, 5), (2, 7), (4, 4)$, and we wish to closely model this with a quadratic model. Then, $k = 2$ and we wish to find coefficients $a_0, a_1, a_2$ such that</p>
+<p>$$\begin{align*}
+E_2(f) &amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \<br>
+&amp;= \sqrt{\frac{1}{4}\left((1 - f(0))^2 + (5 - f(1))^2 + (7 - f(2))^2 + (4 - f(4))^2\right)} \<br>
+&amp;= \sqrt{\frac{1}{4}(4a_0^2 + 14a_0a_1 + 21a_1^2 + 42a_0a_2 + 146a_1a_2 + 273a_2^2 - 34a_0 - 70a_1 - 194a_2 + 91)}
+\end{align*}$$</p>
+<p>is minimised. Of course it looks impossible to solve right now, as we have $3$ variables and a total of $10$ terms to minimise together. However, we will solve the minimisation problem in section 4.</p>
+<p><figure 
+	>
+	<a href="https://i.imgur.com/0lRE0Zk.png" >
+		<img src="https://i.imgur.com/0lRE0Zk.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<hr>
+<h2 id="3-lagrange-multiplier">3. Lagrange Multiplier</h2>
+<p>To minimise the absolute mess above, we will require another tool. Recall that in normal calculus, it is find the local minimum any function, say $f(x) = x^3 + 3x^2 - 5$ - we differentiate it to get $f'(x) = 3x^2 + 6x$, then find it&rsquo;s zeroes $f'(x) = 3x(x + 2) \implies x = 0, -2$, and finally check that $f''(x) &gt; 0$ to get that $x = 0$ is a local minimum of $f$. We wish to do something like that with more than one variables!</p>
+<p>This is when Lagrange can help us. In the 18th and early 19th century, Lagrange developed a tool called the Lagrange Multiplier to solve such optimisation problems. The details of <em>when</em> it is applicable is complicated, but for our purpose, we will present a simplified version.</p>
+<p>Firstly, we need a notion of &ldquo;derivative&rdquo; when there are more than one variable. It will be simplier to demonstrate by an example than to rigorously define it. Take a function $f(x, y) = x^2 + 5xy + 3y$. We define the <em>partial derivative with respect to $x$</em>, denoted $\frac{\partial f}{\partial x}$ as taking the normal derivative, except that we treat every variable except $x$ as a constant. In this case, this means $y$ is a constant (like $2$ is), and we get</p>
+<p>$$
+\frac{\partial f}{\partial x} = \underbrace{2x}<em>{x^2} + \underbrace{5y}</em>{5xy} + \underbrace{0}_{3y}
+$$</p>
+<p>Similarly, we can also do this for other variables:</p>
+<p>$$
+\frac{\partial f}{\partial y} = \underbrace{0}<em>{x^2} + \underbrace{5x}</em>{5xy} + \underbrace{3}_{3y}
+$$</p>
+<p>As you see, this is essentially the same as the normal derivatives - we simply fix one variable and ignore the other variables.</p>
+<p>With this, we can state what Lagrange derived:</p>
+<p>:::success</p>
+<p><strong>Theorem (Simplified):</strong> Suppose that $f$ is a function in terms of $x_1, x_2, \ldots, x_k$. Then, at where $f(x_1, x_2, \ldots, x_k)$ achieves local minimum or maximum, we must have</p>
+<p>$$
+\frac{\partial f}{\partial x_1} = \frac{\partial f}{\partial x_2} = \cdots = \frac{\partial f}{\partial x_k} = 0
+$$</p>
+<p>:::</p>
+<p>For example, with our function of $f(x, y) = x^2 + 5xy + 3y$, we can find it&rsquo;s local extremas by setting $2x + 5y = 5x + 3 = 0$ and solving the equations.</p>
+<p>With this, we can go back and solve the minimisation problem in Section 2.</p>
+<hr>
+<h2 id="section-4-finding-the-model">Section 4: Finding the Model</h2>
+<p>In Section 2, we arrived at the formalisation of the problem, which requires us to minimise the following scary looking formula:</p>
+<p>$$
+E_2(f) = \sqrt{\frac{1}{n}\sum_{i=1}^n (y_i - f(x_i))^2}
+$$</p>
+<p>To do this, first notice that it suffices to minimise the term $\sum_{i=1}^n (y_i - f(x_i))^2$, since multiplying by a constant $\frac{1}{n}$ and taking square root does not change the minimality of the term. Hence, we minimise</p>
+<p>$$
+R_2(f) = \sum_{i=1}^n (y_i - f(x_i))^2
+$$</p>
+<p>where $f(x) = a_0 + a_1x + \cdots + a_kx^k = \sum_{j=0}^k a_jx^j$. Now applying Lagrange&rsquo;s Theorem, we require</p>
+<p>$$
+\frac{\partial R_2}{\partial a_0} = \frac{\partial R_2}{\partial a_1} = \cdots = \frac{\partial R_2}{\partial a_k} = 0
+$$</p>
+<p>What does each of these terms equal to? Well, for a particular index $j$,</p>
+<p>$$
+\frac{\partial R_2}{\partial a_j} = \frac{\partial}{\partial a_j} \sum_{i=1}^n (\color{red}{y_i - f(x_i)})^{\color{blue}{2}}
+$$</p>
+<p>We can apply the chain rule on the second term. Recall that the normal chain rule states $\frac{d}{dx} f(g(x)) = f'(g(x))\cdot g'(x)$. Here, it is exactly the same. Apply $f(x) = x^2$ and $g(x) = y_i - f(x_i)$,</p>
+<p>$$
+\frac{\partial R_2}{\partial a_j} = \sum_{i=1}^n \underbrace{\color{blue}{2(\color{red}{y_i - f(x_i)})}}_{f'(g)}\cdot\underbrace{\frac{\partial}{\partial a_j}(\color{red}{y_i - f(x_i)})}_{g'} = -\sum_{i=1}^n 2(y_i - f(x_i))\cdot\frac{\partial f}{\partial a_j}(x_i)
+$$</p>
+<p>Finally, we know that $f(x) = a_0 + a_1x + \cdots + a_kx^k$. Therefore, if we take partial derivative w.r.t. $a_i$, which means treating every other variable as constant, then we are left with $\frac{\partial f}{\partial a_j} = \frac{\partial}{\partial a_j}(a_ix^i + \text{constant}) = x^i$. Therefore,</p>
+<p>$$
+\frac{\partial R_2}{\partial a_j} = -2\sum_{i=1}^n (y_i - f(x_i)) x_i^j
+$$</p>
+<p>And hence, our problem reduces to solving</p>
+<p>$$
+\sum_{i=1}^n (y_i - f(x_i)) = \sum_{i=1}^n (y_i - f(x_i))x_i = \cdots = \sum_{i=1}^n (y_i - f(x_i))x_i^k = 0
+$$</p>
+<p>This still looks scary, but let&rsquo;s look back at our example.</p>
+<p><strong>Example 1 (Cont.):</strong> We had ${(0, 1), (1, 5), (2, 7), (4, 4)}$ as our data points, and $f(x) = a_0 + a_1x + a_2x^2$. Therefore, we want to solve the folllowing system of equations:</p>
+<p>$$\begin{cases}\begin{align*}
+&amp;\sum_{i=1}^n (y_i - f(x_i)) = (1 - a_0) + \cdots + (4 - (a_0 + 4a_1 + 16a_2)) &amp;= 17 - 4a_0 - 7a_1 - 21a_2 = 0 \<br>
+&amp;\sum_{i=1}^n (y_i - f(x_i))x_i = \cdots &amp;= 35 - 7a_0 - 21a_1 - 73a_2 = 0 \<br>
+&amp;\sum_{i=1}^n (y_i - f(x_i))x_i^2 = \cdots &amp;= 97 - 21a_0 - 73a_1 - 273a_2 = 0 \<br>
+\end{align*}\end{cases}$$</p>
+<p>Since there are three variables and three equations, we can solve this using normal system of equations! Indeed, we get $(a_0, a_1, a_2) = \left(\frac{107}{110}, \frac{1147}{220}, -\frac{49}{44}\right) \approx (0.97, 5.21, -1.11)$, which matches the coefficients of Desmos.</p>
+<hr>
+<h2 id="5-code">5. Code</h2>
+<p>To aid computation, we coded up a program in a programming language called Sage. It is a library extension of Python. In Sage, solving linear equations are easy: we first transform the coefficients into a <code>Matrix</code>, then call the function <code>.solve_right</code> to solve the equations - see <a class="link" href="https://doc.sagemath.org/html/en/tutorial/tour_linalg.html"  target="_blank" rel="noopener"
+    >docs</a> for more details.</p>
+<p>Anyways, here is the final code:</p>
+<pre><code class="language-python=" data-lang="python=">def find_coeffs(points, k):
+    # arguments:
+    # points: [(x_1, y_1), ..., (x_n, y_n)] in an array
+    # k: degree of the polynomial model
+    
+    # return values:
+    # - coefficients a_0, a_1, ..., a_k in an array
+    # - also the RMS of the model, E_2(f)
+
+    if len(points) &lt; k + 1:
+        raise RuntimeError(&quot;Not enough data points.&quot;)
+
+    # computing coefficients of a_j
+    x_coeff_matrix = Matrix(QQ, k + 1, k + 1)
+    x_sum_of_powers = [sum(x^i for x, y in points) for i in range(2 * k + 1)]
+    for i in range(k + 1):
+        for j in range(k + 1):
+            x_coeff_matrix[i, j] = x_sum_of_powers[i + j]
+
+    # computing the constant terms of y_i
+    y_coeff_matrix = []
+    for i in range(k + 1):
+        y_coeff_matrix.append(sum(y * x^i for x, y in points))
+    y_coeff_matrix = vector(QQ, y_coeff_matrix)
+
+    # solving system of linear equations
+    coef = x_coeff_matrix.solve_right(y_coeff_matrix)
+
+    # computing residuals and RMS
+    f = lambda x: sum(a_i * x^i for i, a_i in enumerate(coef))
+    residuals = [y_i - f(x_i) for x_i, y_i in points]
+
+    RMS = sqrt(sum(r^2 for r in residuals) / len(points))
+    return coef.n(), RMS.n()
+
+
+def main():
+    # data points
+    arr = [(0, 1), (1, 5), (2, 7), (4, 4)]
+
+    # linear regression
+    coef, RMS = find_coeffs(arr, 1)
+    print(&quot;coef =&quot;, coef)
+    print(&quot;RMS =&quot;, RMS)
+    print()
+
+    # quadratic regression
+    coef, RMS = find_coeffs(arr, 2)
+    print(&quot;coef =&quot;, coef)
+    print(&quot;RMS =&quot;, RMS)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+    
+&quot;&quot;&quot;
+Output:
+
+Linear Regression:
+- coef = (3.20000000000000, 0.600000000000000)
+- RMS = 1.97484176581315
+
+Quadratic Regression:
+- coef = (0.972727272727273, 5.21363636363636, -1.11363636363636)
+- RMS = 0.0476731294622796
+&quot;&quot;&quot;
+</code></pre><hr>
+<h2 id="6-future">6. Future</h2>
+<p>It is easy to extend the work to other models or using other error measures other than $E_2$, and I would love to investigate this further in other fields such as the $p$-adic integers.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2021 - 
+        
+        2022 Blog by grhkm21
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1-linear-regression">1. Linear Regression</a></li>
+    <li><a href="#2-polynomial-regression">2. Polynomial Regression</a></li>
+    <li><a href="#3-lagrange-multiplier">3. Lagrange Multiplier</a></li>
+    <li><a href="#section-4-finding-the-model">Section 4: Finding the Model</a></li>
+    <li><a href="#5-code">5. Code</a></li>
+    <li><a href="#6-future">6. Future</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

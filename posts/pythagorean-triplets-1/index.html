@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-uk">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Nice to meet you!'><title>About Me</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Short article on Pythagorean Triplets and Berggren&#39;s work.'><title>Investigating Pythagorean Triplets (1)</title>
 
-<link rel='canonical' href='https://grhkm21.github.io/about-me/'>
+<link rel='canonical' href='https://grhkm21.github.io/posts/pythagorean-triplets-1/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='About Me'>
-<meta property='og:description' content='Nice to meet you!'>
-<meta property='og:url' content='https://grhkm21.github.io/about-me/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Investigating Pythagorean Triplets (1)'>
+<meta property='og:description' content='Short article on Pythagorean Triplets and Berggren&#39;s work.'>
+<meta property='og:url' content='https://grhkm21.github.io/posts/pythagorean-triplets-1/'>
 <meta property='og:site_name' content='Blog by grhkm21'>
-<meta property='og:type' content='article'><meta property='article:section' content='' /><meta property='article:published_time' content='2021-10-09T10:16:49&#43;01:00'/><meta property='article:modified_time' content='2021-10-09T10:16:49&#43;01:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2022-07-12T23:29:12&#43;08:00'/><meta property='article:modified_time' content='2022-07-12T23:29:12&#43;08:00'/>
 <meta name="twitter:site" content="@grhkm2023">
-    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="About Me">
-<meta name="twitter:description" content="Nice to meet you!">
+    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="Investigating Pythagorean Triplets (1)">
+<meta name="twitter:description" content="Short article on Pythagorean Triplets and Berggren&#39;s work.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -70,7 +70,7 @@
         
         
 
-        <li  class='current' >
+        <li >
             <a href='/about-me' >
                 
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -140,12 +140,12 @@
     
 
     <h2 class="article-title">
-        <a href="/about-me/">About Me</a>
+        <a href="/posts/pythagorean-triplets-1/">Investigating Pythagorean Triplets (1)</a>
     </h2>
 
     
     <h3 class="article-subtitle">
-        Nice to meet you!
+        Short article on Pythagorean Triplets and Berggren&#39;s work.
     </h3>
     
 
@@ -162,7 +162,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Oct 09, 2021</time>
+                <time class="article-time--published">Jul 12, 2022</time>
             </div>
         
 
@@ -177,7 +177,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    8 minute read
                 </time>
             </div>
         
@@ -187,62 +187,99 @@
 </header>
 
     <section class="article-content">
-    <p>Hey there! We have a gift for you 😏</p>
-<p>Hi! I am Gareth, aka grhkm online. Hongkonger 🇭🇰 and currently studying maths at University of Warwick 🇬🇧. Interested in maths, cryptography (abbr. crypto), rhythm games and all kinds of music. As a typical maths student, I am not sure what my future career will be. Maybe cryptography researcher? Software engineer? &hellip;? Please message me if you have any advice 😅.</p>
-<p>This blog mainly contains writeups for interesting CTF and other algorithmic problems, but I plan to write some random blogs as well (someone suggested a song recommendation blog).</p>
-<p>You can also find me on <a class="link" href="https://twitter.com/grhkm21"  target="_blank" rel="noopener"
-    >Twitter</a>, where I also post about ctf-related stuff.</p>
-<h3 id="some-random-facts-about-me">Some random facts about me&hellip;</h3>
+    <h1 id="notes-of-pythagorean-triplets">Notes of Pythagorean Triplets</h1>
+<p>This is a short article re-deriving the <a class="link" href="https://en.wikipedia.org/wiki/Tree_of_primitive_Pythagorean_triples"  target="_blank" rel="noopener"
+    >Tree of (primitive) Pythogrean Triplets</a>, as well as a few interesting generalisations.</p>
+<p>Firstly, let&rsquo;s begin with the equation $x^2 + y^2 = z^2$. A triplet $(x, y, z)$ satisfying the equation is called a <em>Pythagorean Triplet</em>, abbreviated PT. If we further have that $\gcd(x, y, z) = 1$, then we say that $(x, y, z)$ is a <em>primitive</em> PT, abbreviated PPT.</p>
+<p><strong>Theorem 1:</strong> There are infinitely many PT.</p>
+<p><em>Proof (Incomplete):</em> Let $x$ be any odd number at least $3$, say $x = 13$. Square it to get $x^2 = 169$. Now, we find two consecutive integers that add up to it. We can see that $84$ and $85$ works, and hence $(x, y, z) = (13, 84, 85)$ works - indeed, $13^2 + 84^2 = 7225 = 85^2$. You can repeat this for any odd $x \geq 3$.</p>
+<p><strong>Theorem 2:</strong> There are infinitely many PPT.</p>
+<p><em>Proof:</em> Take the PT constructed above, say $(x, y, y + 1)$. Notice that $\gcd(y, y + 1) = 1$, since no numbers divide $y$ and $y + 1$ at the same time other than $1$. Therefore, $\gcd(x, y, y + 1) = \gcd(x, 1) = 1$, and the PT is primitive.</p>
+<p>However, the method above does not construct <em>every</em> solution. For example, $(8, 15, 17)$ is missed, since $15$ and $17$ are not consecutive. Therefore, we want to find a way to enumerate all the solutions. Looking at the equation, it seems that we cannot progress further. We can try factorisation by rearranging the terms, but after $x^2 = z^2 - y^2 = (z - y)(z + y)$, we are stuck again.</p>
+<p>Let&rsquo;s look at some of the small PPT for inspiration:</p>
+<p>$$
+(3, 4, 5), (5, 12, 13), (7, 24, 25), (8, 15, 17), (9, 40, 41), \cdots
+$$</p>
+<p>One observation is that $z &lt; x + y$ for all of them. This is indeed true since $z^2 = x^2 + y^2 &lt; (x + y)^2$. An idea we might try is to use the substitution $z \mapsto x + y - w$. Substituting, we get</p>
+<p>$$\begin{align*}
+x^2 + y^2 &amp;= z^2 \<br>
+x^2 + y^2 &amp;= (x + y - w)^2 \<br>
+x^2 + y^2 &amp;= x^2 + y^2 + w^2 + 2xy - 2wx - 2wy \<br>
+0 &amp;= w^2 - 2wx - 2wy + 2xy \<br>
+w^2 &amp;= 2w^2 - 2wx - 2wy + 2xy \<br>
+w^2 &amp;= 2w(w - x) - 2y(w - x) \<br>
+w^2 &amp;= 2(w - x)(w - y) \<br>
+w^2 &amp;= 2(x - w)(y - w)
+\end{align*}$$</p>
+<p>Wow, we got an interesting factorisation this time! To simplify our notation, let&rsquo;s do one more substitution: By substituting $x \mapsto x + w$ and $y \mapsto y + w$, our left hand side will simplify to $2xy$. Let&rsquo;s rename the variable a bit, and our new substitution becomes $f: (x, y, z) \mapsto (u + w, v + w, u + v + w)$:</p>
+<p>$$\begin{align*}
+(u + w)^2 + (v + w)^2 &amp;= (u + v + w)^2 \<br>
+w^2 &amp;= 2uv
+\end{align*}$$</p>
+<p>This is a very simple equation! Let&rsquo;s try it out. For $w = 6$, we get $uv = 18$. Then if we take $(u, v) = (2, 9)$, we get $(u + w, v + w, u + v + w) = (8, 15, 17)$, which is indeed a PT!</p>
+<p>Alright, so this is a cool equation, but it doesn&rsquo;t help us construct every solution yet, so let&rsquo;s investigate it further.</p>
+<p>Let&rsquo;s take our solution of $8^2 + 15^2 = 17^2$ and $(u, v, w) = (2, 9, 6)$. How can we possibly generate more solutions from this? Here is the trick: taking the negative of any of $x, y, z$ also works. That is, we have</p>
+<p>$$\begin{align*}
+8^2 + 15^2 &amp;= 17^2 \<br>
+(-8)^2 + 15^2 &amp;= 17^2 \<br>
+8^2 + (-15)^2 &amp;= 17^2 \<br>
+(-8)^2 + (-15)^2 &amp;= 17^2
+\end{align*}$$</p>
+<p>I know this looks trivial, but let&rsquo;s continue this thought. From these PT, let&rsquo;s compute the $(u, v, w)$ parameters. To do this, let&rsquo;s solve the following equations:</p>
+<p>$$\begin{cases}\begin{align*}
+u + \qquad w &amp;= x \<br>
+v + w &amp;= y \<br>
+u + v + w &amp;= z
+\end{align*}\end{cases} \implies (u, v, w) = (-y + z, -x + z, x + y - z)$$</p>
+<p>Now, what does $(x, y, z) = (\pm 8, \pm 15, \pm 17)$ give?</p>
+<p>$$\begin{align*}
+(x, y, z) = (8, 15, 17) &amp;\implies (u, v, w) = (2, 9, 6) \<br>
+(x, y, z) = (-8, 15, 17) &amp;\implies (u, v, w) = (2, 25, -10) \<br>
+(x, y, z) = (8, -15, 17) &amp;\implies (u, v, w) = (32, 9, -24) \<br>
+(x, y, z) = (-8, -15, 17) &amp;\implies (u, v, w) = (32, 25, -40)
+\end{align*}$$</p>
+<p>Well, now we are getting some new numbers. However, these still don&rsquo;t help us get new solutions - recovering the $(x, y, z)$ for these values of $(u, v, w)$ will just give us the left hand side! However, there is one final trick.</p>
+<p>Recall that these values satisfy $w^2 = 2uv$. This means that if $(u, v, w)$ is a solution, then so is $(u, v, -w)$! Let&rsquo;s try that on the values above:</p>
+<p>$$\begin{align*}
+(u, v, w) &amp;= (2, 9, \color{red}{-}6) \implies (x, y, z) = (-4, 3, 5) \<br>
+(u, v, w) &amp;= (2, 25, \color{red}{+}10) \implies (x, y, z) = (12, 35, 37) \<br>
+(u, v, w) &amp;= (32, 9, \color{red}{+}24) \implies (x, y, z) = (56, 33, 65) \<br>
+(u, v, w) &amp;= (32, 25, \color{red}{+}40) \implies (x, y, z) = (72, 65, 97)
+\end{align*}$$</p>
+<p>Woohoo! We got some new solutions! Note that the first row gives a &ldquo;smaller&rdquo; solution. This is because this method produces new solutions only when $w &gt; 0$. Now, let&rsquo;s generalise this technique. For a given solution of $(x, y, z)$, we do the following</p>
+<p>$$
+\begin{alignat*}{5}
+(x, y, z) &amp;\to (\pm x, \pm y, z) &amp;&amp;\to (u, v, w) &amp;&amp;\to (u, v, -w) &amp;&amp;\to (x', y', z') \\<br>
+\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;\to \begin{pmatrix} -x \ y \ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -y + z \ x + z \ -x + y - z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -y + z \ x + z \ x - y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} x - 2y + 2z \ 2x - y + 2z \ 2x - 2y + 3z \end{pmatrix} \\<br>
+\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;\to \begin{pmatrix} x \ -y \ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \ -x + z \ x - y - z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \ -x + z \ -x + y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} -x + 2y + 2z \ -2x + y + 2z \ -2x + 2y + 3z \end{pmatrix} \\<br>
+\begin{pmatrix} x \ y \ z \end{pmatrix} &amp;\to \begin{pmatrix} -x \ -y \ z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \ x + z \ -x - y - z\end{pmatrix} &amp;&amp;\to \begin{pmatrix} y + z \ x + z \ x + y + z \end{pmatrix} &amp;&amp;\to \begin{pmatrix} x + 2y + 2z \ 2x + y + 2z \ 2x + 2y + 3z \end{pmatrix}
+\end{alignat*}
+$$</p>
+<p>Note that this gives us a way to generate new PT from old ones. We can also write this in a more compact way using matrix multiplication, which is how we summarise below:</p>
+<p>:::success</p>
+<p><strong>Theorem:</strong> Let $M_1, M_2, M_3$ be the matrices</p>
+<p>$$
+M_1 = \begin{pmatrix} 1 &amp; -2 &amp; 2 \ 2 &amp; -1 &amp; 2 \ 2 &amp; -2 &amp; 3 \end{pmatrix}, M_2 = \begin{pmatrix} -1 &amp; 2 &amp; 2 \ -2 &amp; 1 &amp; 2 \ -2 &amp; 2 &amp; 3 \end{pmatrix}, M_3 = \begin{pmatrix} 1 &amp; 2 &amp; 2 \ 2 &amp; 1 &amp; 2 \ 2 &amp; 2 &amp; 3 \end{pmatrix}
+$$</p>
+<p>Then if $\vec{v} = \begin{pmatrix} x \ y \ z \end{pmatrix}$ is a Pythagorean Triplet, so is $M_1\vec{v}, M_2\vec{v}$ and $M_3\vec{v}$.</p>
+<p>:::</p>
+<p>Finally, I would state the following result without proof. I might add the proof in the future:</p>
+<p>:::success</p>
+<p><strong>Theorem (Berggren, 1934):</strong></p>
+<ol>
+<li>If $\vec{v}$ is a primitive Pythagorean Triplet (PPT), so is $M_1\vec{v}, M_2\vec{v}$ and $M_3\vec{v}$.</li>
+<li>For each PPT $\vec{v}$, there exists a unique finite product of the matrices, say $M = \prod_{i=1}^k M_{j_i}$, $1\leq j_i\leq 3$, such that</li>
+</ol>
+<p>$$
+\vec{v} = M\begin{pmatrix} 3 \ 4 \ 5 \end{pmatrix}
+$$</p>
+<p>:::</p>
+<p>What this means is that these matrices generate <em>every</em> primitive Pythagorean Triplet. Since the word of matrices is unique, this also means that the set of PPT is a partially ordered set (poset)!</p>
+<p>Finally, here are some exercises for the reader:</p>
 <ul>
-<li>I&rsquo;m a <a class="link" href="https://www.youtube.com/watch?v=qY22HPfafSQ"  target="_blank" rel="noopener"
-    >Once</a>, recently listening to <a class="link" href="https://www.youtube.com/watch?v=KR3Ct2KjB20"  target="_blank" rel="noopener"
-    >IVE</a>!</li>
-<li><a class="link" href="https://projecteuler.net/location=Hong_Kong"  target="_blank" rel="noopener"
-    >PE #1 HK</a>, <a class="link" href="https://cryptohack.org/scoreboard/"  target="_blank" rel="noopener"
-    >CH #1 HK / #12 Global</a>, <a class="link" href="https://jstris.jezevec10.com/sprint?display=10"  target="_blank" rel="noopener"
-    >JS #49 HK</a></li>
-<li><a class="link" href="https://codeforces.com/blog/entry/86793"  target="_blank" rel="noopener"
-    >Missed</a> a chance to join the HKOI team because my CS teacher didn&rsquo;t sign me up for the competition and there was nothing I can do.</li>
-<li>I type pretty <a class="link" href="/wpm.png" >fast</a></li>
-</ul>
-<h3 id="not-sure-where-to-start-check-out-these-articles">Not sure where to start? Check out these articles:</h3>
-<ul>
-<li>Lagrange Interpolation, pt. <a class="link" href="https://codeforces.com/blog/entry/82953"  target="_blank" rel="noopener"
-    >1</a> and <a class="link" href="https://codeforces.com/blog/entry/94143"  target="_blank" rel="noopener"
-    >2</a></li>
-<li><a class="link" href="/posts/dice-learning-without-errors" >DiceCTF LWE</a></li>
-<li><a class="link" href="/posts/hkcert-unobserved-box" >hkcert Unobserved Box</a></li>
-</ul>
-<h3 id="if-you-like-my-blog-you-might-also-like">If you like my blog, you might also like&hellip;</h3>
-<ul>
-<li><strong>Mystiz&rsquo;s Blog: <a class="link" href="https://mystiz.hk/"  target="_blank" rel="noopener"
-    >https://mystiz.hk/</a></strong>
-<ul>
-<li>Mystiz is an experienced member of Black Bauhinia (many more years of experience than me). I thought he is good at crypto but he is definitely more than that.</li>
-<li>Just kidding, I first met him on Cryptohack where he invited me to his Hong Kong CTF team. I am very fortunate to have met him (virtually for now). Can&rsquo;t wait to solve more CTF problems and continue vibing together!</li>
-</ul>
-</li>
-<li><strong>kurenaif&rsquo;s Channel: <a class="link" href="https://www.youtube.com/c/kurenaif"  target="_blank" rel="noopener"
-    >https://www.youtube.com/c/kurenaif</a></strong>
-<ul>
-<li>She makes really high quality videos on crypto, pwn/vulnerabilities, web, and more. I first learned and understood lattice-based attacks from her <a class="link" href="https://www.youtube.com/watch?v=Uktq1RYVtbo"  target="_blank" rel="noopener"
-    >video</a>. Be sure to check it out!</li>
-</ul>
-</li>
-<li><strong>rkm0959&rsquo;s Blog: <a class="link" href="https://rkm0959.tistory.com/category/CTF"  target="_blank" rel="noopener"
-    >https://rkm0959.tistory.com/category/CTF</a></strong>
-<ul>
-<li>He has some really high quality writeups, and every crypto player should read his <a class="link" href="https://rkm0959.tistory.com/220?category=765103"  target="_blank" rel="noopener"
-    >article</a> named &ldquo;Inequality Solving with CVP&rdquo;.</li>
-</ul>
-</li>
-<li><strong>Cousin&rsquo;s Blog: <a class="link" href="https://klwu.co/"  target="_blank" rel="noopener"
-    >https://klwu.co/</a></strong>
-<ul>
-<li>Also known as the Kirby guy, he has many well-explained articles on Elliptic Curves and Lattice-based Cryptography. He has a cool demonstration of the Babai&rsquo;s algorithm <a class="link" href="https://klwu.co/demo/lattice-demo-1/"  target="_blank" rel="noopener"
-    >here</a>.</li>
-</ul>
-</li>
+<li>Apart from the transformation $w \mapsto -w$, we also have $(u, v) \mapsto (-u, -v)$. Verify that it does not generate larger solutions.</li>
+<li>Prove (1) of Berggren&rsquo;s Theorem.</li>
+<li>Prove (2) of Berggren&rsquo;s Theorem. (<em>Hint: Uniqueness is easy. Prove existance by contradiction.</em>)</li>
 </ul>
 
 </section>
