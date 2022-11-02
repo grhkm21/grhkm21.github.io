@@ -35,16 +35,6 @@ Service: nc 139.</description>
     </item>
     
     <item>
-      <title>ECC Notes 1 - Divisors</title>
-      <link>https://grhkm21.github.io/posts/ecc-notes-1/</link>
-      <pubDate>Wed, 22 Dec 2021 02:28:45 +0000</pubDate>
-      
-      <guid>https://grhkm21.github.io/posts/ecc-notes-1/</guid>
-      <description>Introduction After my absolute failure attempt to solve zipfel in \langlehxp CTF 2021\rangle(https://ctftime.org/event/1447), I have decided for the $n^{\text{th}}$ time to seriously learn Elliptic Curve Cryptography. This time, hopefully I will finally understand pairings, supersingular curves and isogeny crypto. After all, I want to be a cool guy too!
-\langleblockquote class=&amp;ldquo;twitter-tweet&amp;rdquo;\rangle\langlep lang=&amp;ldquo;en&amp;rdquo; dir=&amp;ldquo;ltr&amp;rdquo;\rangleIsogeny crypto is what cool guys do these days: walking around graphs of supersingular elliptic curves.\langlebr\rangle\langlebr\rangleI&#39;ve written yet another brief introduction to it, using the many great resources available.</description>
-    </item>
-    
-    <item>
       <title>pppp (117 pts, 70 solves)</title>
       <link>https://grhkm21.github.io/posts/seccon-pppp/</link>
       <pubDate>Sun, 12 Dec 2021 05:59:38 +0000</pubDate>

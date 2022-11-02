@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LWE on Blog by grhkm21</title>
+    <link>https://grhkm21.github.io/tags/lwe/</link>
+    <description>Recent content in LWE on Blog by grhkm21</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Wed, 09 Feb 2022 16:15:44 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/tags/lwe/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Learning Without Errors (396 pts, 6 solves, upsolve)</title>
+      <link>https://grhkm21.github.io/posts/dice-learning-without-errors/</link>
+      <pubDate>Wed, 09 Feb 2022 16:15:44 +0100</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/dice-learning-without-errors/</guid>
+      <description>(Up-)Solved by: grhkm
+Source of the problem: Dice CTF 2022
+Self-Reflection I am actually very frustrated and annoyed at myself for this problem. During the CTF I was scared off by my lack of experience with this encryption scheme, and also just didn&amp;rsquo;t believe I can solve this challenge. As a result, I spent a lot of my time watching YouTube instead.
+Approaching the end of the CTF, for absolutely no reason I decided I will try to take a look at the challenge.</description>
+    </item>
+    
+  </channel>
+</rss>
