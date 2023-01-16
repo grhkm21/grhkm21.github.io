@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>math on Blog by grhkm21</title>
+    <link>https://grhkm21.github.io/tags/math/</link>
+    <description>Recent content in math on Blog by grhkm21</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Mon, 16 Jan 2023 12:36:14 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/tags/math/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Finite Realm of Random (498 points, 4 solves)</title>
+      <link>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</link>
+      <pubDate>Mon, 16 Jan 2023 12:36:14 +0000</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</guid>
+      <description>Introduction Our team Black Bauhinia participated in the idekCTF 2023 which spans two days. Finite Realm of Random was an interesting math / crypto puzzle. In the end, only 3 teams solved it the intended way, and we were the second.
+Problem Statement Description: I took a flag, and shuffled it. I took a part, and randomized it. I took the bits and pieces, and scattered them across the field. Now, only an haphazard mess remains.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -200,7 +200,7 @@ E_2(f) &amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \\ &amp;= \sqrt{\fr
 </figure></p>
 <hr>
 <h2 id="3-lagrange-multiplier">3. Lagrange Multiplier</h2>
-<p>To minimise the absolute mess above, we will require another tool. Recall that in normal calculus, it is find the local minimum any function, say $f(x) = x^3 + 3x^2 - 5$ - we differentiate it to get $f'(x) = 3x^2 + 6x$, then find it&rsquo;s zeroes $f'(x) = 3x(x + 2) \implies x = 0, -2$, and finally check that $f''(x) &gt; 0$ to get that $x = 0$ is a local minimum of $f$. We wish to do something like that with more than one variables!</p>
+<p>To minimise the absolute mess above, we will require another tool. Recall that in normal calculus, it is find the local minimum any function, say $f(x) = x^3 + 3x^2 - 5$ - we differentiate it to get $f&rsquo;(x) = 3x^2 + 6x$, then find it&rsquo;s zeroes $f&rsquo;(x) = 3x(x + 2) \implies x = 0, -2$, and finally check that $f&rsquo;&rsquo;(x) &gt; 0$ to get that $x = 0$ is a local minimum of $f$. We wish to do something like that with more than one variables!</p>
 <p>This is when Lagrange can help us. In the 18th and early 19th century, Lagrange developed a tool called the Lagrange Multiplier to solve such optimisation problems. The details of <em>when</em> it is applicable is complicated, but for our purpose, we will present a simplified version.</p>
 <p>Firstly, we need a notion of &ldquo;derivative&rdquo; when there are more than one variable. It will be simplier to demonstrate by an example than to rigorously define it. Take a function $f(x, y) = x^2 + 5xy + 3y$. We define the <em>partial derivative with respect to $x$</em>, denoted $\frac{\partial f}{\partial x}$ as taking the normal derivative, except that we treat every variable except $x$ as a constant. In this case, this means $y$ is a constant (like $2$ is), and we get</p>
 <p>$$\frac{\partial f}{\partial x} = \underbrace{2x}_{x^2} + \underbrace{5y}_{5xy} + \underbrace{0}_{3y}$$</p>
@@ -235,9 +235,9 @@ $$</p>
 <p>$$
 \frac{\partial R_2}{\partial a_j} = \frac{\partial}{\partial a_j} \sum_{i=1}^n (\color{red}{y_i - f(x_i)})^{\color{cyan}{2}}
 $$</p>
-<p>We can apply the chain rule on the second term. Recall that the normal chain rule states $\frac{d}{dx} f(g(x)) = f'(g(x))\cdot g'(x)$. Here, it is exactly the same. Apply $f(x) = x^2$ and $g(x) = y_i - f(x_i)$,</p>
+<p>We can apply the chain rule on the second term. Recall that the normal chain rule states $\frac{d}{dx} f(g(x)) = f&rsquo;(g(x))\cdot g&rsquo;(x)$. Here, it is exactly the same. Apply $f(x) = x^2$ and $g(x) = y_i - f(x_i)$,</p>
 <p>$$
-\frac{\partial R_2}{\partial a_j} = \sum_{i=1}^n \underbrace{\color{cyan}{2(\color{red}{y_i - f(x_i)})}}_{f'(g)}\cdot\underbrace{\frac{\partial}{\partial a_j}(\color{red}{y_i - f(x_i)})}_{g'} = -\sum_{i=1}^n 2(y_i - f(x_i))\cdot\frac{\partial f}{\partial a_j}(x_i)
+\frac{\partial R_2}{\partial a_j} = \sum_{i=1}^n \underbrace{\color{cyan}{2(\color{red}{y_i - f(x_i)})}}<em>{f&rsquo;(g)}\cdot\underbrace{\frac{\partial}{\partial a_j}(\color{red}{y_i - f(x_i)})}</em>{g&rsquo;} = -\sum_{i=1}^n 2(y_i - f(x_i))\cdot\frac{\partial f}{\partial a_j}(x_i)
 $$</p>
 <p>Finally, we know that $f(x) = a_0 + a_1x + \cdots + a_kx^k$. Therefore, if we take partial derivative w.r.t. $a_i$, which means treating every other variable as constant, then we are left with $\frac{\partial f}{\partial a_j} = \frac{\partial}{\partial a_j}(a_ix^i + \text{constant}) = x^i$. Therefore,</p>
 <p>$$
@@ -250,9 +250,9 @@ $$</p>
 <p>This still looks scary, but let&rsquo;s look back at our example.</p>
 <p><strong>Example 1 (Cont.):</strong> We had ${(0, 1), (1, 5), (2, 7), (4, 4)}$ as our data points, and $f(x) = a_0 + a_1x + a_2x^2$. Therefore, we want to solve the folllowing system of equations:</p>
 <p>$$\begin{cases}\begin{align*}
-&amp;\sum_{i=1}^n (y_i - f(x_i)) = (1 - a_0) + \cdots + (4 - (a_0 + 4a_1 + 16a_2)) &amp;= 17 - 4a_0 - 7a_1 - 21a_2 = 0 \<br>
-&amp;\sum_{i=1}^n (y_i - f(x_i))x_i = \cdots &amp;= 35 - 7a_0 - 21a_1 - 73a_2 = 0 \<br>
-&amp;\sum_{i=1}^n (y_i - f(x_i))x_i^2 = \cdots &amp;= 97 - 21a_0 - 73a_1 - 273a_2 = 0 \<br>
+&amp;\sum_{i=1}^n (y_i - f(x_i)) = (1 - a_0) + \cdots + (4 - (a_0 + 4a_1 + 16a_2)) &amp;= 17 - 4a_0 - 7a_1 - 21a_2 = 0 \
+&amp;\sum_{i=1}^n (y_i - f(x_i))x_i = \cdots &amp;= 35 - 7a_0 - 21a_1 - 73a_2 = 0 \
+&amp;\sum_{i=1}^n (y_i - f(x_i))x_i^2 = \cdots &amp;= 97 - 21a_0 - 73a_1 - 273a_2 = 0 \
 \end{align*}\end{cases}$$</p>
 <p>Since there are three variables and three equations, we can solve this using normal system of equations! Indeed, we get $(a_0, a_1, a_2) = \left(\frac{107}{110}, \frac{1147}{220}, -\frac{49}{44}\right) \approx (0.97, 5.21, -1.11)$, which matches the coefficients of Desmos.</p>
 <hr>
@@ -260,73 +260,73 @@ $$</p>
 <p>To aid computation, we coded up a program in a programming language called Sage. It is a library extension of Python. In Sage, solving linear equations are easy: we first transform the coefficients into a <code>Matrix</code>, then call the function <code>.solve_right</code> to solve the equations - see <a class="link" href="https://doc.sagemath.org/html/en/tutorial/tour_linalg.html"  target="_blank" rel="noopener"
     >docs</a> for more details.</p>
 <p>Anyways, here is the final code:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">find_coeffs</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-    <span class="c1"># arguments:</span>
-    <span class="c1"># points: [(x_1, y_1), ..., (x_n, y_n)] in an array</span>
-    <span class="c1"># k: degree of the polynomial model</span>
-    
-    <span class="c1"># return values:</span>
-    <span class="c1"># - coefficients a_0, a_1, ..., a_k in an array</span>
-    <span class="c1"># - also the RMS of the model, E_2(f)</span>
-
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&#34;Not enough data points.&#34;</span><span class="p">)</span>
-
-    <span class="c1"># computing coefficients of a_j</span>
-    <span class="n">x_coeff_matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">x_sum_of_powers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">x_coeff_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_sum_of_powers</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
-
-    <span class="c1"># computing the constant terms of y_i</span>
-    <span class="n">y_coeff_matrix</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">y_coeff_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">))</span>
-    <span class="n">y_coeff_matrix</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="n">y_coeff_matrix</span><span class="p">)</span>
-
-    <span class="c1"># solving system of linear equations</span>
-    <span class="n">coef</span> <span class="o">=</span> <span class="n">x_coeff_matrix</span><span class="o">.</span><span class="n">solve_right</span><span class="p">(</span><span class="n">y_coeff_matrix</span><span class="p">)</span>
-
-    <span class="c1"># computing residuals and RMS</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a_i</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coef</span><span class="p">))</span>
-    <span class="n">residuals</span> <span class="o">=</span> <span class="p">[</span><span class="n">y_i</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">y_i</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
-
-    <span class="n">RMS</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">r</span><span class="o">^</span><span class="mi">2</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">residuals</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">coef</span><span class="o">.</span><span class="n">n</span><span class="p">(),</span> <span class="n">RMS</span><span class="o">.</span><span class="n">n</span><span class="p">()</span>
-
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="c1"># data points</span>
-    <span class="n">arr</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
-
-    <span class="c1"># linear regression</span>
-    <span class="n">coef</span><span class="p">,</span> <span class="n">RMS</span> <span class="o">=</span> <span class="n">find_coeffs</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;coef =&#34;</span><span class="p">,</span> <span class="n">coef</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;RMS =&#34;</span><span class="p">,</span> <span class="n">RMS</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
-
-    <span class="c1"># quadratic regression</span>
-    <span class="n">coef</span><span class="p">,</span> <span class="n">RMS</span> <span class="o">=</span> <span class="n">find_coeffs</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;coef =&#34;</span><span class="p">,</span> <span class="n">coef</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;RMS =&#34;</span><span class="p">,</span> <span class="n">RMS</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-    
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">Output:
-</span><span class="s2">
-</span><span class="s2">Linear Regression:
-</span><span class="s2">- coef = (3.20000000000000, 0.600000000000000)
-</span><span class="s2">- RMS = 1.97484176581315
-</span><span class="s2">
-</span><span class="s2">Quadratic Regression:
-</span><span class="s2">- coef = (0.972727272727273, 5.21363636363636, -1.11363636363636)
-</span><span class="s2">- RMS = 0.0476731294622796
-</span><span class="s2">&#34;&#34;&#34;</span>
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">find_coeffs</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># arguments:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># points: [(x_1, y_1), ..., (x_n, y_n)] in an array</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># k: degree of the polynomial model</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># return values:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># - coefficients a_0, a_1, ..., a_k in an array</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># - also the RMS of the model, E_2(f)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&#34;Not enough data points.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># computing coefficients of a_j</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_coeff_matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_sum_of_powers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">x_coeff_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_sum_of_powers</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># computing the constant terms of y_i</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_coeff_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y_coeff_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">points</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_coeff_matrix</span> <span class="o">=</span> <span class="n">vector</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="n">y_coeff_matrix</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># solving system of linear equations</span>
+</span></span><span class="line"><span class="cl">    <span class="n">coef</span> <span class="o">=</span> <span class="n">x_coeff_matrix</span><span class="o">.</span><span class="n">solve_right</span><span class="p">(</span><span class="n">y_coeff_matrix</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># computing residuals and RMS</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a_i</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coef</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">residuals</span> <span class="o">=</span> <span class="p">[</span><span class="n">y_i</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">y_i</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">RMS</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">r</span><span class="o">^</span><span class="mi">2</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">residuals</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">coef</span><span class="o">.</span><span class="n">n</span><span class="p">(),</span> <span class="n">RMS</span><span class="o">.</span><span class="n">n</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># data points</span>
+</span></span><span class="line"><span class="cl">    <span class="n">arr</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># linear regression</span>
+</span></span><span class="line"><span class="cl">    <span class="n">coef</span><span class="p">,</span> <span class="n">RMS</span> <span class="o">=</span> <span class="n">find_coeffs</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;coef =&#34;</span><span class="p">,</span> <span class="n">coef</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;RMS =&#34;</span><span class="p">,</span> <span class="n">RMS</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># quadratic regression</span>
+</span></span><span class="line"><span class="cl">    <span class="n">coef</span><span class="p">,</span> <span class="n">RMS</span> <span class="o">=</span> <span class="n">find_coeffs</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;coef =&#34;</span><span class="p">,</span> <span class="n">coef</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;RMS =&#34;</span><span class="p">,</span> <span class="n">RMS</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Output:
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Linear Regression:
+</span></span></span><span class="line"><span class="cl"><span class="s2">- coef = (3.20000000000000, 0.600000000000000)
+</span></span></span><span class="line"><span class="cl"><span class="s2">- RMS = 1.97484176581315
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Quadratic Regression:
+</span></span></span><span class="line"><span class="cl"><span class="s2">- coef = (0.972727272727273, 5.21363636363636, -1.11363636363636)
+</span></span></span><span class="line"><span class="cl"><span class="s2">- RMS = 0.0476731294622796
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></div><hr>
 <h2 id="6-future">6. Future</h2>
 <p>It is easy to extend the work to other models or using other error measures other than $E_2$, and I would love to investigate this further in other fields such as the $p$-adic integers.</p>
 

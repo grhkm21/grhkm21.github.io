@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Tue, 12 Jul 2022 23:29:12 +0800</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Jan 2023 12:36:14 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Finite Realm of Random (498 points, 4 solves)</title>
+      <link>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</link>
+      <pubDate>Mon, 16 Jan 2023 12:36:14 +0000</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</guid>
+      <description>Introduction Our team Black Bauhinia participated in the idekCTF 2023 which spans two days. Finite Realm of Random was an interesting math / crypto puzzle. In the end, only 3 teams solved it the intended way, and we were the second.
+Problem Statement Description: I took a flag, and shuffled it. I took a part, and randomized it. I took the bits and pieces, and scattered them across the field. Now, only an haphazard mess remains.</description>
+    </item>
+    
     <item>
       <title>Investigating Pythagorean Triplets (1)</title>
       <link>https://grhkm21.github.io/posts/pythagorean-triplets-1/</link>
@@ -47,10 +57,10 @@ Approaching the end of the CTF, for absolutely no reason I decided I will try to
       
       <guid>https://grhkm21.github.io/posts/tet-algebra/</guid>
       <description>Introduction Our team Black Bauhinia participated in the TetCTF 2022 which spans two days. Algebra is the hardest Crypto challenge in the CTF. Mystiz and I (grhkm) together spent around 7 hours on this challenge.
-Problem Statement  Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!
+Problem Statement Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!
 Service: nc 139.162.61.222 13374
 Binary: https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing
- Solution Outline $x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.</description>
+Solution Outline $x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.</description>
     </item>
     
     <item>
@@ -60,11 +70,11 @@ Binary: https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?u
       
       <guid>https://grhkm21.github.io/posts/tet-shares/</guid>
       <description>Introduction Our team Black Bauhinia participated in the TetCTF 2022 which spans two days. Shares is an interesting two-part challenge. Mystiz and I (grhkm) spent around 10 hours in total on this challenge, $4$ on the first part and $6$ on the second.
-Problem Statements  Description: Yet another secret sharing scheme.
+Problem Statements Description: Yet another secret sharing scheme.
 Service: nc 139.162.61.222 13371
 Binary: https://drive.google.com/file/d/1sP0zKSKoF6TJZ-gtaUf7rv4dQ-bGr-cp/view?usp=sharing
-  Description: A new feature is added. Check it out!
-Service: nc 139.</description>
+Description: A new feature is added. Check it out!
+Service: nc 139.162.61.222 13372</description>
     </item>
     
     <item>
@@ -75,10 +85,10 @@ Service: nc 139.</description>
       <guid>https://grhkm21.github.io/posts/seccon-pppp/</guid>
       <description>Solved by: grhkm and TWY
 Source of the problem: SECCON CTF 2021
-Problem Statement  Great research on witch has made it possible to split and duplicate messages.
+Problem Statement Great research on witch has made it possible to split and duplicate messages.
 problem.sage 8df65d6861d69ed6d461c5cd70b7157040534a0c
 output.txt 2cf4e086b11751dfe9eaf758d26f8f0a765458d2
- Solution Outline We found a (partial) general formula for exponent of an upper triangular matrix and solved the equations by comparing the entries.
+Solution Outline We found a (partial) general formula for exponent of an upper triangular matrix and solved the equations by comparing the entries.
 Initial Observations We are given a matrix version of RSA. Essentially, we were asked to solve the matrix equation</description>
     </item>
     
@@ -89,7 +99,7 @@ Initial Observations We are given a matrix version of RSA. Essentially, we were 
       
       <guid>https://grhkm21.github.io/posts/hkcert-the-hardest-path/</guid>
       <description>Source of the problem: HKCERT CTF 2021.
-Summary of Problem Statement  寧願不揀最易的路 行極還未到
+Summary of Problem Statement 寧願不揀最易的路 行極還未到
 寧願你最後未傾慕 但信念安好
 在意的 不再是 愛的煩惱
 是哪樣做人 更清高
@@ -98,7 +108,7 @@ Summary of Problem Statement  寧願不揀最易的路 行極還未到
 When you think reverse engineering is hard, try working on reverse engineering challenges &amp;gt; those need your algorithmic thinking skills!
 nc chalp.hkcert21.pwnable.hk 28117
 Attachments
- the-hardest-path_e00c6aa7b64b8dc2a06e577937b5b07c.zip   Solution Outline We have to find a path (represented by NEWS - North, East, West, South) from source _328518a497015157 to _8b0eb6f195ae182a, which is done by constructing call relationship graph and performing shortest path algorithm (such as Dijkstra&amp;rsquo;s).</description>
+the-hardest-path_e00c6aa7b64b8dc2a06e577937b5b07c.zip Solution Outline We have to find a path (represented by NEWS - North, East, West, South) from source _328518a497015157 to _8b0eb6f195ae182a, which is done by constructing call relationship graph and performing shortest path algorithm (such as Dijkstra&amp;rsquo;s).</description>
     </item>
     
     <item>
@@ -110,10 +120,10 @@ Attachments
       <description>Team Name: O0027 - UND3r 20 D53 H473r5 4ND r374K3r
 Solved by: grhkm and Kaiziron
 Source of the problem: HKCERT CTF 2021
-Problem Statement  All codes are uncertain before the measurement, and you will never make it.
+Problem Statement All codes are uncertain before the measurement, and you will never make it.
 Observe the code to get the flag.
 nc chalp.hkcert21.pwnable.hk 28132
- Solution Outline We dump the binary from 0x400000 to 0x405000 using format string and %8$s, then reverse engineer the check function for the flag.</description>
+Solution Outline We dump the binary from 0x400000 to 0x405000 using format string and %8$s, then reverse engineer the check function for the flag.</description>
     </item>
     
   </channel>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Field theory exam revision.'><title>Finite Realm of Random (498 points, 4 solves)</title>
+
+<link rel='canonical' href='https://grhkm21.github.io/posts/idek-finite-realm-of-random/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Finite Realm of Random (498 points, 4 solves)'>
+<meta property='og:description' content='Field theory exam revision.'>
+<meta property='og:url' content='https://grhkm21.github.io/posts/idek-finite-realm-of-random/'>
+<meta property='og:site_name' content='Blog by grhkm21'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='crypto' /><meta property='article:tag' content='math' /><meta property='article:published_time' content='2023-01-16T12:36:14&#43;00:00'/><meta property='article:modified_time' content='2023-01-16T12:36:14&#43;00:00'/>
+<meta name="twitter:site" content="@grhkm2023">
+    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="Finite Realm of Random (498 points, 4 solves)">
+<meta name="twitter:description" content="Field theory exam revision.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6BP6QGT61V');
+</script>
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://grhkm21.github.io/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/posts/idek-finite-realm-of-random/">Finite Realm of Random (498 points, 4 solves)</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Field theory exam revision.
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 16, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
+
+    window.addEventListener('load', (event) => {
+        document.querySelectorAll("mjx-container").forEach(function (x) {
+            x.parentElement.classList += 'has-jax'
+        })
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <section class="article-content">
+    <h2 id="introduction">Introduction</h2>
+<p>Our team Black Bauhinia participated in the idekCTF 2023 which spans two days. <code>Finite Realm of Random</code> was an interesting math / crypto puzzle. In the end, only 3 teams solved it the intended way, and we were the second.</p>
+<h2 id="problem-statement">Problem Statement</h2>
+<blockquote>
+<p>Description: I took a flag, and shuffled it. I took a part, and randomized it. I took the bits and pieces, and scattered them across the field. Now, only an haphazard mess remains.</p>
+<p>Author: A~Z</p>
+<p>Binary: <a class="link" href="/files/finite-realm-of-random.tar.gz" >finite-realm-of-random.tar.gz</a></p>
+</blockquote>
+<h2 id="solution-outline">Solution Outline</h2>
+<p>By observing that the code maps the original flag-encoded polynomial to its Galois conjugates, we try the 32 possibilities and retrieve the flag.</p>
+<h2 id="a-bit-of-math">A Bit of Math</h2>
+<p>Let $L = \mathbb{F}_{127^{32}}$ and $g$ be a fixed generator of $L$. The flag is splitted into character blocks and the following operation is performed:</p>
+<ol>
+<li>The block is encoded by $\vec{c} = (c_0, c_1, \ldots, c_{31}) \mapsto f = c_0 + c_1g + c_2g^2 + \cdots + c_{31}g^{31}$</li>
+<li>For at most $5$ times:
+<ul>
+<li>Two elements $r_1$ and $r_2$ are chosen with the same minimal polynomial in $L$</li>
+<li>Find a polynomial $\varphi(X) \in \mathbb{F}_{127}[X]$ that satisfies $\mathrm{deg}(\varphi) \leq 31$ and $\varphi(r_1) = f$</li>
+<li>Replace $f \mapsto \varphi(r_2)$</li>
+</ul>
+</li>
+<li>We receive the resulting $f$</li>
+</ol>
+<p>Let&rsquo;s first analyse the curious code in 2(a) by recalling the following fact.</p>
+
+<div class="alert alert-info" role="alert"><p><strong>Lemma:</strong> Let $L / K$ be a Galois extension. Then, the minimal polynomial of any $\alpha \in L \setminus K$ is</p>
+<p>$$
+f(x) = \prod_{\sigma \in \mathrm{Gal}(L / K)} (x - \sigma(\alpha)).
+$$</p>
+</div>
+
+<p>In fancy math terms, we say that the minimal polynomial of $\alpha$ are precisely the <a class="link" href="https://www.wikiwand.com/en/Conjugate_element_%28field_theory%29"  target="_blank" rel="noopener"
+    >Galois conjugates</a> of $\alpha$. Applying this to our problem, we see that $r_2 = \sigma(r_1)$ for some $\sigma \in \mathrm{Gal}(L / K)$. Moreover, recall that the Galois group of a finite field is exactly the powers of the <a class="link" href="https://www.wikiwand.com/en/Frobenius_endomorphism"  target="_blank" rel="noopener"
+    >Froebnius endomorphism</a>:</p>
+<p>$$
+\mathrm{Gal}(\mathbb{F}_{p^n} / \mathbb{F}_p) = \{\mathrm{Frob}_p^i : 0 \leq i &lt; n\} \cong \mathbb{Z} / n\mathbb{Z}
+$$</p>
+<p>Where $\mathrm{Frob}_p$ is the map $x \mapsto x^p$. Hence, $r_1$ and $r_2$ are Galois conjugates and we can write $r_2 = r_1^{p^k}$ for some $0 \leq k &lt; 32$.</p>
+<p>Let&rsquo;s move on to the rest of the algorithm. We now compute a polynomial that maps $r_1 \mapsto f$ and see where $r_2$ maps to. With our new gained knowledge, this part is easy to figure out. In fact, since the field has characteristics $p$, we have the following fact:</p>
+
+<div class="alert alert-info" role="alert"><p><strong>Claim:</strong> We have $\varphi(r_2) = \varphi(r_1)^{p^k}$.</p>
+</div>
+
+<p><em>Proof:</em> We apply Freshman&rsquo;s Dream. Writing $\varphi(X) = \sum_{i = 0}^{31} d_iX^i$, we have</p>
+<p>\begin{align*}
+\varphi(r_1)^{p^k} &amp;= \left(\sum_{i = 0}^{31} d_ir_1^i\right)^{p^k} \\
+&amp;= \sum_{i = 0}^{31} \left(d_ir_1^i\right)^{p^k} &amp;\text{Freshman&rsquo;s dream} \\
+&amp;= \sum_{i = 0}^{31} d_ir_1^{ip^k} \\
+&amp;= \varphi\left(r_1^{p^k}\right) \\
+&amp;= \varphi(r_2)
+\end{align*}</p>
+<p>Where the third line uses the fact that $d_i \in \mathbb{F}_{127}$, so raising $d_i$ to the $p^k$-th power results in $d_i$. By definition, $\varphi(r_1) = f$, so we get that $\varphi(r_2) = f^{p^k}$. This means that step (2) in the original algorithm simply maps $f$ to one of its conjugates by $f \mapsto f^{p^k}$. Therefore, to recover the original $f$, we simply look at all $32$ conjugates of the resulting $f$ and check if it is valid ASCII with the correct length.</p>
+<h2 id="code">Code</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Curiously, random is not random</span>
+</span></span><span class="line"><span class="cl"><span class="n">L</span> <span class="o">=</span> <span class="n">GF</span><span class="p">(</span><span class="mi">127</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">L</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">irreducible_element</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">splitting_field</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;t</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Parses resulting f</span>
+</span></span><span class="line"><span class="cl"><span class="n">ct</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="o">.</span><span class="n">degree</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">blocks</span> <span class="o">=</span> <span class="p">[</span><span class="n">L</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">ct</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">L</span><span class="o">.</span><span class="n">degree</span><span class="p">()])))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ct</span><span class="p">),</span> <span class="n">L</span><span class="o">.</span><span class="n">degree</span><span class="p">())]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">poly</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">poly</span><span class="o">.</span><span class="n">polynomial</span><span class="p">()</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Checks conjugates by f -&gt; f^(p^i)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">vector</span><span class="p">(</span><span class="n">c</span><span class="o">^</span><span class="p">(</span><span class="mi">127</span><span class="o">^</span><span class="n">i</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="mi">32</span> <span class="o">&lt;=</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">127</span> <span class="ow">or</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">r</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</span></span></code></pre></div><p>Flag: <code>idek{4nd_7hu5_5p0k3_G4!015:_7h3_f1n1t3_r34Lm_sh4ll_n07_h4rb0ur_r4nd0mn355,_0n!y_7h3_fr0b3n1u5__}</code></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Thank you A~Z and all other idekCTF authors for the challenges. It was a lot of fun and I learned quite a lot! Also thank you to my team members, Mystiz and LifeIsHard (new member) for offering their mental support and listening to my nonstop rant for 48 hours. Writeups for other challenges may or may not appear in the future.</p>
+<p>Unrelated note: I am now on <a class="link" href="https://infosec.exchange/@grhkm"  target="_blank" rel="noopener"
+    >Mastodon</a>, and you will find me more active there than on Twitter. Check me out over there! There are quite a few exciting things going on.</p>
+<p>POV: You are trying to understand the source code of this problem:</p>
+<img src="/images/finite-realm-of-random-ending.jpg" width=60% style="margin-left:auto;margin-right:auto;display:block">
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/crypto/">crypto</a>
+        
+            <a href="/tags/math/">math</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+    
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2021 - 
+        
+        2023 Blog by grhkm21
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#problem-statement">Problem Statement</a></li>
+    <li><a href="#solution-outline">Solution Outline</a></li>
+    <li><a href="#a-bit-of-math">A Bit of Math</a></li>
+    <li><a href="#code">Code</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
