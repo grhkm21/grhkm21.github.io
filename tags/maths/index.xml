@@ -14,10 +14,10 @@
       
       <guid>https://grhkm21.github.io/posts/tet-algebra/</guid>
       <description>Introduction Our team Black Bauhinia participated in the TetCTF 2022 which spans two days. Algebra is the hardest Crypto challenge in the CTF. Mystiz and I (grhkm) together spent around 7 hours on this challenge.
-Problem Statement  Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!
+Problem Statement Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!
 Service: nc 139.162.61.222 13374
 Binary: https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing
- Solution Outline $x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.</description>
+Solution Outline $x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.</description>
     </item>
     
     <item>
@@ -27,11 +27,11 @@ Binary: https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?u
       
       <guid>https://grhkm21.github.io/posts/tet-shares/</guid>
       <description>Introduction Our team Black Bauhinia participated in the TetCTF 2022 which spans two days. Shares is an interesting two-part challenge. Mystiz and I (grhkm) spent around 10 hours in total on this challenge, $4$ on the first part and $6$ on the second.
-Problem Statements  Description: Yet another secret sharing scheme.
+Problem Statements Description: Yet another secret sharing scheme.
 Service: nc 139.162.61.222 13371
 Binary: https://drive.google.com/file/d/1sP0zKSKoF6TJZ-gtaUf7rv4dQ-bGr-cp/view?usp=sharing
-  Description: A new feature is added. Check it out!
-Service: nc 139.</description>
+Description: A new feature is added. Check it out!
+Service: nc 139.162.61.222 13372</description>
     </item>
     
     <item>
@@ -42,10 +42,10 @@ Service: nc 139.</description>
       <guid>https://grhkm21.github.io/posts/seccon-pppp/</guid>
       <description>Solved by: grhkm and TWY
 Source of the problem: SECCON CTF 2021
-Problem Statement  Great research on witch has made it possible to split and duplicate messages.
+Problem Statement Great research on witch has made it possible to split and duplicate messages.
 problem.sage 8df65d6861d69ed6d461c5cd70b7157040534a0c
 output.txt 2cf4e086b11751dfe9eaf758d26f8f0a765458d2
- Solution Outline We found a (partial) general formula for exponent of an upper triangular matrix and solved the equations by comparing the entries.
+Solution Outline We found a (partial) general formula for exponent of an upper triangular matrix and solved the equations by comparing the entries.
 Initial Observations We are given a matrix version of RSA. Essentially, we were asked to solve the matrix equation</description>
     </item>
     

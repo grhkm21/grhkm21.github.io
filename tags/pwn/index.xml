@@ -16,10 +16,10 @@
       <description>Team Name: O0027 - UND3r 20 D53 H473r5 4ND r374K3r
 Solved by: grhkm and Kaiziron
 Source of the problem: HKCERT CTF 2021
-Problem Statement  All codes are uncertain before the measurement, and you will never make it.
+Problem Statement All codes are uncertain before the measurement, and you will never make it.
 Observe the code to get the flag.
 nc chalp.hkcert21.pwnable.hk 28132
- Solution Outline We dump the binary from 0x400000 to 0x405000 using format string and %8$s, then reverse engineer the check function for the flag.</description>
+Solution Outline We dump the binary from 0x400000 to 0x405000 using format string and %8$s, then reverse engineer the check function for the flag.</description>
     </item>
     
   </channel>

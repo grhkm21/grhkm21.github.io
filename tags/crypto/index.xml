@@ -6,7 +6,17 @@
     <description>Recent content in crypto on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Wed, 09 Feb 2022 16:15:44 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/tags/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Jan 2023 12:36:14 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/tags/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Finite Realm of Random (498 points, 4 solves)</title>
+      <link>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</link>
+      <pubDate>Mon, 16 Jan 2023 12:36:14 +0000</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</guid>
+      <description>Introduction Our team Black Bauhinia participated in the idekCTF 2023 which spans two days. Finite Realm of Random was an interesting math / crypto puzzle. In the end, only 3 teams solved it the intended way, and we were the second.
+Problem Statement Description: I took a flag, and shuffled it. I took a part, and randomized it. I took the bits and pieces, and scattered them across the field. Now, only an haphazard mess remains.</description>
+    </item>
+    
     <item>
       <title>Learning Without Errors (396 pts, 6 solves, upsolve)</title>
       <link>https://grhkm21.github.io/posts/dice-learning-without-errors/</link>
@@ -26,10 +36,10 @@ Approaching the end of the CTF, for absolutely no reason I decided I will try to
       
       <guid>https://grhkm21.github.io/posts/tet-algebra/</guid>
       <description>Introduction Our team Black Bauhinia participated in the TetCTF 2022 which spans two days. Algebra is the hardest Crypto challenge in the CTF. Mystiz and I (grhkm) together spent around 7 hours on this challenge.
-Problem Statement  Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!
+Problem Statement Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!
 Service: nc 139.162.61.222 13374
 Binary: https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing
- Solution Outline $x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.</description>
+Solution Outline $x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.</description>
     </item>
     
     <item>
@@ -39,11 +49,11 @@ Binary: https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?u
       
       <guid>https://grhkm21.github.io/posts/tet-shares/</guid>
       <description>Introduction Our team Black Bauhinia participated in the TetCTF 2022 which spans two days. Shares is an interesting two-part challenge. Mystiz and I (grhkm) spent around 10 hours in total on this challenge, $4$ on the first part and $6$ on the second.
-Problem Statements  Description: Yet another secret sharing scheme.
+Problem Statements Description: Yet another secret sharing scheme.
 Service: nc 139.162.61.222 13371
 Binary: https://drive.google.com/file/d/1sP0zKSKoF6TJZ-gtaUf7rv4dQ-bGr-cp/view?usp=sharing
-  Description: A new feature is added. Check it out!
-Service: nc 139.</description>
+Description: A new feature is added. Check it out!
+Service: nc 139.162.61.222 13372</description>
     </item>
     
     <item>
@@ -54,10 +64,10 @@ Service: nc 139.</description>
       <guid>https://grhkm21.github.io/posts/seccon-pppp/</guid>
       <description>Solved by: grhkm and TWY
 Source of the problem: SECCON CTF 2021
-Problem Statement  Great research on witch has made it possible to split and duplicate messages.
+Problem Statement Great research on witch has made it possible to split and duplicate messages.
 problem.sage 8df65d6861d69ed6d461c5cd70b7157040534a0c
 output.txt 2cf4e086b11751dfe9eaf758d26f8f0a765458d2
- Solution Outline We found a (partial) general formula for exponent of an upper triangular matrix and solved the equations by comparing the entries.
+Solution Outline We found a (partial) general formula for exponent of an upper triangular matrix and solved the equations by comparing the entries.
 Initial Observations We are given a matrix version of RSA. Essentially, we were asked to solve the matrix equation</description>
     </item>
     
