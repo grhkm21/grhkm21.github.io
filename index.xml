@@ -6,7 +6,142 @@
         <description>Recent content on Blog by grhkm21</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-uk</language>
-        <lastBuildDate>Mon, 16 Jan 2023 12:36:14 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 25 Jan 2023 16:39:37 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Bernoulli Polynomials</title>
+        <link>https://grhkm21.github.io/posts/bernoulli-polynomials/</link>
+        <pubDate>Wed, 25 Jan 2023 16:39:37 +0000</pubDate>
+        
+        <guid>https://grhkm21.github.io/posts/bernoulli-polynomials/</guid>
+        <description>&lt;p&gt;Please note that $p$ does not denote a prime, but instead usually an integer $p \geq 0$.&lt;/p&gt;
+&lt;h2 id=&#34;existing-lemmas&#34;&gt;Existing lemmas&lt;/h2&gt;
+&lt;p&gt;Definition by recurrence:&lt;/p&gt;
+&lt;p&gt;$$
+B_n = 1 - \sum_{k = 0}^{n - 1} \binom{n}{k} \frac{B_k}{n + 1 - k}
+$$&lt;/p&gt;
+&lt;p&gt;$$
+B_n(x) = \sum_{k = 0}^n \binom{n}{k} B_{n - k}x^k
+$$&lt;/p&gt;
+&lt;p&gt;Faulhaber&amp;rsquo;s theorem:&lt;/p&gt;
+&lt;p&gt;$$
+\sum_{k = 0}^{n - 1} k^p = \sum_{i = 0}^p B_i \binom{p + 1}{i} \frac{n^{p + 1 - i}}{p + 1}
+$$&lt;/p&gt;
+&lt;p&gt;Which has been formalised in Lean:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-lean&#34; data-lang=&#34;lean&#34;&gt;theorem sum_range_pow (n p : ℕ) :
+  ∑ k in range n, (k : ℚ) ^ p =
+    ∑ i in range (p + 1), bernoulli i * (p + 1).choose i * n ^ (p + 1 - i) / (p + 1) :=
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Exponential Generating Function of Bernoulli numbers:&lt;/p&gt;
+&lt;p&gt;$$
+\sum_{k = 0}^{\infty} \frac{B_k}{k!} t^k = \frac{t}{e^t - 1}
+$$&lt;/p&gt;
+&lt;p&gt;Which has been formalised in Lean:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-lean&#34; data-lang=&#34;lean&#34;&gt;def bernoulli_power_series := mk $ λ n, algebra_map ℚ A (bernoulli n / n!)
+
+theorem bernoulli_power_series_mul_exp_sub_one :
+  bernoulli_power_series A * (exp A - 1) = X :=
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We also have the following result:&lt;/p&gt;
+&lt;p&gt;$$
+B_n(0) = (-1)^n B_n(1)
+$$&lt;/p&gt;
+&lt;p&gt;Which has been formalised in Lean:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-lean&#34; data-lang=&#34;lean&#34;&gt;@[simp] lemma bernoulli_eval_zero (n : ℕ) : (bernoulli n).eval 0 = _root_.bernoulli n :=
+@[simp] lemma bernoulli_eval_one (n : ℕ) : (bernoulli n).eval 1 = _root_.bernoulli&amp;#39; n :=
+def bernoulli (n : ℕ) : ℚ := (-1)^n * bernoulli&amp;#39; n
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;lemmas&#34;&gt;Lemmas&lt;/h2&gt;
+&lt;p&gt;Below are lemmas that can to be proven:&lt;/p&gt;
+&lt;p&gt;Lemma 1 (Exponential Generating Function of Bernoulli polynomials):&lt;/p&gt;
+&lt;p&gt;$$
+\sum_{k = 0}^{\infty} \frac{B_k(x)}{k!} t^k = \frac{te^{tx}}{e^t - 1}
+$$&lt;/p&gt;
+&lt;p&gt;Proof from &lt;a class=&#34;link&#34; href=&#34;https://proofwiki.org/wiki/Generating_Function_of_Bernoulli_Polynomials&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;proofwiki&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;As usual, we have $e^{tx} = \sum_{k = 0}^{\infty} \frac{x^k}{k!} t^k$, also formalised as&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-lean&#34; data-lang=&#34;lean&#34;&gt;def exp : power_series A := mk $ λ n, algebra_map ℚ A (1 / n!)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Therefore, we multiply to get&lt;/p&gt;
+&lt;p&gt;\begin{align*}
+\frac{te^{tx}}{e^t - 1}
+&amp;amp;= \left(\sum_{k = 0}^{\infty} \frac{B_k}{k!} t^k\right)\left(\sum_{k = 0}^{\infty} \frac{x^k}{k!} t^k\right) \\
+&amp;amp;= \sum_{k = 0}^{\infty} t^k \sum_{m = 0}^k \frac{B_{k - m}}{(k - m)!} \frac{x^m}{m!} \\
+&amp;amp;= \sum_{k = 0}^{\infty} \frac{t^k}{k!} \sum_{m = 0}^k \frac{k!}{(k - m)!m!} B_{k - m} x^m \\
+&amp;amp;= \sum_{k = 0}^{\infty} \frac{t^k}{k!} \sum_{m = 0}^k \binom{k}{m} B_{k - m} x^m \\
+&amp;amp;= \sum_{k = 0}^{\infty} \frac{B_k(x)}{k!} t^k
+\end{align*}&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34;&gt;&lt;p&gt;It might be easier to just prove that each coefficient of $t^k$ is equal, since that&amp;rsquo;s essentially what we are doing.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;Lemma 2 (Faulhaber&amp;rsquo;s Theorem in terms of bernoulli polynomials): For integers $n \geq 1$ and $p \geq 0$,&lt;/p&gt;
+&lt;p&gt;$$
+\sum_{k = 0}^{n - 1} k^p = \frac{B_{p + 1}(n) - B_{p + 1}}{p + 1}
+$$&lt;/p&gt;
+&lt;p&gt;Proof:&lt;/p&gt;
+&lt;p&gt;\begin{align*}
+\frac{B_{p + 1}(n) - B_{p + 1}}{p + 1}
+&amp;amp;= \frac{1}{p + 1}\left(\sum_{k = 0}^{p + 1} \binom{p + 1}{k} B_{p + 1 - k} n^k - B_{p + 1}\right) \\
+&amp;amp;= \frac{1}{p + 1}\left(\sum_{k = 1}^{p + 1} \binom{p + 1}{k} B_{p + 1 - k} n^k\right) \\
+&amp;amp;= \frac{1}{p + 1}\left(\sum_{k = 0}^p \binom{p + 1}{k + 1} B_{p - k} n^{k + 1}\right) \\
+&amp;amp;= \frac{1}{p + 1}\left(\sum_{k = 0}^p \binom{p + 1}{(p - k) + 1} B_k n^{(p - k) + 1}k\right) &amp;amp; k \mapsto p - k \\
+&amp;amp;= \frac{1}{p + 1}\left(\sum_{k = 0}^p \binom{p + 1}{k} B_k n^{p + 1 - k}\right) \\
+&amp;amp;= \sum_{i = 0}^p B_i \binom{p + 1}{i} \frac{n^{p + 1 - i}}{p + 1} \\
+\end{align*}&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Lemma 3 (Forward difference of bernoulli polynomials): For integers $n \geq 0$ and $p \geq 1$,&lt;/p&gt;
+&lt;p&gt;$$
+B_p(n + 1) - B_p(n) = pn^{p - 1}
+$$&lt;/p&gt;
+&lt;p&gt;Proof: Actually, this is equivalent to lemma 1! Rewriting lemma 1, we have&lt;/p&gt;
+&lt;p&gt;$$
+B_p(n) = p\left(\sum_{k = 0}^{n - 1} k^{p - 1}\right) + B_p
+$$&lt;/p&gt;
+&lt;p&gt;\begin{align*}
+B_p(n + 1) - B_p(n)
+&amp;amp;= \left(p\left(\sum_{k = 0}^n k^{p - 1}\right) + B_p\right) \\
+&amp;amp;- \left(p\left(\sum_{k = 0}^{n - 1} k^{p - 1}\right) + B_p\right) \\
+&amp;amp;= pn^{p - 1}
+\end{align*}&lt;/p&gt;
+
+&lt;div class=&#34;alert alert-info&#34; role=&#34;alert&#34;&gt;&lt;p&gt;
+This identity holds for $n &amp;lt; 0$ too. In fact, it holds for any $n \in \mathbb{R}$. Fix it.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;Lemma 4 (Derivative of Bernoulli polynomials): For integers $n \geq 1$,&lt;/p&gt;
+&lt;p&gt;$$
+\frac{\mathrm{d}}{\mathrm{d}x} B_n(x) = nB_{n - 1}(x)
+$$&lt;/p&gt;
+&lt;p&gt;Proof: From the basic identity $\binom{n}{k + 1} \cdot (k + 1) = \frac{n!}{(n - k - 1)!(k + 1)!} = \frac{(n - 1)!}{(n - k - 1)!k!} \cdot n$, we get that&lt;/p&gt;
+&lt;p&gt;\begin{align*}
+\frac{\mathrm{d}}{\mathrm{d}x} B_n(x)
+&amp;amp;= \sum_{k = 1}^n \binom{n}{k} B_{n - k} \left(kx^{k - 1}\right) \\
+&amp;amp;= \sum_{k = 0}^{n - 1} \binom{n}{k + 1} B_{n - 1 - k} \left((k + 1)x^k\right) \\
+&amp;amp;= n\sum_{k = 0}^{n - 1} \binom{n - 1}{k} B_{n - 1 - k} x^k \\
+&amp;amp;= nB_{n - 1}(x)
+\end{align*}&lt;/p&gt;
+&lt;h2 id=&#34;theorems&#34;&gt;Theorems&lt;/h2&gt;
+&lt;p&gt;Theorem (Symmetry): For integers $n \geq 0$,&lt;/p&gt;
+&lt;p&gt;$$
+B_n(x) = (-1)^n B_n(1 - x)
+$$&lt;/p&gt;
+&lt;p&gt;Proof: Define the polynomial $E_n(x) = B_n(1 - x) - (-1)^n B_n(x)$. It suffices to show that $E_n(x) = 0$. We perform induction on $n$. For $n = 0$, it is so trivial that &lt;code&gt;simp&lt;/code&gt; can probably do it. Assume it is true for $n = k$, then&lt;/p&gt;
+&lt;p&gt;\begin{align*}
+\frac{\mathrm{d}}{\mathrm{d}x} E_{k + 1}(x)
+&amp;amp;= -(k + 1)B_k(1 - x) - (-1)^{k + 1} (k + 1)B_k(x) \\
+&amp;amp;= -(k + 1)\left(B_k(1 - x) - (-1)^k B_k(x)\right) \\
+&amp;amp;= -(k + 1)E_k(x) \\
+&amp;amp;= 0
+\end{align*}&lt;/p&gt;
+&lt;p&gt;This means that $E_k(x)$ is constant. Finally, we know that $E_k(0) = B_n(1) - (-1)^n B_n(0) = 0$, finishing the proof.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;I have to go now, but this is what I am planning currently. I will check which lemmas are not implemented later, simply from the comment at the top of the file:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-lean&#34; data-lang=&#34;lean&#34;&gt;## TODO
+
+- `bernoulli_eval_one_neg` : $$ B_n(1 - x) = (-1)^n B_n(x) $$
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Gareth&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Finite Realm of Random (498 points, 4 solves)</title>
         <link>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</link>
         <pubDate>Mon, 16 Jan 2023 12:36:14 +0000</pubDate>

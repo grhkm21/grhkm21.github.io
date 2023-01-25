@@ -6,7 +6,21 @@
     <description>Recent content in Posts on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Mon, 16 Jan 2023 12:36:14 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Jan 2023 16:39:37 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bernoulli Polynomials</title>
+      <link>https://grhkm21.github.io/posts/bernoulli-polynomials/</link>
+      <pubDate>Wed, 25 Jan 2023 16:39:37 +0000</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/bernoulli-polynomials/</guid>
+      <description>Please note that $p$ does not denote a prime, but instead usually an integer $p \geq 0$.
+Existing lemmas Definition by recurrence:
+$$ B_n = 1 - \sum_{k = 0}^{n - 1} \binom{n}{k} \frac{B_k}{n + 1 - k} $$
+$$ B_n(x) = \sum_{k = 0}^n \binom{n}{k} B_{n - k}x^k $$
+Faulhaber&amp;rsquo;s theorem:
+$$ \sum_{k = 0}^{n - 1} k^p = \sum_{i = 0}^p B_i \binom{p + 1}{i} \frac{n^{p + 1 - i}}{p + 1} $$</description>
+    </item>
+    
     <item>
       <title>Finite Realm of Random (498 points, 4 solves)</title>
       <link>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</link>
