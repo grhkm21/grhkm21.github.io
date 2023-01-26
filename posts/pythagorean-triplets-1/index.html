@@ -1,160 +1,60 @@
 <!DOCTYPE html>
 <html lang="en-uk">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Short article on Pythagorean Triplets and Berggren&#39;s work.'><title>Investigating Pythagorean Triplets (1)</title>
+<title>Investigating Pythagorean Triplets (1) | Blog by grhkm21</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.109.0">
+<meta name="description" content="Short article on Pythagorean Triplets and Berggren&#39;s work.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="https://grhkm21.github.io/posts/pythagorean-triplets-1/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm21">
 
-<link rel='canonical' href='https://grhkm21.github.io/posts/pythagorean-triplets-1/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Investigating Pythagorean Triplets (1)'>
-<meta property='og:description' content='Short article on Pythagorean Triplets and Berggren&#39;s work.'>
-<meta property='og:url' content='https://grhkm21.github.io/posts/pythagorean-triplets-1/'>
-<meta property='og:site_name' content='Blog by grhkm21'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2022-07-12T23:29:12&#43;08:00'/><meta property='article:modified_time' content='2022-07-12T23:29:12&#43;08:00'/>
-<meta name="twitter:title" content="Investigating Pythagorean Triplets (1)">
-<meta name="twitter:description" content="Short article on Pythagorean Triplets and Berggren&#39;s work.">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-6BP6QGT61V');
-</script>
-    </head>
-    <body class="
-    article-page 
-">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            localStorage.setItem(colorSchemeKey, "auto");
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex 
-    
-        on-phone--column compact
-    
-">
-    
-        <aside class="sidebar left-sidebar sticky">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header class="site-info">
-        
-        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
-        <h2 class="site-description"></h2>
-    </header>
-
-    <ol class="menu" id="main-menu">
-        
-        
-        
-
-        <li >
-            <a href='/about-me/' >
-                
-                <span>About</span>
-            </a>
-        </li>
-        
-        
-
-        <li >
-            <a href='/' >
-                
-                <span>Posts</span>
-            </a>
-        </li>
-        
-
-        
-    </ol>
-</aside>
-
-    
-<main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-
-    <h2 class="article-title">
-        <a href="/posts/pythagorean-triplets-1/">Investigating Pythagorean Triplets (1)</a>
-    </h2>
-
-    
-    <h3 class="article-subtitle">
-        Short article on Pythagorean Triplets and Berggren&#39;s work.
-    </h3>
-    
-
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Jul 12, 2022</time>
-            </div>
-        
-
-        
-    </footer>
-    
-</div>
-</header>
-    <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        options: {
-            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-        }
-    };
-
-    window.addEventListener('load', (event) => {
-        document.querySelectorAll("mjx-container").forEach(function (x) {
-            x.parentElement.classList += 'has-jax'
-        })
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
     });
-
 </script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <section class="article-content">
-    <h1 id="notes-of-pythagorean-triplets">Notes of Pythagorean Triplets</h1>
-<p>This is a short article re-deriving the <a class="link" href="https://en.wikipedia.org/wiki/Tree_of_primitive_Pythagorean_triples"  target="_blank" rel="noopener"
-    >Tree of (primitive) Pythagorean Triplets</a>, as well as a few interesting generalisations.</p>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm21</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me/">About</a>
+    
+      <a href="/">Posts</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Investigating Pythagorean Triplets (1)</h1>
+  </header>
+  <h1 id="notes-of-pythagorean-triplets">Notes of Pythagorean Triplets</h1>
+<p>This is a short article re-deriving the <a href="https://en.wikipedia.org/wiki/Tree_of_primitive_Pythagorean_triples">Tree of (primitive) Pythagorean Triplets</a>, as well as a few interesting generalisations.</p>
 <p>Firstly, let&rsquo;s begin with the equation $x^2 + y^2 = z^2$. A triplet $(x, y, z)$ satisfying the equation is called a <em>Pythagorean Triplet</em>, abbreviated PT. If we further have that $\gcd(x, y, z) = 1$, then we say that $(x, y, z)$ is a <em>primitive</em> PT, abbreviated PPT.</p>
 <p><strong>Theorem 1:</strong> There are infinitely many PT.</p>
 <p><em>Proof (Incomplete):</em> Let $x$ be any odd number at least $3$, say $x = 13$. Square it to get $x^2 = 169$. Now, we find two consecutive integers that add up to it. We can see that $84$ and $85$ works, and hence $(x, y, z) = (13, 84, 85)$ works - indeed, $13^2 + 84^2 = 7225 = 85^2$. You can repeat this for any odd $x \geq 3$.</p>
@@ -216,140 +116,10 @@ $$</p>
 <li>Prove (2) of Berggren&rsquo;s Theorem. (<em>Hint: Uniqueness is easy. Prove existence by contradiction.</em>)</li>
 </ul>
 
-</section>
-
-
-    <footer class="article-footer">
-    
-
-    </footer>
-
-
-    
 </article>
 
-    <aside class="related-contents--wrapper">
-    
-    
-</aside>
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2023 Blog by grhkm21
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
-    </section>
-</footer>
 
 
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-    
-    <div class="pswp__bg"></div>
 
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
-            >
-
-            </main>
-    
-
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
-                defer="false"
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
 </html>

@@ -1,158 +1,59 @@
 <!DOCTYPE html>
 <html lang="en-uk">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Short article on nonlinear regression, focusing on polynomial models. Written for HS students.'><title>Nonlinear Regression (1)</title>
+<title>Nonlinear Regression (1) | Blog by grhkm21</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.109.0">
+<meta name="description" content="Short article on nonlinear regression, focusing on polynomial models. Written for HS students.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="https://grhkm21.github.io/posts/nonlinear-regression/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm21">
 
-<link rel='canonical' href='https://grhkm21.github.io/posts/nonlinear-regression/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Nonlinear Regression (1)'>
-<meta property='og:description' content='Short article on nonlinear regression, focusing on polynomial models. Written for HS students.'>
-<meta property='og:url' content='https://grhkm21.github.io/posts/nonlinear-regression/'>
-<meta property='og:site_name' content='Blog by grhkm21'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2022-07-12T23:29:12&#43;08:00'/><meta property='article:modified_time' content='2022-07-12T23:29:12&#43;08:00'/>
-<meta name="twitter:title" content="Nonlinear Regression (1)">
-<meta name="twitter:description" content="Short article on nonlinear regression, focusing on polynomial models. Written for HS students.">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-6BP6QGT61V');
-</script>
-    </head>
-    <body class="
-    article-page 
-">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            localStorage.setItem(colorSchemeKey, "auto");
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex 
-    
-        on-phone--column compact
-    
-">
-    
-        <aside class="sidebar left-sidebar sticky">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header class="site-info">
-        
-        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
-        <h2 class="site-description"></h2>
-    </header>
-
-    <ol class="menu" id="main-menu">
-        
-        
-        
-
-        <li >
-            <a href='/about-me/' >
-                
-                <span>About</span>
-            </a>
-        </li>
-        
-        
-
-        <li >
-            <a href='/' >
-                
-                <span>Posts</span>
-            </a>
-        </li>
-        
-
-        
-    </ol>
-</aside>
-
-    
-<main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-
-    <h2 class="article-title">
-        <a href="/posts/nonlinear-regression/">Nonlinear Regression (1)</a>
-    </h2>
-
-    
-    <h3 class="article-subtitle">
-        Short article on nonlinear regression, focusing on polynomial models. Written for HS students.
-    </h3>
-    
-
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Jul 12, 2022</time>
-            </div>
-        
-
-        
-    </footer>
-    
-</div>
-</header>
-    <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        options: {
-            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-        }
-    };
-
-    window.addEventListener('load', (event) => {
-        document.querySelectorAll("mjx-container").forEach(function (x) {
-            x.parentElement.classList += 'has-jax'
-        })
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
     });
-
 </script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <section class="article-content">
-    <h1 id="notes-on-non-linear-regression">Notes on Non-Linear Regression</h1>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm21</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me/">About</a>
+    
+      <a href="/">Posts</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Nonlinear Regression (1)</h1>
+  </header>
+  <h1 id="notes-on-non-linear-regression">Notes on Non-Linear Regression</h1>
 <h2 id="1-linear-regression">1. Linear Regression</h2>
 <p>To begin, let&rsquo;s recall how linear regression is done. We are given $n$ <strong>data points</strong> $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, and we are to make a linear <strong>model</strong></p>
 <p>$$
@@ -196,18 +97,7 @@ $$</p>
 E_2(f) &amp;= \sqrt{\frac{1}{n}\sum_{i=1}^n(y_i - f(x_i))^2} \\ &amp;= \sqrt{\frac{1}{4}\left((1 - f(0))^2 + (5 - f(1))^2 + (7 - f(2))^2 + (4 - f(4))^2\right)} \\ &amp;= \sqrt{\frac{1}{4}(4a_0^2 + 14a_0a_1 + 21a_1^2 + 42a_0a_2 + 146a_1a_2 + 273a_2^2 - 34a_0 - 70a_1 - 194a_2 + 91)}
 \end{align*}$$</p>
 <p>is minimised. Of course it looks impossible to solve right now, as we have $3$ variables and a total of $10$ terms to minimise together. However, we will solve the minimisation problem in section 4.</p>
-<p><figure 
-	>
-	<a href="https://i.imgur.com/0lRE0Zk.png" >
-		<img src="https://i.imgur.com/0lRE0Zk.png"
-			
-			
-			
-			loading="lazy"
-			>
-	</a>
-	
-</figure></p>
+<p><img src="https://i.imgur.com/0lRE0Zk.png" alt=""></p>
 <hr>
 <h2 id="3-lagrange-multiplier">3. Lagrange Multiplier</h2>
 <p>To minimise the absolute mess above, we will require another tool. Recall that in normal calculus, it is find the local minimum any function, say $f(x) = x^3 + 3x^2 - 5$ - we differentiate it to get $f&rsquo;(x) = 3x^2 + 6x$, then find it&rsquo;s zeroes $f&rsquo;(x) = 3x(x + 2) \implies x = 0, -2$, and finally check that $f&rsquo;&rsquo;(x) &gt; 0$ to get that $x = 0$ is a local minimum of $f$. We wish to do something like that with more than one variables!</p>
@@ -267,8 +157,7 @@ $$</p>
 <p>Since there are three variables and three equations, we can solve this using normal system of equations! Indeed, we get $(a_0, a_1, a_2) = \left(\frac{107}{110}, \frac{1147}{220}, -\frac{49}{44}\right) \approx (0.97, 5.21, -1.11)$, which matches the coefficients of Desmos.</p>
 <hr>
 <h2 id="5-code">5. Code</h2>
-<p>To aid computation, we coded up a program in a programming language called Sage. It is a library extension of Python. In Sage, solving linear equations are easy: we first transform the coefficients into a <code>Matrix</code>, then call the function <code>.solve_right</code> to solve the equations - see <a class="link" href="https://doc.sagemath.org/html/en/tutorial/tour_linalg.html"  target="_blank" rel="noopener"
-    >docs</a> for more details.</p>
+<p>To aid computation, we coded up a program in a programming language called Sage. It is a library extension of Python. In Sage, solving linear equations are easy: we first transform the coefficients into a <code>Matrix</code>, then call the function <code>.solve_right</code> to solve the equations - see <a href="https://doc.sagemath.org/html/en/tutorial/tour_linalg.html">docs</a> for more details.</p>
 <p>Anyways, here is the final code:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_coeffs</span>(points, k):
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e"># arguments:</span>
@@ -340,140 +229,10 @@ $$</p>
 <h2 id="6-future">6. Future</h2>
 <p>It is easy to extend the work to other models or using other error measures other than $E_2$, and I would love to investigate this further in other fields such as the $p$-adic integers.</p>
 
-</section>
-
-
-    <footer class="article-footer">
-    
-
-    </footer>
-
-
-    
 </article>
 
-    <aside class="related-contents--wrapper">
-    
-    
-</aside>
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2023 Blog by grhkm21
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
-    </section>
-</footer>
 
 
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-    
-    <div class="pswp__bg"></div>
 
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
-            >
-
-            </main>
-    
-
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
-                defer="false"
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
 </html>

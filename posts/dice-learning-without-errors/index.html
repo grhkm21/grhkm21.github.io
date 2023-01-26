@@ -1,160 +1,60 @@
 <!DOCTYPE html>
 <html lang="en-uk">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Chosen Plaintext Ring-LWE (CKKS) Attack'><title>Learning Without Errors (396 pts, 6 solves, upsolve)</title>
+<title>Learning Without Errors (396 pts, 6 solves, upsolve) | Blog by grhkm21</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.109.0">
+<meta name="description" content="Chosen Plaintext Ring-LWE (CKKS) Attack">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="https://grhkm21.github.io/posts/dice-learning-without-errors/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm21">
 
-<link rel='canonical' href='https://grhkm21.github.io/posts/dice-learning-without-errors/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Learning Without Errors (396 pts, 6 solves, upsolve)'>
-<meta property='og:description' content='Chosen Plaintext Ring-LWE (CKKS) Attack'>
-<meta property='og:url' content='https://grhkm21.github.io/posts/dice-learning-without-errors/'>
-<meta property='og:site_name' content='Blog by grhkm21'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='crypto' /><meta property='article:tag' content='LWE' /><meta property='article:tag' content='CKKS' /><meta property='article:published_time' content='2022-02-09T16:15:44&#43;01:00'/><meta property='article:modified_time' content='2022-02-09T16:15:44&#43;01:00'/>
-<meta name="twitter:title" content="Learning Without Errors (396 pts, 6 solves, upsolve)">
-<meta name="twitter:description" content="Chosen Plaintext Ring-LWE (CKKS) Attack">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-6BP6QGT61V');
-</script>
-    </head>
-    <body class="
-    article-page 
-">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            localStorage.setItem(colorSchemeKey, "auto");
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex 
-    
-        on-phone--column compact
-    
-">
-    
-        <aside class="sidebar left-sidebar sticky">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header class="site-info">
-        
-        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
-        <h2 class="site-description"></h2>
-    </header>
-
-    <ol class="menu" id="main-menu">
-        
-        
-        
-
-        <li >
-            <a href='/about-me/' >
-                
-                <span>About</span>
-            </a>
-        </li>
-        
-        
-
-        <li >
-            <a href='/' >
-                
-                <span>Posts</span>
-            </a>
-        </li>
-        
-
-        
-    </ol>
-</aside>
-
-    
-<main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-
-    <h2 class="article-title">
-        <a href="/posts/dice-learning-without-errors/">Learning Without Errors (396 pts, 6 solves, upsolve)</a>
-    </h2>
-
-    
-    <h3 class="article-subtitle">
-        Chosen Plaintext Ring-LWE (CKKS) Attack
-    </h3>
-    
-
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Feb 09, 2022</time>
-            </div>
-        
-
-        
-    </footer>
-    
-</div>
-</header>
-    <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        options: {
-            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-        }
-    };
-
-    window.addEventListener('load', (event) => {
-        document.querySelectorAll("mjx-container").forEach(function (x) {
-            x.parentElement.classList += 'has-jax'
-        })
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
     });
-
 </script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <section class="article-content">
-    <p>(Up-)Solved by: grhkm</p>
-<p>Source of the problem: <a class="link" href="https://ctf.dicega.ng/challs"  target="_blank" rel="noopener"
-    >Dice CTF 2022</a></p>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm21</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me/">About</a>
+    
+      <a href="/">Posts</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Learning Without Errors (396 pts, 6 solves, upsolve)</h1>
+  </header>
+  <p>(Up-)Solved by: grhkm</p>
+<p>Source of the problem: <a href="https://ctf.dicega.ng/challs">Dice CTF 2022</a></p>
 <h2 id="self-reflection">Self-Reflection</h2>
 <p>I am actually very frustrated and annoyed at myself for this problem. During the CTF I was scared off by my lack of experience with this encryption scheme, and also just didn&rsquo;t believe I can solve this challenge. As a result, I spent a lot of my time watching YouTube instead.</p>
 <p>Approaching the end of the CTF, for absolutely no reason I decided I will try to take a look at the challenge. I started the biggest crossover between the CTF and the speed-running community ever and seriously attempted the challenge in the last hour and half of the CTF. I watched a video on Homomorphic Encryption while I ate dinner, and an hour before the end of CTF I found the correct paper and started tracing the given <code>fhe</code> library. At the end I had the idea of the solution and was ready to start coding. But of course, it was also the end of CTF! After the contest, I finished coding my solution in around an hour, while debugging took me around 3 hours, mainly due to my unfamiliarity with the system. Nonetheless, I would have solved this if not due to my lack of confidence and if I actually spent time on this <em>crypto</em> challenge, which I am meant to excel in&hellip;</p>
@@ -162,8 +62,8 @@
 <blockquote>
 <p>Choose Keys Karefully for Security</p>
 <p><code>nc mc.ax 31614</code></p>
-<p><a class="link" href="/files/lwe-server.py" >server.py</a></p>
-<p><a class="link" href="/files/lwe-challenge.py" >challenge.py</a></p>
+<p><a href="/files/lwe-server.py">server.py</a></p>
+<p><a href="/files/lwe-challenge.py">challenge.py</a></p>
 </blockquote>
 <h2 id="solution-outline">Solution Outline</h2>
 <p>The ciphertext-message pair leaks the secret key as a linear equation, and we can simply decrypt the flag. Yes, it&rsquo;s that simple.</p>
@@ -200,8 +100,7 @@
 <li>It then encrypts the message by <code>encrypt_json</code>, and decrypts it the message by <code>decrypt_ciphertext</code></li>
 <li>Finally, the server prints the encrypted flag from <code>encrypt_flag()</code></li>
 </ul>
-<p>In other words, we have to perform a Single Chosen Plaintext attack. Let&rsquo;s now take a look at <code>challenge.py</code>. Note that the script uses an external implementation of CKKS, which can be found at <a class="link" href="https://github.com/sarojaerabelli/py-fhe"  target="_blank" rel="noopener"
-    >sarojaerabelli/py-fhe</a>. I will refer to it as &ldquo;the library&rdquo; from now on.</p>
+<p>In other words, we have to perform a Single Chosen Plaintext attack. Let&rsquo;s now take a look at <code>challenge.py</code>. Note that the script uses an external implementation of CKKS, which can be found at <a href="https://github.com/sarojaerabelli/py-fhe">sarojaerabelli/py-fhe</a>. I will refer to it as &ldquo;the library&rdquo; from now on.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># https://github.com/sarojaerabelli/py-fhe</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># imports omitted</span>
 </span></span><span style="display:flex;"><span>
@@ -289,30 +188,13 @@
 <p>To motivate the idea of <em>Fully Homomorphic Encryption</em> (FHE), imagine that you have two secret prime numbers (your crush&rsquo;s phone number and birthday!), $m_1$ and $m_2$, that you want to store in a secure cloud server. Obviously you should not trust the cloud, so you encrypted them as $c_1 := \text{enc}_{\text{pk}}(m_1)$ and $c_2 := \text{enc}_{\text{pk}}(m_2)$, and stored it into the cloud. Now suppose that you want to merge them together, which involves calculating $m_3 = m_1 \cdot m_2$. Of course, one way to do this is to decrypt both the messages, multiply them together, then encrypt and store it back. However, the cloud might intercept the decrypted messages, which is bad.</p>
 <p>Here is when FHE will help - FHE allows you to calculate $c_3 = \text{enc}_{\text{pk}}(m_3)$ directly without knowing $m_1$ and $m_2$. In particular, there are operators $\oplus$ and $\otimes$ such that</p>
 <p>$$\begin{align*} \text{enc}<em>{\text{pk}}(m_1)\ {\color{red}\oplus}\ \text{enc}</em>{\text{pk}}(m_2) &amp;= \text{enc}<em>{\text{pk}}(m_1\ {\color{cyan}+}\  m_2) \\ \text{enc}</em>{\text{pk}}(m_1)\ {\color{red}\otimes}\ \text{enc}<em>{\text{pk}}(m_2) &amp;= \text{enc}</em>{\text{pk}}(m_1\ {\color{cyan}\cdot}\ m_2) \end{align*}$$</p>
-<p><figure 
-	>
-	<a href="/images/dice-learning-with-errors-FHE.png" >
-		<img src="/images/dice-learning-with-errors-FHE.png"
-			
-			
-			
-			loading="lazy"
-			alt="Here, &ldquo;easy&rdquo; and &ldquo;hard&rdquo; is from the perspective of the cloud. It is easy to go right and down, but not up.">
-	</a>
-	
-	<figcaption>Here, “easy” and “hard” is from the perspective of the cloud. It is easy to go right and down, but not up.</figcaption>
-	
-</figure></p>
-<p>In other words, it allows one to perform computations over encrypted data without ever decrypting them. Notice the parallel between the <em>plaintext</em> space and the <em>ciphertext</em> space! This is why it is called a <em>homomorphic</em> scheme. This property is very useful and has practical uses, most importantly in cloud computing. I shall refer the reader to watch the first half of <a class="link" href="https://www.youtube.com/watch?v=9lTGEPJTw9M"  target="_blank" rel="noopener"
-    >this podcast</a>, which explains the concept in layman terms, and <a class="link" href="https://www.youtube.com/watch?v=TySXpV86958"  target="_blank" rel="noopener"
-    >this Eurocrypt 2019 talk</a>, which is a pretty clear talk.</p>
+<p><img src="/images/dice-learning-with-errors-FHE.png" alt="Here, &amp;ldquo;easy&amp;rdquo; and &amp;ldquo;hard&amp;rdquo; is from the perspective of the cloud. It is easy to go right and down, but not up."></p>
+<p>In other words, it allows one to perform computations over encrypted data without ever decrypting them. Notice the parallel between the <em>plaintext</em> space and the <em>ciphertext</em> space! This is why it is called a <em>homomorphic</em> scheme. This property is very useful and has practical uses, most importantly in cloud computing. I shall refer the reader to watch the first half of <a href="https://www.youtube.com/watch?v=9lTGEPJTw9M">this podcast</a>, which explains the concept in layman terms, and <a href="https://www.youtube.com/watch?v=TySXpV86958">this Eurocrypt 2019 talk</a>, which is a pretty clear talk.</p>
 <h2 id="ckks-cheon-kim-kim-song-scheme">CKKS (Cheon-Kim-Kim-Song) Scheme</h2>
-<p>The CKKS Encryption Scheme, named after Jung Hee Cheon, Andrey Kim, Miran Kim and Yongsoo Song, is a <em>Fully Homomorphic Encryption</em> (FHE) scheme <a class="link" href="https://eprint.iacr.org/2016/421.pdf"  target="_blank" rel="noopener"
-    >proposed</a> in 2016 that&rsquo;s based on approximate arithmetic. The core idea comes from the difficulty of Learning With Errors (LWE), that is, the difficulty of recovering the <em>secret</em> key $\vec{s}$ given only &ldquo;approximate&rdquo; random linear equations on $\vec{s}$. For example, it is hard to recover $\vec{s}$ given equations</p>
+<p>The CKKS Encryption Scheme, named after Jung Hee Cheon, Andrey Kim, Miran Kim and Yongsoo Song, is a <em>Fully Homomorphic Encryption</em> (FHE) scheme <a href="https://eprint.iacr.org/2016/421.pdf">proposed</a> in 2016 that&rsquo;s based on approximate arithmetic. The core idea comes from the difficulty of Learning With Errors (LWE), that is, the difficulty of recovering the <em>secret</em> key $\vec{s}$ given only &ldquo;approximate&rdquo; random linear equations on $\vec{s}$. For example, it is hard to recover $\vec{s}$ given equations</p>
 <p>$$\vec{b_i} = \vec{a_i}\cdot\vec{s} + \vec{e_i} \approx \vec{a_i}\cdot\vec{s}$$</p>
 <p>Where $\vec{e_i}$ is the error term sampled from a secure error distribution $\chi$, usually chosen to be the normal distribution.</p>
-<p>The scheme is fascinating and has a lot of details, but I will provide a simplified outline of the scheme to ease understanding. Hence, details such as scaling factors and relinearization will be left out. Interested readers shall refer to the original paper (linked) or <a class="link" href="https://eprint.iacr.org/2020/1533.pdf"  target="_blank" rel="noopener"
-    >[BD21, p.8]</a>.</p>
+<p>The scheme is fascinating and has a lot of details, but I will provide a simplified outline of the scheme to ease understanding. Hence, details such as scaling factors and relinearization will be left out. Interested readers shall refer to the original paper (linked) or <a href="https://eprint.iacr.org/2020/1533.pdf">[BD21, p.8]</a>.</p>
 <h3 id="data-representation">Data Representation</h3>
 <p>In the scheme, all operations are done with real polynomials of degree $\leq N$, where the coefficients are taken mod $q$. Our plaintext would be a complex vector, chosen as the evaluation of the polynomial at the primitive $(2N)$th roots of unity $\zeta^{2j + 1}$ for a few reasons.</p>
 <p>First, notice that as these are primitive roots, they satisfy $x^N + 1 = 0$. This means that our polynomial can be reduced mod $x^N + 1$ and not affect the decoded vector, which means we can compute polynomial operations mod $x^N + 1$.</p>
@@ -535,193 +417,10 @@
 <p>Apparently, having an even constant term in the polynomial doesn&rsquo;t mean we can&rsquo;t invert the polynomial. Example? $x^{1024} + 2$.</p>
 <p>Motivated by this, we simply consider $P(x) + (x^{1024} + 1)$ if the constant term is even, and if $(x + 1)\mid P(x)$, then $(x + 1)\mid P(x) + (x^{1024} + 1)$ by factor theorem and we proceed as above!</p>
 
-</section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/crypto/">crypto</a>
-        
-            <a href="/tags/lwe/">LWE</a>
-        
-            <a href="/tags/ckks/">CKKS</a>
-        
-    </section>
-
-
-    </footer>
-
-
-    
 </article>
 
-    <aside class="related-contents--wrapper">
-    
-    
-        <h2 class="section-title">Related contents</h2>
-        <div class="related-contents">
-            <div class="flex article-list--tile">
-                
-                    
-<article class="">
-    <a href="/posts/tet-algebra/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Algebra (831 pts, 14 solves)</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/posts/tet-shares/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/posts/seccon-pppp/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">pppp (117 pts, 70 solves)</h2>
-        </div>
-    </a>
-</article>
-                
-            </div>
-        </div>
-    
-</aside>
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2023 Blog by grhkm21
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
-    </section>
-</footer>
 
 
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-    
-    <div class="pswp__bg"></div>
 
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
-            >
-
-            </main>
-    
-
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
-                defer="false"
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
 </html>

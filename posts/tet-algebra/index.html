@@ -1,165 +1,65 @@
 <!DOCTYPE html>
 <html lang="en-uk">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Recovering a curve from a point addition group law defined on it.'><title>Algebra (831 pts, 14 solves)</title>
+<title>Algebra (831 pts, 14 solves) | Blog by grhkm21</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.109.0">
+<meta name="description" content="Recovering a curve from a point addition group law defined on it.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="https://grhkm21.github.io/posts/tet-algebra/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm21">
 
-<link rel='canonical' href='https://grhkm21.github.io/posts/tet-algebra/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Algebra (831 pts, 14 solves)'>
-<meta property='og:description' content='Recovering a curve from a point addition group law defined on it.'>
-<meta property='og:url' content='https://grhkm21.github.io/posts/tet-algebra/'>
-<meta property='og:site_name' content='Blog by grhkm21'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='maths' /><meta property='article:tag' content='crypto' /><meta property='article:published_time' content='2022-01-02T22:53:00&#43;00:00'/><meta property='article:modified_time' content='2022-01-02T22:53:00&#43;00:00'/>
-<meta name="twitter:title" content="Algebra (831 pts, 14 solves)">
-<meta name="twitter:description" content="Recovering a curve from a point addition group law defined on it.">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-6BP6QGT61V');
-</script>
-    </head>
-    <body class="
-    article-page 
-">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            localStorage.setItem(colorSchemeKey, "auto");
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex 
-    
-        on-phone--column compact
-    
-">
-    
-        <aside class="sidebar left-sidebar sticky">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header class="site-info">
-        
-        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
-        <h2 class="site-description"></h2>
-    </header>
-
-    <ol class="menu" id="main-menu">
-        
-        
-        
-
-        <li >
-            <a href='/about-me/' >
-                
-                <span>About</span>
-            </a>
-        </li>
-        
-        
-
-        <li >
-            <a href='/' >
-                
-                <span>Posts</span>
-            </a>
-        </li>
-        
-
-        
-    </ol>
-</aside>
-
-    
-<main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-
-    <h2 class="article-title">
-        <a href="/posts/tet-algebra/">Algebra (831 pts, 14 solves)</a>
-    </h2>
-
-    
-    <h3 class="article-subtitle">
-        Recovering a curve from a point addition group law defined on it.
-    </h3>
-    
-
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Jan 02, 2022</time>
-            </div>
-        
-
-        
-    </footer>
-    
-</div>
-</header>
-    <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        options: {
-            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-        }
-    };
-
-    window.addEventListener('load', (event) => {
-        document.querySelectorAll("mjx-container").forEach(function (x) {
-            x.parentElement.classList += 'has-jax'
-        })
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
     });
-
 </script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <section class="article-content">
-    <h2 id="introduction">Introduction</h2>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm21</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me/">About</a>
+    
+      <a href="/">Posts</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Algebra (831 pts, 14 solves)</h1>
+  </header>
+  <h2 id="introduction">Introduction</h2>
 <p>Our team Black Bauhinia participated in the TetCTF 2022 which spans two days.  <code>Algebra</code> is the hardest Crypto challenge in the CTF. Mystiz and I (grhkm) together spent around 7 hours on this challenge.</p>
 <h2 id="problem-statement">Problem Statement</h2>
 <blockquote>
 <p>Description: I threw some arbitrary operator into a finite field and, interestingly, I got a group!</p>
 <p>Service: nc 139.162.61.222 13374</p>
-<p>Binary: <a class="link" href="https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing"  target="_blank" rel="noopener"
-    >https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing</a></p>
+<p>Binary: <a href="https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing">https://drive.google.com/file/d/1_fe-o44NH3pjHVLS_Bk965BPHO6QnVvO/view?usp=sharing</a></p>
 </blockquote>
 <h2 id="solution-outline">Solution Outline</h2>
 <p>$x_3 = f(x_1, x_2)$ satisfies $\frac{1}{x_3} = [x^0]\left[\big(x + \frac{1}{x_1}\big)\big(x + \frac{1}{x_2}\big)\text{.monic()}\right]\ \text{mod}\ (x^2 + 2Cx + 1)$, where $[x^0]P(x)$ is the constant term of the polynomial after reduction. From this, we obtain $c = f^m(a)f^n(b) = [x^0]\left[\big(x - a^{-1}\big)^m\big(x - b^{-1}\big)^n\right]\ \text{mod}\ (x^2 + 2Cx + 1)$. Realizing that $\sqrt{C^2 - 1}$ exists in $\mathbb{F}_p$, we apply CRT to get two relations $(r_i - a^{-1})^m(r_i - b^{-1})^n \equiv k(r_i - c^{-1})$ where $k$ is the linear coefficient. Dividing the two equations gives the desired <code>fa</code>, <code>fb</code> and <code>fc</code>.</p>
@@ -246,20 +146,7 @@
 </blockquote>
 <p>Here, the theorem&rsquo;s conditions are satisfied, and he proposed the following. Consider the polynomial $\big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big)\ \text{mod}\ (x^2 + 2Cx + 1)$. We have</p>
 <p>$$\begin{align*} \big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big) &amp;\equiv x^2 - \frac{x_1 + x_2}{x_1x_2}x + \frac{1}{x_1x_2} \\ &amp;\equiv -(2C + \frac{x_1 + x_2}{x_1x_2}\big)x + \big(\frac{1}{x_1x_2} - 1\big) \\ &amp;\equiv -\frac{x_1 + x_2 + 2Cx_1x_2}{x_1x_2}x + \frac{1 - x_1x_2}{x_1x_2} \\ &amp;\equiv -\frac{x_1 + x_2 + 2Cx_1x_2}{x_1x_2}\big(x - \frac{1 - x_1x_2}{x_1 + x_2 + 2Cx_1x_2}\big) \\ &amp;\equiv k(x - \frac{1}{f(x_1, x_2)})\ \text{for some}\ k. \end{align*}$$</p>
-<p><figure 
-	>
-	<a href="/images/tet-algebra-mystiz-god.png" >
-		<img src="/images/tet-algebra-mystiz-god.png"
-			
-			
-			
-			loading="lazy"
-			alt="Mystiz God Theorem Use Case">
-	</a>
-	
-	<figcaption>Mystiz God Theorem Use Case</figcaption>
-	
-</figure></p>
+<p><img src="/images/tet-algebra-mystiz-god.png" alt="Mystiz God Theorem Use Case"></p>
 <p>From this, it is easy to see that</p>
 <p>$$\big(x - \frac{1}{x_1}\big)\big(x - \frac{1}{x_2}\big)\big(x - \frac{1}{x_3}\big)\equiv k_1\big(x - \frac{1}{f(x_1, x_2)}\big)\big(x - \frac{1}{x_3}\big)\equiv k_2\big(x - \frac{1}{f(x_1, x_2, x_3)}\big)\ \text{mod}\ (x^2 + 2Cx + 1)$$</p>
 <p>$$\prod_{i=1}^n \big(x - \frac{1}{x_i}\big)\equiv k\big(x - \frac{1}{f(x_1, x_2, \ldots, x_n)})\ \text{mod}\ (x^2 + 2Cx + 1)$$</p>
@@ -289,20 +176,7 @@
 <p>Dividing the equations, we get</p>
 <p>$$\frac{cr_1 - 1}{cr_2 - 1}\equiv\Big(\frac{ar_1 - 1}{ar_2 - 1}\Big)^m\Big(\frac{br_1 - 1}{br_2 - 1}\Big)^n\ \text{mod}\ p$$</p>
 <p>That&rsquo;s it!</p>
-<p><figure 
-	>
-	<a href="/images/tet-algebra-flag.png" >
-		<img src="/images/tet-algebra-flag.png"
-			
-			
-			
-			loading="lazy"
-			alt="I was so excited and I SHOULD BE">
-	</a>
-	
-	<figcaption>I was so excited and I SHOULD BE</figcaption>
-	
-</figure></p>
+<p><img src="/images/tet-algebra-flag.png" alt="I was so excited and I SHOULD BE"></p>
 <h2 id="code">Code</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span>
@@ -331,20 +205,7 @@
 <p>Firstly, it is natural to look for fixed point of the function. So let&rsquo;s try!</p>
 <p>$$\begin{align*} f(x_1, x_2) &amp;= x_1 \\\\ \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2} &amp;= x_1 \\\\ x_1 + x_2 + 2Cx_1x_2 &amp;= x_1 - x_1^2x_2 \\\\ x_2(x_1^2 + 2Cx_1 + 1) &amp;= 0 \end{align*}$$</p>
 <p>We see that the roots of $x_1^2 + 2Cx_1 + 1$ are fixed points. In Sage, we can further verify that $\left(\frac{C^2 - 1}{p}\right) = 1$, so such $x_1$ indeed exists. It is then natural to guess that the group structure might be a quotient ring, and that $M(x) = x^2 + 2Cx + 1$ is the quotient.</p>
-<p><figure 
-	>
-	<a href="/images/tet-algebra-quotient-ring.png" >
-		<img src="/images/tet-algebra-quotient-ring.png"
-			
-			
-			
-			loading="lazy"
-			alt="Mystiz suggesting ideas">
-	</a>
-	
-	<figcaption>Mystiz suggesting ideas</figcaption>
-	
-</figure></p>
+<p><img src="/images/tet-algebra-quotient-ring.png" alt="Mystiz suggesting ideas"></p>
 <p>Now let&rsquo;s take a look at $f(x_1, x_2)$ under our assumption.</p>
 <p>$$\begin{align*} f(x_1, x_2) &amp;\equiv \frac{x_1 + x_2 + 2Cx_1x_2}{1 - x_1x_2} \\\ f(x_1, x_2) &amp;\equiv \frac{\frac{1}{x_1} + \frac{1}{x_2} + 2C}{\frac{1}{x_1x_2} - 1} \\\ \left(\frac{1}{x_1x_2} - 1\right)f(x_1, x_2) &amp;\equiv \frac{1}{x_1} + \frac{1}{x_2} + 2C \\\ (x_1x_2 - 1)f(\frac{1}{x_1}, \frac{1}{x_2}) &amp;\equiv x_1 + x_2 + 2C \end{align*}$$</p>
 <p>We see that the right-hand side has a linear expression $x_1 + x_2 + 2C$, while the left-hand side has a product $x_1x_2 - 1$. We might think of something like Vieta&rsquo;s Theorem or quadratic factoring in general, where we have $(x - x_1)(x - x_2) = x^2 - (x_1 + x_2)x + x_1x_2$. What if we try it here?</p>
@@ -358,179 +219,10 @@
 <p>In our Solution section, we found that $x\mapsto\frac{r_1x - 1}{r_2x - 1}$ is the desired map. Indeed, many people (such as @hellman and @rkm0959) solved it by letting the map be $x\mapsto\frac{ax + b}{cx + d}$ and looked at fixed points / points with small orders.</p>
 <p>In the CTF, Mystiz and I also found that when we change $C$ to random values, sometimes points have order $p^2 - 1$ instead of $p - 1$. This is now explained, as $x^2 + 2Cx + 1 = (x - r_1)(x - r_2)$ have roots in $\mathbb{F}_{p^2}$ when $C^2 - 1$ is a quadratic non-residue, which the field has order $p^2 - 1$.</p>
 
-</section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/maths/">maths</a>
-        
-            <a href="/tags/crypto/">crypto</a>
-        
-    </section>
-
-
-    </footer>
-
-
-    
 </article>
 
-    <aside class="related-contents--wrapper">
-    
-    
-        <h2 class="section-title">Related contents</h2>
-        <div class="related-contents">
-            <div class="flex article-list--tile">
-                
-                    
-<article class="">
-    <a href="/posts/tet-shares/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/posts/seccon-pppp/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">pppp (117 pts, 70 solves)</h2>
-        </div>
-    </a>
-</article>
-                
-            </div>
-        </div>
-    
-</aside>
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2023 Blog by grhkm21
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
-    </section>
-</footer>
 
 
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-    
-    <div class="pswp__bg"></div>
 
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
-            >
-
-            </main>
-    
-
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
-                defer="false"
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
 </html>

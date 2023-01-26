@@ -1,159 +1,59 @@
 <!DOCTYPE html>
 <html lang="en-uk">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Shortest path on a slightly obfuscated graph structure.'><title>The Hardest Path (300 pts, 9 solves)</title>
+<title>The Hardest Path (300 pts, 9 solves) | Blog by grhkm21</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.109.0">
+<meta name="description" content="Shortest path on a slightly obfuscated graph structure.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="https://grhkm21.github.io/posts/hkcert-the-hardest-path/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm21">
 
-<link rel='canonical' href='https://grhkm21.github.io/posts/hkcert-the-hardest-path/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='The Hardest Path (300 pts, 9 solves)'>
-<meta property='og:description' content='Shortest path on a slightly obfuscated graph structure.'>
-<meta property='og:url' content='https://grhkm21.github.io/posts/hkcert-the-hardest-path/'>
-<meta property='og:site_name' content='Blog by grhkm21'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2021-11-15T06:42:15&#43;00:00'/><meta property='article:modified_time' content='2021-11-15T06:42:15&#43;00:00'/>
-<meta name="twitter:title" content="The Hardest Path (300 pts, 9 solves)">
-<meta name="twitter:description" content="Shortest path on a slightly obfuscated graph structure.">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-6BP6QGT61V');
-</script>
-    </head>
-    <body class="
-    article-page 
-">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            localStorage.setItem(colorSchemeKey, "auto");
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex 
-    
-        on-phone--column compact
-    
-">
-    
-        <aside class="sidebar left-sidebar sticky">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header class="site-info">
-        
-        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
-        <h2 class="site-description"></h2>
-    </header>
-
-    <ol class="menu" id="main-menu">
-        
-        
-        
-
-        <li >
-            <a href='/about-me/' >
-                
-                <span>About</span>
-            </a>
-        </li>
-        
-        
-
-        <li >
-            <a href='/' >
-                
-                <span>Posts</span>
-            </a>
-        </li>
-        
-
-        
-    </ol>
-</aside>
-
-    
-<main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-
-    <h2 class="article-title">
-        <a href="/posts/hkcert-the-hardest-path/">The Hardest Path (300 pts, 9 solves)</a>
-    </h2>
-
-    
-    <h3 class="article-subtitle">
-        Shortest path on a slightly obfuscated graph structure.
-    </h3>
-    
-
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Nov 15, 2021</time>
-            </div>
-        
-
-        
-    </footer>
-    
-</div>
-</header>
-    <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        options: {
-            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-        }
-    };
-
-    window.addEventListener('load', (event) => {
-        document.querySelectorAll("mjx-container").forEach(function (x) {
-            x.parentElement.classList += 'has-jax'
-        })
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
     });
-
 </script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <section class="article-content">
-    <p>Source of the problem: <a class="link" href="https://platform.ctf.hkcert.org/challenges/17"  target="_blank" rel="noopener"
-    >HKCERT CTF 2021</a>.</p>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm21</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me/">About</a>
+    
+      <a href="/">Posts</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>The Hardest Path (300 pts, 9 solves)</h1>
+  </header>
+  <p>Source of the problem: <a href="https://platform.ctf.hkcert.org/challenges/17">HKCERT CTF 2021</a>.</p>
 <h2 id="summary-of-problem-statement">Summary of Problem Statement</h2>
 <blockquote>
 <p>寧願不揀最易的路 行極還未到</p>
@@ -166,7 +66,7 @@
 <p><code>nc chalp.hkcert21.pwnable.hk 28117</code></p>
 <p><strong>Attachments</strong></p>
 <ul>
-<li><a class="link" href="/files/the-hardest-path.zip" >the-hardest-path_e00c6aa7b64b8dc2a06e577937b5b07c.zip</a></li>
+<li><a href="/files/the-hardest-path.zip">the-hardest-path_e00c6aa7b64b8dc2a06e577937b5b07c.zip</a></li>
 </ul>
 </blockquote>
 <h2 id="solution-outline">Solution Outline</h2>
@@ -274,20 +174,7 @@
 </li>
 </ul>
 <p>If you don&rsquo;t understand, reread the code and follow through with <code>process(False, ('f1', 'f2', 'f3', 'f4'))('EW')</code>. You should arrive at <code>f2('W')</code> as a result.</p>
-<p><figure 
-	>
-	<a href="/images/the-hardest-path-call-graph.png" >
-		<img src="/images/the-hardest-path-call-graph.png"
-			
-			
-			
-			loading="lazy"
-			alt="Call graph representation. Entering WEE at the start will give us the flag.">
-	</a>
-	
-	<figcaption>Call graph representation. Entering WEE at the start will give us the flag.</figcaption>
-	
-</figure></p>
+<p><img src="/images/the-hardest-path-call-graph.png" alt="Call graph representation. Entering WEE at the start will give us the flag."></p>
 <p>At this point, we should still have many questions, such as:</p>
 <ul>
 <li>How many arguments are there in <code>func_list</code>? (Well, the image is a spoiler&hellip;)</li>
@@ -302,20 +189,7 @@
 <li><code>_func = process(False, func1, func2, func3, func4)</code></li>
 <li><code>_8b0eb6f195ae182a = process(True, &quot;_92ccf583b1b065ea&quot;, &quot;_d3084505a4a12123&quot;, &quot;_e335a503c47e5243&quot;, &quot;_ebff1548ca6e8dbd&quot;)</code></li>
 </ul>
-<p><figure 
-	>
-	<a href="/images/the-hardest-path-dest.png" >
-		<img src="/images/the-hardest-path-dest.png"
-			
-			
-			
-			loading="lazy"
-			alt="The unique process(True, &hellip;) call">
-	</a>
-	
-	<figcaption>The unique process(True, …) call</figcaption>
-	
-</figure></p>
+<p><img src="/images/the-hardest-path-dest.png" alt="The unique process(True, &amp;hellip;) call"></p>
 <p>Yes, the final one is a category on its own. That is because it is the only <code>process</code> function call that has <code>is_end = True</code>! This means that we must reach and end our function here at <code>_8b0eb6f195ae182a</code>, which I will call <code>dest</code> from now. To briefly summarize, we start from <code>src</code> and must supply a direction string made up of <code>N, E, W, S</code>, reaching the <code>dest</code> function at the end.</p>
 <h2 id="parsing-the-source-file">Parsing the source file</h2>
 <p>Finally, we can start solving the challenge! To begin, we will construct the <em>adjacency list</em> of the <em>call graph</em> out of the function calls in <code>lost.py</code>, which is a fancy way of saying &ldquo;for each function <code>_func</code>, what are the four functions supplied into <code>process</code>?&rdquo; In the process, we also handle when <code>_func = fail</code> by setting its entry to be empty, meaning it cannot reach any other node and is hence useless. Here is a short script:</p>
@@ -349,20 +223,7 @@
 4.3. Remove the element from the queue</li>
 <li>Done!</li>
 </ol>
-<p><figure 
-	>
-	<a href="/images/the-hardest-path-call-graph.gif" >
-		<img src="/images/the-hardest-path-call-graph.gif"
-			
-			
-			
-			loading="lazy"
-			alt="Demonstration of BFS.">
-	</a>
-	
-	<figcaption>Demonstration of BFS.</figcaption>
-	
-</figure></p>
+<p><img src="/images/the-hardest-path-call-graph.gif" alt="Demonstration of BFS."></p>
 <p>Intuitively speaking, the <code>queue</code> will keep track of the nodes in chronological order: the earlier the node is visited, the shorter the distance and the earlier it will be processed in (4.). You can also think of the nodes as lining up in a queue, where the earlier you arrive, the earlier you will leave! Hence, this algorithm will give us the shortest distance from <code>src</code> to <code>dest</code>, or in fact to any reachable node. Here is a simple line-by-line implementation:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>queue <span style="color:#f92672">=</span> []                                       <span style="color:#75715e"># 1.</span>
 </span></span><span style="display:flex;"><span>visited <span style="color:#f92672">=</span> set()                                  <span style="color:#75715e"># 2.</span>
@@ -401,143 +262,12 @@
 </span></span></code></pre></div><p>Flag: <code>hkcert21{4lw4ys_l0ok_4t_s74ck_0verf1ow_wh3n_y0u_w4nt_t0_4v01d_s7ack_0v3rfl0ws}</code></p>
 <h2 id="remarks">Remarks</h2>
 <p>If the graph is weighted, other algorithms would have to be used.</p>
-<p>Thank you <a class="link" href="https://mystiz.hk/about-me/"  target="_blank" rel="noopener"
-    >Mystiz</a> for the challenge!</p>
+<p>Thank you <a href="https://mystiz.hk/about-me/">Mystiz</a> for the challenge!</p>
 
-</section>
-
-
-    <footer class="article-footer">
-    
-
-    </footer>
-
-
-    
 </article>
 
-    <aside class="related-contents--wrapper">
-    
-    
-</aside>
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2023 Blog by grhkm21
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
-    </section>
-</footer>
 
 
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-    
-    <div class="pswp__bg"></div>
 
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
-            >
-
-            </main>
-    
-
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
-                defer="false"
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
 </html>
