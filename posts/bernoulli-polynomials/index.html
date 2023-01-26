@@ -10,8 +10,7 @@
 <meta property='og:url' content='https://grhkm21.github.io/posts/bernoulli-polynomials/'>
 <meta property='og:site_name' content='Blog by grhkm21'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='math' /><meta property='article:published_time' content='2023-01-25T16:39:37&#43;00:00'/><meta property='article:modified_time' content='2023-01-25T16:39:37&#43;00:00'/>
-<meta name="twitter:site" content="@grhkm2023">
-    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="Bernoulli Polynomials">
+<meta name="twitter:title" content="Bernoulli Polynomials">
 <meta name="twitter:description" content="Outlining what can be done on bernoulli polynomials in Lean">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
 <script>
@@ -27,9 +26,7 @@
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
+            localStorage.setItem(colorSchemeKey, "auto");
         })();
     </script><script>
     (function() {
@@ -100,20 +97,6 @@
         
 
         
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    5 minute read
-                </time>
-            </div>
-        
     </footer>
     
 </div>
@@ -178,88 +161,62 @@ $$</p>
 def bernoulli (n : ℕ) : ℚ := (-1)^n * bernoulli&#39; n
 </code></pre><h2 id="lemmas">Lemmas</h2>
 <p>Below are lemmas that can to be proven:</p>
-<p>Lemma 1 (Exponential Generating Function of Bernoulli polynomials):</p>
+<p>Lemma (Exponential Generating Function of Bernoulli polynomials):</p>
 <p>$$
 \sum_{k = 0}^{\infty} \frac{B_k(x)}{k!} t^k = \frac{te^{tx}}{e^t - 1}
 $$</p>
-<p>Proof from <a class="link" href="https://proofwiki.org/wiki/Generating_Function_of_Bernoulli_Polynomials"  target="_blank" rel="noopener"
-    >proofwiki</a>:</p>
-<p>As usual, we have $e^{tx} = \sum_{k = 0}^{\infty} \frac{x^k}{k!} t^k$, also formalised as</p>
-<pre tabindex="0"><code class="language-lean" data-lang="lean">def exp : power_series A := mk $ λ n, algebra_map ℚ A (1 / n!)
-</code></pre><p>Therefore, we multiply to get</p>
-<p>\begin{align*}
-\frac{te^{tx}}{e^t - 1}
-&amp;= \left(\sum_{k = 0}^{\infty} \frac{B_k}{k!} t^k\right)\left(\sum_{k = 0}^{\infty} \frac{x^k}{k!} t^k\right) \\
-&amp;= \sum_{k = 0}^{\infty} t^k \sum_{m = 0}^k \frac{B_{k - m}}{(k - m)!} \frac{x^m}{m!} \\
-&amp;= \sum_{k = 0}^{\infty} \frac{t^k}{k!} \sum_{m = 0}^k \frac{k!}{(k - m)!m!} B_{k - m} x^m \\
-&amp;= \sum_{k = 0}^{\infty} \frac{t^k}{k!} \sum_{m = 0}^k \binom{k}{m} B_{k - m} x^m \\
-&amp;= \sum_{k = 0}^{\infty} \frac{B_k(x)}{k!} t^k
-\end{align*}</p>
-
-<div class="alert alert-info" role="alert"><p>It might be easier to just prove that each coefficient of $t^k$ is equal, since that&rsquo;s essentially what we are doing.</p>
-</div>
-
-<hr>
-<p>Lemma 2 (Faulhaber&rsquo;s Theorem in terms of bernoulli polynomials): For integers $n \geq 1$ and $p \geq 0$,</p>
+<p>Formalised as:</p>
+<pre tabindex="0"><code class="language-lean" data-lang="lean">theorem bernoulli_generating_function (t : A) :
+  mk (λ n, aeval t ((1 / n! : ℚ) • bernoulli n)) * (exp A - 1) =
+    power_series.X * rescale t (exp A) :=
+</code></pre><p>Lemma (Faulhaber&rsquo;s Theorem in terms of bernoulli polynomials): For integers $n \geq 1$ and $p \geq 0$,</p>
 <p>$$
 \sum_{k = 0}^{n - 1} k^p = \frac{B_{p + 1}(n) - B_{p + 1}}{p + 1}
 $$</p>
-<p>Proof:</p>
-<p>\begin{align*}
-\frac{B_{p + 1}(n) - B_{p + 1}}{p + 1}
-&amp;= \frac{1}{p + 1}\left(\sum_{k = 0}^{p + 1} \binom{p + 1}{k} B_{p + 1 - k} n^k - B_{p + 1}\right) \\
-&amp;= \frac{1}{p + 1}\left(\sum_{k = 1}^{p + 1} \binom{p + 1}{k} B_{p + 1 - k} n^k\right) \\
-&amp;= \frac{1}{p + 1}\left(\sum_{k = 0}^p \binom{p + 1}{k + 1} B_{p - k} n^{k + 1}\right) \\
-&amp;= \frac{1}{p + 1}\left(\sum_{k = 0}^p \binom{p + 1}{(p - k) + 1} B_k n^{(p - k) + 1}k\right) &amp; k \mapsto p - k \\
-&amp;= \frac{1}{p + 1}\left(\sum_{k = 0}^p \binom{p + 1}{k} B_k n^{p + 1 - k}\right) \\
-&amp;= \sum_{i = 0}^p B_i \binom{p + 1}{i} \frac{n^{p + 1 - i}}{p + 1} \\
-\end{align*}</p>
-<hr>
-<p>Lemma 3 (Forward difference of bernoulli polynomials): For integers $n \geq 0$ and $p \geq 1$,</p>
-<p>$$
-B_p(n + 1) - B_p(n) = pn^{p - 1}
-$$</p>
-<p>Proof: Actually, this is equivalent to lemma 1! Rewriting lemma 1, we have</p>
-<p>$$
-B_p(n) = p\left(\sum_{k = 0}^{n - 1} k^{p - 1}\right) + B_p
-$$</p>
-<p>\begin{align*}
-B_p(n + 1) - B_p(n)
-&amp;= \left(p\left(\sum_{k = 0}^n k^{p - 1}\right) + B_p\right) \\
-&amp;- \left(p\left(\sum_{k = 0}^{n - 1} k^{p - 1}\right) + B_p\right) \\
-&amp;= pn^{p - 1}
-\end{align*}</p>
-
-<div class="alert alert-info" role="alert"><p>
-This identity holds for $n &lt; 0$ too. In fact, it holds for any $n \in \mathbb{R}$. Fix it.</p>
-</div>
-
-<hr>
-<p>Lemma 4 (Derivative of Bernoulli polynomials): For integers $n \geq 1$,</p>
+<p>Formalised as:</p>
+<pre tabindex="0"><code class="language-lean" data-lang="lean">lemma sum_range_pow_eq_bernoulli_sub (n p : ℕ) :
+  (p + 1 : ℚ) * ∑ k in range n, (k : ℚ) ^ p = (bernoulli p.succ).eval n -
+  (_root_.bernoulli p.succ) :=
+</code></pre><p>Lemma (Derivative of Bernoulli polynomials): For integers $n \geq 1$,</p>
 <p>$$
 \frac{\mathrm{d}}{\mathrm{d}x} B_n(x) = nB_{n - 1}(x)
 $$</p>
-<p>Proof: From the basic identity $\binom{n}{k + 1} \cdot (k + 1) = \frac{n!}{(n - k - 1)!(k + 1)!} = \frac{(n - 1)!}{(n - k - 1)!k!} \cdot n$, we get that</p>
-<p>\begin{align*}
-\frac{\mathrm{d}}{\mathrm{d}x} B_n(x)
-&amp;= \sum_{k = 1}^n \binom{n}{k} B_{n - k} \left(kx^{k - 1}\right) \\
-&amp;= \sum_{k = 0}^{n - 1} \binom{n}{k + 1} B_{n - 1 - k} \left((k + 1)x^k\right) \\
-&amp;= n\sum_{k = 0}^{n - 1} \binom{n - 1}{k} B_{n - 1 - k} x^k \\
-&amp;= nB_{n - 1}(x)
-\end{align*}</p>
+<p>Formalised as:</p>
+<pre tabindex="0"><code class="language-lean" data-lang="lean">lemma derivative_bernoulli_add_one (k : ℕ) :
+  (bernoulli (k + 1)).derivative = (k + 1) * bernoulli k :=
+</code></pre><hr>
 <h2 id="theorems">Theorems</h2>
+<p>Theorem (Forward difference of bernoulli polynomials): For integers $n \geq 0$ and $p \geq 1$,</p>
+<p>$$
+B_p(n + 1) - B_p(n) = pn^{p - 1}
+$$</p>
+<p>Proof: We consider the exponential generating function of the forward difference:</p>
+<p>$$
+\begin{align*}
+&amp;\sum_{n = 0}^{\infty} \left(B_n(x + 1) - B_n(x)\right) \frac{t^n}{n!} \\
+&amp;= \left(\sum_{n = 0}^{\infty} B_n(x + 1) \frac{t^n}{n!}\right) - \left(\sum_{n = 0}^{\infty} B_n(x) \frac{t^n}{n!}\right) \\
+&amp;= \frac{te^{t(x + 1)}}{e^t - 1} - \frac{te^{tx}}{e^t - 1} \\
+&amp;= \frac{te^{tx}(e^t - 1)}{e^t - 1} \\
+&amp;= te^{tx} \\
+&amp;= \sum_{n = 0}^{\infty} x^n \frac{t^{n + 1}}{n!} \\
+&amp;= \sum_{n = 1}^{\infty} nx^{n - 1} \frac{t^n}{n!} \\
+\end{align*}
+$$</p>
+<hr>
 <p>Theorem (Symmetry): For integers $n \geq 0$,</p>
 <p>$$
 B_n(x) = (-1)^n B_n(1 - x)
 $$</p>
 <p>Proof: Define the polynomial $E_n(x) = B_n(1 - x) - (-1)^n B_n(x)$. It suffices to show that $E_n(x) = 0$. We perform induction on $n$. For $n = 0$, it is so trivial that <code>simp</code> can probably do it. Assume it is true for $n = k$, then</p>
-<p>\begin{align*}
+<p>$$
+\begin{align*}
 \frac{\mathrm{d}}{\mathrm{d}x} E_{k + 1}(x)
 &amp;= -(k + 1)B_k(1 - x) - (-1)^{k + 1} (k + 1)B_k(x) \\
 &amp;= -(k + 1)\left(B_k(1 - x) - (-1)^k B_k(x)\right) \\
 &amp;= -(k + 1)E_k(x) \\
 &amp;= 0
-\end{align*}</p>
+\end{align*}
+$$</p>
 <p>This means that $E_k(x)$ is constant. Finally, we know that $E_k(0) = B_n(1) - (-1)^n B_n(0) = 0$, finishing the proof.</p>
 <hr>
 <p>I have to go now, but this is what I am planning currently. I will check which lemmas are not implemented later, simply from the comment at the top of the file:</p>
@@ -286,12 +243,29 @@ $$</p>
 
 
     
-    
-    
 </article>
 
     <aside class="related-contents--wrapper">
     
+    
+        <h2 class="section-title">Related contents</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/posts/idek-finite-realm-of-random/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Finite Realm of Random (498 points, 4 solves)</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
     
 </aside>
 
@@ -303,8 +277,6 @@ $$</p>
     <footer class="site-footer">
     <section class="copyright">
         &copy; 
-        
-            2021 - 
         
         2023 Blog by grhkm21
     </section>
@@ -414,11 +386,11 @@ $$</p>
                 
                 <div class="widget--toc">
                     <nav id="TableOfContents">
-  <ol>
+  <ul>
     <li><a href="#existing-lemmas">Existing lemmas</a></li>
     <li><a href="#lemmas">Lemmas</a></li>
     <li><a href="#theorems">Theorems</a></li>
-  </ol>
+  </ul>
 </nav>
                 </div>
             </section>

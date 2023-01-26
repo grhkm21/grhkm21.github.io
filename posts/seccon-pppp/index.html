@@ -10,8 +10,7 @@
 <meta property='og:url' content='https://grhkm21.github.io/posts/seccon-pppp/'>
 <meta property='og:site_name' content='Blog by grhkm21'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='maths' /><meta property='article:tag' content='crypto' /><meta property='article:published_time' content='2021-12-12T05:59:38&#43;00:00'/><meta property='article:modified_time' content='2021-12-12T05:59:38&#43;00:00'/>
-<meta name="twitter:site" content="@grhkm2023">
-    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="pppp (117 pts, 70 solves)">
+<meta name="twitter:title" content="pppp (117 pts, 70 solves)">
 <meta name="twitter:description" content="Finding nth root of certain upper triangular matrix.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
 <script>
@@ -22,14 +21,12 @@
 </script>
     </head>
     <body class="
-    article-page has-toc
+    article-page 
 ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
+            localStorage.setItem(colorSchemeKey, "auto");
         })();
     </script><script>
     (function() {
@@ -48,22 +45,49 @@
 </script>
 <div class="container main-container flex 
     
-        extended
+        on-phone--column compact
     
 ">
     
-        <div id="article-toolbar">
-            <a href="https://grhkm21.github.io/" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
-</svg>
+        <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
 
+    <header class="site-info">
+        
+        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
+        <h2 class="site-description"></h2>
+    </header>
 
+    <ol class="menu" id="main-menu">
+        
+        
+        
 
-                <span>Back</span>
+        <li >
+            <a href='/about-me/' >
+                
+                <span>About</span>
             </a>
-        </div>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                <span>Posts</span>
+            </a>
+        </li>
+        
+
+        
+    </ol>
+</aside>
+
     
 <main class="main full-width">
     <article class="main-article">
@@ -99,20 +123,6 @@
             </div>
         
 
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    4 minute read
-                </time>
-            </div>
         
     </footer>
     
@@ -160,36 +170,36 @@
 <p>$$\begin{cases} p, q &lt; 2^{512} \\ a_i &lt; 2^{768} \\ m_1, m_2 &lt; 2^{256} \\ R = \begin{pmatrix} p\cdot a_1 &amp; p\cdot a_2 &amp; p\cdot a_3 &amp; p\cdot a_4 \\ 0 &amp; m_1\cdot a_5 &amp; m_1\cdot a_6 &amp; m_1\cdot a_7 \\ 0 &amp; 0 &amp; m_2\cdot a_8 &amp; m_2\cdot a_9 \\ 0 &amp; 0 &amp; 0 &amp; a_{10} \end{pmatrix}\end{cases}$$</p>
 <p>First observation we had was that since $n$ is $1024$-bit and $m_i\cdot a_j\approx 2^{768 + 256} = 2^{1024}$, if we can recover two entries of $R$ on the same row, say $r_{22} = m_1\cdot a_5$ and $r_{23} = m_1\cdot a_6$, they will be reduced under $pq$ by a few times, and we can directly take $\gcd$ and recover $m_1$ and $m_2$. In other words, we don&rsquo;t have to recover the entire $R$, but rather just a few entries.</p>
 <p>Naturally, we started by playing around in Sage. Very quickly, we found that the diagonal entries of <code>M</code> are simply $r_{ii}^e$:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([[</span><span class="n">r11</span><span class="p">,</span> <span class="n">r12</span><span class="p">,</span> <span class="n">r13</span><span class="p">,</span> <span class="n">r14</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">r22</span><span class="p">,</span> <span class="n">r23</span><span class="p">,</span> <span class="n">r24</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r33</span><span class="p">,</span> <span class="n">r34</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r44</span><span class="p">]])</span>
-</span></span><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="p">[(</span><span class="n">A</span> <span class="o">^</span> <span class="mi">50</span><span class="p">)[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
-</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">r11</span><span class="o">^</span><span class="mi">50</span><span class="p">,</span> <span class="n">r22</span><span class="o">^</span><span class="mi">50</span><span class="p">,</span> <span class="n">r33</span><span class="o">^</span><span class="mi">50</span><span class="p">,</span> <span class="n">r44</span><span class="o">^</span><span class="mi">50</span><span class="p">]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sage: A <span style="color:#f92672">=</span> Matrix([[r11, r12, r13, r14], [<span style="color:#ae81ff">0</span>, r22, r23, r24], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, r33, r34], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, r44]])
+</span></span><span style="display:flex;"><span>sage: [(A <span style="color:#f92672">^</span> <span style="color:#ae81ff">50</span>)[i][i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>)]
+</span></span><span style="display:flex;"><span>[r11<span style="color:#f92672">^</span><span style="color:#ae81ff">50</span>, r22<span style="color:#f92672">^</span><span style="color:#ae81ff">50</span>, r33<span style="color:#f92672">^</span><span style="color:#ae81ff">50</span>, r44<span style="color:#f92672">^</span><span style="color:#ae81ff">50</span>]
 </span></span></code></pre></div><p>Recall that in matrix multiplication, we have $(AB)_{ij} = \sum_{k=1}^n A_{ik}B_{kj}$. Now observe that since $R$ is upper triangular, $R_{ij} &gt; 0$ only when $j\geq i$. Then we have</p>
 <p>$$(R^e)_{ii} = \sum_{k=1}^4 (R^{e - 1})_{ik}R_{ki} = (R^{e - 1})<em>{ii}r</em>{ii} = r_{ii}^e.$$</p>
 <p>Therefore, we already have $M_{11} = (p\cdot a_1)^e = p^e\cdot a_1^e\mod pq$. Since $M_{11}\neq 0$, it must be divisible by $p$, and we can recover $p$ by calculating</p>
 <p>$$p = \gcd(N, M_{11}).$$</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="n">p</span> <span class="o">=</span> <span class="n">gcd</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ct</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="n">q</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="n">p</span>
-</span></span><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">and</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span> <span class="o">==</span> <span class="n">n</span>
-</span></span><span class="line"><span class="cl"><span class="kc">True</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sage: p <span style="color:#f92672">=</span> gcd(n, ct[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>sage: q <span style="color:#f92672">=</span> n <span style="color:#f92672">//</span> p
+</span></span><span style="display:flex;"><span>sage: is_prime(p) <span style="color:#f92672">and</span> is_prime(q) <span style="color:#f92672">and</span> p <span style="color:#f92672">*</span> q <span style="color:#f92672">==</span> n
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">True</span>
 </span></span></code></pre></div><p>Now that we have factored $N$, we can actually recover all $r_{ii}$ from $M_{ii}$ by Chinese Remainder Theorem and standard RSA decryption:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="n">diag</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span> <span class="c1"># diagonal entries r[i][i]</span>
-</span></span><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl"><span class="o">....</span><span class="p">:</span>     <span class="n">crt1</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">Mod</span><span class="p">(</span><span class="n">ct</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">nth_root</span><span class="p">(</span><span class="mi">65537</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="o">....</span><span class="p">:</span>     <span class="n">crt2</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">Mod</span><span class="p">(</span><span class="n">ct</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">nth_root</span><span class="p">(</span><span class="mi">65537</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="o">....</span><span class="p">:</span>     <span class="n">diag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">crt</span><span class="p">([</span><span class="n">crt1</span><span class="p">,</span> <span class="n">crt2</span><span class="p">],</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">])</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sage: diag <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#75715e"># diagonal entries r[i][i]</span>
+</span></span><span style="display:flex;"><span>sage: <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span><span style="color:#f92672">....</span>:     crt1 <span style="color:#f92672">=</span> Integer(Mod(ct[i][i], p)<span style="color:#f92672">.</span>nth_root(<span style="color:#ae81ff">65537</span>))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">....</span>:     crt2 <span style="color:#f92672">=</span> Integer(Mod(ct[i][i], q)<span style="color:#f92672">.</span>nth_root(<span style="color:#ae81ff">65537</span>))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">....</span>:     diag[i] <span style="color:#f92672">=</span> crt([crt1, crt2], [p, q])
 </span></span></code></pre></div><h2 id="the-final-step-">The Final Step (??)</h2>
 <p>Now that we have the diagonal entries, let&rsquo;s try to recover $r_{i, i + 1}$. Applying the matrix multiplication formula, we have for $i = 2, 3$</p>
 <p>$$\begin{align*} (R^e)<em>{i, i + 1} &amp;= (R^{e - 1})_{ii} r_{i, i + 1} + (R^{e - 1})_{i, i + 1}r_{i + 1, i + 1} \\ &amp;= r^{e - 1}_{ii}r</em>{i, i + 1} + (R^{e - 1})_{i, i + 1}r_{i + 1, i + 1} &amp; a := r_{ii} \\ &amp;= a^{e - 1}b + f(e - 1)c &amp; b := r_{i, i + 1} \\ &amp;= a^{e - 1}b + {\color{cyan} (a^{e - 2}b + f(e - 2)c)}c &amp; c := r_{i + 1, i + 1} \\ &amp;= \cdots \\ &amp;= a^{e - 1}b + a^{e - 2}bc + a^{e - 3}bc^2 + \cdots + abc^{e - 2} + f(1)c^{e - 1} \\ &amp;= b(a^{e - 1} + a^{e - 2}c + a^{e - 3}c^2 + \cdots + ac^{e - 2} + c^{e - 1}) \\ &amp;= b\cdot\frac{c^e - a^e}{c - a}\end{align*}$$</p>
 <p>So we can recover $b = r_{i, i + 1}$ by calculating $M_{i, i + 1}\cdot\frac{c - a}{c^e - a^e}$:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="n">superdiag</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
-</span></span><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl"><span class="o">....</span><span class="p">:</span>     <span class="n">a</span> <span class="o">=</span> <span class="n">diag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="o">....</span><span class="p">:</span>     <span class="n">b</span> <span class="o">=</span> <span class="n">ct</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="o">....</span><span class="p">:</span>     <span class="n">c</span> <span class="o">=</span> <span class="n">diag</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="o">....</span><span class="p">:</span>     <span class="n">superdiag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="n">c</span><span class="o">^</span><span class="n">e</span> <span class="o">-</span> <span class="n">a</span><span class="o">^</span><span class="n">e</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sage: superdiag <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>sage: <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span><span style="color:#f92672">....</span>:     a <span style="color:#f92672">=</span> diag[i]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">....</span>:     b <span style="color:#f92672">=</span> ct[i][i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">....</span>:     c <span style="color:#f92672">=</span> diag[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">....</span>:     superdiag[i] <span style="color:#f92672">=</span> Integer(b <span style="color:#f92672">*</span> (c <span style="color:#f92672">-</span> a) <span style="color:#f92672">*</span> pow(c<span style="color:#f92672">^</span>e <span style="color:#f92672">-</span> a<span style="color:#f92672">^</span>e, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, n))
 </span></span></code></pre></div><p>Finally, we take the GCD and obtain the flag:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sage</span><span class="p">:</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">gcd</span><span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">superdiag</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span> <span class="o">+</span> <span class="n">gcd</span><span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">superdiag</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="s1">&#39;SECCON{C4n_y0u_prove_why_decryptable?}&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sage: bytes<span style="color:#f92672">.</span>fromhex(gcd(diag[<span style="color:#ae81ff">1</span>], superdiag[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">.</span>hex() <span style="color:#f92672">+</span> gcd(diag[<span style="color:#ae81ff">2</span>], superdiag[<span style="color:#ae81ff">2</span>])<span style="color:#f92672">.</span>hex())<span style="color:#f92672">.</span>decode()
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;SECCON{C4n_y0u_prove_why_decryptable?}&#39;</span>
 </span></span></code></pre></div><h2 id="remarks">Remarks</h2>
 <p>I read some other writeups such as <a class="link" href="https://gist.github.com/9host1st/4b3dbc84f799ee3e48472de046fd4283"  target="_blank" rel="noopener"
     >this</a> by @9host1st, which seems to directly compute $M^{e^{-1}\text{mod}\ \phi}$ and obtain the entries&hellip; I thought about this approach but thought it won&rsquo;t work after my Sage hangs computing <code>M.multiplicative_order()</code>. Oops&hellip;</p>
@@ -212,43 +222,10 @@
 
 
     
-    
-    
 </article>
 
     <aside class="related-contents--wrapper">
     
-    
-        <h2 class="section-title">Related contents</h2>
-        <div class="related-contents">
-            <div class="flex article-list--tile">
-                
-                    
-<article class="">
-    <a href="/posts/tet-algebra/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Algebra (831 pts, 14 solves)</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/posts/tet-shares/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</h2>
-        </div>
-    </a>
-</article>
-                
-            </div>
-        </div>
     
 </aside>
 
@@ -260,8 +237,6 @@
     <footer class="site-footer">
     <section class="copyright">
         &copy; 
-        
-            2021 - 
         
         2023 Blog by grhkm21
     </section>
@@ -352,36 +327,6 @@
             >
 
             </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-                </div>
-                <h2 class="widget-title section-title">Table of contents</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
-  <ol>
-    <li><a href="#problem-statement">Problem Statement</a></li>
-    <li><a href="#solution-outline">Solution Outline</a></li>
-    <li><a href="#initial-observations">Initial Observations</a></li>
-    <li><a href="#the-final-step-">The Final Step (??)</a></li>
-    <li><a href="#remarks">Remarks</a></li>
-  </ol>
-</nav>
-                </div>
-            </section>
-        </aside>
     
 
         </div>

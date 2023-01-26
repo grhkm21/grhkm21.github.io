@@ -10,8 +10,7 @@
 <meta property='og:url' content='https://grhkm21.github.io/posts/dice-learning-without-errors/'>
 <meta property='og:site_name' content='Blog by grhkm21'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='crypto' /><meta property='article:tag' content='LWE' /><meta property='article:tag' content='CKKS' /><meta property='article:published_time' content='2022-02-09T16:15:44&#43;01:00'/><meta property='article:modified_time' content='2022-02-09T16:15:44&#43;01:00'/>
-<meta name="twitter:site" content="@grhkm2023">
-    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="Learning Without Errors (396 pts, 6 solves, upsolve)">
+<meta name="twitter:title" content="Learning Without Errors (396 pts, 6 solves, upsolve)">
 <meta name="twitter:description" content="Chosen Plaintext Ring-LWE (CKKS) Attack">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
 <script>
@@ -22,14 +21,12 @@
 </script>
     </head>
     <body class="
-    article-page has-toc
+    article-page 
 ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
+            localStorage.setItem(colorSchemeKey, "auto");
         })();
     </script><script>
     (function() {
@@ -48,22 +45,49 @@
 </script>
 <div class="container main-container flex 
     
-        extended
+        on-phone--column compact
     
 ">
     
-        <div id="article-toolbar">
-            <a href="https://grhkm21.github.io/" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
-</svg>
+        <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
 
+    <header class="site-info">
+        
+        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
+        <h2 class="site-description"></h2>
+    </header>
 
+    <ol class="menu" id="main-menu">
+        
+        
+        
 
-                <span>Back</span>
+        <li >
+            <a href='/about-me/' >
+                
+                <span>About</span>
             </a>
-        </div>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                <span>Posts</span>
+            </a>
+        </li>
+        
+
+        
+    </ol>
+</aside>
+
     
 <main class="main full-width">
     <article class="main-article">
@@ -99,20 +123,6 @@
             </div>
         
 
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    15 minute read
-                </time>
-            </div>
         
     </footer>
     
@@ -159,31 +169,31 @@
 <p>The ciphertext-message pair leaks the secret key as a linear equation, and we can simply decrypt the flag. Yes, it&rsquo;s that simple.</p>
 <h2 id="understanding-the-code">Understanding the Code</h2>
 <p>Let&rsquo;s first try to understand the flow of the challenge by looking at <code>server.py</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">challenge</span> <span class="kn">import</span> <span class="n">Challenge</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">poly_degree</span> <span class="o">=</span> <span class="mi">1024</span>
-</span></span><span class="line"><span class="cl"><span class="n">ciph_modulus</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">100</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Please hold, generating keys...&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">chal</span> <span class="o">=</span> <span class="n">Challenge</span><span class="p">(</span><span class="n">poly_degree</span><span class="p">,</span> <span class="n">ciph_modulus</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Welcome to the Encryption-As-A-Service Provider of the Future, powered by the latest in Fully-Homomorphic Encryption!&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Provide your complex vector as json to be encrypted: &#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ciph</span> <span class="o">=</span> <span class="n">chal</span><span class="o">.</span><span class="n">encrypt_json</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">string_ciph</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chal</span><span class="o">.</span><span class="n">dump_ciphertext</span><span class="p">(</span><span class="n">ciph</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encryption successful, here is your ciphertext:&#39;</span><span class="p">,</span> <span class="n">string_ciph</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">plain</span> <span class="o">=</span> <span class="n">chal</span><span class="o">.</span><span class="n">decrypt_ciphertext</span><span class="p">(</span><span class="n">ciph</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">string_plain</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chal</span><span class="o">.</span><span class="n">dump_plaintext</span><span class="p">(</span><span class="n">plain</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;To verify that the encryption worked, here is the corresponding decryption:&#39;</span><span class="p">,</span> <span class="n">string_plain</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">e_flag</span> <span class="o">=</span> <span class="n">chal</span><span class="o">.</span><span class="n">encrypt_flag</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">string_flag</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chal</span><span class="o">.</span><span class="n">dump_ciphertext</span><span class="p">(</span><span class="n">e_flag</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All done, here</span><span class="se">\&#39;</span><span class="s1">s an encrypted flag as a reward:&#39;</span><span class="p">,</span> <span class="n">string_flag</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Enjoy DiceCTF!&#39;</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> challenge <span style="color:#f92672">import</span> Challenge
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>poly_degree <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span>
+</span></span><span style="display:flex;"><span>ciph_modulus <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Please hold, generating keys...&#39;</span>, flush<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>chal <span style="color:#f92672">=</span> Challenge(poly_degree, ciph_modulus)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Welcome to the Encryption-As-A-Service Provider of the Future, powered by the latest in Fully-Homomorphic Encryption!&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;Provide your complex vector as json to be encrypted: &#39;</span>)
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(data)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ciph <span style="color:#f92672">=</span> chal<span style="color:#f92672">.</span>encrypt_json(data)
+</span></span><span style="display:flex;"><span>string_ciph <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>dumps(chal<span style="color:#f92672">.</span>dump_ciphertext(ciph))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Encryption successful, here is your ciphertext:&#39;</span>, string_ciph)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plain <span style="color:#f92672">=</span> chal<span style="color:#f92672">.</span>decrypt_ciphertext(ciph)
+</span></span><span style="display:flex;"><span>string_plain <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>dumps(chal<span style="color:#f92672">.</span>dump_plaintext(plain))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;To verify that the encryption worked, here is the corresponding decryption:&#39;</span>, string_plain)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e_flag <span style="color:#f92672">=</span> chal<span style="color:#f92672">.</span>encrypt_flag()
+</span></span><span style="display:flex;"><span>string_flag <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>dumps(chal<span style="color:#f92672">.</span>dump_ciphertext(e_flag))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;All done, here</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s an encrypted flag as a reward:&#39;</span>, string_flag)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Enjoy DiceCTF!&#39;</span>)
 </span></span></code></pre></div><p>The cryptography-related functions are implemented in <code>challenge.py</code> instead.</p>
 <ul>
 <li>The server first asks for a message</li>
@@ -192,82 +202,82 @@
 </ul>
 <p>In other words, we have to perform a Single Chosen Plaintext attack. Let&rsquo;s now take a look at <code>challenge.py</code>. Note that the script uses an external implementation of CKKS, which can be found at <a class="link" href="https://github.com/sarojaerabelli/py-fhe"  target="_blank" rel="noopener"
     >sarojaerabelli/py-fhe</a>. I will refer to it as &ldquo;the library&rdquo; from now on.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># https://github.com/sarojaerabelli/py-fhe</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># imports omitted</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Challenge</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">poly_degree</span><span class="p">,</span> <span class="n">ciph_modulus</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">big_modulus</span> <span class="o">=</span> <span class="n">ciph_modulus</span><span class="o">**</span><span class="mi">2</span>
-</span></span><span class="line"><span class="cl">        <span class="n">scaling_factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">30</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">params</span> <span class="o">=</span> <span class="n">CKKSParameters</span><span class="p">(</span><span class="n">poly_degree</span><span class="o">=</span><span class="n">poly_degree</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                                <span class="n">ciph_modulus</span><span class="o">=</span><span class="n">ciph_modulus</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                                <span class="n">big_modulus</span><span class="o">=</span><span class="n">big_modulus</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                                <span class="n">scaling_factor</span><span class="o">=</span><span class="n">scaling_factor</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">key_generator</span> <span class="o">=</span> <span class="n">CKKSKeyGenerator</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">public_key</span> <span class="o">=</span> <span class="n">key_generator</span><span class="o">.</span><span class="n">public_key</span>
-</span></span><span class="line"><span class="cl">        <span class="n">secret_key</span> <span class="o">=</span> <span class="n">key_generator</span><span class="o">.</span><span class="n">secret_key</span>
-</span></span><span class="line"><span class="cl">        <span class="n">encoder</span> <span class="o">=</span> <span class="n">CKKSEncoder</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">encryptor</span> <span class="o">=</span> <span class="n">CKKSEncryptor</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">public_key</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">decryptor</span> <span class="o">=</span> <span class="n">CKKSDecryptor</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">secret_key</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">evaluator</span> <span class="o">=</span> <span class="n">CKKSEvaluator</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># irrelevant code omitted</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">encrypt_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;flag.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">flag</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">poly_degree</span> <span class="o">//</span> <span class="mi">2</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">flag</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span> <span class="s2">&#34;big&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">flag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">flag</span><span class="si">:</span><span class="s2">0</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">b</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">flag</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flag</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;real_part&#34;</span><span class="p">:</span> <span class="n">flag</span><span class="p">,</span> <span class="s2">&#34;imag_part&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ciph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encrypt_json</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">ciph</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">dump_ciphertext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ciph</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;c0&#34;</span> <span class="p">:</span> <span class="n">ciph</span><span class="o">.</span><span class="n">c0</span><span class="o">.</span><span class="n">coeffs</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">             <span class="s2">&#34;c1&#34;</span> <span class="p">:</span> <span class="n">ciph</span><span class="o">.</span><span class="n">c1</span><span class="o">.</span><span class="n">coeffs</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">             <span class="s2">&#34;poly_degree&#34;</span> <span class="p">:</span> <span class="n">ciph</span><span class="o">.</span><span class="n">c0</span><span class="o">.</span><span class="n">ring_degree</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">             <span class="s2">&#34;modulus&#34;</span> <span class="p">:</span> <span class="n">ciph</span><span class="o">.</span><span class="n">modulus</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">d</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">dump_plaintext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plain</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;m&#34;</span> <span class="p">:</span> <span class="n">plain</span><span class="o">.</span><span class="n">poly</span><span class="o">.</span><span class="n">coeffs</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">             <span class="s2">&#34;poly_degree&#34;</span> <span class="p">:</span> <span class="n">plain</span><span class="o">.</span><span class="n">poly</span><span class="o">.</span><span class="n">ring_degree</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">             <span class="s2">&#34;scaling_factor&#34;</span> <span class="p">:</span> <span class="n">plain</span><span class="o">.</span><span class="n">scaling_factor</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">d</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">dump_decoded_plaintext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plain</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">complex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plain</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="n">real</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">real</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plain</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="n">imag</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">imag</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plain</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;real_part&#34;</span><span class="p">:</span> <span class="n">real</span><span class="p">,</span> <span class="s2">&#34;imag_part&#34;</span><span class="p">:</span> <span class="n">imag</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">d</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">decrypt_ciphertext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ciph</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">plain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decryptor</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">ciph</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">plain</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">decrypt_and_decode_ciphertext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ciph</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">plain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decryptor</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">ciph</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">plain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">plain</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">plain</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">encrypt_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">real</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&#34;real_part&#34;</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">        <span class="n">imag</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&#34;imag_part&#34;</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">message</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span><span class="p">)]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">poly_degree</span> <span class="o">//</span> <span class="mi">2</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">plain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling_factor</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ciph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encryptor</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">plain</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">ciph</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># https://github.com/sarojaerabelli/py-fhe</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># imports omitted</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Challenge</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, poly_degree, ciph_modulus):
+</span></span><span style="display:flex;"><span>        big_modulus <span style="color:#f92672">=</span> ciph_modulus<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>        scaling_factor <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        params <span style="color:#f92672">=</span> CKKSParameters(poly_degree<span style="color:#f92672">=</span>poly_degree,
+</span></span><span style="display:flex;"><span>                                ciph_modulus<span style="color:#f92672">=</span>ciph_modulus,
+</span></span><span style="display:flex;"><span>                                big_modulus<span style="color:#f92672">=</span>big_modulus,
+</span></span><span style="display:flex;"><span>                                scaling_factor<span style="color:#f92672">=</span>scaling_factor)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        key_generator <span style="color:#f92672">=</span> CKKSKeyGenerator(params)
+</span></span><span style="display:flex;"><span>        public_key <span style="color:#f92672">=</span> key_generator<span style="color:#f92672">.</span>public_key
+</span></span><span style="display:flex;"><span>        secret_key <span style="color:#f92672">=</span> key_generator<span style="color:#f92672">.</span>secret_key
+</span></span><span style="display:flex;"><span>        encoder <span style="color:#f92672">=</span> CKKSEncoder(params)
+</span></span><span style="display:flex;"><span>        encryptor <span style="color:#f92672">=</span> CKKSEncryptor(params, public_key, secret_key)
+</span></span><span style="display:flex;"><span>        decryptor <span style="color:#f92672">=</span> CKKSDecryptor(params, secret_key)
+</span></span><span style="display:flex;"><span>        evaluator <span style="color:#f92672">=</span> CKKSEvaluator(params)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># irrelevant code omitted</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">encrypt_flag</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;flag.txt&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            flag <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        n <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>poly_degree <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        flag <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(flag, <span style="color:#e6db74">&#34;big&#34;</span>)
+</span></span><span style="display:flex;"><span>        flag <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>flag<span style="color:#e6db74">:</span><span style="color:#e6db74">0</span><span style="color:#e6db74">{</span>n<span style="color:#e6db74">}</span><span style="color:#e6db74">b</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        flag <span style="color:#f92672">=</span> [float(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;real_part&#34;</span>: flag, <span style="color:#e6db74">&#34;imag_part&#34;</span>: [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> n}
+</span></span><span style="display:flex;"><span>        ciph <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encrypt_json(d)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ciph
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dump_ciphertext</span>(self, ciph):
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;c0&#34;</span> : ciph<span style="color:#f92672">.</span>c0<span style="color:#f92672">.</span>coeffs,
+</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;c1&#34;</span> : ciph<span style="color:#f92672">.</span>c1<span style="color:#f92672">.</span>coeffs,
+</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;poly_degree&#34;</span> : ciph<span style="color:#f92672">.</span>c0<span style="color:#f92672">.</span>ring_degree,
+</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;modulus&#34;</span> : ciph<span style="color:#f92672">.</span>modulus}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dump_plaintext</span>(self, plain):
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;m&#34;</span> : plain<span style="color:#f92672">.</span>poly<span style="color:#f92672">.</span>coeffs,
+</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;poly_degree&#34;</span> : plain<span style="color:#f92672">.</span>poly<span style="color:#f92672">.</span>ring_degree,
+</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;scaling_factor&#34;</span> : plain<span style="color:#f92672">.</span>scaling_factor}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dump_decoded_plaintext</span>(self, plain):
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> [complex(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> plain]
+</span></span><span style="display:flex;"><span>        real <span style="color:#f92672">=</span> [i<span style="color:#f92672">.</span>real <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> plain]
+</span></span><span style="display:flex;"><span>        imag <span style="color:#f92672">=</span> [i<span style="color:#f92672">.</span>imag <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> plain]
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;real_part&#34;</span>: real, <span style="color:#e6db74">&#34;imag_part&#34;</span>: imag}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">decrypt_ciphertext</span>(self, ciph):
+</span></span><span style="display:flex;"><span>        plain <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>decryptor<span style="color:#f92672">.</span>decrypt(ciph)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> plain
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">decrypt_and_decode_ciphertext</span>(self, ciph):
+</span></span><span style="display:flex;"><span>        plain <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>decryptor<span style="color:#f92672">.</span>decrypt(ciph)
+</span></span><span style="display:flex;"><span>        plain <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encoder<span style="color:#f92672">.</span>decode(plain)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> plain
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">encrypt_json</span>(self, d):
+</span></span><span style="display:flex;"><span>        real <span style="color:#f92672">=</span> list(d[<span style="color:#e6db74">&#34;real_part&#34;</span>])
+</span></span><span style="display:flex;"><span>        imag <span style="color:#f92672">=</span> list(d[<span style="color:#e6db74">&#34;imag_part&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        message <span style="color:#f92672">=</span> [r <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>j <span style="color:#f92672">*</span> i <span style="color:#66d9ef">for</span> r,i <span style="color:#f92672">in</span> zip(real, imag)]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> len(message) <span style="color:#f92672">==</span> self<span style="color:#f92672">.</span>poly_degree <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        plain <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encoder<span style="color:#f92672">.</span>encode(message, self<span style="color:#f92672">.</span>scaling_factor)
+</span></span><span style="display:flex;"><span>        ciph <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encryptor<span style="color:#f92672">.</span>encrypt(plain)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ciph
 </span></span></code></pre></div><p>There are quite a few functions to keep track of here. Here I highlight the library function calls.</p>
 <ul>
 <li><code>encrypt_json</code> → <code>encoder.encode</code>, <code>encryptor.encrypt</code></li>
@@ -344,49 +354,49 @@
 <p>Looking back at our challenge, we are able to supply $m$ and receive</p>
 <p>$$\begin{align*} \text{enc}_{\text{pk}}(m) &amp;= (c_1, c_2) = \ldots \\ \text{dec}_{sk}(\text{enc}_{pk}(m)) &amp;= c_1 + sc_2 = \ldots \\ \text{enc}_{\text{pk}}(flag) &amp;= \ldots\end{align*}$$</p>
 <p>Wait&hellip; this means that we are given $c_1, c_2, c_1 + sc_2$. Of course, we can recover $s$! Our $m$ doesn&rsquo;t even matter. Let&rsquo;s code this up and see:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">q</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">100</span> <span class="c1"># ciph_modulus</span>
-</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span> <span class="c1"># poly_degree</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;mc.ax&#39;</span><span class="p">,</span> <span class="mi">31614</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># receive our data</span>
-</span></span><span class="line"><span class="cl"><span class="n">zeros</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;to be encrypted: &#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&#34;real_part&#34;</span><span class="p">:</span> <span class="n">zeros</span><span class="p">,</span> <span class="s2">&#34;imag_part&#34;</span><span class="p">:</span> <span class="n">zeros</span><span class="p">})</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ct</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;ciphertext: &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl"><span class="n">msg</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;decryption: &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;reward: &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># these are coefficients of the actual polynomials</span>
-</span></span><span class="line"><span class="cl"><span class="n">msg_c0</span><span class="p">,</span> <span class="n">msg_c1</span><span class="p">,</span> <span class="n">msg_dec</span> <span class="o">=</span> <span class="n">ct</span><span class="p">[</span><span class="s1">&#39;c0&#39;</span><span class="p">],</span> <span class="n">ct</span><span class="p">[</span><span class="s1">&#39;c1&#39;</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">flag_c0</span><span class="p">,</span> <span class="n">flag_c1</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;c0&#39;</span><span class="p">],</span> <span class="n">flag</span><span class="p">[</span><span class="s1">&#39;c1&#39;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># convert to our polynomials</span>
-</span></span><span class="line"><span class="cl"><span class="n">R</span><span class="o">.&lt;</span><span class="n">x</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">PolynomialRing</span><span class="p">(</span><span class="n">Zmod</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">quotient</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">to_poly</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">arr</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="o">^</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl"><span class="n">msg_c0</span><span class="p">,</span> <span class="n">msg_c1</span><span class="p">,</span> <span class="n">msg_dec</span><span class="p">,</span> <span class="n">flag_c0</span><span class="p">,</span> <span class="n">flag_c1</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">to_poly</span><span class="p">,</span> <span class="p">[</span><span class="n">msg_c0</span><span class="p">,</span> <span class="n">msg_c1</span><span class="p">,</span> <span class="n">msg_dec</span><span class="p">,</span> <span class="n">flag_c0</span><span class="p">,</span> <span class="n">flag_c1</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># as derived, msg_dec = msg_c0 + secret * msg_c1</span>
-</span></span><span class="line"><span class="cl"><span class="n">secret</span> <span class="o">=</span> <span class="p">(</span><span class="n">msg_dec</span> <span class="o">-</span> <span class="n">msg_c0</span><span class="p">)</span> <span class="o">/</span> <span class="n">msg_c1</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>q <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">100</span> <span style="color:#75715e"># ciph_modulus</span>
+</span></span><span style="display:flex;"><span>N <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span> <span style="color:#75715e"># poly_degree</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;mc.ax&#39;</span>, <span style="color:#ae81ff">31614</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># receive our data</span>
+</span></span><span style="display:flex;"><span>zeros <span style="color:#f92672">=</span> [float(<span style="color:#ae81ff">0.0</span>)] <span style="color:#f92672">*</span> (N <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>r<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;to be encrypted: &#39;</span>)
+</span></span><span style="display:flex;"><span>r<span style="color:#f92672">.</span>sendline(json<span style="color:#f92672">.</span>dumps({<span style="color:#e6db74">&#34;real_part&#34;</span>: zeros, <span style="color:#e6db74">&#34;imag_part&#34;</span>: zeros})<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ct <span style="color:#f92672">=</span> eval(r<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>decode()<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;ciphertext: &#39;</span>)[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>msg <span style="color:#f92672">=</span> eval(r<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>decode()<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;decryption: &#39;</span>)[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> eval(r<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>decode()<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;reward: &#39;</span>)[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># these are coefficients of the actual polynomials</span>
+</span></span><span style="display:flex;"><span>msg_c0, msg_c1, msg_dec <span style="color:#f92672">=</span> ct[<span style="color:#e6db74">&#39;c0&#39;</span>], ct[<span style="color:#e6db74">&#39;c1&#39;</span>], msg[<span style="color:#e6db74">&#39;m&#39;</span>]
+</span></span><span style="display:flex;"><span>flag_c0, flag_c1 <span style="color:#f92672">=</span> flag[<span style="color:#e6db74">&#39;c0&#39;</span>], flag[<span style="color:#e6db74">&#39;c1&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># convert to our polynomials</span>
+</span></span><span style="display:flex;"><span>R<span style="color:#f92672">.&lt;</span>x<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> PolynomialRing(Zmod(q), <span style="color:#e6db74">&#39;x&#39;</span>)<span style="color:#f92672">.</span>quotient(x<span style="color:#f92672">^</span>N <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>to_poly <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> arr: sum(arr[i] <span style="color:#f92672">*</span> x<span style="color:#f92672">^</span>i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(arr)))
+</span></span><span style="display:flex;"><span>msg_c0, msg_c1, msg_dec, flag_c0, flag_c1 <span style="color:#f92672">=</span> map(to_poly, [msg_c0, msg_c1, msg_dec, flag_c0, flag_c1])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># as derived, msg_dec = msg_c0 + secret * msg_c1</span>
+</span></span><span style="display:flex;"><span>secret <span style="color:#f92672">=</span> (msg_dec <span style="color:#f92672">-</span> msg_c0) <span style="color:#f92672">/</span> msg_c1
+</span></span><span style="display:flex;"><span>print(secret)
 </span></span></code></pre></div><p>Output:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ne">NotImplementedError</span><span class="p">:</span> <span class="n">The</span> <span class="n">base</span> <span class="n">ring</span> <span class="p">(</span><span class="o">=</span><span class="n">Ring</span> <span class="n">of</span> <span class="n">integers</span> <span class="n">modulo</span> <span class="mi">1267650600228229401496703205376</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">a</span> <span class="n">field</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">NotImplementedError</span>: The base ring (<span style="color:#f92672">=</span>Ring of integers modulo <span style="color:#ae81ff">1267650600228229401496703205376</span>) <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> a field
 </span></span></code></pre></div><p>Fuck sage &lt;3</p>
 <h2 id="problem-1-cant-invert">Problem 1: Can&rsquo;t invert</h2>
 <p>As shown by the error, Sage is not able to compute the inverse of <code>msg_c1</code>, required to divide, since $\mathbb{Z} / q\mathbb{Z}$ is not a field. For example, $2$ does not have an inverse $\mod q$, since $q = 2^{100}$. However, some elements are still invertible, and Sage is not able to calculate them. We can attempt to implement our own division instead of using Sage&rsquo;s,</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># ax + by = 1</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">xgcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">g</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xgcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># fill in the blanks</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">g</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">b</span> <span class="o">//</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">xgcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># ax + by = 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">xgcd</span>(a, b):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> b <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    g, x, y <span style="color:#f92672">=</span> xgcd(b, a <span style="color:#f92672">%</span> b) <span style="color:#75715e"># fill in the blanks</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> g, y <span style="color:#f92672">-</span> (b <span style="color:#f92672">//</span> a) <span style="color:#f92672">*</span> x, x
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">inverse</span>(a, b):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> xgcd(a, b)[<span style="color:#ae81ff">1</span>]
 </span></span></code></pre></div><p>However, the algorithm still requires division, which is not always possible. We need a better way&hellip;</p>
 <h2 id="fix-1-use-gareth-theorem">Fix 1: Use Gareth T.(heorem)</h2>
 <p>As we mentioned, $2$ does not have an inverse $\mod q$. However, it is easy to see that all odd numbers $n = 2k + 1$ has an inverse. Let&rsquo;s look the inverse:</p>
@@ -394,75 +404,75 @@
 <p>Where the last (in)equality follows from a geometric series expansion. Now, notice that $(-2)^{-i}$ is actually eventually non-zero modulo $2^{100}$! In particular, we only have to sum the first $99$ terms of the series:</p>
 <p>$$\frac{1}{1 + 2k} \equiv \sum_{i=0}^{99} (-2k)^{i}\mod 2^{100}$$</p>
 <p>One can prove this by copying the proof of geometric series - multiply by $(-2k)$, subtract and divide. However, I prefer a better method: Prove by AC.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">k</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">q</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="p">,</span> <span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>    k <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, q <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> sum(pow(<span style="color:#f92672">-</span>k, <span style="color:#f92672">-</span>i, q) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>)) <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> k) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>
 </span></span></code></pre></div><p>Now, we can try to apply this for invertible polynomials in general. It is not hard to prove that polynomials are only invertible if their constant term is odd. For such polynomials, we can write $P(x) = c_0P_1(x) = c_0(1 + Q(x))$, where $c_0$ is the constant term. Then,</p>
 <p>$$\begin{align*} \frac{1}{P(x)} &amp;= \frac{1}{c_0}\cdot\frac{1}{1 + Q(x)} \ &amp;\equiv c_0^{-1}\sum_{i=0}^{\infty} (-Q(x))^i \mod (x^N + 1) \end{align*}$$</p>
 <p>However, it turns out that this method doesn&rsquo;t always converge for all invertible polynomials - in fact, it converges for about 50% of the time, and a proof is included at the end. Moreover, the theoretical upper-bound for the converging $j$ is $2^{111}$, which would be impossible to compute with the $O(j)$ series. However, <em>numerical evidence</em> shows that $j$ is usually smaller. For reference, $j\leq 2^{15}$ for about 3% of the cases, and $j\leq 2^{16}$ for about 13%. (Keep in mind that it is polynomial arithmetic, and I am lazy to implement FFT). Therefore, we can assume that $j = 2^{16}$ is an upper bound and simply binary search for it.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># notice we change the definition to without quotient</span>
-</span></span><span class="line"><span class="cl"><span class="n">R</span><span class="o">.&lt;</span><span class="n">x</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">PolynomialRing</span><span class="p">(</span><span class="n">Zmod</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">c0</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">c0</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># Q is the geometric series ratio</span>
-</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">/=</span> <span class="n">c0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Q</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># find bounds</span>
-</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="nb">pow</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="mi">2</span><span class="o">^</span><span class="mi">32</span><span class="p">,</span> <span class="n">x</span><span class="o">^</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">upper</span> <span class="o">=</span> <span class="mi">2</span><span class="o">^</span><span class="mi">32</span>
-</span></span><span class="line"><span class="cl">    <span class="n">lower</span> <span class="o">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">upper</span> <span class="o">&gt;=</span> <span class="n">lower</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower</span> <span class="o">+</span> <span class="n">upper</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">pow</span><span class="p">(</span><span class="o">-</span><span class="n">Q</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">x</span><span class="o">^</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">result</span> <span class="o">=</span> <span class="n">mid</span>
-</span></span><span class="line"><span class="cl">            <span class="n">upper</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">lower</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># sum and return</span>
-</span></span><span class="line"><span class="cl">    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cur</span> <span class="o">=</span>  <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">result</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">total</span> <span class="o">+=</span> <span class="n">cur</span>
-</span></span><span class="line"><span class="cl">        <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span> <span class="o">*</span> <span class="o">-</span><span class="n">Q</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">total</span> <span class="o">/</span> <span class="n">Mod</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># notice we change the definition to without quotient</span>
+</span></span><span style="display:flex;"><span>R<span style="color:#f92672">.&lt;</span>x<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> PolynomialRing(Zmod(q), <span style="color:#e6db74">&#39;x&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">inverse</span>(a):
+</span></span><span style="display:flex;"><span>    c0 <span style="color:#f92672">=</span> a[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> c0 <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Q is the geometric series ratio</span>
+</span></span><span style="display:flex;"><span>    a <span style="color:#f92672">/=</span> c0
+</span></span><span style="display:flex;"><span>    Q <span style="color:#f92672">=</span> a <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># find bounds</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> pow(Q, <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">32</span>, x<span style="color:#f92672">^</span>N <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    upper <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">32</span>
+</span></span><span style="display:flex;"><span>    lower <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> upper <span style="color:#f92672">&gt;=</span> lower:
+</span></span><span style="display:flex;"><span>        mid <span style="color:#f92672">=</span> (lower <span style="color:#f92672">+</span> upper) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> pow(<span style="color:#f92672">-</span>Q, mid, x<span style="color:#f92672">^</span>N <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> mid
+</span></span><span style="display:flex;"><span>            upper <span style="color:#f92672">=</span> mid <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            lower <span style="color:#f92672">=</span> mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># sum and return</span>
+</span></span><span style="display:flex;"><span>    total <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    cur <span style="color:#f92672">=</span>  <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(result)):
+</span></span><span style="display:flex;"><span>        total <span style="color:#f92672">+=</span> cur
+</span></span><span style="display:flex;"><span>        cur <span style="color:#f92672">=</span> cur <span style="color:#f92672">*</span> <span style="color:#f92672">-</span>Q <span style="color:#f92672">%</span> (x<span style="color:#f92672">^</span>N <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> total <span style="color:#f92672">/</span> Mod(c0, q)
 </span></span></code></pre></div><p>Run it on <code>inverse(R(3))</code>, and</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">------------------------------------------------------------------------
-</span></span><span class="line"><span class="cl"><span class="o">(</span>no backtrace available<span class="o">)</span>
-</span></span><span class="line"><span class="cl">------------------------------------------------------------------------
-</span></span><span class="line"><span class="cl">Unhandled SIGABRT: An abort<span class="o">()</span> occurred.
-</span></span><span class="line"><span class="cl">This probably occurred because a *compiled* module has a bug
-</span></span><span class="line"><span class="cl">in it and is not properly wrapped with sig_on<span class="o">()</span>, sig_off<span class="o">()</span>.
-</span></span><span class="line"><span class="cl">Python will now terminate.
-</span></span><span class="line"><span class="cl">------------------------------------------------------------------------
-</span></span><span class="line"><span class="cl">/usr/local/bin/sage: line 19: <span class="m">51248</span> Abort trap: <span class="m">6</span>           <span class="s2">&#34;</span><span class="nv">$SYMLINK</span><span class="s2">/local/bin/sage&#34;</span> <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>no backtrace available<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>Unhandled SIGABRT: An abort<span style="color:#f92672">()</span> occurred.
+</span></span><span style="display:flex;"><span>This probably occurred because a *compiled* module has a bug
+</span></span><span style="display:flex;"><span>in it and is not properly wrapped with sig_on<span style="color:#f92672">()</span>, sig_off<span style="color:#f92672">()</span>.
+</span></span><span style="display:flex;"><span>Python will now terminate.
+</span></span><span style="display:flex;"><span>------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>/usr/local/bin/sage: line 19: <span style="color:#ae81ff">51248</span> Abort trap: <span style="color:#ae81ff">6</span>           <span style="color:#e6db74">&#34;</span>$SYMLINK<span style="color:#e6db74">/local/bin/sage&#34;</span> <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
 </span></span></code></pre></div><p>???????</p>
 <h2 id="bug-2-sage-whats-wrong-with-you">Bug 2: Sage, What&rsquo;s Wrong With You?</h2>
 <p>To this day, I still have no idea why <code>pow</code> fails even with <code>int</code> exponents. I discovered this code in <code>polynomial_modn_dense_ntl.pyx</code>, but&hellip; ?:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">if</span> <span class="n">not</span> <span class="n">isinstance</span><span class="p">(</span><span class="n">modulus</span><span class="p">,</span> <span class="n">Polynomial_dense_modn_ntl_ZZ</span><span class="p">)</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">modulus</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">parent</span><span class="p">().</span><span class="n">_coerce_</span><span class="p">(</span><span class="n">modulus</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">ZZ_pX_Modulus_build</span><span class="p">(</span><span class="n">mod</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">Polynomial_dense_modn_ntl_ZZ</span><span class="o">&gt;</span><span class="n">modulus</span><span class="p">).</span><span class="n">x</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">do_sig</span> <span class="o">=</span> <span class="n">ZZ_pX_deg</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">e</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">c</span><span class="p">.</span><span class="n">p_bits</span> <span class="o">&gt;</span> <span class="mf">1e5</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nl">do_sig</span><span class="p">:</span> <span class="n">sig_on</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">ZZ_pX_PowerMod_long_pre</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">mod</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nl">do_sig</span><span class="p">:</span> <span class="n">sig_off</span><span class="p">()</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> not isinstance(modulus, Polynomial_dense_modn_ntl_ZZ)<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    modulus <span style="color:#f92672">=</span> self.parent()._coerce_(modulus)
+</span></span><span style="display:flex;"><span>ZZ_pX_Modulus_build(mod[<span style="color:#ae81ff">0</span>], (<span style="color:#f92672">&lt;</span>Polynomial_dense_modn_ntl_ZZ<span style="color:#f92672">&gt;</span>modulus).x)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>do_sig <span style="color:#f92672">=</span> ZZ_pX_deg(self.x) <span style="color:#f92672">*</span> e <span style="color:#f92672">*</span> self.c.p_bits <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1e5</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> do_sig: sig_on()
+</span></span><span style="display:flex;"><span>ZZ_pX_PowerMod_long_pre(r.x, self.x, e, mod[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> do_sig: sig_off()
 </span></span></code></pre></div><p>Anyways, the fix for this is pretty simple.</p>
 <h2 id="fix-2-take-matters-into-my-own-hands">Fix 2: Take Matters Into My Own Hands</h2>
 <p>Since Sage refuses work and never works, I wrote my own pow implementation:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">qpow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">*</span> <span class="n">a</span> <span class="o">%</span> <span class="n">m</span>
-</span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span> <span class="o">%</span> <span class="n">m</span>
-</span></span><span class="line"><span class="cl">        <span class="n">b</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">res</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">qpow</span>(a, b, m):
+</span></span><span style="display:flex;"><span>    res <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> b <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> b <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>            res <span style="color:#f92672">=</span> res <span style="color:#f92672">*</span> a <span style="color:#f92672">%</span> m
+</span></span><span style="display:flex;"><span>        a <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> a <span style="color:#f92672">%</span> m
+</span></span><span style="display:flex;"><span>        b <span style="color:#f92672">&gt;&gt;=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> res
 </span></span></code></pre></div><h2 id="final-step">Final Step</h2>
 <p>With this, our code finally runs, at least 50% of the time (due to the polynomial being invertible 50% of the time). It takes a while, but after we recover the secret, we can compute the decrypted flag and <em>decode</em> for the flag.</p>
 
@@ -475,44 +485,41 @@
 <li><code>encrypt_flag</code> → <code>encrypt_json</code> → <code>encoder.encode</code>, <code>encryptor.encrypt</code></li>
 </ul>
 <p>Relevant code:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># setup secret key, mapping q - 1 to -1</span>
-</span></span><span class="line"><span class="cl"><span class="n">coef</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">ZZ</span><span class="p">,</span> <span class="n">secret</span><span class="o">.</span><span class="n">coefficients</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">coef</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">coef</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">coef</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span></span><span class="line"><span class="cl"><span class="n">secret</span> <span class="o">=</span> <span class="n">SecretKey</span><span class="p">(</span><span class="n">Polynomial</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">coef</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># decoder</span>
-</span></span><span class="line"><span class="cl"><span class="n">big_modulus</span> <span class="o">=</span> <span class="n">q</span> <span class="o">**</span> <span class="mi">2</span>
-</span></span><span class="line"><span class="cl"><span class="n">scaling_factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">30</span>
-</span></span><span class="line"><span class="cl"><span class="n">params</span> <span class="o">=</span> <span class="n">CKKSParameters</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">poly_degree</span><span class="o">=</span><span class="n">N</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ciph_modulus</span><span class="o">=</span><span class="n">q</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">big_modulus</span><span class="o">=</span><span class="n">big_modulus</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">scaling_factor</span><span class="o">=</span><span class="n">scaling_factor</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># use py-fhe library</span>
-</span></span><span class="line"><span class="cl"><span class="n">decryptor</span> <span class="o">=</span> <span class="n">CKKSDecryptor</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">flag_c0</span> <span class="o">=</span> <span class="n">Polynomial</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">flag_c0</span><span class="o">.</span><span class="n">coefficients</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="n">flag_c1</span> <span class="o">=</span> <span class="n">Polynomial</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">flag_c1</span><span class="o">.</span><span class="n">coefficients</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">Ciphertext</span><span class="p">(</span><span class="n">flag_c0</span><span class="p">,</span> <span class="n">flag_c1</span><span class="p">,</span> <span class="n">scaling_factor</span><span class="o">=</span><span class="n">scaling_factor</span><span class="p">,</span> <span class="n">modulus</span><span class="o">=</span><span class="n">q</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">encoder</span> <span class="o">=</span> <span class="n">CKKSEncoder</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">real</span><span class="p">())</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">]))</span>
-</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:64x}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flag</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Flag: </span><span class="si">{</span><span class="n">flag</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># setup secret key, mapping q - 1 to -1</span>
+</span></span><span style="display:flex;"><span>coef <span style="color:#f92672">=</span> list(map(ZZ, secret<span style="color:#f92672">.</span>coefficients(sparse<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> len(coef) <span style="color:#f92672">&lt;</span> N:
+</span></span><span style="display:flex;"><span>    coef<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> coef[i] <span style="color:#f92672">==</span> q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        coef[i] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>secret <span style="color:#f92672">=</span> SecretKey(Polynomial(N, coef))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># decoder</span>
+</span></span><span style="display:flex;"><span>big_modulus <span style="color:#f92672">=</span> q <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>scaling_factor <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>params <span style="color:#f92672">=</span> CKKSParameters(
+</span></span><span style="display:flex;"><span>    poly_degree<span style="color:#f92672">=</span>N,
+</span></span><span style="display:flex;"><span>    ciph_modulus<span style="color:#f92672">=</span>q,
+</span></span><span style="display:flex;"><span>    big_modulus<span style="color:#f92672">=</span>big_modulus,
+</span></span><span style="display:flex;"><span>    scaling_factor<span style="color:#f92672">=</span>scaling_factor,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># use py-fhe library</span>
+</span></span><span style="display:flex;"><span>decryptor <span style="color:#f92672">=</span> CKKSDecryptor(params, secret)
+</span></span><span style="display:flex;"><span>flag_c0 <span style="color:#f92672">=</span> Polynomial(N, flag_c0<span style="color:#f92672">.</span>coefficients(sparse<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>))
+</span></span><span style="display:flex;"><span>flag_c1 <span style="color:#f92672">=</span> Polynomial(N, flag_c1<span style="color:#f92672">.</span>coefficients(sparse<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>))
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> decryptor<span style="color:#f92672">.</span>decrypt(Ciphertext(flag_c0, flag_c1, scaling_factor<span style="color:#f92672">=</span>scaling_factor, modulus<span style="color:#f92672">=</span>q))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>encoder <span style="color:#f92672">=</span> CKKSEncoder(params)
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> encoder<span style="color:#f92672">.</span>decode(flag)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(str, [round(r<span style="color:#f92672">.</span>real()) <span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> arr]))
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>fromhex(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{:64x}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(flag))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Flag: </span><span style="color:#e6db74">{</span>flag<span style="color:#f92672">.</span>decode()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
 </span></span></code></pre></div><p>With all this done, we simply have to run our script, extract the real part of each complex number, and get the flag~</p>
 <p>Flag: <code>dice{this_destroyes_the_CKKS_cryptosystem_a3b31e683b82b26f}</code></p>
 <p>Thank you for reading this blog, and thank you to @ireland for the challenge. Also thank you @Mystiz for suggesting the title &ldquo;Gareth T&rdquo;, it&rsquo;s a singer in Hong Kong :D Still wish I solved this during the CTF though :3</p>
-<figure>
-    <img src="https://wallpaperaccess.com/full/1965429.jpg" width="600px" loading="lazy" alt="Thank you for reading!">
-    <figcaption>Thank you for reading!</figcaption>
-</figure>
+<!-- raw HTML omitted -->
 <h2 id="appendix-proof">Appendix: Proof</h2>
 <p>Below, I will prove that for $N = 2^{10}$ and $q = 2^{100}$, as it is in the scheme, then</p>
 <p>$$P(x)\equiv 0\mod (2, x + 1)\implies \lim_{n\to\infty} P(x)^{2^n}\equiv 0\mod (q, x^N + 1).$$</p>
@@ -548,12 +555,53 @@
 
 
     
-    
-    
 </article>
 
     <aside class="related-contents--wrapper">
     
+    
+        <h2 class="section-title">Related contents</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/posts/tet-algebra/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Algebra (831 pts, 14 solves)</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/posts/tet-shares/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/posts/seccon-pppp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">pppp (117 pts, 70 solves)</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
     
 </aside>
 
@@ -565,8 +613,6 @@
     <footer class="site-footer">
     <section class="copyright">
         &copy; 
-        
-            2021 - 
         
         2023 Blog by grhkm21
     </section>
@@ -657,51 +703,6 @@
             >
 
             </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-                </div>
-                <h2 class="widget-title section-title">Table of contents</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
-  <ol>
-    <li><a href="#self-reflection">Self-Reflection</a></li>
-    <li><a href="#problem-statement">Problem Statement</a></li>
-    <li><a href="#solution-outline">Solution Outline</a></li>
-    <li><a href="#understanding-the-code">Understanding the Code</a></li>
-    <li><a href="#fully-homomorphic-encryption-fhe">Fully Homomorphic Encryption (FHE)</a></li>
-    <li><a href="#ckks-cheon-kim-kim-song-scheme">CKKS (Cheon-Kim-Kim-Song) Scheme</a>
-      <ol>
-        <li><a href="#data-representation">Data Representation</a></li>
-        <li><a href="#key-generation">Key Generation</a></li>
-        <li><a href="#encryption">Encryption</a></li>
-        <li><a href="#approximated-decryption">Approximated Decryption</a></li>
-      </ol>
-    </li>
-    <li><a href="#hidden-in-plain-sight">Hidden in Plain Sight</a></li>
-    <li><a href="#problem-1-cant-invert">Problem 1: Can&rsquo;t invert</a></li>
-    <li><a href="#fix-1-use-gareth-theorem">Fix 1: Use Gareth T.(heorem)</a></li>
-    <li><a href="#bug-2-sage-whats-wrong-with-you">Bug 2: Sage, What&rsquo;s Wrong With You?</a></li>
-    <li><a href="#fix-2-take-matters-into-my-own-hands">Fix 2: Take Matters Into My Own Hands</a></li>
-    <li><a href="#final-step">Final Step</a></li>
-    <li><a href="#appendix-proof">Appendix: Proof</a></li>
-  </ol>
-</nav>
-                </div>
-            </section>
-        </aside>
     
 
         </div>

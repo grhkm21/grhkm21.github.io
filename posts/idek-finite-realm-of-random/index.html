@@ -10,8 +10,7 @@
 <meta property='og:url' content='https://grhkm21.github.io/posts/idek-finite-realm-of-random/'>
 <meta property='og:site_name' content='Blog by grhkm21'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='crypto' /><meta property='article:tag' content='math' /><meta property='article:published_time' content='2023-01-16T12:36:14&#43;00:00'/><meta property='article:modified_time' content='2023-01-16T12:36:14&#43;00:00'/>
-<meta name="twitter:site" content="@grhkm2023">
-    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="Finite Realm of Random (498 points, 4 solves)">
+<meta name="twitter:title" content="Finite Realm of Random (498 points, 4 solves)">
 <meta name="twitter:description" content="Field theory exam revision.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
 <script>
@@ -22,14 +21,12 @@
 </script>
     </head>
     <body class="
-    article-page has-toc
+    article-page 
 ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
+            localStorage.setItem(colorSchemeKey, "auto");
         })();
     </script><script>
     (function() {
@@ -48,22 +45,49 @@
 </script>
 <div class="container main-container flex 
     
-        extended
+        on-phone--column compact
     
 ">
     
-        <div id="article-toolbar">
-            <a href="https://grhkm21.github.io/" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
-</svg>
+        <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
 
+    <header class="site-info">
+        
+        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
+        <h2 class="site-description"></h2>
+    </header>
 
+    <ol class="menu" id="main-menu">
+        
+        
+        
 
-                <span>Back</span>
+        <li >
+            <a href='/about-me/' >
+                
+                <span>About</span>
             </a>
-        </div>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                <span>Posts</span>
+            </a>
+        </li>
+        
+
+        
+    </ol>
+</aside>
+
     
 <main class="main full-width">
     <article class="main-article">
@@ -99,20 +123,6 @@
             </div>
         
 
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    4 minute read
-                </time>
-            </div>
         
     </footer>
     
@@ -186,41 +196,43 @@ $$</p>
 </div>
 
 <p><em>Proof:</em> We apply Freshman&rsquo;s Dream. Writing $\varphi(X) = \sum_{i = 0}^{31} d_iX^i$, we have</p>
-<p>\begin{align*}
+<p>$$
+\begin{align*}
 \varphi(r_1)^{p^k} &amp;= \left(\sum_{i = 0}^{31} d_ir_1^i\right)^{p^k} \\
 &amp;= \sum_{i = 0}^{31} \left(d_ir_1^i\right)^{p^k} &amp;\text{Freshman&rsquo;s dream} \\
 &amp;= \sum_{i = 0}^{31} d_ir_1^{ip^k} \\
 &amp;= \varphi\left(r_1^{p^k}\right) \\
 &amp;= \varphi(r_2)
-\end{align*}</p>
+\end{align*}
+$$</p>
 <p>Where the third line uses the fact that $d_i \in \mathbb{F}_{127}$, so raising $d_i$ to the $p^k$-th power results in $d_i$. By definition, $\varphi(r_1) = f$, so we get that $\varphi(r_2) = f^{p^k}$. This means that step (2) in the original algorithm simply maps $f$ to one of its conjugates by $f \mapsto f^{p^k}$. Therefore, to recover the original $f$, we simply look at all $32$ conjugates of the resulting $f$ and check if it is valid ASCII with the correct length.</p>
 <h2 id="code">Code</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Curiously, random is not random</span>
-</span></span><span class="line"><span class="cl"><span class="n">L</span> <span class="o">=</span> <span class="n">GF</span><span class="p">(</span><span class="mi">127</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">L</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">irreducible_element</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">splitting_field</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;t</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Parses resulting f</span>
-</span></span><span class="line"><span class="cl"><span class="n">ct</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;out.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span> <span class="o">%</span> <span class="n">L</span><span class="o">.</span><span class="n">degree</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl"><span class="n">blocks</span> <span class="o">=</span> <span class="p">[</span><span class="n">L</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">ct</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">L</span><span class="o">.</span><span class="n">degree</span><span class="p">()])))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ct</span><span class="p">),</span> <span class="n">L</span><span class="o">.</span><span class="n">degree</span><span class="p">())]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">poly</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">poly</span><span class="o">.</span><span class="n">polynomial</span><span class="p">()</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()))</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># Checks conjugates by f -&gt; f^(p^i)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">vector</span><span class="p">(</span><span class="n">c</span><span class="o">^</span><span class="p">(</span><span class="mi">127</span><span class="o">^</span><span class="n">i</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="mi">32</span> <span class="o">&lt;=</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">127</span> <span class="ow">or</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">r</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Curiously, random is not random</span>
+</span></span><span style="display:flex;"><span>L <span style="color:#f92672">=</span> GF(<span style="color:#ae81ff">127</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>    L <span style="color:#f92672">=</span> L[<span style="color:#e6db74">&#39;x&#39;</span>]<span style="color:#f92672">.</span>irreducible_element(<span style="color:#ae81ff">2</span>, algorithm<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;random&#39;</span>)<span style="color:#f92672">.</span>splitting_field(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;t</span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Parses resulting f</span>
+</span></span><span style="display:flex;"><span>ct <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>fromhex(open(<span style="color:#e6db74">&#39;out.txt&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>)<span style="color:#f92672">.</span>read())
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> len(ct) <span style="color:#f92672">%</span> L<span style="color:#f92672">.</span>degree() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>blocks <span style="color:#f92672">=</span> [L(list(map(int, ct[i:i <span style="color:#f92672">+</span> L<span style="color:#f92672">.</span>degree()]))) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(ct), L<span style="color:#f92672">.</span>degree())]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert</span>(poly):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> bytes(map(int, poly<span style="color:#f92672">.</span>polynomial()<span style="color:#f92672">.</span>coefficients()))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> blocks:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">32</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Checks conjugates by f -&gt; f^(p^i)</span>
+</span></span><span style="display:flex;"><span>        r <span style="color:#f92672">=</span> bytes(vector(c<span style="color:#f92672">^</span>(<span style="color:#ae81ff">127</span><span style="color:#f92672">^</span>i)))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> all(<span style="color:#ae81ff">32</span> <span style="color:#f92672">&lt;=</span> t <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">127</span> <span style="color:#f92672">or</span> t <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> r):
+</span></span><span style="display:flex;"><span>            print(r<span style="color:#f92672">.</span>decode())
 </span></span></code></pre></div><p>Flag: <code>idek{4nd_7hu5_5p0k3_G4!015:_7h3_f1n1t3_r34Lm_sh4ll_n07_h4rb0ur_r4nd0mn355,_0n!y_7h3_fr0b3n1u5__}</code></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Thank you A~Z and all other idekCTF authors for the challenges. It was a lot of fun and I learned quite a lot! Also thank you to my team members, Mystiz and LifeIsHard (new member) for offering their mental support and listening to my nonstop rant for 48 hours. Writeups for other challenges may or may not appear in the future.</p>
 <p>Unrelated note: I am now on <a class="link" href="https://infosec.exchange/@grhkm"  target="_blank" rel="noopener"
     >Mastodon</a>, and you will find me more active there than on Twitter. Check me out over there! There are quite a few exciting things going on.</p>
 <p>POV: You are trying to understand the source code of this problem:</p>
-<img src="/images/finite-realm-of-random-ending.jpg" width=60% style="margin-left:auto;margin-right:auto;display:block">
+<!-- raw HTML omitted -->
 
 </section>
 
@@ -240,12 +252,65 @@ $$</p>
 
 
     
-    
-    
 </article>
 
     <aside class="related-contents--wrapper">
     
+    
+        <h2 class="section-title">Related contents</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/posts/dice-learning-without-errors/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Learning Without Errors (396 pts, 6 solves, upsolve)</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/posts/tet-algebra/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Algebra (831 pts, 14 solves)</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/posts/tet-shares/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Shares V1 (216 pts, 29 solves) / V2 (804 pts, 15 solves)</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/posts/seccon-pppp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">pppp (117 pts, 70 solves)</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
     
 </aside>
 
@@ -257,8 +322,6 @@ $$</p>
     <footer class="site-footer">
     <section class="copyright">
         &copy; 
-        
-            2021 - 
         
         2023 Blog by grhkm21
     </section>
@@ -349,37 +412,6 @@ $$</p>
             >
 
             </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-                </div>
-                <h2 class="widget-title section-title">Table of contents</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
-  <ol>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#problem-statement">Problem Statement</a></li>
-    <li><a href="#solution-outline">Solution Outline</a></li>
-    <li><a href="#a-bit-of-math">A Bit of Math</a></li>
-    <li><a href="#code">Code</a></li>
-    <li><a href="#conclusion">Conclusion</a></li>
-  </ol>
-</nav>
-                </div>
-            </section>
-        </aside>
     
 
         </div>

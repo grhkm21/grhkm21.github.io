@@ -10,8 +10,7 @@
 <meta property='og:url' content='https://grhkm21.github.io/posts/hkcert-the-hardest-path/'>
 <meta property='og:site_name' content='Blog by grhkm21'>
 <meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:published_time' content='2021-11-15T06:42:15&#43;00:00'/><meta property='article:modified_time' content='2021-11-15T06:42:15&#43;00:00'/>
-<meta name="twitter:site" content="@grhkm2023">
-    <meta name="twitter:creator" content="@grhkm2023"><meta name="twitter:title" content="The Hardest Path (300 pts, 9 solves)">
+<meta name="twitter:title" content="The Hardest Path (300 pts, 9 solves)">
 <meta name="twitter:description" content="Shortest path on a slightly obfuscated graph structure.">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
 <script>
@@ -22,14 +21,12 @@
 </script>
     </head>
     <body class="
-    article-page has-toc
+    article-page 
 ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
+            localStorage.setItem(colorSchemeKey, "auto");
         })();
     </script><script>
     (function() {
@@ -48,22 +45,49 @@
 </script>
 <div class="container main-container flex 
     
-        extended
+        on-phone--column compact
     
 ">
     
-        <div id="article-toolbar">
-            <a href="https://grhkm21.github.io/" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
-</svg>
+        <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
 
+    <header class="site-info">
+        
+        <h1 class="site-name"><a href="https://grhkm21.github.io/">Blog by grhkm21</a></h1>
+        <h2 class="site-description"></h2>
+    </header>
 
+    <ol class="menu" id="main-menu">
+        
+        
+        
 
-                <span>Back</span>
+        <li >
+            <a href='/about-me/' >
+                
+                <span>About</span>
             </a>
-        </div>
+        </li>
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                <span>Posts</span>
+            </a>
+        </li>
+        
+
+        
+    </ol>
+</aside>
+
     
 <main class="main full-width">
     <article class="main-article">
@@ -99,20 +123,6 @@
             </div>
         
 
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    7 minute read
-                </time>
-            </div>
         
     </footer>
     
@@ -167,71 +177,71 @@
 <li><code>chall.py</code>, which is essentially a wrapper for the problem and</li>
 <li><code>lost.py</code>, the actual code containing the logic.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># File: chall.py</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># code has been rewritten</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># proof of concept</span>
-</span></span><span class="line"><span class="cl"><span class="n">challenge</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;🔧 </span><span class="si">{</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">challenge</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">response</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;🔩 &#39;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">challenge</span> <span class="o">+</span> <span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">h</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00</span><span class="s1">&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># calling lost._328518a497015157(data)</span>
-</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;🥺 &#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">lost</span><span class="o">.</span><span class="n">_328518a497015157</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;FLAG&#39;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="k">except</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no good!&#39;</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># File: chall.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># code has been rewritten</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># proof of concept</span>
+</span></span><span style="display:flex;"><span>challenge <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>urandom(<span style="color:#ae81ff">8</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;🔧 </span><span style="color:#e6db74">{</span>base64<span style="color:#f92672">.</span>b64encode(challenge)<span style="color:#f92672">.</span>decode()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>b64decode(input(<span style="color:#e6db74">&#39;🔩 &#39;</span>))
+</span></span><span style="display:flex;"><span>h <span style="color:#f92672">=</span> hashlib<span style="color:#f92672">.</span>sha256(challenge <span style="color:#f92672">+</span> response)<span style="color:#f92672">.</span>digest()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> h<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\x00\x00\x00</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># calling lost._328518a497015157(data)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;🥺 &#39;</span>)
+</span></span><span style="display:flex;"><span>    lost<span style="color:#f92672">.</span>_328518a497015157(data)
+</span></span><span style="display:flex;"><span>    print(os<span style="color:#f92672">.</span>environ<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;FLAG&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;no good!&#39;</span>)
 </span></span></code></pre></div><p>Reading <code>chall.py</code>, we first have to solve a proof of concept which can easily be bruteforced. We then supply the input string <code>data</code> and call the function <code>_328518a497015157</code>, which I shall refer to as <code>src</code> for reasons I will explain soon. The flag is returned only if the function call does not raise an Exception. That is interesting&hellip;</p>
 <h2 id="understanding-the-logic">Understanding the logic</h2>
 <p><code>test.py</code>, however, is a completely different beast. Let&rsquo;s analyze the file slowly. First, we are presented with:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># File: test.py</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># original</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_29aa7a86665899ed</span><span class="p">(</span><span class="n">_050ca071ab51aece</span><span class="p">):</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;😵‍💫💫🧱&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># deobfuscate</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">fail</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">()</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># File: test.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># original</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_29aa7a86665899ed</span>(_050ca071ab51aece): <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#39;😵‍💫💫🧱&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># deobfuscate</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fail</span>(_):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>()
 </span></span></code></pre></div><p>This function simply raises an Exception. Remember that the flag condition is for this function to <strong>not</strong> be called. Onto the next one:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># File: test.py</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># original</span>
-</span></span><span class="line"><span class="cl"><span class="n">mystery</span> <span class="o">=</span> <span class="s1">&#39;NEWS&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_f42fb5e137443877</span><span class="p">(</span><span class="n">_a78810bb76cc7d70</span><span class="p">,</span> <span class="o">*</span><span class="n">_ab1bbf35017f4f42</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">_e6aea2db2242b19f</span><span class="p">(</span><span class="n">_41d28eb8c27952c3</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_41d28eb8c27952c3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="n">_a78810bb76cc7d70</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;🤷🏁😕&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span>
-</span></span><span class="line"><span class="cl">        <span class="n">_03d38fa3a589db14</span><span class="p">,</span> <span class="n">_41d28eb8c27952c3</span> <span class="o">=</span> <span class="n">_41d28eb8c27952c3</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_41d28eb8c27952c3</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">_ab1bbf35017f4f42</span><span class="p">[</span><span class="n">mystery</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">_03d38fa3a589db14</span><span class="p">)]](</span><span class="n">_41d28eb8c27952c3</span><span class="p">)</span> <span class="k">if</span> <span class="n">_03d38fa3a589db14</span> <span class="ow">in</span> <span class="n">mystery</span> <span class="k">else</span> <span class="n">_e6aea2db2242b19f</span><span class="p">(</span><span class="n">_41d28eb8c27952c3</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">_e6aea2db2242b19f</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># deobfuscate (variable name change)</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">is_end</span><span class="p">,</span> <span class="o">*</span><span class="n">func_list</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_end</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;🤷🏁😕&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span>
-</span></span><span class="line"><span class="cl">        <span class="n">flag</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">func_list</span><span class="p">[</span><span class="n">mystery</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">flag</span><span class="p">)]](</span><span class="n">arg</span><span class="p">)</span> <span class="k">if</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">mystery</span> <span class="k">else</span> <span class="n">step</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">step</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># deobfuscate (styling)</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">is_end</span><span class="p">,</span> <span class="o">*</span><span class="n">func_list</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_end</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;🤷🏁😕&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span>
-</span></span><span class="line"><span class="cl">        <span class="n">first_char</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">first_char</span> <span class="ow">in</span> <span class="s1">&#39;NEWS&#39;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;NEWS&#39;</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">first_char</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="n">function</span> <span class="o">=</span> <span class="n">func_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="n">function</span><span class="p">)(</span><span class="n">arg</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">step</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">step</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># File: test.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># original</span>
+</span></span><span style="display:flex;"><span>mystery <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;NEWS&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_f42fb5e137443877</span>(_a78810bb76cc7d70, <span style="color:#f92672">*</span>_ab1bbf35017f4f42):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_e6aea2db2242b19f</span>(_41d28eb8c27952c3):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(_41d28eb8c27952c3) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> _a78810bb76cc7d70: <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#39;🤷🏁😕&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>        _03d38fa3a589db14, _41d28eb8c27952c3 <span style="color:#f92672">=</span> _41d28eb8c27952c3[<span style="color:#ae81ff">0</span>], _41d28eb8c27952c3[<span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> globals()[_ab1bbf35017f4f42[mystery<span style="color:#f92672">.</span>index(_03d38fa3a589db14)]](_41d28eb8c27952c3) <span style="color:#66d9ef">if</span> _03d38fa3a589db14 <span style="color:#f92672">in</span> mystery <span style="color:#66d9ef">else</span> _e6aea2db2242b19f(_41d28eb8c27952c3)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> _e6aea2db2242b19f
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># deobfuscate (variable name change)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process</span>(is_end, <span style="color:#f92672">*</span>func_list):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">step</span>(arg):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(arg) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> is_end: <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#39;🤷🏁😕&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>        flag, arg <span style="color:#f92672">=</span> arg[<span style="color:#ae81ff">0</span>], arg[<span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> globals()[func_list[mystery<span style="color:#f92672">.</span>index(flag)]](arg) <span style="color:#66d9ef">if</span> flag <span style="color:#f92672">in</span> mystery <span style="color:#66d9ef">else</span> step(arg)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> step
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># deobfuscate (styling)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process</span>(is_end, <span style="color:#f92672">*</span>func_list):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">step</span>(arg):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(arg) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> is_end:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#39;🤷🏁😕&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>        first_char, arg <span style="color:#f92672">=</span> arg[<span style="color:#ae81ff">0</span>], arg[<span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> first_char <span style="color:#f92672">in</span> <span style="color:#e6db74">&#39;NEWS&#39;</span>:
+</span></span><span style="display:flex;"><span>            index <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;NEWS&#39;</span><span style="color:#f92672">.</span>index(first_char)
+</span></span><span style="display:flex;"><span>            function <span style="color:#f92672">=</span> func_list[index]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> eval(function)(arg)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> step(arg)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> step
 </span></span></code></pre></div><p>In short, <code>process(is_end, *func_list)</code> returns a function which can then be called. Let&rsquo;s say we call it with <code>arg</code> i.e. we have <code>process(is_end, *func_list)(arg)</code>. Then there are three outcomes:</p>
 <ul>
 <li>If <code>arg</code> is empty, we further have</li>
@@ -309,25 +319,25 @@
 <p>Yes, the final one is a category on its own. That is because it is the only <code>process</code> function call that has <code>is_end = True</code>! This means that we must reach and end our function here at <code>_8b0eb6f195ae182a</code>, which I will call <code>dest</code> from now. To briefly summarize, we start from <code>src</code> and must supply a direction string made up of <code>N, E, W, S</code>, reaching the <code>dest</code> function at the end.</p>
 <h2 id="parsing-the-source-file">Parsing the source file</h2>
 <p>Finally, we can start solving the challenge! To begin, we will construct the <em>adjacency list</em> of the <em>call graph</em> out of the function calls in <code>lost.py</code>, which is a fancy way of saying &ldquo;for each function <code>_func</code>, what are the four functions supplied into <code>process</code>?&rdquo; In the process, we also handle when <code>_func = fail</code> by setting its entry to be empty, meaning it cannot reach any other node and is hence useless. Here is a short script:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
-</span></span><span class="line"><span class="cl"><span class="n">source</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;lost.py&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">offset</span> <span class="o">=</span> <span class="mi">16</span>  <span class="c1"># might have to change this if you deobfuscated lost.py</span>
-</span></span><span class="line"><span class="cl"><span class="n">call_graph</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dictionary, storing {node: [reachable from node]}</span>
-</span></span><span class="line"><span class="cl"><span class="n">src</span> <span class="o">=</span> <span class="s1">&#39;_328518a497015157&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="n">dest</span> <span class="o">=</span> <span class="kc">None</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source</span><span class="p">[</span><span class="n">offset</span><span class="p">:]:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; = &#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">right</span> <span class="o">==</span> <span class="s1">&#39;_29aa7a86665899ed&#39;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">call_graph</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s1">&#39;True&#39;</span> <span class="ow">in</span> <span class="n">right</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">dest</span> <span class="o">=</span> <span class="n">left</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># right == _f42fb5e137443877(is_flag, ...)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">funcs</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;_[0-9a-f]{1,16}&#39;</span><span class="p">,</span> <span class="n">right</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
-</span></span><span class="line"><span class="cl">        <span class="n">call_graph</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">=</span> <span class="n">funcs</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># len(call_graph) = 40401</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span>source <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#39;lost.py&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>)<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>  <span style="color:#75715e"># might have to change this if you deobfuscated lost.py</span>
+</span></span><span style="display:flex;"><span>call_graph <span style="color:#f92672">=</span> {}  <span style="color:#75715e"># dictionary, storing {node: [reachable from node]}</span>
+</span></span><span style="display:flex;"><span>src <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;_328518a497015157&#39;</span>
+</span></span><span style="display:flex;"><span>dest <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> source[offset:]:
+</span></span><span style="display:flex;"><span>    left, right <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39; = &#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> right <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;_29aa7a86665899ed&#39;</span>:
+</span></span><span style="display:flex;"><span>        call_graph[left] <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;True&#39;</span> <span style="color:#f92672">in</span> right:
+</span></span><span style="display:flex;"><span>            dest <span style="color:#f92672">=</span> left
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># right == _f42fb5e137443877(is_flag, ...)</span>
+</span></span><span style="display:flex;"><span>        funcs <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;_[0-9a-f]{1,16}&#39;</span>, right)[<span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>        call_graph[left] <span style="color:#f92672">=</span> funcs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># len(call_graph) = 40401</span>
 </span></span></code></pre></div><p>All there is left is to find a path from <code>src</code> to <code>dest</code>. The naive algorithm of bruteforcing all possible paths won&rsquo;t work, as there are $4^{40401}$ such paths. Instead, let&rsquo;s apply an algorithm called <strong>Breadth-First Search</strong> (BFS). The algorithm is very simple to understand with a few steps only:</p>
 <ol>
 <li>Start an array <code>queue</code> that will store which functions to visit (&ldquo;nodes&rdquo;), as well as its distance.</li>
@@ -354,40 +364,40 @@
 	
 </figure></p>
 <p>Intuitively speaking, the <code>queue</code> will keep track of the nodes in chronological order: the earlier the node is visited, the shorter the distance and the earlier it will be processed in (4.). You can also think of the nodes as lining up in a queue, where the earlier you arrive, the earlier you will leave! Hence, this algorithm will give us the shortest distance from <code>src</code> to <code>dest</code>, or in fact to any reachable node. Here is a simple line-by-line implementation:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>                                       <span class="c1"># 1.</span>
-</span></span><span class="line"><span class="cl"><span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>                                  <span class="c1"># 2.</span>
-</span></span><span class="line"><span class="cl"><span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">src</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>                           <span class="c1"># 3.</span>
-</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>                            <span class="c1"># 4.0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">first</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">first</span> <span class="o">==</span> <span class="n">dest</span><span class="p">:</span>                            <span class="c1"># Handle reaching dest</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>                           <span class="c1"># 4.1</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">reachable</span> <span class="ow">in</span> <span class="n">call_graph</span><span class="p">[</span><span class="n">first</span><span class="p">]:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">reachable</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">reachable</span><span class="p">,</span> <span class="n">dist</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># 4.2</span>
-</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>queue <span style="color:#f92672">=</span> []                                       <span style="color:#75715e"># 1.</span>
+</span></span><span style="display:flex;"><span>visited <span style="color:#f92672">=</span> set()                                  <span style="color:#75715e"># 2.</span>
+</span></span><span style="display:flex;"><span>queue<span style="color:#f92672">.</span>append((src, <span style="color:#ae81ff">0</span>))                           <span style="color:#75715e"># 3.</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> len(queue) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:                            <span style="color:#75715e"># 4.0</span>
+</span></span><span style="display:flex;"><span>    first, dist <span style="color:#f92672">=</span> queue[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> first <span style="color:#f92672">==</span> dest:                            <span style="color:#75715e"># Handle reaching dest</span>
+</span></span><span style="display:flex;"><span>        print(dist)
+</span></span><span style="display:flex;"><span>    visited<span style="color:#f92672">.</span>add(first)                           <span style="color:#75715e"># 4.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> reachable <span style="color:#f92672">in</span> call_graph[first]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> reachable <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> visited:
+</span></span><span style="display:flex;"><span>            queue<span style="color:#f92672">.</span>append((reachable, dist <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>))  <span style="color:#75715e"># 4.2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">del</span> queue[<span style="color:#ae81ff">0</span>]
 </span></span></code></pre></div><p>Running this code will print <code>996</code>. Well, that&rsquo;s useless! We want the full path with <code>NEWS</code>! Luckily, we simply store <code>(node, path)</code> instead of <code>(node, dist)</code>, which is straightforward to implement:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>                                          <span class="c1"># 1.</span>
-</span></span><span class="line"><span class="cl"><span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>                                     <span class="c1"># 2.</span>
-</span></span><span class="line"><span class="cl"><span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">src</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>                             <span class="c1"># 3.</span>
-</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>                               <span class="c1"># 4.0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">first</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">first</span> <span class="o">==</span> <span class="n">dest</span><span class="p">:</span>                               <span class="c1"># Handle reaching dest</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>                              <span class="c1"># 4.1</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">call_graph</span><span class="p">[</span><span class="n">first</span><span class="p">])):</span>     <span class="c1"># Require index</span>
-</span></span><span class="line"><span class="cl">        <span class="n">reachable</span> <span class="o">=</span> <span class="n">call_graph</span><span class="p">[</span><span class="n">first</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">reachable</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">char</span> <span class="o">=</span> <span class="s1">&#39;NEWS&#39;</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>                    <span class="c1"># To get NEWS[index] for path</span>
-</span></span><span class="line"><span class="cl">            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">reachable</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="n">char</span><span class="p">))</span>  <span class="c1"># 4.2</span>
-</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="n">queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>queue <span style="color:#f92672">=</span> []                                          <span style="color:#75715e"># 1.</span>
+</span></span><span style="display:flex;"><span>visited <span style="color:#f92672">=</span> set()                                     <span style="color:#75715e"># 2.</span>
+</span></span><span style="display:flex;"><span>queue<span style="color:#f92672">.</span>append((src, <span style="color:#e6db74">&#39;&#39;</span>))                             <span style="color:#75715e"># 3.</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> len(queue) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:                               <span style="color:#75715e"># 4.0</span>
+</span></span><span style="display:flex;"><span>    first, path <span style="color:#f92672">=</span> queue[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> first <span style="color:#f92672">==</span> dest:                               <span style="color:#75715e"># Handle reaching dest</span>
+</span></span><span style="display:flex;"><span>        print(path)
+</span></span><span style="display:flex;"><span>    visited<span style="color:#f92672">.</span>add(first)                              <span style="color:#75715e"># 4.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> index <span style="color:#f92672">in</span> range(len(call_graph[first])):     <span style="color:#75715e"># Require index</span>
+</span></span><span style="display:flex;"><span>        reachable <span style="color:#f92672">=</span> call_graph[first][index]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> reachable <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> visited:
+</span></span><span style="display:flex;"><span>            char <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;NEWS&#39;</span>[index]                    <span style="color:#75715e"># To get NEWS[index] for path</span>
+</span></span><span style="display:flex;"><span>            queue<span style="color:#f92672">.</span>append((reachable, path <span style="color:#f92672">+</span> char))  <span style="color:#75715e"># 4.2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">del</span> queue[<span style="color:#ae81ff">0</span>]
 </span></span></code></pre></div><p>Finally, running this code gives</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">SSSSEENNEESSSSEENNEEEEEEEESSSSEESSSSWWSSSSEESSEESSSSWWSSSSWWWWWWSSWWSSSSSSEEEESSSSEESSEESSSSSSSSEENNEESSEEEESSEESSSSEESSEEEEEEEESSEEEESSSSEEEEEENNNNNNEENNWWNNEEEENNNNEEEENNEEEEEESSSSWWSSWWSSSSEEEESSWWSSEESSEEEESSSSEENNNNNNEEEESSEESSEESSEEEESSEENNEENNWWNNEEEEEESSEEEEEENNNNWWWWNNWWNNNNWWNNEEEEEENNEENNWWWWNNWWNNEENNEEEEEEEESSEESSEESSSSEESSEEEEEENNEESSSSSSEEEEEENNNNNNNNNNNNNNNNEEEEEEEEEEEESSEESSSSWWWWSSSSSSWWSSEESSEEEEEENNNNEESSEESSEEEENNEENNNNEEEEEENNEENNWWWWWWNNNNWWSSSSWWSSSSWWWWNNNNNNNNNNEENNEENNEENNEEEESSEESSSSEEEEEESSEEEEEEEENNNNEENNNNWWNNEEEENNNNEEEEEESSSSSSSSSSSSSSSSSSSSSSEESSSSEEEEEESSEESSWWSSSSEESSSSEEEENNEEEESSWWSSSSSSSSWWSSWWWWWWSSWWWWSSWWNNNNWWWWWWSSEESSWWSSWWSSEESSSSSSSSSSWWSSEEEESSSSSSEEEESSSSEESSEESSSSEEEESSEENNEEEESSSSWWSSEESSWWSSSSWWWWNNWWSSSSEESSEEEESSWWSSSSWWWWNNWWNNWWSSSSWWWWWWWWWWWWWWSSSSSSWWWWSSEESSWWSSWWWWWWSSWWWWWWWWSSSSEESSEEEEEESSSSSSEEEESSSSEEEEEESSWWWWSSSSSSSSSSSSEEEEEESSEEEENNEEEENNEEEENNEEEENNEEEESSEENNEEEESSSSSSSSWWSSWWSSSSWWSSSSSSEESSSSEEEESSEENNEESSEEEE</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>SSSSEENNEESSSSEENNEEEEEEEESSSSEESSSSWWSSSSEESSEESSSSWWSSSSWWWWWWSSWWSSSSSSEEEESSSSEESSEESSSSSSSSEENNEESSEEEESSEESSSSEESSEEEEEEEESSEEEESSSSEEEEEENNNNNNEENNWWNNEEEENNNNEEEENNEEEEEESSSSWWSSWWSSSSEEEESSWWSSEESSEEEESSSSEENNNNNNEEEESSEESSEESSEEEESSEENNEENNWWNNEEEEEESSEEEEEENNNNWWWWNNWWNNNNWWNNEEEEEENNEENNWWWWNNWWNNEENNEEEEEEEESSEESSEESSSSEESSEEEEEENNEESSSSSSEEEEEENNNNNNNNNNNNNNNNEEEEEEEEEEEESSEESSSSWWWWSSSSSSWWSSEESSEEEEEENNNNEESSEESSEEEENNEENNNNEEEEEENNEENNWWWWWWNNNNWWSSSSWWSSSSWWWWNNNNNNNNNNEENNEENNEENNEEEESSEESSSSEEEEEESSEEEEEEEENNNNEENNNNWWNNEEEENNNNEEEEEESSSSSSSSSSSSSSSSSSSSSSEESSSSEEEEEESSEESSWWSSSSEESSSSEEEENNEEEESSWWSSSSSSSSWWSSWWWWWWSSWWWWSSWWNNNNWWWWWWSSEESSWWSSWWSSEESSSSSSSSSSWWSSEEEESSSSSSEEEESSSSEESSEESSSSEEEESSEENNEEEESSSSWWSSEESSWWSSSSWWWWNNWWSSSSEESSEEEESSWWSSSSWWWWNNWWNNWWSSSSWWWWWWWWWWWWWWSSSSSSWWWWSSEESSWWSSWWWWWWSSWWWWWWWWSSSSEESSEEEEEESSSSSSEEEESSSSEEEEEESSWWWWSSSSSSSSSSSSEEEEEESSEEEENNEEEENNEEEENNEEEENNEEEESSEENNEEEESSSSSSSSWWSSWWSSSSWWSSSSSSEESSSSEEEESSEENNEESSEEEE
 </span></span></code></pre></div><p>We can then submit to the remote server for the flag.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">❯ python3 <span class="s2">&#34;python3 solve.py&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Opening connection to chalp.hkcert21.pwnable.hk on port 28117: Done
-</span></span><span class="line"><span class="cl">hkcert21<span class="o">{</span>4lw4ys_l0ok_4t_s74ck_0verf1ow_wh3n_y0u_w4nt_t0_4v01d_s7ack_0v3rfl0ws<span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> Closed connection to chalp.hkcert21.pwnable.hk port <span class="m">28117</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ python3 <span style="color:#e6db74">&#34;python3 solve.py&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to chalp.hkcert21.pwnable.hk on port 28117: Done
+</span></span><span style="display:flex;"><span>hkcert21<span style="color:#f92672">{</span>4lw4ys_l0ok_4t_s74ck_0verf1ow_wh3n_y0u_w4nt_t0_4v01d_s7ack_0v3rfl0ws<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Closed connection to chalp.hkcert21.pwnable.hk port <span style="color:#ae81ff">28117</span>
 </span></span></code></pre></div><p>Flag: <code>hkcert21{4lw4ys_l0ok_4t_s74ck_0verf1ow_wh3n_y0u_w4nt_t0_4v01d_s7ack_0v3rfl0ws}</code></p>
 <h2 id="remarks">Remarks</h2>
 <p>If the graph is weighted, other algorithms would have to be used.</p>
@@ -404,8 +414,6 @@
 
 
     
-    
-    
 </article>
 
     <aside class="related-contents--wrapper">
@@ -421,8 +429,6 @@
     <footer class="site-footer">
     <section class="copyright">
         &copy; 
-        
-            2021 - 
         
         2023 Blog by grhkm21
     </section>
@@ -513,38 +519,6 @@
             >
 
             </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-                </div>
-                <h2 class="widget-title section-title">Table of contents</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
-  <ol>
-    <li><a href="#summary-of-problem-statement">Summary of Problem Statement</a></li>
-    <li><a href="#solution-outline">Solution Outline</a></li>
-    <li><a href="#understanding-our-goal">Understanding our goal</a></li>
-    <li><a href="#understanding-the-logic">Understanding the logic</a></li>
-    <li><a href="#understanding-our-goal-1">Understanding our goal</a></li>
-    <li><a href="#parsing-the-source-file">Parsing the source file</a></li>
-    <li><a href="#remarks">Remarks</a></li>
-  </ol>
-</nav>
-                </div>
-            </section>
-        </aside>
     
 
         </div>
