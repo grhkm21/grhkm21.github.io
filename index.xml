@@ -6,7 +6,18 @@
     <description>Recent content on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Wed, 25 Jan 2023 16:39:37 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Apr 2023 00:00:37 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Modular Forms</title>
+      <link>https://grhkm21.github.io/posts/modular-forms/</link>
+      <pubDate>Mon, 24 Apr 2023 00:00:37 +0100</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/modular-forms/</guid>
+      <description>I have decided to take on the topic of Modular Forms. I don&amp;rsquo;t intend to dive too in depth into the topic, since it is obviously a rich theory and has many prerequisites. However, I will try to get a basic understanding of what is it about and what the theory tries to answer.
+References: Kilford, Conrad @ CTNT Notes and Videos
+Prerequisites We begin by considering the modular group $\mathrm{SL}_2(\mathbb{Z})$, defined as all $2 \times 2$ matrices with determinant $1$:</description>
+    </item>
+    
     <item>
       <title>Bernoulli Polynomials</title>
       <link>https://grhkm21.github.io/posts/bernoulli-polynomials/</link>

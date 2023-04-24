@@ -1,0 +1,50 @@
+@import "../../../../node_modules/html-hint/dist/html-hint";
+
+.hint--html {
+    display: inline;
+}
+
+.hint__content {
+    display: table;
+
+    padding: 1rem;
+    min-width: 30vw;
+    left: unset !important;
+    right: 50%;
+    margin-left: 0;
+    margin-right: 0;
+
+    color: #ff0000;
+    background: #000000;
+
+    border: 1px solid #ffff00;
+
+    font-size: 1em;
+
+    & .hint--title {
+        display: block;
+
+        margin-bottom: 0.4em;
+
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .hint__content {
+        min-width: 80vw;
+        left: unset !important;
+        right: unset;
+        transform: unset !important;
+    }
+}
+
+.hint--element {
+    display: inline;
+
+    text-decoration: underline dotted #00ffff;
+    font-style: italic;
+
+    cursor: pointer;
+}
