@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-6BP6QGT61V');
+</script>
+
+<title>Jacobi Quartics | Blog by grhkm21</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.109.0">
+<meta name="description" content="Short note on verifying Jacobi quartics using Sage">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+    href="https://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="https://grhkm21.github.io/posts/jacobi-quartics/">
+<link rel="alternate" type="application/rss+xml" href=""
+    title="Blog by grhkm21">
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/scss/hint.min.css">
+
+
+<link rel="stylesheet" href="/scss/alert.min.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body)"></script>
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+            
+            
+            delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$', right: '$', display: false },
+                { left: '\\(', right: '\\)', display: false },
+                { left: '\\[', right: '\\]', display: true }
+            ],
+            
+            throwOnError: false
+        });
+    });
+</script>
+
+<header>
+    
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm21</a>
+    
+    
+    <nav>
+        
+        <a href="/about-me/">About</a>
+        
+        <a href="/">Posts</a>
+        
+    </nav>
+    
+</header>
+
+<article>
+  <header>
+    <h1>Jacobi Quartics</h1>
+  </header>
+  <p>This is a short note on Jacobi quartics and its relationship with elliptic curves.</p>
+<h2 id="definition">Definition</h2>
+<p>An elliptic curve in <strong>Jacobi quartic form</strong> is a curve of the form $J_a: y^2 = x^4 + 2ax^2 + 1$, where $\det(J)$, which is some multiple of $a^2 - 1$ here, is nonzero. This model of elliptic curves is important as it provides quicker point arithmetic. We shall prove that the curve $J_a$ is birationally equivalent to $E_a: 2v^2 = u^3 - 2au^2 + (a^2 - 1)u$. The origin of $J_a$ is $(0, 1)$.</p>
+<h2 id="jacobi-quartic-form---elliptic-curve">Jacobi quartic form -&gt; Elliptic Curve</h2>
+<p>We shall verify that $\varphi: J_a \to E_a$ with $\varphi(x, y) \coloneqq \left(ax^3 + xy + x : ax^2 + y + 1 : x^3\right)$ is indeed a map between curves. We begin by observing that the origins indeed map to each other. For the rest, we set up the coordinate ring of $J_a$ in Sage:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>R<span style="color:#f92672">.&lt;</span>a, x, y<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> QQ[]
+</span></span><span style="display:flex;"><span>I <span style="color:#f92672">=</span> R<span style="color:#f92672">.</span>ideal(y<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> (x<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> a <span style="color:#f92672">*</span> x<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>J <span style="color:#f92672">=</span> R<span style="color:#f92672">.</span>quotient_ring(I)<span style="color:#f92672">.</span>fraction_field()
+</span></span><span style="display:flex;"><span>a, x, y <span style="color:#f92672">=</span> J<span style="color:#f92672">.</span>gens()
+</span></span><span style="display:flex;"><span>J
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fraction Field of Quotient of Multivariate Polynomial Ring in a, x, y over Rational Field by the ideal (-x^4 - 2*a*x^2 + y^2 - 1)</span>
+</span></span></code></pre></div><p>We then verify that the claimed formula actually maps to a point on $E_a$. We use the homogenised equation $v^2w = u^3 - 4au^2w + 4(a^2 - 1)uw^2$ instead:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>u, v, w <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (a <span style="color:#f92672">*</span> x<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> x <span style="color:#f92672">*</span> y <span style="color:#f92672">+</span> x), <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> (a <span style="color:#f92672">*</span> x<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>), x<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">=</span> v<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> w <span style="color:#f92672">-</span> (u<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> a <span style="color:#f92672">*</span> u<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> w <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> (a<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> u <span style="color:#f92672">*</span> w<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> f <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><h2 id="elliptic-curve---jacobi-quartic-form">Elliptic Curve -&gt; Jacobi quartic form</h2>
+<p>Since the two curves are birationally equivalent, there is also an inverse map. It is not the easiest to write down, but just note that Sage already provides such functionality. For a fixed $a$, we can use the following code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>R<span style="color:#f92672">.&lt;</span>x, y<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> QQ[]
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C <span style="color:#f92672">=</span> Curve(y<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> (x<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> a <span style="color:#f92672">*</span> x<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>phi <span style="color:#f92672">=</span> Jacobian(C, morphism<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>E <span style="color:#f92672">=</span> phi<span style="color:#f92672">.</span>codomain()
+</span></span><span style="display:flex;"><span>Es <span style="color:#f92672">=</span> EllipticCurve(QQ, [<span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> a, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> (a<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), <span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>iso <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>isomorphism_to(Es)
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">=</span> iso<span style="color:#f92672">.</span>as_morphism() <span style="color:#f92672">*</span> phi
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Scheme morphism:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   From: Affine Plane Curve over Rational Field defined by -x^4 - 14*x^2 + y^2 - 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   To:   Closed subscheme of Projective Space of dimension 2 over Rational Field defined by:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   x^3 - 28*x^2*z - y^2*z + 192*x*z^2</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   Defn: Defined on coordinates by sending (x, y) to</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># (-28*x^4*y + 184*x^2*y + 28*y^3 - 28*y : 576*x^5 - 576*x : 3*y^3)</span>
+</span></span></code></pre></div>
+</article>
+
+
+
+
+
+</html>

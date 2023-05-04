@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>elliptic-curves on Blog by grhkm21</title>
+    <link>https://grhkm21.github.io/tags/elliptic-curves/</link>
+    <description>Recent content in elliptic-curves on Blog by grhkm21</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Thu, 04 May 2023 00:13:15 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/tags/elliptic-curves/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jacobi Quartics</title>
+      <link>https://grhkm21.github.io/posts/jacobi-quartics/</link>
+      <pubDate>Thu, 04 May 2023 00:13:15 +0100</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/jacobi-quartics/</guid>
+      <description>This is a short note on Jacobi quartics and its relationship with elliptic curves.
+Definition An elliptic curve in Jacobi quartic form is a curve of the form $J_a: y^2 = x^4 + 2ax^2 + 1$, where $\det(J)$, which is some multiple of $a^2 - 1$ here, is nonzero. This model of elliptic curves is important as it provides quicker point arithmetic. We shall prove that the curve $J_a$ is birationally equivalent to $E_a: 2v^2 = u^3 - 2au^2 + (a^2 - 1)u$.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -80,7 +80,12 @@
     <h1>Modular Forms</h1>
   </header>
   <p>I have decided to take on the topic of Modular Forms. I don&rsquo;t intend to dive too in depth into the topic, since it is obviously a rich theory and has many prerequisites. However, I will try to get a basic understanding of what is it about and what the theory tries to answer.</p>
-<p>References: <a href="https://www.amazon.co.uk/Modular-Forms-Classical-Computational-Introduction/dp/1783265450">Kilford</a>, <a href="https://ctnt-summer.math.uconn.edu/wp-content/uploads/sites/1632/2016/02/CTNTmodularforms.pdf">Conrad @ CTNT Notes</a> and <a href="https://www.youtube.com/watch?v=LolxzYwN1TQ">Videos</a></p>
+<p>References: <a href="https://www.amazon.co.uk/Modular-Forms-Classical-Computational-Introduction/dp/1783265450">Kilford (Book)</a>, <a href="https://ctnt-summer.math.uconn.edu/wp-content/uploads/sites/1632/2016/02/CTNTmodularforms.pdf">Conrad (Notes)</a>, <a href="https://www.youtube.com/watch?v=LolxzYwN1TQ">Conrad (Videos)</a>, <a href="https://www.youtube.com/watch?v=f8pjt9ivjjc&amp;list=PL8yHsr3EFj51HisRtNyzHX-Xyg6I3Wl2F">Borcherds (Videos)</a>.</p>
+<p>Update time:</p>
+<ol>
+<li>Apr 24, 2023 (Modular forms, $q$-expansion, Eisenstein Series)</li>
+<li>Apr 29, 2023 (?)</li>
+</ol>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>We begin by considering the <strong>modular group</strong> $\mathrm{SL}_2(\mathbb{Z})$, defined as all $2 \times 2$ matrices with determinant $1$:</p>
 <p>$$
@@ -254,10 +259,11 @@ $$</p>
 <p>Which again converges for $t &gt; k$.</p>
 <hr>
 <p>Back to the task of proving that $G_k(z)$ is a nonzero modular form of weight $k$ for $\mathrm{SL}_2(\mathbb{Z})$. We are now ready to prove that it is holomorphic.</p>
-
-<div class="alert alert-danger" role="alert"><p>Yes. We are ready. I am not. I am feeling sleepy. I will fill this in later, but one of the main tools is that <a href="https://math.stackexchange.com/questions/2639532/sequence-of-holomorphic-functions-converges-to-a-holomorphic-function-more-deta">limit of holomorphic functions is holomorphic</a>.</p>
-</div>
-
+<p>Suppose that $z \in \mathbb{C}$ satisfies $|z| \geq 1$ and $|\Re(z)| \leq \frac{1}{2}$, as shaded blue below. This region $F$ is a <strong>fundamental domain</strong> of $\mathrm{SL}_2(\mathbb{Z})$, which we will rigorously define latetr. For now, we see that for $z \in F$, we have</p>
+<p>$$
+|mz + n|^2 = m^2 z\bar{z} + 2mn\Re(z) + n^2 \geq m^2 - mn + n^2 = |m\omega - n|^2
+$$</p>
+<p><img src="/images/modular-forms-fundamental-domain-1.png" alt="Fundamental Domain"></p>
 <p>Next, we show that $G_k(z)$ is holomorphic at $i\infty$, we shall compute the limit of $G_k(z)$ as $z \to i\infty$. However, this is simple. When $m \neq 0$, the term $\frac{1}{(mz + n)^k}$ contributes $0$ to the sum, while when $m = 0$, it contributes $n^{-k}$. Therefore, $\lim_{z \to i\infty} G_k(z) = 2\zeta(k)$ which is finite and nonzero.</p>
 <p>We now show that $G_k(z)$ is weakly modular for $\mathrm{SL}_2(\mathbb{Z})$, which requires showing that $G_k(z + 1) = G_k(z)$ and $G_k\left(-\frac{1}{z}\right) = z^k G_k(z)$. Here, $G_k(z)$ being absolutely convergence allows us to rearrange the terms. For the first condition, note that</p>
 <p>$$
