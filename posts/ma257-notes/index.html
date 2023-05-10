@@ -81,6 +81,7 @@
   </header>
   <p>These are some summarised notes for MA257. I tried my best :)</p>
 <p>Just like any other module, this module can be split into <em>theoretical</em> and <em>computational</em>. Obviously the theoretical parts are important as well, but in my opinion having a computational intuition helps see the big picture easier. Here, I only summarise the computational part of the module. For the proofs, you will need to look at the lecture notes themselves, but I don&rsquo;t think they will be terribly important.</p>
+<p>Last Updated (10th May 19:23): Added exercises from Rosen</p>
 <h2 id="paper-summary">Paper summary</h2>
 <p>The exam will be <strong>2 hours</strong>. It consists of <strong>3 questions</strong> totalling to <strong>40 + 20 + 20 = 80</strong> marks.</p>
 <h2 id="summary">Summary</h2>
@@ -241,6 +242,9 @@
 <p>Compute $g = \gcd(1038, 2628)$, and find integers $x, y$ such that $1038x + 2628y = g$. Also parametrise <em>all</em> solutions to the equation.</p>
 </li>
 <li>
+<p>Let $d = \gcd(a, b)$ and define $a&rsquo; = \frac{a}{d}$ and $b&rsquo; = \frac{b}{d}$. Show that $\gcd(a&rsquo;, b&rsquo;) = 1$.</p>
+</li>
+<li>
 <p>Find the inverse of $7$ mod $55$. From this, solve $7x \equiv 5 \pmod{55}$. Also solve $35x \equiv 10\pmod{55}$.</p>
 </li>
 <li>
@@ -267,7 +271,7 @@ You just need to find how many powers of $5$ divides $1000!$. Think about each t
         </div>
     </div>
 </div>
-<ol start="5">
+<ol start="6">
 <li>Prove $p^2 \equiv 1 \pmod{24}$ for all primes $p &gt; 3$.</li>
 </ol>
 
@@ -290,7 +294,10 @@ Consider CRT and look at $p \pmod{4}$.
         </div>
     </div>
 </div>
-<ol start="6">
+<ol start="7">
+<li>
+<p>For all integers $n$, show that $30 \mid n^5 - n$ and $42 \mid n^7 - n$.</p>
+</li>
 <li>
 <p>Find all integer solutions $x$ to $\begin{cases} 5x &amp;\equiv 7 \pmod{8} \\ 5x &amp;\equiv 2 \pmod{13} \\ 3x &amp;\equiv 12 \pmod{17} \end{cases}$.</p>
 </li>
@@ -318,8 +325,16 @@ This is a typical infinite descent question.
         </div>
     </div>
 </div>
-<ol start="8">
-<li>Prove that there are infinitely many primes congruent to 1 mod $4$.</li>
+<ol start="9">
+<li>
+<p>Prove that there are infinitely many primes congruent to $1$ mod $4$.</p>
+</li>
+<li>
+<p>Prove that there are infinitely many primes congruent to $5$ mod $6$.</p>
+</li>
+<li>
+<p>Suppose that $n$ is an integer such that $2^n - 1$ is a prime. Prove that $n$ is a prime. Also, prove that $2^{n - 1}(2^n - 1)$ is a perfect number, i.e. its proper divisors sum to itself.</p>
+</li>
 </ol>
 <h3 id="congruences-chapter-15---19">Congruences (Chapter 1.5 - 1.9)</h3>
 <ol>
@@ -407,6 +422,12 @@ Consider $p = 2$ and $p = 7$ separately.
 </div>
 <ol start="8">
 <li>
+<p>Find all integer solutions to $3x^2 + 2 = y^2$.</p>
+</li>
+<li>
+<p>Find all integer solutions to $7x^3 + 2 = y^3$.</p>
+</li>
+<li>
 <p>Assuming that $2027$ is a prime, compute $2024! \pmod{2027}$.</p>
 </li>
 <li>
@@ -433,7 +454,13 @@ Use Euler's criterion and quadratic reciprocity. Also, $2021 = 45^2 - 2^2$. Or j
         </div>
     </div>
 </div>
-<ol start="10">
+<ol start="12">
+<li>
+<p>Let $p = 4k + 1$ be a prime. Prove that $g$ is a primitive root mod $p$ if and only if $-a$ is a primitive root mod $p$.</p>
+</li>
+<li>
+<p>Let $p = 4k + 3$ be a prime. Prove that $g$ is a primitive root mod $p$ if and only if $-a$ has order $\frac{p - 1}{2}$.</p>
+</li>
 <li>
 <p>Let $p = 8k + 1$ be a prime. Prove that $2$ is not a primitive root mod $p$.</p>
 </li>
@@ -461,7 +488,7 @@ Consider the powers of the given primitive root.
         </div>
     </div>
 </div>
-<ol start="12">
+<ol start="16">
 <li>
 <p>Suppose that $n &gt; 0$ and $u$ is coprime to $n$. If $\gcd(m, \varphi(n)) = 1$ and $u^m \equiv 1 \pmod{n}$, prove that $u \equiv 1 \pmod{n}$.</p>
 </li>
@@ -484,6 +511,46 @@ Consider the powers of the given primitive root.
             
 
 Consider primitive roots $g_2, g_3, g_5$ modulo $2, 3, 5$ respectively.
+
+
+        </div>
+    </div>
+</div>
+<ol start="18">
+<li>
+<p>Prove that $2$ is a primitive root mod $29$. Hence, solve $x^7 \equiv 1 \pmod{29}$.</p>
+</li>
+<li>
+<p>For prime $p$, prove that $v_p(a + b) \geq \min(v_p(a), v_p(b))$. When does equality hold?</p>
+</li>
+<li>
+<p>For prime $p$, let $1 \leq k \leq p - 1$. Prove that $p \mid \binom{p}{k}$. From this, deduce that $(a + 1)^p \equiv a^p + 1 \pmod{p}$.</p>
+</li>
+<li>
+<p>Suppose that $n$ is not a prime. Compute $(n - 1)! \pmod{n}$ by considering $n = 4$ and $n &gt; 4$.</p>
+</li>
+<li>
+<p>For prime $p$, let $S = \sum_{a = 1}^{p - 1} \left(\frac{a}{p}\right)$. Prove that $S = 0$. (Hint: Let $g$ be a quadratic nonresidue mod $p$. Consider $\left(\frac{g}{p}\right)S$.)</p>
+</li>
+<li>
+<p>Prove that for any prime $p$, the polynomial $f(x) = (x^2 - 2)(x^2 - 13)(x^2 - 26)$ has a root mod $p$.</p>
+</li>
+</ol>
+
+<div class="spoiler panel panel-default">
+    <div class='spoiler_block'>
+        <a href='#' class='spoiler_block_icon spoiler_block_icon_zoom_in spoiler_block_show'>
+            Hint
+        </a>
+
+        <a href='#' class='spoiler_block_icon spoiler_block_icon_zoom_out spoiler_block_hide' style='display: none;'>
+            Hint
+        </a>
+
+        <div class='spoiler_block_content' style='display: none;'>
+            
+
+Consider $\left(\frac{2}{p}\right)$, $\left(\frac{13}{p}\right)$ and $\left(\frac{26}{p}\right)$.
 
 
         </div>
@@ -515,6 +582,12 @@ Consider primitive roots $g_2, g_3, g_5$ modulo $2, 3, 5$ respectively.
 </li>
 <li>
 <p>Factor the following into product of Gaussian primes: $4 - 3i, 5 + 7i, 1 - i, 2 + 3i, 20 + 17i$.</p>
+</li>
+<li>
+<p>Show that the only units in $\mathbb{Z}[i]$ are $\{\pm 1, \pm i\}$.</p>
+</li>
+<li>
+<p>Let $\alpha = a + bi$ and $\beta = c + di$ be Gaussian integers. Assuming multiplicity of $N$, write the product $(a^2 + b^2)(c^2 + d^2)$ as a sum of two squares.</p>
 </li>
 </ol>
 <h3 id="pythagorean-triples-chapter-24---25">Pythagorean triples (Chapter 2.4 - 2.5)</h3>
