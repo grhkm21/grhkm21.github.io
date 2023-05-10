@@ -6,7 +6,17 @@
     <description>Recent content on Blog by grhkm21</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Thu, 04 May 2023 00:13:15 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 May 2023 05:43:47 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MA259 Notes</title>
+      <link>https://grhkm21.github.io/posts/ma259-notes/</link>
+      <pubDate>Wed, 10 May 2023 05:43:47 +0100</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/ma259-notes/</guid>
+      <description>These are some summarised notes for MA259. I tried my best :)
+Just like any other module, this module can be split into theoretical and computational. Obviously the theoretical parts are important as well, but in my opinion having a computational intuition helps see the big picture easier. Here, I only summarise the computational part of the module. For the proofs, you will need to look at the lecture notes themselves, but I don&amp;rsquo;t think they will be terribly important.</description>
+    </item>
+    
     <item>
       <title>Jacobi Quartics</title>
       <link>https://grhkm21.github.io/posts/jacobi-quartics/</link>
@@ -168,7 +178,7 @@ Solution Outline We dump the binary from 0x400000 to 0x405000 using format strin
       <pubDate>Sat, 09 Oct 2021 10:16:49 +0100</pubDate>
       
       <guid>https://grhkm21.github.io/about-me/</guid>
-      <description>Hi! I am Gareth, aka grhkm online. Hongkonger 🇭🇰 and currently studying maths at University of Warwick 🇬🇧. Interested in maths, cryptography (abbr. crypto), rhythm games, philosophy, indie and rock music. Currently looking for internship positions and research opportunities. Please contact me if you have any opportunities! I can provide my CV upon request.
+      <description>Hi! I am Gareth, aka grhkm online. Hongkonger 🇭🇰 and currently studying maths at University of Warwick 🇬🇧. Interested in maths, cryptography (abbr. crypto), rhythm games, philosophy, indie and rock music. I am particularly interested in cryptanalysis, lattice-based and isogeny-based schemes within cryptography.
 This blog mainly contains writeups for interesting CTF and other algorithmic problems, but I plan to write some random blogs as well (someone suggested a song recommendation blog).</description>
     </item>
     
