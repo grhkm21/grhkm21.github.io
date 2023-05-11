@@ -81,7 +81,9 @@
   </header>
   <p>These are some summarised notes for MA257. I tried my best :)</p>
 <p>Just like any other module, this module can be split into <em>theoretical</em> and <em>computational</em>. Obviously the theoretical parts are important as well, but in my opinion having a computational intuition helps see the big picture easier. Here, I only summarise the computational part of the module. For the proofs, you will need to look at the lecture notes themselves, but I don&rsquo;t think they will be terribly important.</p>
-<p>Last Updated (10th May 19:23): Added exercises from Rosen</p>
+<p>Updates:
+- 10th May (19:23): Added exercises from Ireland &amp; Rosen
+- 11th May (21:30): Added solutions to exercises</p>
 <h2 id="paper-summary">Paper summary</h2>
 <p>The exam will be <strong>2 hours</strong>. It consists of <strong>3 questions</strong> totalling to <strong>40 + 20 + 20 = 80</strong> marks.</p>
 <h2 id="summary">Summary</h2>
@@ -233,10 +235,10 @@
 <hr>
 <h2 id="exercises">Exercises</h2>
 <p>I have compiled some exercises, essentially following the list of topics above. They are all taken from either lecture notes, support classes or past papers. If you don&rsquo;t know how to solve them, good luck in the exam&hellip;</p>
-<h3 id="numbers-and-congruences-chapter-11---15">Numbers and congruences (Chapter 1.1 - 1.5)</h3>
+<h3 style="color:cyan">Numbers and congruences (Chapter 1.1 - 1.5)</h3>
 <ol>
 <li>
-<p>Prove that an integer is divisible by $9$ if and only if the sum of digits is divisible by $9$.</p>
+<p>Prove that a positive integer is divisible by $9$ if and only if the sum of digits (in base $10$) is divisible by $9$.</p>
 </li>
 <li>
 <p>Compute $g = \gcd(1038, 2628)$, and find integers $x, y$ such that $1038x + 2628y = g$. Also parametrise <em>all</em> solutions to the equation.</p>
@@ -245,7 +247,7 @@
 <p>Let $d = \gcd(a, b)$ and define $a&rsquo; = \frac{a}{d}$ and $b&rsquo; = \frac{b}{d}$. Show that $\gcd(a&rsquo;, b&rsquo;) = 1$.</p>
 </li>
 <li>
-<p>Find the inverse of $7$ mod $55$. From this, solve $7x \equiv 5 \pmod{55}$. Also solve $35x \equiv 10\pmod{55}$.</p>
+<p>Find the (multiplicative) inverse of $7$ mod $55$. From this, solve $7x \equiv 5 \pmod{55}$. Also solve $35x \equiv 10\pmod{55}$.</p>
 </li>
 <li>
 <p>How many zeros are at the end of $1000!$ ($1000$ factorial)?</p>
@@ -325,7 +327,7 @@ This is a typical infinite descent question.
         </div>
     </div>
 </div>
-<ol start="9">
+<ol start="10">
 <li>
 <p>Prove that there are infinitely many primes congruent to $1$ mod $4$.</p>
 </li>
@@ -336,8 +338,8 @@ This is a typical infinite descent question.
 <p>Suppose that $n$ is an integer such that $2^n - 1$ is a prime. Prove that $n$ is a prime. Also, prove that $2^{n - 1}(2^n - 1)$ is a perfect number, i.e. its proper divisors sum to itself.</p>
 </li>
 </ol>
-<h3 id="congruences-chapter-15---19">Congruences (Chapter 1.5 - 1.9)</h3>
-<ol>
+<h3 style="color:cyan">Congruences (Chapter 1.5 - 1.9)</h3>
+<ol start="13">
 <li>
 <p>Recall that a function $f: \mathbb{N} \to \mathbb{N}$ is multiplicative if $f(mn) = f(m)f(n)$ holds for coprime $m, n$. Prove that $\varphi$ is multiplicative.</p>
 </li>
@@ -374,7 +376,7 @@ Proving the contrary / by contradiction is easier.
         </div>
     </div>
 </div>
-<ol start="6">
+<ol start="18">
 <li>Fix an odd prime $p$, show that the product of two primitive roots mod $p$ is not a primitive root mod $p$.</li>
 </ol>
 
@@ -397,7 +399,7 @@ Abuse the fact that $\frac{p - 1}{2}$ is an integer.
         </div>
     </div>
 </div>
-<ol start="7">
+<ol start="19">
 <li>When does the equation $x^2 + 3x + 4 \equiv 0 \pmod{p}$ have solutions?</li>
 </ol>
 
@@ -420,7 +422,7 @@ Consider $p = 2$ and $p = 7$ separately.
         </div>
     </div>
 </div>
-<ol start="8">
+<ol start="20">
 <li>
 <p>Find all integer solutions to $3x^2 + 2 = y^2$.</p>
 </li>
@@ -454,7 +456,7 @@ Use Euler's criterion and quadratic reciprocity. Also, $2021 = 45^2 - 2^2$. Or j
         </div>
     </div>
 </div>
-<ol start="12">
+<ol start="24">
 <li>
 <p>Let $p = 4k + 1$ be a prime. Prove that $g$ is a primitive root mod $p$ if and only if $-a$ is a primitive root mod $p$.</p>
 </li>
@@ -488,7 +490,7 @@ Consider the powers of the given primitive root.
         </div>
     </div>
 </div>
-<ol start="16">
+<ol start="28">
 <li>
 <p>Suppose that $n &gt; 0$ and $u$ is coprime to $n$. If $\gcd(m, \varphi(n)) = 1$ and $u^m \equiv 1 \pmod{n}$, prove that $u \equiv 1 \pmod{n}$.</p>
 </li>
@@ -516,7 +518,7 @@ Consider primitive roots $g_2, g_3, g_5$ modulo $2, 3, 5$ respectively.
         </div>
     </div>
 </div>
-<ol start="18">
+<ol start="30">
 <li>
 <p>Prove that $2$ is a primitive root mod $29$. Hence, solve $x^7 \equiv 1 \pmod{29}$.</p>
 </li>
@@ -556,8 +558,8 @@ Consider $\left(\frac{2}{p}\right)$, $\left(\frac{13}{p}\right)$ and $\left(\fra
         </div>
     </div>
 </div>
-<h3 id="lattices-chapter-21---22">Lattices (Chapter 2.1 - 2.2)</h3>
-<ol>
+<h3 style="color:cyan">Lattices (Chapter 2.1 - 2.2)</h3>
+<ol start="36">
 <li>
 <p>Show that if $p = a^2 + 2b^2$, then $p \equiv 1$ or $3 \pmod{8}$.</p>
 </li>
@@ -569,8 +571,8 @@ Consider $\left(\frac{2}{p}\right)$, $\left(\frac{13}{p}\right)$ and $\left(\fra
 <p>d) Finally, conclude that a prime $p$ can be written in the form $p = a^2 + 2b^2$ if and only if $p \equiv 1$ or $3 \pmod{8}$.</p>
 </li>
 </ol>
-<h3 id="gaussian-integers-chapter-23">Gaussian integers (Chapter 2.3)</h3>
-<ol>
+<h3 style="color:cyan">Gaussian integers (Chapter 2.3)</h3>
+<ol start="38">
 <li>
 <p>Compute $g = \gcd(14 + 32i, 2 + 16i)$. Hence, find $\alpha, \beta \in \mathbb{Z}[i]$ such that $(14 + 32i)\alpha + (2 + 16i)\beta = g$.</p>
 </li>
@@ -590,8 +592,8 @@ Consider $\left(\frac{2}{p}\right)$, $\left(\frac{13}{p}\right)$ and $\left(\fra
 <p>Let $\alpha = a + bi$ and $\beta = c + di$ be Gaussian integers. Assuming multiplicity of $N$, write the product $(a^2 + b^2)(c^2 + d^2)$ as a sum of two squares.</p>
 </li>
 </ol>
-<h3 id="pythagorean-triples-chapter-24---25">Pythagorean triples (Chapter 2.4 - 2.5)</h3>
-<ol>
+<h3 style="color:cyan">Pythagorean triples (Chapter 2.4 - 2.5)</h3>
+<ol start="44">
 <li>
 <p>Show that in a primitive Pythagorean triple $(x, y, z)$, neither $x$ nor $y$ could be amultiple of $3$.</p>
 </li>
@@ -619,8 +621,8 @@ Factor $65$ into Gaussian primes and recall the parametrisation of Pythagorean t
         </div>
     </div>
 </div>
-<h3 id="p-adic-numbers-chapter-26---27">$p$-adic numbers (Chapter 2.6 - 2.7)</h3>
-<ol>
+<h3 style="color:cyan">$p$-adic numbers (Chapter 2.6 - 2.7)</h3>
+<ol start="46">
 <li>
 <p>Solve $x^2 - 7 \equiv 0 \pmod{27}$.</p>
 </li>
@@ -663,7 +665,7 @@ Assignment 4, question 5.
         </div>
     </div>
 </div>
-<ol start="8">
+<ol start="53">
 <li>
 <p>Let $p$ be an odd prime and $a = (a_1, a_2, \cdots) \in \mathbb{Z}_p$. Prove that there exists $x \in \mathbb{Z}_p$ such that $x^2 = a$ if and only if $\left(\frac{a_1}{p}\right) = 1$.</p>
 </li>
@@ -736,6 +738,188 @@ First note that $p \mid f(a) - a$, so $|f(a) - a| \leq p^{-1}$, and hence the se
         </div>
     </div>
 </div>
+<hr>
+<h2 id="solutions">Solutions</h2>
+<ol>
+<li>A positive integer can be written as $d = \overline{d_k d_{k-1} \cdots d_2 d_1 d_0} = d_0 + 10d_1 + 10^2d_2 + \cdots + 10^kd_k$ in base $10$. Then,</li>
+</ol>
+<p>$$
+d \equiv \sum_{i = 0}^k 10^i \cdot d_i \equiv \sum_{i = 0}^k 1^i \cdot d_i = \sum_{i = 0}^k d_i \pmod{k}
+$$</p>
+<p>Hence, $d$ is divisible by $9$ if and only if its sum of digits is.</p>
+<hr>
+<ol start="2">
+<li>We compute $g$ using the Euclidean Algorithm.</li>
+</ol>
+<p>$$
+\def\arraystretch{1.5}
+\begin{array}{lll}
+g &amp;= \gcd(1038, 2628) \\
+&amp;= \gcd(1038, 552) &amp;\because 2628 = 2 \times 1038 + 552 \\
+&amp;= \gcd(486, 552) &amp;\because 1038 = 1 \times 552 + 486 \\
+&amp;= \gcd(486, 66) &amp;\because 552 = 1 \times 486 + 66 \\
+&amp;= \gcd(24, 66) &amp;\because 486 = 7 \times 66 + 24 \\
+&amp;= \gcd(24, 18) &amp;\because 66 = 2 \times 24 + 18 \\
+&amp;= \gcd(6, 18) &amp;\because 24 = 1 \times 18 + 6 \\
+&amp;= 6
+\end{array}
+$$</p>
+<p>Next, we reverse the process to solve the equation:</p>
+<p>$$
+\def\arraystretch{1.5}
+\begin{array}{lll}
+6
+&amp;= 24 - 1 \times 18 \\
+&amp;= 24 - 1 \times (66 - 2 \times 24) \\
+&amp;= 3 \times 24 - 1 \times 66 \\
+&amp;= 3 \times (486 - 7 \times 66) - 1 \times 66 \\
+&amp;= 3 \times 486 - 22 \times 66 \\
+&amp;= 3 \times 486 - 22 \times (552 - 1 \times 486) \\
+&amp;= 25 \times 486 - 22 \times 552 \\
+&amp;= 25 \times (1038 - 1 \times 552) - 22 \times 552 \\
+&amp;= 25 \times 1038 - 47 \times 552 \\
+&amp;= 25 \times 1038 - 47 \times (2628 - 2 \times 1038) \\
+&amp;= 121 \times 1038 - 47 \times 2628
+\end{array}
+$$</p>
+<p>Which gives us one solution $(x, y) = (121, -47)$ to $1038x + 2628y = 6$. Finally, we compute that $\frac{1038}{6} = 173$ and $\frac{2628}{6} = 438$. Hence, all solutions are parametrised by</p>
+<p>$$
+(x, y) = \left(121 + 438t, -47 - 173t\right), \quad t \in \mathbb{Z}
+$$</p>
+
+<div class="alert alert-info" role="alert"><p>The trick for the Extended Euclidean algorithm part is to substitute each step from the Euclidean part in reverse, line by line. I highly recommend you to compute a few more examples. Taken from Ireland &amp; Rosen: $\gcd(187, 221), \gcd(6188, 4709), \gcd(314, 159)$. The answers are $(g, x, y) = (17, 6, -5), (17, 121, -159), (1, 119, -235)$ respectively. For the parametrisation part, the general form is $(x, y) = \left(x_0 + \frac{b}{\gcd(a, b)} \cdot t, y_0 - \frac{a}{\gcd(a, b)} \cdot t\right)$ to the equation $ax + by = \gcd(a, b)$.</p>
+</div>
+
+<hr>
+<ol start="3">
+<li>We argue by contradiction. Suppose that $\gcd(a, b) = d$ and $\gcd(a&rsquo;, b&rsquo;) = d&rsquo; &gt; 1$. Then, we can write $a&rsquo; = d&rsquo;a&rsquo;&rsquo;$ and $b&rsquo; = d&rsquo;b&rsquo;&rsquo;$, where $a&rsquo;&rsquo;, b&rsquo;&rsquo;$ are integers. Substituting the definitions of $a&rsquo;$ and $b&rsquo;$ and rearranging, we get that $a = dd&rsquo;a&rsquo;&rsquo;$ and $b = dd&rsquo;b&rsquo;&rsquo;$. This means that $\gcd(a, b) = \gcd(dd&rsquo;a&rsquo;&rsquo;, dd&rsquo;b&rsquo;&rsquo;) = d$. We see that $dd&rsquo;$ divides both $dd&rsquo;a&rsquo;&rsquo;$ and $dd&rsquo;b&rsquo;&rsquo;$, meaning $dd&rsquo; \mid \gcd(dd&rsquo;a&rsquo;&rsquo;, dd&rsquo;b&rsquo;&rsquo;) = d$. However, $d&rsquo; &gt; 1$ gives $dd&rsquo; &gt; d$, implying that $dd&rsquo; \nmid d$, contradiction.</li>
+</ol>
+<hr>
+<ol start="4">
+<li>We claim that the inverse of $7$ mod $55$ is $8$. To see this, we check that $7 \cdot 8 = 56 \equiv 1 \pmod{55}$. Hence, $7x \equiv 5 \pmod{55} \iff 8 \cdot (7x) \equiv 8 \cdot 5 \pmod{55} \iff x \equiv 40 \pmod{55}$. For $35x \equiv 10 \pmod{55}$, we see that $\gcd(35, 55) = \gcd(10, 55) = 5$. Therefore, we divide the numbers by $5$ to get $7x \equiv 2 \pmod{11}$. From here, we get $8 \cdot (7x) \equiv 8 \cdot 2 \pmod{11} \iff 56x \equiv 16 \pmod{11} \iff x \equiv 5 \pmod{11}$.</li>
+</ol>
+
+<div class="alert alert-info" role="alert"><p>The thing to remember here is that the equation $ka \equiv kb \pmod{c}$ is equivalent to $a \equiv b \pmod{\frac{c}{\gcd(c, k)}}$.</p>
+</div>
+
+<hr>
+<ol start="5">
+<li>The number of zeros at the end of a number $n$ is the minimum of the number of $2$ and $5$ that divides $n$, i.e. $\min(v_2(n), v_5(n))$. We compute the quantities $v_2(1000!)$ and $v_5(1000!)$ separately.</li>
+</ol>
+<p>For $v_2(1000!)$, write $1000! = 1 \times 2 \times \cdots \times 999 \times 1000$. Recall that $v_2(ab) = v_2(a)v_2(b)$ (which can be seen by considering the prime factorisation). Therefore, $v_2(1000!) = \sum_{i = 1}^{1000} v_2(i)$. Next, out of the numbers $1, 2, \cdots, 1000$, the numbers $2, 4, 6, \cdots, 1000$ will contribute $1$ to the sum, since $2$ divides these numbers. However, we also consider the numbers $4, 8, 12, \cdots, 1000$ which contributes an <strong>extra</strong> $1$ to the sum, since $4 = 2^2$ divides these numbers, so we must count them extra. Continuing, we consider the numbers $1 \cdot 2^k, 2 \cdot 2^k, 3 \cdot 2^k, \cdots, \lfloor \frac{1000}{2^k} \rfloor \cdot 2^k$ that are all divisible by $2^k$ and contribute an extra $1$ to the sum (compared to the previous $k$). Therefore,</p>
+<p>$$
+\begin{align*}
+v_2(1000!)
+&amp;= \sum_{k = 1}^{\infty} \underbrace{\lfloor \frac{1000}{2^k} \rfloor}_{\text{contribution from} \, 2^k} \\
+&amp;= \lfloor \frac{1000}{2} \rfloor + \lfloor \frac{1000}{4} \rfloor + \cdots + \lfloor \frac{1000}{512} \rfloor &amp;\because 2^{10} = 1024 &gt; 1000 \\
+&amp;= 500 + 250 + 125 + 62 + 31 + 15 + 7 + 3 + 1 \\
+&amp;= 994
+\end{align*}
+$$</p>
+<p>Similarly, we compute $v_5(1000!)$ with the same argument to get</p>
+<p>$$
+\begin{align*}
+v_5(1000!) = \lfloor \frac{1000}{5} \rfloor + \lfloor \frac{1000}{25} \rfloor + \lfloor \frac{1000}{125} \rfloor + \lfloor \frac{1000}{625} \rfloor = 200 + 40 + 8 + 1 = 249
+\end{align*}
+$$</p>
+<p>We get $v_{10}(1000!) = \min(994, 249) = 249$, meaning $1000!$ has $249$ trailing zeroes.</p>
+
+<div class="alert alert-info" role="alert"><p>Considering that Sam Chow (hi if you&rsquo;re reading this) is an IMO medalist, there is a chance this will be tested.</p>
+</div>
+
+<hr>
+<ol start="6">
+<li>Suppose that $p$ is a prime. Since $p &gt; 3$, we see that $p \equiv 1, 3 \pmod{4}$, as the other two cases are even. Note that $(4k + 1)^2 = 8(2k^2 + k) + 1$ and $(4k + 3)^2 = 8(2k^2 + 3k + 1) + 1$, meaning that $p^2 \equiv 1 \pmod{8}$. We also have that $p \equiv 1, 2 \pmod{3}$, since $3 \nmid p$. We see that $(3k + 1)^2 = 3(3k^2 + 2k) + 1$ and $(3k + 2)^2 = 3(3k^2 + 4k + 1) + 1$, meaning that $p^2 \equiv 1 \pmod{3}$. We can combine these using Chinese Remainder Theorem to get that $p^2 \equiv 1 \pmod{24}$, as desired.</li>
+</ol>
+<hr>
+<ol start="7">
+<li>We show that $n^5 \equiv n \pmod{30}$. By Chinese Remainder Theorem, it suffices to show that $n^5 \equiv n \pmod{2, 3, 5}$ separately. Firstly, note that $0^5 \equiv 0 \pmod{2}$ and $1^5 \equiv 1 \pmod{2}$, so $n^5 \equiv n \pmod{2}$. Next, by Fermat&rsquo;s little Theorem, we see that $n^2 \equiv 1 \pmod{3}$, so $n^5 = n \cdot (n^2)^2 \equiv n \pmod{3}$. We also see that $n^4 \equiv 1 \pmod{5}$, so $n^5 \equiv n \pmod{5}$. Hence, $30 \mid n^5 - n$.</li>
+</ol>
+<p>Similarly, we show $42 \mid n^7 - n$ by proving $n^7 \equiv n \pmod{2, 3, 7}$. Firstly, note that $0^7 \equiv 0 \pmod{2}$ and $1^7 \equiv 1 \pmod{2}$, so $n^7 \equiv n \pmod{2}$. Next, by Fermat&rsquo;s little Theorem, we see that $n^2 \equiv 1 \pmod{3}$, so $n^7 = n \cdot (n^2)^3 \equiv n \pmod{3}$. We also see that $n^6 \equiv 1 \pmod{7}$, so $n^7 \equiv n \pmod{7}$. Hence, $42 \mid n^7 - n$.</p>
+
+<div class="alert alert-warning" role="alert"><p>There are other methods to prove this. For example, writing $n^5 - n = n(n - 1)(n + 1)(n^2 + 1)$, we immediately see that $6 \mid n^5 - n$. Proving $5 \mid n^5 - n$ is more annoying but it is just casework on $n \pmod{5}$.</p>
+</div>
+
+<hr>
+<ol start="8">
+<li>We first reduce each equation to a monic linear equation. Firstly,</li>
+</ol>
+<p>$$
+5x \equiv 7 \pmod{8} \iff x \equiv (5^{-1}) \cdot 7 \equiv 5 \cdot 7 \equiv 35 \equiv 3 \pmod{8}
+$$</p>
+<p>Next,</p>
+<p>$$
+5x \equiv 2 \pmod{13} \iff x \equiv (5^{-1}) \cdot 2 \equiv 8 \cdot 2 \equiv 16 \equiv 3 \pmod{13}
+$$</p>
+<p>Finally, note that $\gcd(3, 17) = \gcd(12, 17) = 1$. Therefore, we can simply divide to get</p>
+<p>$$
+3x \equiv 12 \pmod{17} \iff x \equiv 4 \pmod{17}
+$$</p>
+<p>We can combine the first two congruences to get $x \equiv 3 \pmod{104}$ (as guaranteed by Chinese Remainder Theorem). Now, to solve the system of congruences $\begin{cases} x \equiv 3 \pmod{104} \\ x \equiv 4 \pmod{17} \end{cases}$, we shall compute $y_1 \equiv 17^{-1} \pmod{104}$ and $y_2 \equiv 104^{-1} \equiv 2^{-1} \pmod{1}$. It is easy to verify that $y_1 = 49$ and $y_2 = 9$ are solutions. Then, the general solution is given by</p>
+<p>$$
+x = x_0 + 17 \cdot 104t, \quad x_0 = 3 \cdot 17 \cdot y_1 + 4 \cdot 104 \cdot y_2 = 51 \cdot 49 + 416 \cdot 9 = 2499 + 3744 = 6243
+$$</p>
+<p>We can reduce the $x_0$ by noting that $17 \cdot 104 = 1768$ and $6243 = 3 \cdot 1768 + 939$. Therefore, the solutions to the system of congruences are given by $x = 939 + 1768t$, where $t$ is any integer.</p>
+
+<div class="alert alert-success" role="alert"><p>This solution is exactly what I wrote on Assignment 2 Question 3 and was given full marks, which means if you copy this exact format in the exam, you shouldn&rsquo;t get deducted any marks! :)</p>
+</div>
+
+<hr>
+<ol start="9">
+<li>Suppose that there is an integer solution $(x, y, z)$ to the equation $x^2 - 3y^2 = 5z^2$. Without loss of generality, we can assume that $\gcd(x, y, z) = 1$, since $(dx)^2 - 3(dy)^2 = 5(dz)^2 \implies x^2 - 3y^2 = 5z^2$. Note that $(0^2, 1^2, 2^2, 3^2, 4^2) = (0, 1, 4, 9, 16) \equiv (0, 1, 4, 4, 1) \pmod{5}$. We take the given equation modulo $5$ to get</li>
+</ol>
+<p>$$
+x^2 + 2y^2 \equiv 0 \pmod{5}
+$$</p>
+<p>From the first observation, we see that $(x^2, 2y^2) \equiv (0, 0), (0, 2), (0, 8), (1, 0), (1, 2), (1, 8), (4, 0), (4, 2), (4, 8) \pmod{5}$. These correspond to $x^2 + 2y^2 \equiv 0, 2, 3, 1, 3, 4, 4, 1, 2 \pmod{2}$ respectively. Therefore, the only solution to $x^2 + 2y^2 \equiv 0 \pmod{5}$ is when $(x^2, 2y^2) \equiv (0, 0) \pmod{5}$, i.e. when $x \equiv y \equiv 0 \pmod{5}$. This means that there exists integers $x&rsquo;, y&rsquo;$ such that $x = 5x&rsquo;$ and $y = 5y&rsquo;$. Substituting into the original equation, we get</p>
+<p>$$
+\begin{align*}
+(5x&rsquo;)^2 - 3(5y&rsquo;)^2 &amp;= 5z^2 \\
+25x&rsquo;^2 - 75y&rsquo;^2 &amp;= 5z^2 \\
+5(x&rsquo;^2 - 15y&rsquo;^2) &amp;= z^2
+\end{align*}
+$$</p>
+<p>which means that $z^2 \equiv 0 \pmod{5}$ i.e. $z \equiv 0 \pmod{5}$. However, this means $\gcd(x, y, z) = 5$, contradiction. Therefore, there rae no integer solutions to $x^2 - 3y^2 = 5z^2$.</p>
+
+<div class="alert alert-info" role="alert"><p>This is a typical example of infinite descent. Remember that the setup is</p>
+<ul>
+<li>Assume that $x, y, z$ are coprime</li>
+<li>Mod some numbers</li>
+<li>Prove yourself wrong</li>
+</ul>
+</div>
+
+<hr>
+<ol start="10">
+<li>We argue by contradiction. Suppose that there are finitely many primes, say $p_1 &lt; p_2 &lt; \cdots &lt; p_k$, which are congruent to $1$ mod $4$. Define $N = (2p_1 p_2 \cdots p_k)^2 + 1$. None of $p_i$ divides $N$, as $N \equiv 0^2 + 1 \pmod{p_i}$. We also note that $N \equiv 1 \pmod{4}$ and $N &gt; p_k$, meaning that it is composite. Let $q$ be a prime that divides $N$. Then, $(2p_1 p_2 \cdots p_k)^2 + 1 \equiv 0 \pmod{q}$, meaning that $-1$ is a square mod $q$. By the First supplement of quadratic reciprocity, this only happens when $q \equiv 1 \pmod{4}$. This contradicts our previous observation. Therefore, there are infinitely many primes congruent to $1$ mod $4$.</li>
+</ol>
+
+<div class="alert alert-success" role="alert"><p>In Assignment 2 Question 5, the construction of $N$ was given. Might as well memorise it though. Again, this is essentially what I wrote in my full mark assignment.</p>
+</div>
+
+<hr>
+<ol start="11">
+<li>We argue by contradiction. Suppose that there are finitely many primes, say $p_1 &lt; p_2 &lt; \cdots &lt; p_k$, which are congruent to $5$ mod $6$. Define $N = 6p_1 p_2 \cdots p_k + 5$. We also note that $N \equiv 5 \pmod{6}$ and $N &gt; p_k$, meaning it is none of $p_i$. We also see that none of $p_i$ divides $N$, as $N \equiv 6 \cdot 0 + 5 \pmod{p_i}$. Combining these facts, we must have $N = q_1 q_2 \cdot q_n$, where $q_1, q_2, \cdots, q_n$ are primes congruent to $1$ mod $6$ and $n \geq 1$. However, this means $N \equiv 1 \cdot 1 \cdots 1 \equiv 1 \pmod{6}$, contradiction. Therefore, there are infinitely many primes congruent to $5$ mod $6$.</li>
+</ol>
+
+<div class="alert alert-info" role="alert"><p>Hopefully you did not get tricked by the previous question. This proof is essentially Euclid&rsquo;s proof of infinitude of primes, but modified to work here. Note that this method does not apply in general (e.g. in the previous question), as you do not get contradictions sometimes. This is why it took Dirichlet a hundred years to prove that all arithmetic sequences that does not have trivial divisors include infinite primes. The proof isn&rsquo;t that hard though, just establishing a $L$ series.</p>
+</div>
+
+<hr>
+<ol start="12">
+<li>We argue by contradiction. Suppose that $n$ is not a prime and $2^n - 1$ is a prime. Then, $n = ab$, where $a, b$ are positive integers both at least $2$. We then note that $2^n - 1 = (2^a)^b - 1 \equiv 1^b - 1 \equiv 0 \pmod{2^a - 1}$, meaning that $2^a - 1 \mid 2^n - 1$. Since $a \geq 2$, we have $2^a - 1 \geq 3$, contradicting that $2^n - 1$ being a prime.</li>
+</ol>
+<p>Next, we prove that $2^{n - 1}(2^n - 1)$ is a perfect number. We note that both $2$ and $2^n - 1$ are primes, meaning that our number is in the form of $p^{n - 1} \cdot q^1$, where $p, q$ are primes. Therefore, all divisors are of the form $p^i q^j$, where $0 \leq i \leq n - 1$ and $0 \leq j \leq 1$. More concretely, the divisors of $2^{n - 1}(2^n - 1)$ can be enumerated as:</p>
+<p>$$
+2^0 \cdot 1, 2^1 \cdot 1, \cdots, 2^{n - 2} \cdot 1, 2^{n - 1} \cdot 1 \\
+2^0 \cdot (2^n - 1), 2^1 \cdot (2^n - 1), \cdots, 2^{n - 2} \cdot (2^n - 1), 2^{n - 1} \cdot (2^n - 1)
+$$</p>
+<p>To compute the sum of these divisors, we instead add the sum of each row. The first row sums to the geometric series $2^0 + 2^1 + \cdots + 2^{n - 1} = 2^n - 1$, while we can factor the sum of second row into $(2^n - 1)(2^0 + 2^1 + \cdots + 2^{n - 1}) = (2^n - 1)(2^n - 1)$. Hence, the sum of the divisors of $2^{n - 1}(2^n - 1)$ is $(2^n - 1) \cdot 2^n$, which is double of itself. Therefore, the sum of the proper divisors is exactly $2^{n - 1}(2^n - 1)$ itself, meaning it is a perfect number.</p>
+
+<div class="alert alert-success" role="alert"><p>There is a shorter proof using the fact that the sum of divisors function $\sigma_1(d)$ is multiplicative. We simply compute $\sigma_1\left(2^{n - 1}(2^n - 1)\right) = \sigma_1\left(2^{n - 1}\right)\sigma_1\left(2^n - 1\right) = \left(1 + 2 + \cdots + 2^{n - 1}\right)\left(1 + (2^n - 1)\right) = (2^n - 1) \cdot 2^n$, and the rest follows.</p>
+</div>
+
+<hr>
 
 </article>
 
