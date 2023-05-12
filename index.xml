@@ -172,15 +172,5 @@ nc chalp.hkcert21.pwnable.hk 28132
 Solution Outline We dump the binary from 0x400000 to 0x405000 using format string and %8$s, then reverse engineer the check function for the flag.</description>
     </item>
     
-    <item>
-      <title>About Me</title>
-      <link>https://grhkm21.github.io/about-me/</link>
-      <pubDate>Sat, 09 Oct 2021 10:16:49 +0100</pubDate>
-      
-      <guid>https://grhkm21.github.io/about-me/</guid>
-      <description>Hi! I am Gareth, aka grhkm online. Hongkonger 🇭🇰 and currently studying maths at University of Warwick 🇬🇧. Interested in maths, cryptography (abbr. crypto), rhythm games, philosophy, indie and rock music. I am particularly interested in cryptanalysis, lattice-based and isogeny-based schemes within cryptography.
-This blog mainly contains writeups for interesting CTF and other algorithmic problems, but I plan to write some random blogs as well (someone suggested a song recommendation blog).</description>
-    </item>
-    
   </channel>
 </rss>
