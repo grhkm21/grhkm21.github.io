@@ -458,10 +458,10 @@ Use Euler's criterion and quadratic reciprocity. Also, $2021 = 45^2 - 2^2$. Or j
 </div>
 <ol start="24">
 <li>
-<p>Let $p = 4k + 1$ be a prime. Prove that $g$ is a primitive root mod $p$ if and only if $-a$ is a primitive root mod $p$.</p>
+<p>Let $p = 4k + 1$ be a prime. Prove that $g$ is a primitive root mod $p$ if and only if $-g$ is a primitive root mod $p$.</p>
 </li>
 <li>
-<p>Let $p = 4k + 3$ be a prime. Prove that $g$ is a primitive root mod $p$ if and only if $-a$ has order $\frac{p - 1}{2}$.</p>
+<p>Let $p = 4k + 3$ be a prime. Prove that $g$ is a primitive root mod $p$ if and only if $-g$ has order $\frac{p - 1}{2}$.</p>
 </li>
 <li>
 <p>Let $p = 8k + 1$ be a prime. Prove that $2$ is not a primitive root mod $p$.</p>
@@ -920,6 +920,171 @@ $$</p>
 </div>
 
 <hr>
+<ol start="13">
+<li>Euler&rsquo;s totient function $\varphi$ is defined as $\varphi(n) = \left|\left(\mathbb{Z} / n\mathbb{Z}\right)^{\times}\right|$. Let $m, n$ be coprime integers. Then, the (algebraic) Chinese Remainder Theorem states that $\left(\mathbb{Z} / (mn)\mathbb{Z}\right)^{\times} = \left(\mathbb{Z} / m\mathbb{Z}\right)^{\times} \times \left(\mathbb{Z} / n\mathbb{Z}\right)^{\times}$. The order of a direct product is the product of the order of the groups, and the multiplicity of $\varphi$ follows.</li>
+</ol>
+<hr>
+<ol start="14">
+<li>We consider the unit ring $\left(\mathbb{Z} / p^e\mathbb{Z}\right)^{\times}$. Note that an element $a \in \mathbb{Z} / p^e\mathbb{Z}$ is in the unit ring if and only if $\gcd(a, p^e) = 1$. This is equivalent to $\gcd(a, p) = 1$ by considering the prime factorisation, which holds when $p \nmid a$. This holds for $\frac{p - 1}{p} \cdot p^e$ of the elements in $\mathbb{Z} / p^e\mathbb{Z}$. Therefore, $\varphi(p^e) = \frac{p - 1}{p} \cdot p^e = (p - 1)p^{e - 1}$.</li>
+</ol>
+<p>To compute $\varphi(300)$, we write the prime factorisation $300 = 2^2 \cdot 3 \cdot 5^2$. By multiplicity, $\varphi(300) = \varphi(2^2)\varphi(3)\varphi(5^2) = (2 - 1) \cdot 2^1 \cdot (3 - 1) \cdot (5 - 1) \cdot 5^1 = 80$ as desired.</p>
+
+<div class="alert alert-success" role="alert"><p>In general, if $n = \prod_{i = 1}^k p_i^{e_i}$, then $\varphi(n) = \prod_{i = 1}^k (p_i - 1)p_i^{e_i - 1} = n\prod_{i = 1}^k \left(1 - \frac{1}{p_i}\right)$. You shouldn&rsquo;t memorise this though, it&rsquo;s derivable.</p>
+</div>
+
+<hr>
+<ol start="15">
+<li>Suppose that $n$ is an odd integer. Write it as a product of prime powers $n = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k}$, where $p_i$ are all odd and $e_i &gt; 0$. Then, $\varphi(n) = \prod_{i = 1}^k (p_i - 1)p_i^{e_i - 1}$. Since $p_i - 1$ is even, $\varphi(n)$ is even.</li>
+</ol>
+<hr>
+<ol start="16">
+<li>Since $19$ is a prime, by Fermat&rsquo;s little theorem we have $a^{18} \equiv 1 \pmod{19}$. Hence, $13^{102} \equiv 13^{5 \cdot 18 + 12} \equiv 13^{12} \equiv ((13^2)^2)^3 \equiv (169^2)^3 \equiv (17^2)^3 \equiv ((-2)^2)^3 \equiv 64 \equiv 7 \pmod{19}$.</li>
+</ol>
+
+<div class="alert alert-info" role="alert"><p>Typical Fermat&rsquo;s little theorem appliaction. If $19$ is instead a composite modulus, remember to use $\varphi(n)$ instead of $n - 1$.</p>
+</div>
+
+<hr>
+<ol start="17">
+<li>Recall that $\varphi(p^n) = (p - 1)p^{n - 1}$, i.e. $p - 1 \mid \varphi(p^n)$, and also that the $g$ is a primitive root mod $n$ if $\mathrm{ord}_n(g) = \varphi(n)$. We argue by contradiction. Suppose that $g$ is a primitive root mod $p^n$ but is not a primitive root mod $p$. Then, $\mathrm{ord}_p(g) &lt; \varphi(p) = p - 1$.</li>
+</ol>
+<p>Next, consider $S = \{1, g, g^2, \cdots, g^{\varphi(p^n) - 1}\}$. Since $g$ is a primitive root mod $p^n$, it must contain every integer in $\left(\mathbb{Z} / p^n\mathbb{Z}\right)$, which is every integer not divisible by $p$. This means that if we consider the reduced set $S&rsquo; = \{1 \pmod{p}, g \pmod{p}, g^2 \pmod{p}, \cdots, g^{\varphi(p^n) - 1} \pmod{p}\}$ instead, it must also contain every integer in $\mathbb{Z} / p\mathbb{Z}$ that is not divisible by $p$, i.e. every integer between $1$ and $p - 1$. Finally, note that by Fermat&rsquo;s little theorem, we have $S&rsquo; = \{1 \pmod{p}, g \pmod{p}, \cdots, g^{p - 2} \pmod{p}\}$. However, this does not include every integer between $1$ and $p - 1$, since $\mathrm{ord}_p(g) \leq p - 2$. In particular, there are two elements within $S&rsquo;$ both equalling to $1$, and so $|S&rsquo;| &lt; p - 1$, contradiction.</p>
+
+<div class="alert alert-info" role="alert"><p>My solution is kind of long, but I always write more than less in exams when the problem is unseen. Maybe we have discussed this, but I am not sure.</p>
+</div>
+
+<hr>
+<ol start="18">
+<li>We first prove that a generator $g$ mod an odd prime $p$ satisfies $g^{(p - 1) / 2} \equiv -1 \pmod{p}$. By Fermat&rsquo;s little theorem, we have $g^{p - 1} - 1 \equiv 0 \pmod{p}$, and factoring gives $\left(g^{(p - 1) / 2} - 1\right)\left(g^{(p - 1) / 2} + 1\right) \equiv 0 \pmod{p}$. The first case would imply that $\mathrm{ord}_p(g) \leq \frac{p - 1}{2}$, so the second case must hold, and our result follows.</li>
+</ol>
+<p>Now, suppose that $g_1$ and $g_2$ are primitive roots mod $p$. Then, $g_1^{(p - 1) / 2} \equiv g_2^{(p - 1) / 2} \equiv -1 \pmod{p}$. Hence, $(g_1g_2)^{(p - 1) / 2} \equiv 1 \pmod{p}$, meaning $g_1g_2$ is not a primitive root mod $p$.</p>
+
+<div class="alert alert-success" role="alert"><p>The claim I proved at the start was shown in lecture notes, so you probably don&rsquo;t have to reprove it. I did it because I can.</p>
+</div>
+
+<hr>
+<ol start="19">
+<li>First, when $p = 2$ the equation reduces to $x^2 + x \equiv 0 \pmod{2}$, which has a solution $x = 0$. Next, we complete the square to get $\left(x + \frac{3}{2}\right)^2 + \frac{7}{4} \equiv 0 \pmod{p}$. Since $\gcd(4, p) = 1$, this is equivalent to $(2x + 3)^2 + 7 \equiv 0 \pmod{p}$, i.e. $x \equiv \frac{-3 \pm \sqrt{-7}}{2} \pmod{p}$ are solutions to the equation. Since $\gcd(2, p) = 1$, $2^{-1} \pmod{p}$ exists and this means the equation has solution if and only if $-7$ is a quadratic residue mod $p$.</li>
+</ol>
+<p>Now we determine when $\left(\frac{-7}{p}\right) = 1$. Firstly, when $p = 7$ this clearly holds. Next, the equation holds when $\left(\frac{-1}{p}\right) = \left(\frac{7}{p}\right) = 1$ or $\left(\frac{-1}{p}\right) = \left(\frac{7}{p}\right) = -1$. By the First supplement of quadratic reciprocity,</p>
+<p>$$
+\left(\frac{-1}{p}\right) = \begin{cases} 1 &amp;\text{if} , p \equiv 1 \pmod{4} \\ -1 &amp;\text{if} , p \equiv 3 \pmod{4} \end{cases}
+$$</p>
+<p>On the other hand, by quadratic reciprocity, we get $\left(\frac{7}{p}\right) = (-1)^{3(p - 1) / 2}\left(\frac{p}{7}\right)$. Recall that $p$ is a (nonzero) quadratic residue mod $7$ when $p \equiv 1, 2, 4 \pmod{7}$. By also considering $p \equiv 1, 3 \pmod{4}$ separately, we get that</p>
+<ul>
+<li>When $p \equiv 1 \pmod{4}$ and $p \equiv 1, 2, 4 \pmod{7}$, we have $\left(\frac{7}{p}\right) = 1$.</li>
+<li>When $p \equiv 3 \pmod{4}$ and $p \equiv 1, 2, 4 \pmod{7}$, we have $\left(\frac{7}{p}\right) = -1$.</li>
+<li>When $p \equiv 1 \pmod{4}$ and $p \equiv 3, 5, 6 \pmod{7}$, we have $\left(\frac{7}{p}\right) = -1$.</li>
+<li>When $p \equiv 3 \pmod{4}$ and $p \equiv 3, 5, 6 \pmod{7}$, we have $\left(\frac{7}{p}\right) = 1$.</li>
+</ul>
+<p>Finally, we combine these cases with the result above to get</p>
+<ul>
+<li>When $p \equiv 1 \pmod{4}$ and $p \equiv 1, 2, 4 \pmod{7}$, we have $\left(\frac{-7}{p}\right) = 1$.</li>
+<li>When $p \equiv 3 \pmod{4}$ and $p \equiv 1, 2, 4 \pmod{7}$, we have $\left(\frac{-7}{p}\right) = 1$.</li>
+<li>When $p \equiv 1 \pmod{4}$ and $p \equiv 3, 5, 6 \pmod{7}$, we have $\left(\frac{-7}{p}\right) = -1$.</li>
+<li>When $p \equiv 3 \pmod{4}$ and $p \equiv 3, 5, 6 \pmod{7}$, we have $\left(\frac{-7}{p}\right) = -1$.</li>
+</ul>
+<p>By Chinese Remainder Theorem, we can combine the conditions to get that $-7$ is a quadratic residue mod $p$ if and only if $p = 7$ or $p \equiv 1, 9, 25, 15, 23, 11 \pmod{28}$. Therefore, the equation $x^2 + 3x + 4 \equiv 0 \pmod{p}$ has solutions when $p = 2$, $p = 7$ or $p \equiv 1, 9, 11, 15, 23, 25 \pmod{28}$.</p>
+
+<div class="alert alert-warning" role="alert"><p>You must get comfortable with these calculations! It is unpleasant and long, and it will be even worse if you don&rsquo;t know it during the exam. You can also skip the entire first paragraph if you risk assuming the quadratic formula, but I am not sure if it can be assumed or not.</p>
+</div>
+
+<hr>
+<ol start="20">
+<li>Taking the equation mod $3$, we get $y^2 \equiv 2 \pmod{3}$. The quadratic residues mod $3$ are $0$ and $1$, so there are no integer solutions to the equation.</li>
+</ol>
+<hr>
+<ol start="21">
+<li>Taking the equation mod $7$, we get $y^3 \equiv 2 \pmod{7}$. Enumerating, we see that $(0^3, 1^3, 2^3, 3^3, 4^3, 5^3, 6^3) \equiv (0, 1, 1, 6, 1, 6, 6) \pmod{7}$. None of these equal to $2$, so there are no integer solutions to the equation.</li>
+</ol>
+
+<div class="alert alert-info" role="alert"><p>Typical example of &ldquo;find all integer solutions to this&rdquo;.</p>
+</div>
+
+<hr>
+<ol start="22">
+<li>By Wilson&rsquo;s theorem, we have $2026! \equiv -1 \pmod{2027}$. Therefore, $2024! \equiv (-1) \cdot 2026^{-1} \cdot 2025^{-1} \equiv (-1) \cdot (-1)^{-1} \cdot (-2)^{-1} \equiv -1014 \equiv 1013 \pmod{2027}$.</li>
+</ol>
+
+<div class="alert alert-info" role="alert"><p>All factorial questions are like this.</p>
+</div>
+
+<hr>
+<ol start="23">
+<li>We compute $\left(\frac{17}{37}\right)$ by Euler&rsquo;s criterion and quadratic reciprocity. Firstly, by Euler&rsquo;s criterion,</li>
+</ol>
+<p>$$
+\begin{align*}
+\left(\frac{17}{37}\right)
+&amp;\equiv 17^{(37 - 1) / 2} &amp;\pmod{37} \\
+&amp;\equiv 17^{18} &amp;\pmod{37} \\
+&amp;\equiv ((17^2)^3)^3 &amp;\pmod{37} \\
+&amp;\equiv 289^9 &amp;\pmod{37} \\
+&amp;\equiv 30^9 &amp;\pmod{37} \\
+&amp;\equiv 3^9 \cdot 10^9 &amp;\pmod{37} \\
+&amp;\equiv 3 \cdot 81^2 \cdot 1000^3 &amp;\pmod{37} \\
+&amp;\equiv 3 \cdot 7^2 \cdot 1^3 &amp;\pmod{37} \\
+&amp;\equiv 36 &amp;\pmod{37}
+&amp;\equiv -1 &amp;\pmod{37}
+\end{align*}
+$$</p>
+<p>Using the obvious identity $1000 = 37 \times 27 + 1$. Next, by quadratic reciprocity, we get</p>
+<p>$$
+\begin{align*}
+\left(\frac{17}{37}\right)
+&amp;= (-1)^{(17 - 1) \cdot (37 - 1) / 4}\left(\frac{37}{17}\right) \\
+&amp;= \left(\frac{3}{17}\right) \\
+&amp;= (-1)^{(3 - 1) \cdot (17 - 1) / 4}\left(\frac{17}{3}\right) \\
+&amp;= \left(\frac{2}{3}\right)
+&amp;= -1
+\end{align*}
+$$</p>
+<p>Since $2$ is a quadratic nonresidue mod $3$. Finally, we compute $\left(\frac{2021}{41}\right)$ by quadratic reciprocity to get:</p>
+<p>$$
+\left(\frac{2021}{41}\right) = \left(\frac{12}{41}\right) = \left(\frac{2}{41}\right)^2\left(\frac{3}{41}\right) = (-1)^{(3 - 1) \cdot (41 - 1) / 4}\left(\frac{41}{3}\right) = \left(\frac{2}{3}\right) = -1
+$$</p>
+
+<div class="alert alert-info" role="alert"><p>I would assume a lot of the steps and explanations are unnecessary, but might as well write it.</p>
+</div>
+
+<hr>
+<ol start="24">
+<li>Let $p = 4k + 1$ be a prime. Note that $\left(\frac{-1}{p}\right) = 1$ by the First supplement of quadratic reciprocity. Now, recall that $g$ is a primitive root mod $p$ if and only if $\left(\frac{g}{p}\right) = -1$, since the left equals $g^{(p - 1) / 2} \pmod{p}$ by Euler&rsquo;s criterion. Combining these, we have</li>
+</ol>
+<p>$$
+1 = \left(\frac{g}{p}\right)^2 = \left(\frac{g}{p}\right)\left(\frac{-1}{p}\right)\left(\frac{g}{p}\right) = \left(\frac{g}{p}\right)\left(\frac{-g}{p}\right)
+$$</p>
+<p>Therefore, $\left(\frac{g}{p}\right) = \left(\frac{-g}{p}\right)$, which can be interpreted as $g$ is a primitive root mod $p$ if and only if $-g$ is a primitive root mod $p$, as desired.</p>
+
+<div class="alert alert-warning" role="alert"><p>This tests your ability to switch between equivalent definitions of primitive roots. However, $4k + 1$ should trigger your quadratic reciprocity brain. It is also possible to prove this using the fact that $\mathrm{ord}_p(g) = p - 1$, but that is less clean.</p>
+<p>I didn&rsquo;t assume $\left(\frac{g}{p}\right) = -1$ and conclude $\left(\frac{-g}{p}\right) = -1$ right away because that only proves one direction of the statement, while we want to achieve a if and only if (two way) statement. Though looking back, it can be proven by symmetry.</p>
+</div>
+
+<hr>
+<ol start="25">
+<li>Let $p = 4k + 3$ be a prime. Similar to above, we get that $\left(\frac{-1}{p}\right) = -1$, and that $g$ is a primitive root mod $p$ if and only if $g^{(p - 1) / 2} \equiv -1 \pmod{p}$. Since $-1$ is a quadratic nonresidue mod $p$, this is equivalent to $\mathrm{ord}_p(g) = \frac{p - 1}{2}$. This also means that $g^t \neq \pm 1$ for $0 &lt; t &lt; \frac{p - 1}{2}$, since that would mean $g^{2t} \equiv 1 \pmod{p}$ where $0 &lt; 2t &lt; p - 1$, and so $2t = \frac{p - 1}{2}$, but $\frac{p - 1}{4}$ is not an integer.</li>
+</ol>
+<p>Next, we note that $(-g)^{(p - 1) / 2} \equiv g^{(p - 1) / 2} \left(\frac{-1}{p}\right) \equiv 1 \pmod{p}$. Also, for an integer $0 &lt; t &lt; \frac{p - 1}{2}$, we have $(-g)^t \equiv (-1)^t g^t \pmod{p}$, which is never congruent to $\pm 1 \pmod{p}$ since $g^t$ is never $\pm 1 \pmod{p}$. Therefore, $g$ is a primitive root if and only if $\mathrm{ord}_p(-g) = \frac{p - 1}{2}$, as desired.</p>
+
+<div class="alert alert-danger" role="alert"><p>This proof is written pretty poorly&hellip; I will rewrite it when I wake.</p>
+</div>
+
+<hr>
+<ol start="51">
+<li>Recall that every number $a \in \mathbb{Z}_p$ can be written uniquely into $a = p^{v_p(a)} a&rsquo;$, where $p \nmid a&rsquo;$ i.e. $a&rsquo;$ is a unit. Similarly, we can write $b \in \mathbb{Z}_p$ as $b = p^{v_p(b)} b&rsquo;$. Since $a&rsquo;$ is a unit, it divides everything in $\mathbb{Z}_p$. Therefore, $a \mid b$ if and only if $p^{v_p(a)} \mid p^{v_p(b)} b&rsquo;$, and since $v_p(b&rsquo;) = 0$, we see that $a \mid b$ if and only if $v_p(a) \leq v_p(b)$.</li>
+</ol>
+
+<div class="alert alert-danger" role="alert"><p>Okay I will sleep now what is this shit</p>
+</div>
+
+<hr>
+<ol start="52">
+<li>It suffices to find a root to $f(x) = x^3 + 19$ in $\mathbb{Z}_3$, since the rest follows by projecting the root to $\mathbb{Z} / 3^n\mathbb{Z}$. We note that for $a = 2$, we have $f(a) = 2^3 + 19 = 27$, so $p^3 \mid f(a)$. Also, $f&rsquo;(a) = 3 \cdot 2^2 = 12$, meaning $v_3(f&rsquo;(a)) = 1$. Hence, the conditions for Hensel&rsquo;s lemma is satisfied and there exists $0y \in \mathbb{Z}_3$ such that $y^3 + 19 = 0$.</li>
+</ol>
+
+<div class="alert alert-success" role="alert"><p>Copy and pasted from Assignment 4 Question 5. Please learn the full statement of Hensel&rsquo;s lemma and get the free marks.</p>
+</div>
+
 
 </article>
 
