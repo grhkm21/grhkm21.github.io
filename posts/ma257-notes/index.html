@@ -682,14 +682,14 @@ Assignment 4, question 5.
 </div>
 <ol start="53">
 <li>
-<p>Let $p$ be an odd prime and $a = (a_1, a_2, \cdots) \in \mathbb{Z}_p$. Prove that there exists $x \in \mathbb{Z}_p$ such that $x^2 = a$ if and only if $\left(\frac{a_1}{p}\right) = 1$.</p>
+<p>Let $p$ be an odd prime and $a = (a_1, a_2, \cdots) \in \mathbb{Z}_p$, where $a_1 \neq 0$. Prove that there exists $x \in \mathbb{Z}_p$ such that $x^2 = a$ if and only if $\left(\frac{a_1}{p}\right) = 1$.</p>
 </li>
 <li>
 <p>Recall that $\mathbb{Z}_p^{\times}$ denotes the $p$-adic integers which are units / invertible. Fix $p = 31$ and define the function $f: \mathbb{Z}_p^{\times} \to \mathbb{Z}_p$ where $f(x) = \frac{x^2 + 14}{2x}$.</p>
 <p>a) Find $a$ such that $a^2 \equiv 14 \pmod{p}$.</p>
 <p>b) Show that if $x \in \mathbb{Z}_p^{\times}$, then $f(x) \in \mathbb{Z}_p^{\times}$.</p>
 <p>c) Define the $p$-adic absolute value $|\cdot|_p$.</p>
-<p>d) Prove that $|f(f(x)) - f(x)| \leq |f(x) - x|^2$ and $|f(x)^2 - 14| \leq |x^2 - 14|^2$.</p>
+<p>d) Prove that $|f(f(x)) - f(x)|_p \leq |f(x) - x|_p^2$ and $|f(x)^2 - 14|_p \leq |x^2 - 14|_p^2$.</p>
 <p>e) Conclude that the sequence $S_1 = (a, f(a), f(f(a)), \cdots) \subset \mathbb{Z}_p$ converges. By considering the sequence $S_2 = (a^2, f(a)^2, f(f(a))^2, \cdots)$, prove that the limit of $S_1$ satisfies $\left(\lim S_1\right)^2 - 14 = 0$. Hence, iterating $f$ gives a method to compute $\sqrt{14}$ in $\mathbb{Z}_p$.</p>
 </li>
 </ol>
@@ -797,7 +797,7 @@ $$</p>
 &amp;= 129 \times 1038 - 47 \times 2628
 \end{array}
 $$</p>
-<p>Which gives us one solution $(x, y) = (121, -47)$ to $1038x + 2628y = 6$. Finally, we compute that $\frac{1038}{6} = 173$ and $\frac{2628}{6} = 438$. Hence, all solutions are parametrised by</p>
+<p>Which gives us one solution $(x, y) = (129, -47)$ to $1038x + 2628y = 6$. Finally, we compute that $\frac{1038}{6} = 173$ and $\frac{2628}{6} = 438$. Hence, all solutions are parametrised by</p>
 <p>$$
 (x, y) = \left(121 + 438t, -47 - 173t\right), \quad t \in \mathbb{Z}
 $$</p>
@@ -807,7 +807,7 @@ $$</p>
 
 <hr>
 <ol start="3">
-<li>We argue by contradiction. Suppose that $\gcd(a, b) = d$ and $\gcd(a&rsquo;, b&rsquo;) = d&rsquo; &gt; 1$. Then, we can write $a&rsquo; = d&rsquo;a&rsquo;&rsquo;$ and $b&rsquo; = d&rsquo;b&rsquo;&rsquo;$, where $a&rsquo;&rsquo;, b&rsquo;&rsquo;$ are integers. Substituting the definitions of $a&rsquo;$ and $b&rsquo;$ and rearranging, we get that $a = dd&rsquo;a&rsquo;&rsquo;$ and $b = dd&rsquo;b&rsquo;&rsquo;$. This means that $\gcd(a, b) = \gcd(dd&rsquo;a&rsquo;&rsquo;, dd&rsquo;b&rsquo;&rsquo;) = d$. We see that $dd&rsquo;$ divides both $dd&rsquo;a&rsquo;&rsquo;$ and $dd&rsquo;b&rsquo;&rsquo;$, meaning $dd&rsquo; \mid \gcd(dd&rsquo;a&rsquo;&rsquo;, dd&rsquo;b&rsquo;&rsquo;) = d$. However, $d&rsquo; &gt; 1$ gives $dd&rsquo; &gt; d$, implying that $dd&rsquo; \nmid d$, contradiction.</li>
+<li>We argue by contradiction. Suppose that $\gcd(a, b) = d$ and $\gcd(a&rsquo;, b&rsquo;) = d&rsquo; &gt; 1$. Then, we can write $a&rsquo; = d&rsquo;a&rsquo;&rsquo;$ and $b&rsquo; = d&rsquo;b&rsquo;&rsquo;$, where $a&rsquo;&rsquo;, b&rsquo;&rsquo;$ are integeras. Substituting the definitions of $a&rsquo;$ and $b&rsquo;$ and rearranging, we get that $a = dd&rsquo;a&rsquo;&rsquo;$ and $b = dd&rsquo;b&rsquo;&rsquo;$. This means that $\gcd(a, b) = \gcd(dd&rsquo;a&rsquo;&rsquo;, dd&rsquo;b&rsquo;&rsquo;) = d$. We see that $dd&rsquo;$ divides both $dd&rsquo;a&rsquo;&rsquo;$ and $dd&rsquo;b&rsquo;&rsquo;$, meaning $dd&rsquo; \mid \gcd(dd&rsquo;a&rsquo;&rsquo;, dd&rsquo;b&rsquo;&rsquo;) = d$. However, $d&rsquo; &gt; 1$ gives $dd&rsquo; &gt; d$, implying that $dd&rsquo; \nmid d$, contradiction.</li>
 </ol>
 <hr>
 <ol start="4">
@@ -1081,23 +1081,56 @@ $$</p>
 </ol>
 <p>Next, we note that $(-g)^{(p - 1) / 2} \equiv g^{(p - 1) / 2} \left(\frac{-1}{p}\right) \equiv 1 \pmod{p}$. Also, for an integer $0 &lt; t &lt; \frac{p - 1}{2}$, we have $(-g)^t \equiv (-1)^t g^t \pmod{p}$, which is never congruent to $\pm 1 \pmod{p}$ since $g^t$ is never $\pm 1 \pmod{p}$. Therefore, $g$ is a primitive root if and only if $\mathrm{ord}_p(-g) = \frac{p - 1}{2}$, as desired.</p>
 
-<div class="alert alert-danger" role="alert"><p>This proof is written pretty poorly&hellip; I will rewrite it when I wake.</p>
+<div class="alert alert-danger" role="alert"><p>This proof is written pretty poorly&hellip;</p>
 </div>
 
 <hr>
 <ol start="51">
 <li>Recall that every number $a \in \mathbb{Z}_p$ can be written uniquely into $a = p^{v_p(a)} a&rsquo;$, where $p \nmid a&rsquo;$ i.e. $a&rsquo;$ is a unit. Similarly, we can write $b \in \mathbb{Z}_p$ as $b = p^{v_p(b)} b&rsquo;$. Since $a&rsquo;$ is a unit, it divides everything in $\mathbb{Z}_p$. Therefore, $a \mid b$ if and only if $p^{v_p(a)} \mid p^{v_p(b)} b&rsquo;$, and since $v_p(b&rsquo;) = 0$, we see that $a \mid b$ if and only if $v_p(a) \leq v_p(b)$.</li>
 </ol>
-
-<div class="alert alert-danger" role="alert"><p>Okay I will sleep now what is this shit</p>
-</div>
-
 <hr>
 <ol start="52">
 <li>It suffices to find a root to $f(x) = x^3 + 19$ in $\mathbb{Z}_3$, since the rest follows by projecting the root to $\mathbb{Z} / 3^n\mathbb{Z}$. We note that for $a = 2$, we have $f(a) = 2^3 + 19 = 27$, so $p^3 \mid f(a)$. Also, $f&rsquo;(a) = 3 \cdot 2^2 = 12$, meaning $v_3(f&rsquo;(a)) = 1$. Hence, the conditions for Hensel&rsquo;s lemma is satisfied and there exists $0y \in \mathbb{Z}_3$ such that $y^3 + 19 = 0$.</li>
 </ol>
 
 <div class="alert alert-success" role="alert"><p>Copy and pasted from Assignment 4 Question 5. Please learn the full statement of Hensel&rsquo;s lemma and get the free marks.</p>
+</div>
+
+<hr>
+<ol start="54">
+<li>
+<p>This problem proves that the Newton-Raphson method converges to a root of $f$ in $\mathbb{Z}_p$, for a specific $p$.</p>
+<p>a) $a = 13$ works since $13^2 = 169 \equiv 14 \pmod{31}$.</p>
+<p>b) Suppose that $x \in \mathbb{Z}_p^{\times}$. Note that $-14$ is a quadratic nonresidue mod $31$, so $x^2 + 14 \not \equiv 0 \pmod{31}$. Also since $x$ is invertible in $\mathbb{Z}_p$, this means $x \not \equiv 0 \pmod{31}$. Therefore, $f(x) = \frac{x^2 + 14}{2x} \not \equiv 0 \pmod{31}$ (and is well-defined). This is equivalent to $f(x) \in \mathbb{Z}_p^{\times}$.</p>
+<p>c) For $x \in \mathbb{Z}_p$, the $p$-adic absolute value is defined as $|x|_p = p^{-\mathcal{v}_p(x)}$, where $\mathcal{v}_p$ is the $p$-adic valuation of $x$ i.e. the maximum of power of $p$ that divides $x$.</p>
+<p>d) For the first inequality, substituting the definition and expanding the left expression gives</p>
+<p>$$
+\begin{align*}
+f(f(x)) - f(x)
+&amp;= \frac{\left(\frac{x^2 + 14}{2x}\right)^2 + 14}{2 \cdot \frac{x^2 + 14}{2x}} - \frac{x^2 + 14}{2x} \\\\
+&amp;= \frac{(x^2 + 14)^2 + 14(2x)^2}{4x(x^2 + 14)} - \frac{x^2 + 14}{2x} \\
+&amp;= \frac{(x^2 + 14)^2 + 14(2x)^2 - 2(x^2 + 14)^2}{4x(x^2 + 14)} \\
+&amp;= \frac{-x^4 + 28x^2 - 196}{4x(x^2 + 14)} \\
+&amp;= -\frac{(x^2 - 14)^2}{4x(x^2 + 14)}
+\end{align*}
+$$</p>
+<p>This means $\left|f(f(x)) - f(x)\right|_p = \left|x^2 - 14\right|_p^2 / \left|4x(x^2 + 14)\right|_p$. From above, we know that $x^2 + 14$ is invertible in $\mathbb{Z}_p$, meaning $\left|4x(x^2 + 14)\right|_p = \left|4\right|_p \left|x^2 + 14\right|_p = 1$. Therefore, $\left|f(f(x)) - f(x)\right|_p = \left|x^2 - 14\right|_p^2$. On the other hand, simplifying the expression on the right gives $\left|f(x) - x\right|_p = \left|-\frac{x^2 - 14}{2x}\right|_p = \left|x^2 - 14\right|_p$ by similar arguments. Comparing the expressions give the desired inequality.</p>
+<p>For the second inequality, we again expand to get</p>
+<p>$$
+\begin{align*}
+\left|f(x)^2 - 14\right|_p
+&amp;= \left|\left(\frac{x^2 + 14}{2x}\right)^2 - 14\right|_p \\
+&amp;= \left|\frac{x^4 + 28x^2 + 196 - 56x^2}{4x^2}\right|_p \\
+&amp;= \left|\frac{(x^2 - 14)^2}{4x^2}\right|_p \\
+&amp;\leq \left|x^2 - 14\right|_p^2
+\end{align*}
+$$</p>
+<p>e) By repeatedly applying the first inequality above, we get that $\left|f^{(n + 1)}(x) - f^{(n)}(x)\right|_p \leq \left|f(x) - x\right|_p^{2^n}$. Now, $f(a) - a = \frac{a^2 + 14}{2a} - a = -\frac{a^2 - 14}{2a}$, and since $a^2 \equiv 14 \pmod{p}$, we have $\left|a^2 - 14\right|_p \leq p^{-1}$ and hence $\left|f(a) - a\right|_p \leq p^{-1} &lt; 1$. This then means $\left|f^{(n + 1)}(x) - f^{(n)}(x)\right|_p \stackrel{n \to \infty}{\to} 0$. The convergence of $S_1$ then follows from the fact that the sequence of pairwise difference is null.</p>
+<p>Next, we note that the sequence $S_2$ converges to $14$ by the second inequality above and the fact that $|a^2 - 14|_p \leq p^{-1} &lt; 1$. Since each term of $S_2$ is just the square of terms in $S_1$, we get that $\lim S_2 = \left(\lim S_1\right)^2 = 14$ as $n \to \infty$. This means that $S_1 \to \sqrt{14}$ in $\mathbb{Z}_p$, as desired.</p>
+</li>
+</ol>
+
+<div class="alert alert-info" role="alert"><p>I am quite certain this is not accessible. However, I think that it helps with understanding why the Newton-Raphson method works, hence I included it. Hopefully it is also interesting to see how the $p$-adic absolute value provides a notion of distance in the $p$-adic space, and so there is a topology defined on $\mathbb{Z}_p$ (and generalises naturally to $\mathbb{Q}_p$), also allowing for calculus and geometry to be developed in the $p$-adic space. It has also seen uses in Physics, which seems very counterintuitive since the $p$-adic metric is a purely &ldquo;numerical&rdquo; instead of &ldquo;geometrical&rdquo; construction. But physicists are weird :)</p>
 </div>
 
 
