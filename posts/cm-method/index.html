@@ -102,13 +102,13 @@
 <p>Also please correct me if I am blatantly stating wrong facts :D I know I do that quite often.</p>
 <p>Reference: <a href="http://www.numdam.org/article/ASENS_1969_4_2_4_521_0.pdf">Waterhouse</a></p>
 <h2 id="summary">Summary</h2>
-<p>This is a very short summary for the content following. For a squarefree integer $D$, there is a explicitly computable polynomial $h_D(x) \in \mathbb{Z}[x]$. Now, fix a prime $p$, and suppose that $4p = x^2 - Dy^2$, where $x, y$ are integers. Then, for any roots of $H_D$ over $\mathbb{F}_p$, say $H_D(j_0) = 0$, then every elliptic curve $E$ over $\mathbb{F}_p$ with $j$-invariant $j_0$ will have Frobenius trace $t = \pm x$, or equivalently that $\left|E / \mathbb{F}_p\right| = p + 1 \pm x$. With this, we can easily construct curves with given trace or order (satisfying the Hasse bound).</p>
-<p>In response to <a href="https://twitter.com/y011d4/status/1659025096277913600?s=20">y011d4</a>, we can generate anomalous curves (with $p - 1$ also being smooth) as a special case quickly as follows. Let $d$ be an integer such that the class number of $\mathbb{Q}(\sqrt{-d})$ is $1$ i.e. $\mathbb{Q}(\sqrt{-d})$ is a Unique Factorisation Domain. By the <a href="https://www.wikiwand.com/en/Stark%E2%80%93Heegner_theorem">Baker-Heegner-Stark theorem</a> this only happens when $d \in \{1, 2, 3, 7, 11, 19, 43, 67, 163\}$. Next, compute the discriminant of $\mathbb{Q}(\sqrt{-d})$ by $D \coloneqq \begin{cases} 4d &amp;\text{if} \, d \equiv 1 \pmod{4} \\ d &amp;\text{otherwise} \end{cases}$. Then, we can explicitly compute $H_D$ to be</p>
+<p>This is a very short summary for the content following. For a squarefree integer $D$, there is a explicitly computable polynomial $h_D(x) \in \mathbb{Z}[x]$. Now, fix a prime $p$, and suppose that $4p = x^2 + Dy^2$, where $x, y$ are integers. Then, for any roots of $H_{-D}$ over $\mathbb{F}<em>p$, say $H</em>{-D}(j_0) = 0$, then every elliptic curve $E$ over $\mathbb{F}_p$ with $j$-invariant $j_0$ will have Frobenius trace $t = \pm x$, or equivalently that $\left|E / \mathbb{F}_p\right| = p + 1 \pm x$. With this, we can easily construct curves with given trace or order (satisfying the Hasse bound).</p>
+<p>In response to <a href="https://twitter.com/y011d4/status/1659025096277913600?s=20">y011d4</a>, we can generate anomalous curves with $p - 1$ being smooth as a special case quickly as follows. Let $d$ be an integer such that the class number of $\mathbb{Q}(\sqrt{-d})$ is $1$ i.e. $\mathbb{Q}(\sqrt{-d})$ is a Unique Factorisation Domain. By the <a href="https://www.wikiwand.com/en/Stark%E2%80%93Heegner_theorem">Baker-Heegner-Stark theorem</a> this only happens when $d \in \{1, 2, 3, 7, 11, 19, 43, 67, 163\}$. Next, compute the discriminant of $\mathbb{Q}(\sqrt{-d})$ by $D \coloneqq \begin{cases} 4d &amp;\text{if} \, d \equiv 1 \pmod{4} \\ d &amp;\text{otherwise} \end{cases}$. Then, we can explicitly compute $H_D$ to be</p>
 <p>$$
 H_D(x) = x - j\left(\frac{D + \sqrt{-D}}{2}\right) = x - j_0 \in \mathbb{Z}[x]
 $$</p>
 <p>From here, we have to find a prime $p$ such that $4p = 1 + Dy^2$. Indeed, we simply test random odd $y$ until $\frac{1 + Dy^2}{4}$ is prime. From there, either the curve $E: y^2 = x^3 + \frac{3j_0}{1728 - j_0}x + \frac{2j_0}{1728 - j_0}$ or its quadratic twist will have order exactly $p$.</p>
-<p>In the discussion with y011d4 i.e. the challenge HackTMCTF-Final, we also need $p - 1$ to be smooth enough to perform DLP. To do so, we will generate $p$ that are in the form of $1 + kX$, where $X$ is a large smooth number. Substituting into the equation $4p = 1 + Dy^2$, we get</p>
+<p>In the discussion with y011d4 i.e. the challenge DDLP from the HackTMCTF Finals, we also need $p - 1$ to be smooth enough to perform DLP. To do so, we will generate $p$ that are in the form of $1 + kX$, where $X$ is a large smooth number. Substituting into the equation $4p = 1 + Dy^2$, we get</p>
 <p>$$
 \begin{align*}
 4p &amp;= 1 + Dy^2 \\
@@ -122,7 +122,7 @@ $$</p>
 <li>Fix $D$</li>
 <li>Check that $-3D^{-1}$ is a quadratic residue modulo $4X$</li>
 <li>Compute $r \coloneqq \sqrt{-3D^{-1}} \pmod{4X}$</li>
-<li>Generate $y$ in the form of $4kX + y$</li>
+<li>Generate $y$ in the form of $4kX + r$</li>
 <li>Check whether $p = \frac{1 + Dy^2}{4}$ is a prime</li>
 <li>If so, $p - 1$ will be divisible by $X$ and the curve $E / \mathbb{F}_p$ defined above or its twist is an anomalous curve.</li>
 </ol>
