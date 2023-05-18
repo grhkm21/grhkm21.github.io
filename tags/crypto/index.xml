@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>crypto on Blog by grhkm21</title>
+    <title>crypto on Blog by grhkm</title>
     <link>https://grhkm21.github.io/tags/crypto/</link>
-    <description>Recent content in crypto on Blog by grhkm21</description>
+    <description>Recent content in crypto on Blog by grhkm</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Mon, 16 Jan 2023 12:36:14 +0000</lastBuildDate><atom:link href="https://grhkm21.github.io/tags/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 May 2023 03:43:00 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/tags/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CM method</title>
+      <link>https://grhkm21.github.io/posts/cm-method/</link>
+      <pubDate>Thu, 18 May 2023 03:43:00 +0100</pubDate>
+      
+      <guid>https://grhkm21.github.io/posts/cm-method/</guid>
+      <description>Elliptic curves have become very important in the past 20 years, but it is still a difficult field for normal people (e.g. CTF players) to get into due to the maths barrier. One important construction in EC theory is the Complex Multiplication (CM) method, which is a method for generating elliptic curves with a given order or trace over finite fields. Here, I hope to give a short summary on how the method works, as previously I have only found this documented in academic papers.</description>
+    </item>
+    
     <item>
       <title>Finite Realm of Random (498 points, 4 solves)</title>
       <link>https://grhkm21.github.io/posts/idek-finite-realm-of-random/</link>

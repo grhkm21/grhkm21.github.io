@@ -11,7 +11,7 @@
     gtag('config', 'G-6BP6QGT61V');
 </script>
 
-<title>Algebra (831 pts, 14 solves) | Blog by grhkm21</title>
+<title>Algebra (831 pts, 14 solves) | Blog by grhkm</title>
 <meta charset="utf-8">
 <meta name="generator" content="Hugo 0.109.0">
 <meta name="description" content="Recovering a curve from a point addition group law defined on it.">
@@ -20,7 +20,7 @@
     href="https://grhkm21.github.io/css/index.css">
 <link rel="canonical" href="https://grhkm21.github.io/posts/tet-algebra/">
 <link rel="alternate" type="application/rss+xml" href=""
-    title="Blog by grhkm21">
+    title="Blog by grhkm">
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -33,6 +33,9 @@
 
 
 <link rel="stylesheet" href="/scss/alert.min.css">
+
+
+<link rel="stylesheet" href="/scss/toc.min.css">
 
 
 <link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
@@ -62,7 +65,7 @@
 
 <header>
     
-    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm21</a>
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
     
     
     <nav>
@@ -76,10 +79,13 @@
 </header>
 
 <article>
-  <header>
-    <h1>Algebra (831 pts, 14 solves)</h1>
-  </header>
-  <h2 id="introduction">Introduction</h2>
+    <header>
+        <h1>Algebra (831 pts, 14 solves)</h1>
+    </header>
+
+    
+
+    <h2 id="introduction">Introduction</h2>
 <p>Our team Black Bauhinia participated in the TetCTF 2022 which spans two days.  <code>Algebra</code> is the hardest Crypto challenge in the CTF. Mystiz and I (grhkm) together spent around 7 hours on this challenge.</p>
 <h2 id="problem-statement">Problem Statement</h2>
 <blockquote>
@@ -246,8 +252,6 @@
 <p>In the CTF, Mystiz and I also found that when we change $C$ to random values, sometimes points have order $p^2 - 1$ instead of $p - 1$. This is now explained, as $x^2 + 2Cx + 1 = (x - r_1)(x - r_2)$ have roots in $\mathbb{F}_{p^2}$ when $C^2 - 1$ is a quadratic non-residue, which the field has order $p^2 - 1$.</p>
 
 </article>
-
-
 
 
 

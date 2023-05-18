@@ -11,7 +11,7 @@
     gtag('config', 'G-6BP6QGT61V');
 </script>
 
-<title>Learning Without Errors (396 pts, 6 solves, upsolve) | Blog by grhkm21</title>
+<title>Learning Without Errors (396 pts, 6 solves, upsolve) | Blog by grhkm</title>
 <meta charset="utf-8">
 <meta name="generator" content="Hugo 0.109.0">
 <meta name="description" content="Chosen Plaintext Ring-LWE (CKKS) Attack">
@@ -20,7 +20,7 @@
     href="https://grhkm21.github.io/css/index.css">
 <link rel="canonical" href="https://grhkm21.github.io/posts/dice-learning-without-errors/">
 <link rel="alternate" type="application/rss+xml" href=""
-    title="Blog by grhkm21">
+    title="Blog by grhkm">
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -33,6 +33,9 @@
 
 
 <link rel="stylesheet" href="/scss/alert.min.css">
+
+
+<link rel="stylesheet" href="/scss/toc.min.css">
 
 
 <link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
@@ -62,7 +65,7 @@
 
 <header>
     
-    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm21</a>
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
     
     
     <nav>
@@ -76,10 +79,13 @@
 </header>
 
 <article>
-  <header>
-    <h1>Learning Without Errors (396 pts, 6 solves, upsolve)</h1>
-  </header>
-  <p>(Up-)Solved by: grhkm</p>
+    <header>
+        <h1>Learning Without Errors (396 pts, 6 solves, upsolve)</h1>
+    </header>
+
+    
+
+    <p>(Up-)Solved by: grhkm</p>
 <p>Source of the problem: <a href="https://ctf.dicega.ng/challs">Dice CTF 2022</a></p>
 <h2 id="self-reflection">Self-Reflection</h2>
 <p>I am actually very frustrated and annoyed at myself for this problem. During the CTF I was scared off by my lack of experience with this encryption scheme, and also just didn&rsquo;t believe I can solve this challenge. As a result, I spent a lot of my time watching YouTube instead.</p>
@@ -447,8 +453,6 @@
 <p>Motivated by this, we simply consider $P(x) + (x^{1024} + 1)$ if the constant term is even, and if $(x + 1)\mid P(x)$, then $(x + 1)\mid P(x) + (x^{1024} + 1)$ by factor theorem and we proceed as above!</p>
 
 </article>
-
-
 
 
 

@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Blog by grhkm21</title>
+    <title>Posts on Blog by grhkm</title>
     <link>https://grhkm21.github.io/posts/</link>
-    <description>Recent content in Posts on Blog by grhkm21</description>
+    <description>Recent content in Posts on Blog by grhkm</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Wed, 10 May 2023 05:43:47 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 May 2023 03:43:00 +0100</lastBuildDate><atom:link href="https://grhkm21.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>MA257 Notes</title>
-      <link>https://grhkm21.github.io/posts/ma257-notes/</link>
-      <pubDate>Wed, 10 May 2023 05:43:47 +0100</pubDate>
+      <title>CM method</title>
+      <link>https://grhkm21.github.io/posts/cm-method/</link>
+      <pubDate>Thu, 18 May 2023 03:43:00 +0100</pubDate>
       
-      <guid>https://grhkm21.github.io/posts/ma257-notes/</guid>
-      <description>These are some summarised notes for MA257. I tried my best :)
-Just like any other module, this module can be split into theoretical and computational. Obviously the theoretical parts are important as well, but in my opinion having a computational intuition helps see the big picture easier. Here, I only summarise the computational part of the module. For the proofs, you will need to look at the lecture notes themselves, but I don&amp;rsquo;t think they will be terribly important.</description>
-    </item>
-    
-    <item>
-      <title>Jacobi Quartics</title>
-      <link>https://grhkm21.github.io/posts/jacobi-quartics/</link>
-      <pubDate>Thu, 04 May 2023 00:13:15 +0100</pubDate>
-      
-      <guid>https://grhkm21.github.io/posts/jacobi-quartics/</guid>
-      <description>This is a short note on Jacobi quartics and its relationship with elliptic curves.
-Definition An elliptic curve in Jacobi quartic form is a curve of the form $J_a: y^2 = x^4 + 2ax^2 + 1$, where $\det(J)$, which is some multiple of $a^2 - 1$ here, is nonzero. This model of elliptic curves is important as it provides quicker point arithmetic. We shall prove that the curve $J_a$ is birationally equivalent to $E_a: 2v^2 = u^3 - 2au^2 + (a^2 - 1)u$.</description>
+      <guid>https://grhkm21.github.io/posts/cm-method/</guid>
+      <description>Elliptic curves have become very important in the past 20 years, but it is still a difficult field for normal people (e.g. CTF players) to get into due to the maths barrier. One important construction in EC theory is the Complex Multiplication (CM) method, which is a method for generating elliptic curves with a given order or trace over finite fields. Here, I hope to give a short summary on how the method works, as previously I have only found this documented in academic papers.</description>
     </item>
     
     <item>
