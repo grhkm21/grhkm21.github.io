@@ -102,90 +102,10 @@
 <p>Also please correct me if I am blatantly stating wrong facts :D I know I do that quite often.</p>
 <p>Reference: <a href="http://www.numdam.org/article/ASENS_1969_4_2_4_521_0.pdf">Waterhouse</a></p>
 <h2 id="summary">Summary</h2>
-<p>This is a very short summary for the content following. For a squarefree integer $D$, there is a explicitly computable polynomial $h_D(x) \in \mathbb{Z}[x]$. Now, fix a prime $p$, and suppose that $4p = x^2 + Dy^2$, where $x, y$ are integers. Then, for any roots of $H_{-D}$ over $\mathbb{F}<em>p$, say $H</em>{-D}(j_0) = 0$, then every elliptic curve $E$ over $\mathbb{F}_p$ with $j$-invariant $j_0$ will have Frobenius trace $t = \pm x$, or equivalently that $\left|E / \mathbb{F}_p\right| = p + 1 \pm x$. With this, we can easily construct curves with given trace or order (satisfying the Hasse bound).</p>
-<p>In response to <a href="https://twitter.com/y011d4/status/1659025096277913600?s=20">y011d4</a>, we can generate anomalous curves with $p - 1$ being smooth as a special case quickly as follows. Let $d$ be an integer such that the class number of $\mathbb{Q}(\sqrt{-d})$ is $1$ i.e. $\mathbb{Q}(\sqrt{-d})$ is a Unique Factorisation Domain. By the <a href="https://www.wikiwand.com/en/Stark%E2%80%93Heegner_theorem">Baker-Heegner-Stark theorem</a> this only happens when $d \in \{1, 2, 3, 7, 11, 19, 43, 67, 163\}$. Next, compute the discriminant of $\mathbb{Q}(\sqrt{-d})$ by $D \coloneqq \begin{cases} 4d &amp;\text{if} \, d \equiv 1 \pmod{4} \\ d &amp;\text{otherwise} \end{cases}$. Then, we can explicitly compute $H_D$ to be</p>
-<p>$$
-H_D(x) = x - j\left(\frac{D + \sqrt{-D}}{2}\right) = x - j_0 \in \mathbb{Z}[x]
-$$</p>
-<p>From here, we have to find a prime $p$ such that $4p = 1 + Dy^2$. Indeed, we simply test random odd $y$ until $\frac{1 + Dy^2}{4}$ is prime. From there, either the curve $E: y^2 = x^3 + \frac{3j_0}{1728 - j_0}x + \frac{2j_0}{1728 - j_0}$ or its quadratic twist will have order exactly $p$.</p>
-<p>In the discussion with y011d4 i.e. the challenge DDLP from the HackTMCTF Finals, we also need $p - 1$ to be smooth enough to perform DLP. To do so, we will generate $p$ that are in the form of $1 + kX$, where $X$ is a large smooth number. Substituting into the equation $4p = 1 + Dy^2$, we get</p>
-<p>$$
-\begin{align*}
-4p &amp;= 1 + Dy^2 \\
-4(1 + kX) &amp;= 1 + Dy^2 \\
-4 &amp;\equiv 1 + Dy^2 &amp;\pmod{4X} \\
-y &amp;\equiv \frac{-3}{D} &amp;\pmod{4X}
-\end{align*}
-$$</p>
-<p>Therefore, our plan is to:</p>
-<ol>
-<li>Fix $D$</li>
-<li>Check that $-3D^{-1}$ is a quadratic residue modulo $4X$</li>
-<li>Compute $r \coloneqq \sqrt{-3D^{-1}} \pmod{4X}$</li>
-<li>Generate $y$ in the form of $4kX + r$</li>
-<li>Check whether $p = \frac{1 + Dy^2}{4}$ is a prime</li>
-<li>If so, $p - 1$ will be divisible by $X$ and the curve $E / \mathbb{F}_p$ defined above or its twist is an anomalous curve.</li>
-</ol>
-<p>The following code does the above.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>D <span style="color:#f92672">=</span> <span style="color:#ae81ff">163</span>
-</span></span><span style="display:flex;"><span>B <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">256</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># We generate y = 4kX + r ~ 4kX</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Then, p = (1 + Dy^2) / 4 ~ 4Dk^2X^2</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Let say B is a lower bound for p</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># This corresponds to k &gt; sqrt(B) / Xsqrt(D)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># We can just generate X that is very close to</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># sqrt(B) / sqrt(D), then generate any random k</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate smooth X</span>
-</span></span><span style="display:flex;"><span>primes <span style="color:#f92672">=</span> prime_range(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
-</span></span><span style="display:flex;"><span>    X <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    ps <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> X <span style="color:#f92672">&lt;</span> sqrt(B) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">24</span>:
-</span></span><span style="display:flex;"><span>        p <span style="color:#f92672">=</span> choice(primes)
-</span></span><span style="display:flex;"><span>        ps<span style="color:#f92672">.</span>append(p)
-</span></span><span style="display:flex;"><span>        X <span style="color:#f92672">*=</span> p
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> X <span style="color:#f92672">&gt;</span> sqrt(B) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> X <span style="color:#f92672">%</span> D <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> Zmod(X)(<span style="color:#ae81ff">3</span> <span style="color:#f92672">/</span> D)<span style="color:#f92672">.</span>is_square():
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate residue</span>
-</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> ZZ(Zmod(<span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> X)(<span style="color:#ae81ff">3</span> <span style="color:#f92672">/</span> D)<span style="color:#f92672">.</span>sqrt())
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Found: </span><span style="color:#e6db74">{</span>X <span style="color:#e6db74">= }</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>r <span style="color:#e6db74">= }</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>y_lb <span style="color:#f92672">=</span> ceil(sqrt(B) <span style="color:#f92672">/</span> X <span style="color:#f92672">/</span> sqrt(D))
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>y_lb <span style="color:#e6db74">= }</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate prime</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
-</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> randrange(y_lb, y_lb <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>) <span style="color:#f92672">*</span> (<span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> X) <span style="color:#f92672">+</span> r
-</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">=</span> ZZ((<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> D <span style="color:#f92672">*</span> y<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">4</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> p <span style="color:#f92672">&gt;</span> B <span style="color:#f92672">and</span> is_prime(p):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> X <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        mx <span style="color:#f92672">=</span> max([q <span style="color:#66d9ef">for</span> q, _ <span style="color:#f92672">in</span> factor((p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> X)])
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> mx<span style="color:#f92672">.</span>nbits() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">64</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Compute Hilbert class polynomial and construct curve</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># We know that H_D(x) has integer coefficients, so j0 is an integer</span>
-</span></span><span style="display:flex;"><span>j0 <span style="color:#f92672">=</span> round(elliptic_j((<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> sqrt(<span style="color:#f92672">-</span>D)) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>, prec<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)<span style="color:#f92672">.</span>real())
-</span></span><span style="display:flex;"><span>E <span style="color:#f92672">=</span> EllipticCurve(GF(p), j<span style="color:#f92672">=</span>j0)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> E<span style="color:#f92672">.</span>order() <span style="color:#f92672">!=</span> p:
-</span></span><span style="display:flex;"><span>    E <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>quadratic_twist()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;p - 1:&#34;</span>, factor(p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>))
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Anomalous curve?&#34;</span>, E<span style="color:#f92672">.</span>order() <span style="color:#f92672">==</span> p)
-</span></span></code></pre></div><p>Note that in the code, I only break when <code>mx.nbits() &lt; 64</code>.</p>
-<p>Running time non-analysis: This is a non-analysis, I just want to share this knowledge <s>and get more people into analytic number theory</s>. Let&rsquo;s say that our brain consists of a single braincell and only knows Pohlig-Hellman, and also that our computer is worse than a potato and can only perform discrete log when the largest prime factor of $p - 1$ is less than $2^{64}$. What is the probability that a random integer less than $X$ is $2^{64}$-smooth? As it turns out, this problem has been studied by <span class="hint--html hint--bottom">
-    <span class="hint__element">Karl Dickman</span>
-    <span class="hint__content">
-         Apparently he was an actuary and only published one math paper </span>
-</span>, and the answer can be expressed in terms of the <a href="https://www.wikiwand.com/en/Dickman_function">Dickman function</a> $\rho$. He proved that asymptotically, the proportion of numbers below $X$ that are $B$-smooth tends to $\rho\left(\frac{\log X}{\log B}\right)$, where $\rho$ satisfies the delayed differential equation $u\rho&rsquo;(u) + \rho(u - 1) = 0$, with initial conditions $\rho(u) = 1$ for $0 \leq u \leq 1$. With this, we can recursively compute analytic functions $\rho_n$ that matches with $\rho$ on the interval $[n - 1, n]$. In our scenario, we want to compute the probability that an integer below $(p - 1) / X \sim 2^{152}$ is $2^{64}$-smooth. It can be approximated by $\rho\left(\frac{152}{64}\right) = 1 - \log\left(\frac{152}{64}\right) \approx 0.135$. Combined with the probability that $p - 1$ is a prime, which is approximated to be $\frac{1}{\log(2^{260})} \approx \frac{1}{180}$, we see that our algorithm has to test approximately $1335$ numbers before we get a suitable $p$.</p>
-<!-- ## Review
+<p>This is a very short summary for the content following. For a squarefree integer $D$, there is a explicitly computable polynomial $H_{-D}(x) \in \mathbb{Z}[x]$. Now, fix a prime $p$, and suppose that $4p = x^2 + Dy^2$, where $x, y$ are integers. Then, for any roots of $H_{-D}$ over $\mathbb{F}<em>p$, say $H</em>{-D}(j_0) = 0$, then every elliptic curve $E$ over $\mathbb{F}_p$ with $j$-invariant $j_0$ will have Frobenius trace $t = \pm x$, or equivalently that $\left|E / \mathbb{F}_p\right| = p + 1 \pm x$. With this, we can easily construct curves with given trace or order (satisfying the Hasse bound).</p>
+<!--
+
+## Review
 
 Let $p > 3$ be a prime. We write $\mathbb{F}_p$ for the finite field with $p$ elements. A non-singular elliptic curve $E$ over $\mathbb{F}_p$ consists of the points satisfying the short Weierstrass form $E / \mathbb{F}_p: y^2 = x^3 + ax + b$, where $a, b \in \mathbb{F}_p$, along with a point at infinity. We will just write $E$ instead of $E / \mathbb{F}_p$. A quadratic twist of $E$ by $c$ of the curve is $E^t: cy^2 = x^3 + ax + b$. When $c$ is a quadratic nonresidue, $E^t$ is a quadratic twist of $E$. The discriminant of the elliptic curve is $\Delta = -16(4a^3 - 27b^2)$, and non-singular just means $\Delta \neq 0$. The $j$-invariant of the curve is defined to be $j(E) = -1728(4a)^3 / \Delta = 6912a^3 / (4a^3 - 27b^2)$. The endomorphism ring $\mathrm{End}(E)$ of $E$ are the morphisms mapping $E$ to itself.
 
@@ -203,7 +123,7 @@ $$
 
 ## Hilbert Class Polynomial
 
-We first introduce the Hilbert class polynomial. The idea is that over the finite field $\mathbb{F}_p$ where $p > 3$, there are around $p^2$ (non-singular) elliptic curves, which we can write as $y^2 = x^3 + ax + b$. Some of them will be isomorphic, such as the curve $E_1: y^2 = x^3 + ax + b$ and $E_2: y^2 = x^3 + a\lambda^2x + b\lambda^3$ where $\lambda \in \mathbb{F}_p$. It is natural to consider only classes of elliptic curves up to isomorphism. Within those, we can further consider those with the same endomorphism ring $\mathcal{O}$. In short, it turns out that for a  -->
+We first introduce the Hilbert class polynomial. The idea is that over the finite field $\mathbb{F}_p$ where $p > 3$, there are around $p^2$ (non-singular) elliptic curves, which we can write as $y^2 = x^3 + ax + b$. Some of them will be isomorphic, such as the curve $E_1: y^2 = x^3 + ax + b$ and $E_2: y^2 = x^3 + a\lambda^2x + b\lambda^3$ where $\lambda \in \mathbb{F}_p$. It is natural to consider only classes of elliptic curves up to isomorphism. Within those, we can further consider those with the same endomorphism ring $\mathcal{O}$. In short, it turns out that for a
 </article>
 
 

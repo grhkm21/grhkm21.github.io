@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-6BP6QGT61V');
+</script>
+
+<title>DDLP (Upsolve) | Blog by grhkm</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.109.0">
+<meta name="description" content="Find ECC parameters where both DLP (over F_p) and ECDLP (over E/F_p) are feasible.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+    href="https://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="https://grhkm21.github.io/posts/hacktm-ddlp/">
+<link rel="alternate" type="application/rss+xml" href=""
+    title="Blog by grhkm">
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/scss/hint.min.css">
+
+
+<link rel="stylesheet" href="/scss/alert.min.css">
+
+
+<link rel="stylesheet" href="/scss/toc.min.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body)"></script>
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+            
+            
+            delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$', right: '$', display: false },
+                { left: '\\(', right: '\\)', display: false },
+                { left: '\\[', right: '\\]', display: true }
+            ],
+            
+            throwOnError: false
+        });
+    });
+</script>
+
+<header>
+    
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
+    
+    
+    <nav>
+        
+        <a href="/about-me/">About</a>
+        
+        <a href="/">Posts</a>
+        
+    </nav>
+    
+</header>
+
+<article>
+    <header>
+        <h1>DDLP (Upsolve)</h1>
+    </header>
+
+    
+
+    <p>Discussion at <a href="https://twitter.com/y011d4/status/1659025096277913600?s=20">y011d4</a>.</p>
+<p>This post was originally under <a href="/posts/cm-method">CM Method</a>, but after writing the solution and thinking about it, I realised that I didn&rsquo;t really use that much CM theory at all 😅 So I have isolated this into an individual post.</p>
+<p>Source of this problem: <a href="https://github.com/y011d4/my-ctf-challenges/tree/main/2023-HackTMCTF-Final/crypto/ddlp">HackTM Finals</a></p>
+<h2 id="challenge-source">Challenge Source</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> signal
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> SystemRandom
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>random <span style="color:#f92672">=</span> SystemRandom()
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;FLAG&#34;</span>, <span style="color:#e6db74">&#34;FAKEFLAG</span><span style="color:#e6db74">{THIS_IS_FAKE}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    signal<span style="color:#f92672">.</span>alarm(<span style="color:#ae81ff">60</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># parameter setup</span>
+</span></span><span style="display:flex;"><span>        p <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;p = &#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> p<span style="color:#f92672">.</span>bit_length() <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">256</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> is_prime(p)
+</span></span><span style="display:flex;"><span>        a <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;a = &#34;</span>))
+</span></span><span style="display:flex;"><span>        b <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;b = &#34;</span>))
+</span></span><span style="display:flex;"><span>        E <span style="color:#f92672">=</span> EllipticCurve(GF(p), [a, b])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> <span style="color:#f92672">not</span> E<span style="color:#f92672">.</span>is_singular()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;</span> a <span style="color:#f92672">&lt;</span> p
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">assert</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;</span> b <span style="color:#f92672">&lt;</span> p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># DLP in GF(p)</span>
+</span></span><span style="display:flex;"><span>        g <span style="color:#f92672">=</span> GF(p)(input(<span style="color:#e6db74">&#34;g = &#34;</span>))
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        h <span style="color:#f92672">=</span> g<span style="color:#f92672">**</span>x
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>h <span style="color:#e6db74">= }</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        x_ <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;x = &#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># DLP in E</span>
+</span></span><span style="display:flex;"><span>        Gx <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;Gx = &#34;</span>))
+</span></span><span style="display:flex;"><span>        Gy <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;Gy = &#34;</span>))
+</span></span><span style="display:flex;"><span>        G <span style="color:#f92672">=</span> E(Gx, Gy)
+</span></span><span style="display:flex;"><span>        y <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, p <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> int(sqrt(p)))  <span style="color:#75715e"># order should be &gt; p - 2 * sqrt(p)</span>
+</span></span><span style="display:flex;"><span>        H <span style="color:#f92672">=</span> y <span style="color:#f92672">*</span> G
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>H <span style="color:#e6db74">= }</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        y_ <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;y = &#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> x <span style="color:#f92672">==</span> x_ <span style="color:#f92672">and</span> y <span style="color:#f92672">==</span> y_:
+</span></span><span style="display:flex;"><span>            print(flag)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>x <span style="color:#e6db74">= }</span><span style="color:#e6db74">, </span><span style="color:#e6db74">{</span>y <span style="color:#e6db74">= }</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Something wrong...&#34;</span>)
+</span></span></code></pre></div><p>Essentially, we have to provide parameters $(p, a, b)$ such that both the DLP problem on $\mathbb{F}_p$ and the ECDLP problem on $E / \mathbb{F}_p : y^2 = x^3 + ax + b$ are feasible.</p>
+<h2 id="background">Background</h2>
+<p>There is a result from basic CM theory that is very easy to apply. For any <strong>negative</strong> integer $D \equiv 0, 1 \pmod{4}$, there exists a integer polynomial $H_D(X) \in \mathbb{Z}[X]$. Furthermore, if we find one of its roots over $\mathbb{F}_p$ for prime $p$, say $j_0$, then any elliptic curve with $j$-invariant $j_0$ over $\mathbb{F}_p$ will have Frobenius trace $t = p + 1 - \left|E / \mathbb{F}_p\right|$ satisfying $4p = t^2 - Dy^2$. Moreover, $H_D$ can be computed efficiently (especially) when $D$ is small. This will be used below to construct a curve with a given trace.</p>
+<h2 id="solution">Solution</h2>
+<p>The most common attacks on ECDLP are Smart&rsquo;s attack on anomalous curves and the MOV attack on supersingular / curves with low embedding degree. I chose to go with the first since it is nicer. For Smart&rsquo;s attack to work, we need an elliptic curve such that $\left|E / \mathbb{F}_p\right| = p$. We also need $p - 1$ to be smooth in order for DLP to work.</p>
+<p>To do this, first note that an anomalous curve satisfies $t = 1$. This means that we want to find $p$ and some $D$ such that $4p = 1 - Dy^2$ and $D$ is small. Furthermore, remember that we want $p - 1$ to be smooth enough so that DLP works. We can incorporate this information by writing $p = kX + 1$, where $X$ is a large smooth integer. Substituting into the equation, we get that $4(kX + 1) = 1 - Dy^2$. If we reduce modulo $4X$, we get that $3 \equiv -Dy^2 \pmod{4X}$, which means that $-3D^{-1}$ is a quadratic residue modulo $4X$. With this, we can then solve for $y$ to get a congruence $y \equiv \sqrt{-3D^{-1}} \pmod{4X}$. Therefore, our plan is quite clear:</p>
+<ol>
+<li>Generate a large smooth $X$</li>
+<li>Iterate through small $D$s</li>
+<li>For each $D$, check if $-3D^{-1}$ is a quadratic residue modulo $4X$. If not, continue</li>
+<li>If so, we generate a random $y$ such that $y \equiv \sqrt{-3D^{-1}} \pmod{4X}$</li>
+<li>We then check solve for $k$ and check whether $p = kX + 1$ is a prime</li>
+<li>If so, we compute the Hilbert class polynomial $H_{-D}(X)$ and find its roots over $p$</li>
+<li>Finally, curves with those $j$-invariants will have trace $\pm 1$</li>
+<li>In the case where the resulting curve has trace $-1$, we can take its quadratic twist for a curve with trace $1$</li>
+</ol>
+<p>The only steps that require further explanation are steps 6 to 8. In step 6, we can compute the Hilbert class polynomial in Sage using the function <code>hilbert_class_polynomial</code>. For step 7, we have to generate a curve with a given $j$-invariant. This can be done explicitly but Sage also provides an elliptic curve constructor <code>EllipticCurve(GF(p), j=j0)</code> that we can use. Finally, in step 8 we need to turn a curve with trace $-1$ into a curve with trace $1$ via quadratic twist. This is a general result where given an elliptic curve $E / \mathbb{F}_p: y^2 = x^3 + ax + b$, there is a quadratic twist $E^t / \mathbb{F}_p: cy^2 = x^3 + ax + b$ where $c$ is a quadratic nonresidue modulo $p$. Furthermore, they satisfy the equation $\left|E / \mathbb{F}_p\right| + \left|E^t / \mathbb{F}_p\right| = 2p + 2$, and rearranging shows what we want.</p>
+<h2 id="code">Code</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> itertools
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>start_time <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>process_time()
+</span></span><span style="display:flex;"><span>Ds <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>primes <span style="color:#f92672">=</span> prime_range(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> len(Ds) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    X <span style="color:#f92672">=</span> product(sample(primes, <span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span>    Ds <span style="color:#f92672">=</span> [D <span style="color:#66d9ef">for</span> D <span style="color:#f92672">in</span> range(<span style="color:#f92672">-</span><span style="color:#ae81ff">7</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1000</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>) <span style="color:#66d9ef">if</span> D <span style="color:#f92672">%</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">and</span> is_square(Zmod(<span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> X)(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">/</span> D))]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rs <span style="color:#f92672">=</span> [ZZ(Zmod(<span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> X)(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">/</span> D)<span style="color:#f92672">.</span>sqrt()) <span style="color:#66d9ef">for</span> D <span style="color:#f92672">in</span> Ds]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> D, r <span style="color:#f92672">in</span> itertools<span style="color:#f92672">.</span>cycle(zip(Ds, rs)):
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> randrange(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>) <span style="color:#f92672">*</span> (<span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> X) <span style="color:#f92672">+</span> r
+</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">=</span> ZZ((<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> D <span style="color:#f92672">*</span> y<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>    mx <span style="color:#f92672">=</span> max([p <span style="color:#66d9ef">for</span> p, _ <span style="color:#f92672">in</span> factor(p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)])
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Modify 48 to higher numbers if your computer is strong</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> p<span style="color:#f92672">.</span>nbits() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">256</span> <span style="color:#f92672">and</span> is_prime(p) <span style="color:#f92672">and</span> mx<span style="color:#f92672">.</span>nbits() <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">48</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verification</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> is_prime(p)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>p <span style="color:#e6db74">= }</span><span style="color:#e6db74"> (</span><span style="color:#e6db74">{</span>p<span style="color:#f92672">.</span>nbits()<span style="color:#e6db74">}</span><span style="color:#e6db74"> bits)&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;largest prime factor: </span><span style="color:#e6db74">{</span>mx<span style="color:#e6db74">}</span><span style="color:#e6db74"> (</span><span style="color:#e6db74">{</span>mx<span style="color:#f92672">.</span>nbits()<span style="color:#e6db74">}</span><span style="color:#e6db74"> bits)&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Time taken: </span><span style="color:#e6db74">{</span>time<span style="color:#f92672">.</span>process_time() <span style="color:#f92672">-</span> start_time<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> seconds&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Curve</span>
+</span></span><span style="display:flex;"><span>start_time <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>process_time()
+</span></span><span style="display:flex;"><span>j0 <span style="color:#f92672">=</span> hilbert_class_polynomial(D)<span style="color:#f92672">.</span>change_ring(GF(p))<span style="color:#f92672">.</span>roots(multiplicities<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>E <span style="color:#f92672">=</span> EllipticCurve(GF(p), j<span style="color:#f92672">=</span>j0)
+</span></span><span style="display:flex;"><span>P <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>random_point()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> p <span style="color:#f92672">*</span> P <span style="color:#f92672">!=</span> E(<span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>    E <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>quadratic_twist()
+</span></span><span style="display:flex;"><span>P <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>random_point()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> p <span style="color:#f92672">*</span> P <span style="color:#f92672">==</span> E(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Is the curve anomalous?&#34;</span>, E<span style="color:#f92672">.</span>order() <span style="color:#f92672">==</span> p)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Time taken: </span><span style="color:#e6db74">{</span>time<span style="color:#f92672">.</span>process_time() <span style="color:#f92672">-</span> start_time<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> seconds&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># DLP</span>
+</span></span><span style="display:flex;"><span>start_time <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>process_time()
+</span></span><span style="display:flex;"><span>g <span style="color:#f92672">=</span> GF(p)<span style="color:#f92672">.</span>multiplicative_generator()
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> randrange(p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> g<span style="color:#f92672">^</span>r
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> a<span style="color:#f92672">.</span>log(g) <span style="color:#f92672">==</span> r
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;DLP passed&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Time taken: </span><span style="color:#e6db74">{</span>time<span style="color:#f92672">.</span>process_time() <span style="color:#f92672">-</span> start_time<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> seconds&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ECDLP</span>
+</span></span><span style="display:flex;"><span>start_time <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>process_time()
+</span></span><span style="display:flex;"><span>G <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>random_point()
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> randrange(G<span style="color:#f92672">.</span>order())
+</span></span><span style="display:flex;"><span>P <span style="color:#f92672">=</span> r <span style="color:#f92672">*</span> G
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> G<span style="color:#f92672">.</span>discrete_log(P) <span style="color:#f92672">==</span> r
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;ECDLP passed&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Time taken: </span><span style="color:#e6db74">{</span>time<span style="color:#f92672">.</span>process_time() <span style="color:#f92672">-</span> start_time<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> seconds&#34;</span>)
+</span></span></code></pre></div><p>Example output:</p>
+<pre tabindex="0"><code>p = 112724698004539627624570484385750988204241234813855755125331421145620885542006974769 (276 bits)
+largest prime factor: 360332723321 (39 bits)
+Time taken: 4.261 seconds
+Is the curve anomalous? True
+Time taken: 4.903 seconds
+DLP passed
+Time taken: 0.523 seconds
+ECDLP passed
+Time taken: 0.076 seconds
+</code></pre><h2 id="running-time">Running Time</h2>
+<p>Running time non-analysis: This is a non-analysis, I just want to share this knowledge <s>and get more people into analytic number theory</s>. Let&rsquo;s say that our brain consists of a single braincell and only knows Pohlig-Hellman, and also that our computer is worse than a potato and can only perform discrete log when the largest prime factor of $p - 1$ is less than $2^{32}$. What is the probability that a random integer less than $X$ is $2^{32}$-smooth? As it turns out, this problem has been studied by <span class="hint--html hint--bottom">
+    <span class="hint__element">Karl Dickman</span>
+    <span class="hint__content">
+         Apparently he was an actuary and only published one math paper </span>
+</span>, and the answer can be expressed in terms of the <a href="https://www.wikiwand.com/en/Dickman_function">Dickman function</a> $\rho$. He proved that asymptotically, the proportion of numbers below $X$ that are $B$-smooth tends to $\rho\left(\frac{\log X}{\log B}\right)$, where $\rho$ satisfies the delayed differential equation $u\rho&rsquo;(u) + \rho(u - 1) = 0$, with initial conditions $\rho(u) = 1$ for $0 \leq u \leq 1$. With this, we can recursively compute analytic functions $\rho_n$ that matches with $\rho$ on the interval $[n - 1, n]$. In our scenario, we want to compute the probability that an integer below $(p - 1) / X \sim 2^{276 - 120}$ is $2^{32}$-smooth. It can be approximated by $\rho\left(\frac{156}{32}\right) \approx \frac{1}{2400}$. We can then use the Prime Number Theorem to approximate the probability that $(p - 1) / X$ is a prime, etc.</p>
+<p>Thanks to y011d4 for the discussion and nice challenge again.</p>
+
+</article>
+
+
+
+</html>
