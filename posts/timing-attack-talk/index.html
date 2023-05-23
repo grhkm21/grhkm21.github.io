@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BP6QGT61V"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-6BP6QGT61V');
+</script>
+
+<title>Timing Attack Talk | Blog by grhkm</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.109.0">
+<meta name="description" content="A short talk I gave for our CS society on timing attacks">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+    href="https://grhkm21.github.io/css/index.css">
+<link rel="canonical" href="https://grhkm21.github.io/posts/timing-attack-talk/">
+<link rel="alternate" type="application/rss+xml" href=""
+    title="Blog by grhkm">
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/scss/hint.min.css">
+
+
+<link rel="stylesheet" href="/scss/alert.min.css">
+
+
+<link rel="stylesheet" href="/scss/toc.min.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body)"></script>
+
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://grhkm21.github.io/katex/katex.min.js"></script>
+<script defer src="https://grhkm21.github.io/katex/contrib/auto-render.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+            
+            
+            delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$', right: '$', display: false },
+                { left: '\\(', right: '\\)', display: false },
+                { left: '\\[', right: '\\]', display: true }
+            ],
+            
+            throwOnError: false
+        });
+    });
+</script>
+
+<header>
+    
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
+    
+    
+    <nav>
+        
+        <a href="/about-me/">About</a>
+        
+        <a href="/">Posts</a>
+        
+    </nav>
+    
+</header>
+
+<article>
+    <header>
+        <h1>Timing Attack Talk</h1>
+    </header>
+
+    
+
+    <p>I gave a talk for our <a href="https://uwcs.co.uk/">CS society</a> on how timing attacks work. No prior knowledge on cryptography is required! Check me out :D</p>
+<p>Here are random resources I thought of in the past 5 minutes that might be interesting:</p>
+<ul>
+<li>The writeup / tutorial for timing attack on RSA can be found on <a href="https://mystiz.hk/posts/2021/2021-11-27-balsn-dlog/">Mystiz&rsquo;s blog</a></li>
+<li>The writeup for the timeless timing attack can be found on <a href="https://github.com/ConnorNelson/spaceless-spacing">ConnorNelson&rsquo;s blog</a></li>
+<li>Writeups on performing power trace analysis can be found on <a href="https://gist.github.com/Riatre/743da601776d3d10d430dcd9d6a80dc9">Riatre&rsquo;s gist</a></li>
+<li><a href="https://www.youtube.com/watch?v=DU-HruI7Q30">This talk</a> on RSA low-bandwith acoustic cryptanalysis is a classic. You can extract private keys by listening to the CPU</li>
+<li>If possible, I highly recommend you to get your hands on a device and try to mount these attacks yourself!</li>
+</ul>
+<p><script type="text/javascript" src= '/js/pdf-js/build/pdf.js'></script>
+
+<style>
+  #embed-pdf-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 20vh;
+     
+  }
+  
+  .pdf-canvas {
+    border: 1px solid black;
+    direction: ltr;
+    width: 100%;
+    height: auto;
+    display: none;
+  }
+  
+  #the-canvas {
+    border: 1px solid black;
+    direction: ltr;
+    width: 100%;
+    height: auto;
+    display: none;
+  }
+  
+  
+  .pdf-loadingWrapper {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 350px;
+  }
+  
+  .pdf-loading {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #d2d0d0;;
+    border-radius: 50%;
+    border-top-color: #383838;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+  
+  
+  
+  
+  
+  #overlayText {
+    word-wrap: break-word;
+    display: grid;
+    justify-content: end;
+  }
+  
+  #overlayText a {
+    position: relative;
+    top: 10px;
+    right: 4px;
+    color: #000;
+    margin: auto;
+    background-color: #eeeeee;
+    padding: 0.3em 1em;
+    border: solid 2px;
+    border-radius: 12px;
+    border-color: #00000030;
+    text-decoration: none;
+  }
+  
+  #overlayText svg {
+    height: clamp(1em, 2vw, 1.4em);
+    width:  clamp(1em, 2vw, 1.4em);
+  }
+  
+  
+  
+  @keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+  </style><div class="embed-pdf-container" id="embed-pdf-container-ed8793db">
+    <div class="pdf-loadingWrapper" id="pdf-loadingWrapper-ed8793db">
+        <div class="pdf-loading" id="pdf-loading-ed8793db"></div>
+    </div>
+    <div id="overlayText">
+      <a href="/files/timing-attack-talk.pdf" aria-label="Download" download>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+            <path d="M9 13c.3 0 .5-.1.7-.3L15.4 7 14 5.6l-4 4V1H8v8.6l-4-4L2.6 7l5.7 5.7c.2.2.4.3.7.3zm-7 2h14v2H2z" />
+        </svg>
+      </a>
+    </div>
+    <canvas class="pdf-canvas" id="pdf-canvas-ed8793db"></canvas>
+</div>
+
+<div class="pdf-paginator" id="pdf-paginator-ed8793db">
+    <button id="pdf-prev-ed8793db">Previous</button>
+    <button id="pdf-next-ed8793db">Next</button> &nbsp; &nbsp;
+    <span>
+      <span class="pdf-pagenum" id="pdf-pagenum-ed8793db"></span> / <span class="pdf-pagecount" id="pdf-pagecount-ed8793db"></span>
+    </span>
+    <a class="pdf-source" id="pdf-source-ed8793db" href="/files/timing-attack-talk.pdf">[pdf]</a>
+</div>
+
+<noscript>
+View the PDF file <a class="pdf-source" id="pdf-source-noscript-ed8793db" href="/files/timing-attack-talk.pdf">here</a>.
+</noscript>
+
+<script type="text/javascript">
+    (function(){
+    var url = '\/files\/timing-attack-talk.pdf';
+
+    var hidePaginator = "" === "true";
+    var hideLoader = "" === "true";
+    var selectedPageNum = parseInt("") || 1;
+
+    
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+    
+    if (pdfjsLib.GlobalWorkerOptions.workerSrc == '')
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "https:\/\/grhkm21.github.io\/" + 'js/pdf-js/build/pdf.worker.js';
+
+    
+    var pdfDoc = null,
+        pageNum = selectedPageNum,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 3,
+        canvas = document.getElementById('pdf-canvas-ed8793db'),
+        ctx = canvas.getContext('2d'),
+        paginator = document.getElementById("pdf-paginator-ed8793db"),
+        loadingWrapper = document.getElementById('pdf-loadingWrapper-ed8793db');
+
+
+    
+    showPaginator();
+    showLoader();
+
+    
+
+    function renderPage(num) {
+      pageRendering = true;
+      
+      pdfDoc.getPage(num).then(function(page) {
+        var viewport = page.getViewport({scale: scale});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        
+        var renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        var renderTask = page.render(renderContext);
+
+        
+        renderTask.promise.then(function() {
+          pageRendering = false;
+          showContent();
+
+          if (pageNumPending !== null) {
+            
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
+        });
+      });
+
+      
+      document.getElementById('pdf-pagenum-ed8793db').textContent = num;
+    }
+
+    
+
+    function showContent() {
+      loadingWrapper.style.display = 'none';
+      canvas.style.display = 'block';
+    }
+
+    
+
+    function showLoader() {
+      if(hideLoader) return
+      loadingWrapper.style.display = 'flex';
+      canvas.style.display = 'none';
+    }
+
+    
+
+    function showPaginator() {
+      if(hidePaginator) return
+      paginator.style.display = 'block';
+    }
+
+    
+
+    function queueRenderPage(num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    
+
+    function onPrevPage() {
+      if (pageNum <= 1) {
+        return;
+      }
+      pageNum--;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById('pdf-prev-ed8793db').addEventListener('click', onPrevPage);
+
+    
+
+    function onNextPage() {
+      if (pageNum >= pdfDoc.numPages) {
+        return;
+      }
+      pageNum++;
+      queueRenderPage(pageNum);
+    }
+    document.getElementById('pdf-next-ed8793db').addEventListener('click', onNextPage);
+
+    
+
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      var numPages = pdfDoc.numPages;
+      document.getElementById('pdf-pagecount-ed8793db').textContent = numPages;
+
+      
+      if(pageNum > numPages) {
+        pageNum = numPages
+      }
+
+      
+      renderPage(pageNum);
+    });
+    })();
+</script>
+
+ are available now!</p>
+<p>Talk recording:</p>
+<div id="Container"
+ style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
+ <iframe id="googleSlideIframe"
+  width="100%" height="100%"
+  src="https://www.youtube.com/embed/OC5D6DD1-_w"
+  frameborder="0" allowfullscreen=""
+  style="position:absolute; top:0; left: 0"></iframe>
+</div>
+
+
+<p>Love y&rsquo;all!!</p>
+<p><img src="/images/hanni.jpg" alt="Hanni 💖"></p>
+
+</article>
+
+
+
+</html>
