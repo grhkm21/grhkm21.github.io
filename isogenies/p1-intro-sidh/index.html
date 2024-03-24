@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+<title>Isogenies 1: What are isogenies? And a brief introduction to SIDH | Blog by grhkm</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.121.2">
+<meta name="description" content="A brief introduction to isogenies, introducing SIDH briefly as well">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/minimal.css">
+
+<style type="text/css"> .notice { --root-color: #444; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #c33; --error-content: #fee; --warning-title: #fb7; --warning-content: #fec; --info-title: #6be; --info-content: #e7f2fa; --success-title: #5a5; --success-content: #efe } @media (prefers-color-scheme:dark) {} { .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121 } } body.dark .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121; } .notice { padding: 18px; line-height: 24px; margin-bottom: 24px; border-radius: 4px; color: var(--root-color); background: var(--root-background); align-items: center; } .notice p:last-child { margin-bottom: 0 } .notice-title { margin: -18px -18px 12px; padding: 4px 18px; border-radius: 4px 4px 0 0; font-weight: 700; color: var(--title-color); background: var(--title-background); } .notice.error .notice-title { background: var(--error-title) } .notice.error { background: var(--error-content) } .notice.warning .notice-title { background: var(--warning-title) } .notice.warning { background: var(--warning-content) } .notice.info .notice-title { background: var(--info-title) } .notice.info { background: var(--info-content) } .notice.success .notice-title { background: var(--success-title) } .notice.success { background: var(--success-content) } .icon-notice { margin-right: 8px; margin-top: 2px; } .icon-notice img, .icon-notice svg { height: 1em; width: 1em; fill: currentColor; display: inline-block; position: relative; vertical-align: middle; } </style>
+<div><svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="success-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="error-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg></div>
+
+<link rel="canonical" href="https://grhkm21.github.io/isogenies/p1-intro-sidh/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm">
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/css/spoiler.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/main.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/variables.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/hint.css">
+
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me">About Me</a>
+    
+      <a href="/posts">Posts</a>
+    
+      <a href="/isogenies">Isogenies</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Isogenies 1: What are isogenies? And a brief introduction to SIDH</h1>
+    <time datetime="2024-03-21T14:15:13Z">March 21, 2024</time>
+  </header>
+  <div class="spoiler panel panel_default"> <div class="spoiler_block"> <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_in spoiler_block_show"> Disclaimer </a>  <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_out spoiler_block_hide" style="display: none;"> Disclaimer </a>  <div class="spoiler_block_content" style="display: none;"> <div class="notice warning" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#warning-notice"></use></svg></span>[WARNING] 即係唔係error</p><p>After writing the entire thing, I realised that I explained the concepts quite poorly, and isn&rsquo;t technically accurate either&hellip; I don&rsquo;t really care though! If you want a better introduction, see <a href="https://www.mariascrs.com/2020/11/06/isogenies-for-crypto.html">Maria&rsquo;s</a> blog. Also, blog #2 should clarify many of the concepts introduced here.</p></div>
+<div class="notice warning" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#warning-notice"></use></svg></span>[WARNING] 即係唔係error</p><p>Something something separable isogenies.</p></div>
+<div class="notice warning" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#warning-notice"></use></svg></span>[WARNING] 即係唔係error</p><p>After writing the entire blog I learned about Craig&rsquo;s <a href="https://eprint.iacr.org/2019/1321.pdf">Supersingular Isogeny Key Exchange for Beginners</a>. I really considered deleting this entire post&hellip;</p></div>
+<div class="notice warning" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#warning-notice"></use></svg></span>[WARNING] 即係唔係error</p><p>There&rsquo;s also a bunch of ambiguity with \(E\) with \(E(K)\) but yeah&hellip; I didn&rsquo;t introduce the notation \(E / K\) because that will be even more confusing.</p></div>
+<div class="notice warning" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#warning-notice"></use></svg></span>[WARNING] 即係唔係error</p><p>And no, I don&rsquo;t care about \(p = 2\) or \(3\). Please let me go, this blog series already took me billions of hours to write.</p></div>
+</div> </div> </div>
+<p>In this blog post, I hope to give a brief introduction to isogeny-based cryptography, and introduce the idea behind the SIDH scheme.</p>
+<h1 id="background">Background</h1>
+<p>An elliptic curve \(E(K)\) over a field \(K\), or just \(E = E(\overline{K})\), is (roughly) the set of solutions \((x, y) \in K^2\) of the equation \(y^2 = x^3 + ax + b\). It has an abelian group structure, i.e. an identity \(O\) and an operation \(+ : E(K) \to E(K) \to E(K)\) satisfying the abelian group axioms, e.g. \(P + Q = Q + P\) and \(P + (Q + R) = (P + Q) + R\), etc. Since \(K\) is finite, our curve \(E(K)\) is also finite. In classical cryptography (pre-quantum), we perform operations on this group structure. For example, we can think about the discrete logarithm problem:</p>
+<div class="notice info" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#info-notice"></use></svg></span>[INFO] 李家超提提你</p><p>Given two points \(P, Q = [m]P\) on \(E\) for a secret integer \(m\), find \(m\).</p></div>
+<p>With our current computers, the problem is hard. In fact, we don&rsquo;t know how to solve this better than the generic Pohlig-Hellman algorithm. However, the story changes when we introduce quantum computers, as <a href="https://www.cs.umd.edu/~amchilds/teaching/w08/l02.pdf">Shor&rsquo;s Algorithm</a> provides a polynomial-time algorithm to solve the discrete logarithm problem. Hence, we turn to the so-called <em>post-quantum cryptography</em>, and isogeny-based cryptography is one of the promising candidates.</p>
+<p>The philosophy of isogeny-based cryptography is simple: instead of taking \(E\) as our &ldquo;cryptography group&rdquo;, we instead take the set of all elliptic curves. That is, instead of having points \(P, Q, R, \cdots \in E\), we now have \(E_0, E_1, E_2, \cdots \in \mathcal{Ell}_K\). But this is not useful yet. How do we create cryptography out of these curves? Well, we work with <em>morphisms</em> between curves! In the diagram below, things drawn in <span style="color:magenta">magenta</span> are the objects, while things drawn in <span style="color:lightblue">blue</span> are how we manipulate them.</p>
+<p><img src="/images/pq.png" alt="Wow I managed to sneak some category theory in"></p>
+<hr>
+<h1 id="what-are-isogenies">What are Isogenies?</h1>
+<p>There are many definitions and/or properties of <span class="hint--html hint--top">
+<span class="hint__element">isogenies</span>
+<span class="hint__content">
+separable </span>
+</span>. They are morphisms, group homomorphisms with finite kernel, rational maps, etc. For our purpose, we take the following definition:</p>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p>An isogeny is a <strong>group homomorphism</strong> <span class="hint--html hint--top">
+<span class="hint__element"><em>with finite kernel</em></span>
+<span class="hint__content">
+This doesn’t affect us, since we are working with curves over finite fields.</span>
+</span> \(\varphi: E \to E&rsquo;\), treating \(E\) and \(E&rsquo;\) as abelian groups. Two key properties are:</p>
+<ul>
+<li>\(\varphi(P + Q) = \varphi(P) + \varphi(Q)\)</li>
+<li>\(\varphi(\mathcal{O}_E) = \mathcal{O}_{E&rsquo;}\)</li>
+</ul></div>
+<p>Some examples will help. Consider the curves \(E : y^2 = x^3 + x\) and \(E&rsquo; : y^2 = x^3 - 4x\) over some arbitrary field \(K\). There is an isogeny \(\varphi : E \to E&rsquo;\) between them, given by \(\varphi_1(x, y) = \left(\frac{x^2 + 1}{x}, \frac{x^2y - y}{x^2}\right)\). Let&rsquo;s verify the properties above! This is a valid map onto \(E&rsquo;\), which can be checked via direct substitution. The isogeny is a rational map with denominators \(x\) and \(x^2\), which means that when \(x = 0\), we get \(\varphi_1(x, y) = \mathcal{O}_{E&rsquo;}\), the point at infinity (and also the identity element). There are only finitely many solutions to \(x = 0\) on \(E\) (in fact, just \((0, 0)\)), so \(\varphi_1\) indeed has finite kernel. As a consequence, the isogeny is not injective and hence does not have an inverse. However, there still exists a &ldquo;close enough&rdquo; solution, called the <em>dual</em> isogeny and denoted \(\widehat{\varphi_1} : E&rsquo; \to E\). In our case, it is given by \(\widehat{\varphi_1}(x, y) = \left(\frac{x^2 - 4}{4x}, \frac{(x^2 + 4)y}{8x^2}\right)\). We will investigate dual isogenies in future posts, but for now, we only need to know that an isogeny in the opposite direction exists. This means we can say two curves are <em>isogenous</em> when there is an isogeny between them without ambiguity.</p>
+<p>Over finite fields, there are more isogenies from \(E\). For example, there is an isogeny from \(E\) to \(E&rsquo; : y^2 = x^3 + 6x + 3\) over \(K = \mathbb{F}_{17}\), given by \(\varphi_2(x, y) = \left(\frac{13x^2 + 16x + 8}{x + 13}, \cdots\right)\), and similarly there is a dual isogeny from \(E&rsquo; \to E\), given by \(\widehat{\varphi_2}(x, y) = \left(\frac{x^2 + 2x + 1}{x + 2}, \cdots\right)\). For both examples, we say \(E\) and \(E&rsquo;\) are <em>isogenous</em>. The curve \(E\) is the domain and the curve \(E&rsquo;\) is the codomain. We will investigate the relations between \(\varphi\) and \(\widehat{\varphi}\) in the next isogeny post.</p>
+<p>There is also a special type of isogeny that exists for all elliptic curve \(E\), which is the map \([k] : P \mapsto [k]P\). It is a group homomorphism and has <span class="hint--html hint--top">
+<span class="hint__element">finite kernel</span>
+<span class="hint__content">
+Since the group law is a rational map, though one has to prove it doesn&rsquo;t vanish. </span>
+</span>, and so it is an isogeny for all integer \(k \in \Z\). It maps \(E\) to itself, so we give it a special name, called an <em>endomorphism</em>. These endomorphisms will be very important in a few posts.</p>
+<p>Finally, just to be clear, not all elliptic curves are isogenous. By a consequence of <a href="https://www.wikiwand.com/en/Tate's_isogeny_theorem">Tate&rsquo;s isogeny theorem</a>, two elliptic curves over a finite field are isogenous if and only if they have the same number of points. Hence, for example, \(E : y^2 = x^3 + x\) and \(E&rsquo; : y^2 = x^3 + x + 1\) are not isogenous over \(\mathbb{F}_{10^9 + 7}\), because one has order \(10^9 + 8\) and one has order \(10^9 - 46994\). We will see a way to figure out which is which easily later in this post.</p>
+<hr>
+<h1 id="studying-isogenies">Studying Isogenies</h1>
+<!-- In order to do cryptography on them, we need a better understanding of isogenies. As mentioned, isogenies are group homomorphisms, so we can try some group theory. Let \\(P \in E(K)\\) be a point *of finite order*, and consider the subgroup \\(\langle P \rangle = \{\ldots, -2P, -P, O, P, 2P, \ldots\}\\). Then, \\(E' \coloneqq E / \langle P \rangle\\) is also an elliptic curve, and there exists an unique isogeny (up to isomorphism) \\(\varphi : E \to E / \langle P \rangle\\). A simpler way to remember this is that a finite subgroup \\(G \subseteq E\\) uniquely determines an isogeny \\(\varphi : E \to E / G\\), and vice versa (since \\(G = \mathrm{ker}(\varphi)\\)). We can compute both the codomain \\(E / \langle P \rangle\\) (up to isomorphism) and an evaluation \\(\varphi(Q)\\) in time \\(\mathrm{poly}(\mathrm{ord}(P))\\) using [Vélu's formula](https://www.mariascrs.com/2020/11/07/velus-formulas.html). -->
+<p>As mentioned, isogenies are group homomorphisms, so we would like to understand the complicated isogenies above by connecting them to group theory. To do so, we introduce the following theorem, taken from <a href="https://link.springer.com/book/10.1007/978-0-387-09494-6">AEC, Proposition III.4.12</a>. It will be extremely important throughout the remaining posts. It black-boxes many machineries and allows us to focus on the important bits and building intuitions.</p>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p>Let \(G\) be a <em>finite</em> subgroup of \(E(\overline{K})\). Then, there exists a <span class="hint--html hint--top">
+<span class="hint__element">unique</span>
+<span class="hint__content">
+up to isomorphism</span>
+</span> elliptic curve \(E&rsquo;\) and a <span class="hint--html hint--top">
+<span class="hint__element">unique</span>
+<span class="hint__content">
+separable, up to isomorphism</span>
+</span> isogeny \(\varphi_G : E \to E&rsquo;\), such that \(\ker(\varphi_G) = G\). We define \(E / G\) to be (a representative of) \(E&rsquo;\).</p>
+<p>As a corollary, for any point \(P \in E\), there exists a unique elliptic curve \(E&rsquo;\) and a unique isogeny \(\varphi_P : E \to E&rsquo;\) with kernel \(\langle P \rangle\).</p></div>
+<p>The notation \(E / G\) simply denotes the image of \(E\) under the isogeny with kernel \(G\). In particular, it is <em>not</em> a quotient group construction! As we saw before, \(E / G\) are separate curves from \(E\), not even a subgroup. Clearly, an isogeny \(\varphi_P\) also uniquely defines its kernel \(\ker(\varphi_P)\), so there is a bijection between finite subgroups and isogenies. Moreover, given the kernel subgroup \(G\) as a list of points, <a href="https://www.mariascrs.com/2020/11/07/velus-formulas.html">Vélu&rsquo;s formula</a> allows us to compute the codomain \(E&rsquo; = E / G\) in time \(\mathrm{poly}(|G|)\). In the cyclic case, we can compute \(E / \langle P \rangle\) in time \(\mathrm{poly}(\mathrm{ord}(P))\).</p>
+<p>As noted before, isogenies are not isomorphisms. Indeed, the isogeny \(\varphi : E \to E / \langle P \rangle\) has kernel \(\langle P \rangle\), \(\varphi_1\) has kernel \(\{O, (0, 0)\}\), etc. We define the <em>degree</em> of \(\varphi\) to be \(\deg(\varphi) \coloneqq |\ker(\varphi)|\). For example, \(\deg(\varphi) = |\langle P \rangle| = \mathrm{ord}(P)\), \(\deg(\widehat{\varphi}) = 2\), etc. One important case is the scalar endomorphisms \([k]\) with degrees \(k^2\) - even if \(K\) is not algebraically closed. The reason is that there are \(k^2\) points of order dividing \(k\) in general on \(E\) (over an algebraically closed field), a fact that we will use later.</p>
+<p>Next, we need to define a &ldquo;hard&rdquo; problem. In RSA we had the factorisation problem, in elliptic curve cryptography we had the discrete logarithm problem, and in isogeny-based cryptography one of the hard problems is the <em>isogeny path problem</em>.</p>
+<div class="notice info" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#info-notice"></use></svg></span>[INFO] 李家超提提你</p><p>Given two curves \(E, E&rsquo;\), find an isogeny \(\varphi : E \to E&rsquo;\) between them.</p></div>
+<p>There are other variants of this problem, such as finding an isogeny of specified degree, of smooth degree, etc., and we shall see an example later.</p>
+<hr>
+<h1 id="supersingular-isogeny-diffie-hellman-sidh">Supersingular Isogeny Diffie-Hellman (SIDH)</h1>
+<p>Surprisingly, we already have enough tools to construct an isogeny based key exchange using the Diffie-Hellman idea, called the Supersingular Isogeny Diffie-Hellman (SIDH) protocol. Let&rsquo;s fix a public starting elliptic curve \(E_0\), and let the two parties in the key exchange be \(A\) and \(B\). The idea is as follows: they each choose a random point \(P\) and \(Q\) respectively, and compute the targetting curve \(E_A \coloneqq E_0 / \langle P \rangle\) and \(E_B \coloneqq E_0 / \langle Q \rangle\) respectively. Then, they exchange the curves, and compute the curve \(E_0 / \langle P, Q \rangle ``= E_A / \langle Q \rangle = E_B / \langle P \rangle&rsquo;&rsquo;\), to complete the following diagram. This is an adaptation of the group-based Diffie-Hellman, where instead of computing \(g \mapsto g^a\) one computes \(E \mapsto E / \langle P \rangle\).</p>
+<!-- https://q.uiver.app/#q=WzAsNCxbMSwwLCJFXzAiXSxbMCwxLCJFX0EiXSxbMiwxLCJFX0IiXSxbMSwyLCJFX3tBQn0iXSxbMCwxLCJcXHZhcnBoaV9BIiwyLHsiY29sb3VyIjpbMjQwLDYwLDYwXX0sWzI0MCw2MCw2MCwxXV0sWzEsMywiXFx2YXJwaGlfQiIsMix7ImNvbG91ciI6WzMwLDYwLDYwXX0sWzMwLDYwLDYwLDFdXSxbMCwyLCJcXHZhcnBoaV9CIiwwLHsiY29sb3VyIjpbMzAsNjAsNjBdfSxbMzAsNjAsNjAsMV1dLFsyLDMsIlxcdmFycGhpX0EiLDAseyJjb2xvdXIiOlsyNDAsNjAsNjBdfSxbMjQwLDYwLDYwLDFdXV0= -->
+<iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsNCxbMSwwLCJFXzAiXSxbMCwxLCJFX0EiXSxbMiwxLCJFX0IiXSxbMSwyLCJFX3tBQn0iXSxbMCwxLCJcXHZhcnBoaV9BIiwyLHsiY29sb3VyIjpbMjQwLDYwLDYwXX0sWzI0MCw2MCw2MCwxXV0sWzEsMywiXFx2YXJwaGlfQiIsMix7ImNvbG91ciI6WzMwLDYwLDYwXX0sWzMwLDYwLDYwLDFdXSxbMCwyLCJcXHZhcnBoaV9CIiwwLHsiY29sb3VyIjpbMzAsNjAsNjBdfSxbMzAsNjAsNjAsMV1dLFsyLDMsIlxcdmFycGhpX0EiLDAseyJjb2xvdXIiOlsyNDAsNjAsNjBdfSxbMjQwLDYwLDYwLDFdXV0=&embed" width="432" height="432" style="border-radius: 8px; border: none; display: block; margin: auto;"></iframe>
+<p>However, there is a catch. The point \(P\) doesn&rsquo;t even lie on \(E_B\)! How do we &ldquo;translate&rdquo; the <span style="color:lightblue">blue arrow</span> from \(E_0 \to E_A\) onto \(E_B\) i.e. how do we compute \(E_B / \langle P \rangle\)? The idea is simple: instead of taking the isogeny with kernel \(\langle P \rangle\) at \(E_B\), we use the <span class="hint--html hint--top">
+<span class="hint__element"><em>pushforward</em></span>
+<span class="hint__content">
+I don&rsquo;t think this is the correct terminology, but it&rsquo;s what I imagine in my head, and it makes sense on a diagram too. </span>
+</span> \(\varphi_B(P)\) as the kernel instead. Then, party \(A\) can compute by \(E_{AB} = E_B / \langle \varphi_B(P) \rangle = (E_0 / \langle Q \rangle) / \langle \varphi_B(P) \rangle\). The correctness proof is purely group theoretic.</p>
+<div class="spoiler panel panel_default"> <div class="spoiler_block"> <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_in spoiler_block_show"> Proof </a>  <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_out spoiler_block_hide" style="display: none;"> Proof </a>  <div class="spoiler_block_content" style="display: none;"> <p>We want to prove \(\underbrace{E_0 / \langle P, Q \rangle}_{E_1} = \underbrace{(E_0 / \langle Q \rangle) / \langle \varphi_B(P) \rangle}_{E_2} = \underbrace{(E_0 / \langle P \rangle) / \langle \varphi_A(Q) \rangle}_{E_3}\). As noted above, an isogeny is unique determined by its kernel, and from the commutative diagram we see that there&rsquo;s an isogeny from \(E_0\) to each of the three curves \(E_i\). Hence, it suffices to show that the kernels of the isogenies \(E_0 \to E_i\) are the same.</p>
+<ul>
+<li>\(\ker(E_0 \to E_1)\) is just \(\langle P, Q \rangle\) by definition.</li>
+<li>To determine \(\ker(E_0 \to E_2)\), note that \(R \in \ker(E_0 \to E_2) \iff \varphi_B(R) \in \langle \varphi_B(P) \rangle \iff R = aP + bQ\)</li>
+<li>To determine \(\ker(E_0 \to E_3)\), we apply Mathematician&rsquo;s favorite tool:</li>
+</ul>
+<h1 style="text-align: center; color: pink; font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;">By sYmMeTrY</h1>
+<p>The rest is easy.</p>
+</div> </div> </div>
+<p>Still, this cannot be a cryptographic protocol, since party \(A\) doesn&rsquo;t know \(\varphi_B\) and thus cannot compute \(\varphi_B(P)\) by themselves. To resolve this, we require the following theorem about the group structure of torsion points on \(A\), taken from <a href="https://link.springer.com/book/10.1007/978-0-387-09494-6">AEC, Corollary III.6.4</a>:</p>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p>Let \(E\) be an elliptic curve over a finite field \(\mathbb{F}_q\) and let \(m\) be an integer coprime with \(q\). Denote by \(E[m]\) the subgroup of points \(P\) such that \([m]P = 0\). Then, \(E[m] \cong \left(\mathbb{Z} / m\mathbb{Z}\right)^2\).</p></div>
+<p>In other words, there exists a basis \(\{R_1, R_2\}\) such that every point in \(E[m]\) is a integer combination of \(R_1\) and \(R_2\). Let&rsquo;s now apply this to our protocol. For simplicity sake, we only worry about party \(A\) with their points \(P\). First, we fix the order of \(P\) and a public basis \(P_1, P_2\) of \(E[\mathrm{ord}(P)]\). Then, instead of choosing a random point of order \(\mathrm{ord}(P)\), party \(A\) can instead choose two integers \(0 \leq a_1, a_2 &lt; m\), and compute \(P = [a_1]P_1 + [a_2]P_2\). To resolve our original problem of computing \(\varphi_B(P)\), we can make party \(B\) send the pushforward images \(\varphi_B(P_1)\) and \(\varphi_B(P_2)\). By the homomorphism property, we will have \(\varphi_B(P) = [a_1]\varphi_B(P_1) + [a_2]\varphi_B(P_2)\). This step will be explained more clearly at the end of this post with pseudocode.</p>
+<hr>
+<p>We now proceed to choose the parameters. To begin, the orders of \(P\) and \(Q\) cannot be too small, or otherwise, we can just bruteforce all points on \(E_0\) with that order. However, it also cannot be too large. Recall that Vélu&rsquo;s formula runs in time polynomial in \(\mathrm{ord}(P)\). What can we do?</p>
+<p>There is an elegant solution: Instead of computing a single isogeny, we decompose it into an <em>isogeny chain</em>. An isogeny chain is simply a chain of compatible isogenies \(\varphi_1 : E_0 \to E_1, \varphi_2 : E_1 \to E_2, \ldots, \varphi_k : E_{k - 1} \to E_k\), and by decomposing an isogeny we mean writing \(\varphi = \varphi_k \circ \cdots \circ \varphi_1\). There are various properties of such chains, but one important one is that \(\deg(\varphi) = \deg(\varphi_1) \cdots \deg(\varphi_k)\) (this can be proven by looking at the kernels, again as group homomorphisms).</p>
+<p>In our case, we can take \(P\) to be a random point of order \(2^a\) for some integer \(a\). Our task now becomes decomposing the isogeny \(\varphi_A : E_0 \to E_0 / \langle P \rangle\). By definition, \(\langle P \rangle = \{O, P, 2P, \cdots, (2^a - 1)P\}\). We can see that it is made out of many layers. For example, we can first split the subgroup into two halves, i.e. \(\langle P \rangle = \{O, P, 2P, \cdots, (2^{a - 1} - 1)P\} \oplus \color{pink}{\{0, 2^{a - 1} P\}}\). Then, \(E_0 / \langle P \rangle = \color{pink}{(E_0 / \langle 2^{a - 1} P \rangle)} / \{O, P, 2P, \cdots, (2^{a - 1} - 1)P\}\), where \(\color{pink}{\langle 2^{a - 1} P \rangle}\) is the outermost &ldquo;layer&rdquo;. Repeating this process, one can see that we have the following decomposition:</p>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p>For a point \(P\) of order \(2^a\) and isogeny \(\varphi_A : E_0 \to E_a \coloneqq E_0 / \langle P \rangle\), we have \(\varphi_A = \varphi_a \circ \cdots \circ \varphi_1\), where \(E_i = E_0 / \langle 2^{a - i} P_* \rangle\), \(P_*\) is the appropriate image under all previous \(\varphi_i\), and \(\varphi_i : E_{i - 1} \to E_i\).</p></div>
+<p>Similarly, we can also take \(Q\) to be a random point of order \(3^b\) for some integer \(b\), and a similar isogeny chain can be used to compute the codomain \(E / \langle Q \rangle\). In the SIDHp434 parameter set, the parameters \(a = 216\) and \(b = 137\) are taken. For our purpose, we will play around with a smaller parameter set \((a, b) = (91, 57)\) instead.</p>
+<p>This then brings us into the next problem, which is that such points \(P\) and \(Q\) may not exist! To ensure that points of order \(2^a\) and \(3^b\) to exists, \(2^a 3^b\) must divide \(|E|\). One option is to try random elliptic curves \(E\) over random finite fields \(K\), compute the curve&rsquo;s order using an efficient algorithm (such as the <a href="https://www.wikiwand.com/en/Schoof%E2%80%93Elkies%E2%80%93Atkin_algorithm">Schoof-Elkies-Atkin Algorithm</a>), and test if the property holds. However, this is clearly infeasible for cryptographic parameters like \(a = 216\) and \(b = 137\). This brings us into the <em>S</em> in <em>SIDH</em>.</p>
+<hr>
+<h1 id="supersingular-elliptic-curves">Supersingular Elliptic Curves</h1>
+<p>Although all elliptic curves are equal, some are more equal than others. As it turns out, elliptic curves can be divided into two classes, the <em>ordinary</em> ones and the <em>supersingular</em> ones. There are many equivalent characterisations of supersingular elliptic curves, but here is one of them.</p>
+<div class="notice info" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#info-notice"></use></svg></span>[INFO] 李家超提提你</p><p>Let \(q = p^k\) be a prime power and let \(E(\mathbb{F}_q)\) be an elliptic curve over the finite field \(K = \mathbb{F}_q\). We say \(E\) is <em>supersingular</em> if \(|E(\mathbb{F}_q)| \equiv 1 \pmod{p}\).</p></div>
+<p>As it is, the definition is quite arbitrary. However, we have the following powerful lemma:</p>
+<div class="notice info" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#info-notice"></use></svg></span>[INFO] 李家超提提你</p><p>Let \(E\) be a supersingular elliptic curve defined over \(\mathbb{F}_p\), i.e. <span class="hint--html hint--top">
+<span class="hint__element">with coefficients</span>
+<span class="hint__content">
+up to isomorphism</span>
+</span> \(a, b \in \mathbb{F}_p\), and \(p\) be a prime. Then for any positive integer \(k\),
+\[
+|E(\mathbb{F}_{p^k})| = \begin{cases}
+p^k + 1           &amp;\text{if } k \text{ is odd} \\
+(p^{k / 2} - 1)^2 &amp;\text{if } k \equiv 0 \pmod{4} \\
+(p^{k / 2} + 1)^2 &amp;\text{if } k \equiv 2 \pmod{4}
+\end{cases}
+\]</p></div>
+<div class="spoiler panel panel_default"> <div class="spoiler_block"> <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_in spoiler_block_show"> Proof </a>  <a href="#" class="spoiler_block_icon spoiler_block_icon_zoom_out spoiler_block_hide" style="display: none;"> Proof </a>  <div class="spoiler_block_content" style="display: none;"> A simple case of Weil&rsquo;s conjecture / theorem, see <a href="https://link.springer.com/book/10.1007/978-0-387-09494-6">AEC, Theorem V.2.3.1</a> for example.</div> </div> </div>
+<p>How does this help us? Well, if we take \(k = 2\), then we see that as long as \(E\) is defined over \(\mathbb{F}_p\), then \(|E(\mathbb{F}_{p^2})| = (p + 1)^2\). Recall that we need \(2^a 3^b\) to divide \(|E(K)|\) in order to make the point selection in the protocol work. This is simple, as we can pick a (small) integer \(f\) such that \(p = f \cdot 2^a 3^b - 1\) is a prime, and use \(\mathbb{F}_{p^2}\) as our base field</p>
+<div class="notice info" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#info-notice"></use></svg></span>[INFO] 李家超提提你</p><p>The reason why we use \(\mathbb{F}_{p^2}\) instead of \(\mathbb{F}_p\) is so that the entire torsion basis \(E[2^a]\) and \(E[3^b]\) exists over the field - see <a href="https://link.springer.com/book/10.1007/978-0-387-09494-6">AEC, Exercise V.5.6</a>.</p></div>
+<p>We only have one task left now, namely to construct a supersingular elliptic curve over \(\mathbb{F}_p\). To do so, (maybe you see the pattern,) we simply refer to <em>the book</em> again: <a href="https://link.springer.com/book/10.1007/978-0-387-09494-6">AEC, Example V.4.5</a> shows that the curve \(E: y^2 = x^3 + x\) is supersingular over \(\mathbb{F}_{p^k}\) when \(p \equiv 3 \pmod{4}\). Hence, we can initialise our scheme with this curve. And&hellip; we&rsquo;re done!</p>
+<hr>
+<h1 id="cryptographic-assumptions">Cryptographic Assumptions</h1>
+<p>Let&rsquo;s briefly think about what SIDH actually relies on as its hardness assumption. We observe that it relies on a weaker version of <em>isogeny path problem</em>: given \(E_0, E_A, E_B\) <strong>and</strong> the four pushforward images, if a malicious party can find an isogeny between \(E_0\) and \(E_A\), then \(E_{AB}\) can be found already. This is a weakened version since we are given extra information (namely the pushforward images, or the <em>torsion information</em>).</p>
+<hr>
+<h1 id="detailed-protocol">Detailed Protocol</h1>
+<p>Okay, so I yapped a bunch of random stuff, but what does the protocol actually look like? Here is a rough outline for a SIDH key exchange between Alice (he/him) and Bob (she/her) with our toy parameters.</p>
+<p><strong>Public Parameters:</strong></p>
+<ul>
+<li>Integers \(a = 91, b = 57, f = 1\), so \(p = 2^{91} \cdot 3^{57} - 1\)</li>
+<li>Supersingular elliptic curve \(E_0 : y^2 = x^3 + x\) over <span class="hint--html hint--top">
+<span class="hint__element">a fixed</span>
+<span class="hint__content">
+A modulus should be chosen. We will use \(x^2 + 1\) here, i.e. \(\mathbb{F}_{p^2} \cong \mathbb{F}_p[X] / (X^2 + 1)\) </span>
+</span> \(\mathbb{F}_{p^2}\)</li>
+<li>basis \(\color{pink} \{P_1, P_2\}\) of \(E_0[2^a]\)</li>
+<li>basis \(\color{lime} \{Q_1, Q_2\}\) of \(E_0[3^b]\)</li>
+</ul>
+<p><strong>Private Keys:</strong></p>
+<ul>
+<li><span style="color: pink">Alice: Random integers \(a_1, a_2\)</span></li>
+<li><span style="color: lime">Bob: Random integers \(b_1, b_2\)</span></li>
+</ul>
+<p><strong>Key Exchange:</strong></p>
+<ul>
+<li><span style="color: pink">0A. Alice computes \(P = [a_1]P_1 + [a_2]P_2 \in E_0\)</span></li>
+<li><span style="color: pink">1A. Alice computes \(\varphi_A : E_0 \to E_A\) with \(E_A = E_0 / \langle P \rangle\)</span></li>
+<li><span style="color: pink">2A. Alice computes \(Q_1&rsquo; = \varphi_A(Q_1)\) and \(Q_2&rsquo; = \varphi_A(Q_2)\)</span></li>
+<li><span style="color: lime">0B. Bob computes \(Q = [b_1]Q_1 + [b_2]Q_2 \in E_0\)</span></li>
+<li><span style="color: lime">1B. Bob computes \(\varphi_B : E_0 \to E_B\) with \(E_B = E_0 / \langle Q \rangle\)</span></li>
+<li><span style="color: lime">2B. Bob computes \(P_1&rsquo; = \varphi_B(P_1)\) and \(P_2&rsquo; = \varphi_B(P_2)\)</span></li>
+</ul>
+<hr>
+<ul>
+<li><span style="color: pink">3A. Alice sends \(E_A\), \(Q_1&rsquo;\) and \(Q_2&rsquo;\) to Bob</span></li>
+<li><span style="color: lime">3B. Bob sends \(E_B\), \(P_1&rsquo;\) and \(P_2&rsquo;\) to Alice</span></li>
+</ul>
+<hr>
+<ul>
+<li><span style="color: pink">4A. Alice computes \(P&rsquo; = [a_1]P_1&rsquo; + [a_2]P_2&rsquo; \in E_B\)</span></li>
+<li><span style="color: pink">5A. Alice computes \(\color{gold} E_{AB} = E_B / \langle P&rsquo; \rangle\)</span></li>
+<li><span style="color: lime">4B. Bob computes \(Q&rsquo; = [b_1]Q_1&rsquo; + [b_2]Q_2&rsquo; \in E_A\)</span></li>
+<li><span style="color: lime">5B. Bob computes \(\color{gold} E_{BA} = E_A / \langle Q&rsquo; \rangle\)</span></li>
+</ul>
+<p>Alice and Bob have now successfully obtained a shared secret \(\color{gold} E_{AB} = E_{BA}\)&hellip; not exactly. I have glossed over many details in this post, but one of them is that \(\color{gold} E_{AB}\) is only isomorphic to \(\color{gold} E_{BA}\). Hence, in the SIDH protocol, one computes an invariant (with respect to isomorphisms) of the elliptic curves, e.g. the \(j\)-invariant. We shall investigate this further in the next post, where we implement this scheme.</p>
+<div style="text-align:center; background-color:white"><img src="/images/sidh-diagram.svg"></div>
+<hr>
+<h1 id="remark">Remark</h1>
+<p>Oh yeah, SIDH is broken in 2022 by <a href="https://eprint.iacr.org/2022/975">Castryck-Decru</a> and others. Don&rsquo;t use it.</p>
+<hr>
+<p>For no reason, here&rsquo;s a <a href="https://www.youtube.com/watch?v=1DkjY_LAdCE">song</a> I like recently.</p>
+
+</article>
+
+
+
+</html>
+
+<footer class="footer">
+
+</footer>
+</div>
+
+</body>
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+
+</html>
+

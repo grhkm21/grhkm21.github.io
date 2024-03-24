@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-uk">
+<title>Isogenies 3: 🏖️ Vacation by the seaside 🌊! And an introduction to CSIDH | Blog by grhkm</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.121.2">
+<meta name="description" content="We introduce CSIDH along with some proofs and an implementation">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://grhkm21.github.io/css/minimal.css">
+
+<style type="text/css"> .notice { --root-color: #444; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #c33; --error-content: #fee; --warning-title: #fb7; --warning-content: #fec; --info-title: #6be; --info-content: #e7f2fa; --success-title: #5a5; --success-content: #efe } @media (prefers-color-scheme:dark) {} { .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121 } } body.dark .notice { --root-color: #ddd; --root-background: #eff; --title-color: #fff; --title-background: #7bd; --error-title: #800; --error-content: #400; --warning-title: #a50; --warning-content: #420; --info-title: #069; --info-content: #023; --success-title: #363; --success-content: #121; } .notice { padding: 18px; line-height: 24px; margin-bottom: 24px; border-radius: 4px; color: var(--root-color); background: var(--root-background); align-items: center; } .notice p:last-child { margin-bottom: 0 } .notice-title { margin: -18px -18px 12px; padding: 4px 18px; border-radius: 4px 4px 0 0; font-weight: 700; color: var(--title-color); background: var(--title-background); } .notice.error .notice-title { background: var(--error-title) } .notice.error { background: var(--error-content) } .notice.warning .notice-title { background: var(--warning-title) } .notice.warning { background: var(--warning-content) } .notice.info .notice-title { background: var(--info-title) } .notice.info { background: var(--info-content) } .notice.success .notice-title { background: var(--success-title) } .notice.success { background: var(--success-content) } .icon-notice { margin-right: 8px; margin-top: 2px; } .icon-notice img, .icon-notice svg { height: 1em; width: 1em; fill: currentColor; display: inline-block; position: relative; vertical-align: middle; } </style>
+<div><svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="success-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="error-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg></div>
+
+<link rel="canonical" href="https://grhkm21.github.io/isogenies/p3-csidh/">
+<link rel="alternate" type="application/rss+xml" href="" title="Blog by grhkm">
+<link rel="stylesheet" href="https://grhkm21.github.io/katex/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body)"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/css/spoiler.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/main.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/variables.css">
+
+
+<link rel="stylesheet" href="https://grhkm21.github.io/scss/hint.css">
+
+<script defer src="https://grhkm21.github.io/js/spoiler.js"></script>
+
+<header>
+  
+    <a href="https://grhkm21.github.io/" class="title">Blog by grhkm</a>
+  
+  
+    <nav>
+    
+      <a href="/about-me">About Me</a>
+    
+      <a href="/posts">Posts</a>
+    
+      <a href="/isogenies">Isogenies</a>
+    
+    </nav>
+  
+</header>
+
+<article>
+  <header>
+    <h1>Isogenies 3: 🏖️ Vacation by the seaside 🌊! And an introduction to CSIDH</h1>
+    <time datetime="2024-03-23T07:43:33Z">March 23, 2024</time>
+  </header>
+  <div class="notice warning" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#warning-notice"></use></svg></span>[WARNING] 即係唔係error</p><p>I know that there are many great resources and blogs on CSIDH - in fact, I believe the original paper is the most detailed and best explained resource. However, in this blog, I would like to contribute by accompanying the abstract explanation with some Sage code, albeit a limited amount (since we are lacking non-maximal ideals).</p></div>
+<div class="notice error" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#error-notice"></use></svg></span>[ERROR] 唉屌又error</p><p>grhkm is sleepy. grhkm wants sleep. grhkm will finish when they wake.</p></div>
+<p>In this blog post, I will introduce CSIDH as a motivational example for the next post. We will cover eigen{values, spaces} of the Frobenius, how Elkies primes appear in CSIDH, and how they lead to a simple implementation in Sage.</p>
+<h1 id="what-does-c-mean-in-csidh">What does &ldquo;C&rdquo; mean in CSIDH?</h1>
+<p>CSIDH, which stands for Commutative Supersingular Isogeny Diffie-Hellman and pronounced as [&ldquo;si:saId] (seaside 🌊), is another simple isogeny-based key exchange protocol. CSIDH is a <em>group action</em>-based cryptography protocol, a term that we will define later. Despite the similarity in their names, SIDH and CSIDH rely on drastically different theory, as we will see soon. In SIDH, extra information is exchanged to allow the parties to compute the pushforward image of the private kernel point. This is different from say, (commutative) group-based Diffie-Hellman, where both parties can simply compute \((g^a)^b = (g^b)^a\) without any problem. This is because the actions \(g \mapsto g^a\) and \(g \mapsto g^b\) commute, while \(E \mapsto E / A\) and \(E \mapsto E / B\) don&rsquo;t (the pushforward image differs). CSIDH resolves the problem SIDH faces by working with a commutative group action. Intuitively, this means the action (i.e. the arrows in the Diffie-Hellman square) commutes in a way that allows for group-based Diffie-Hellman construction, allowing the two parties to just exchange (the equivalent of) \(g^a\) and \(g^b\) without extra information.</p>
+<h1 id="group-actions">Group Actions</h1>
+<p>Recall that a <span class="hint--html hint--top">
+<span class="hint__element">group</span>
+<span class="hint__content">
+Written multiplicatively </span>
+</span> is a tuple \((G, \cdot : G \to G \to G)\) such that the associativity, identity and inverse axioms hold. A <em>group action</em> is very similar, except that instead of \(\cdot\) being a binary operator on \(G\) acting on itself, it is now an <em>action</em> \(\alpha : G \times X \to X\) acting on a set \(X\), satisfying compatibility (\(\alpha(g, \alpha(h, x)) = \alpha(g \cdot h, x)\)) and identity axioms. We say a group action is commutative if \(\alpha(g, \alpha(h, x)) = \alpha(h, \alpha(g, x))\). From now on, we simply write \(g \cdot x\) or \(gx\) instead of \(\alpha(g, x)\).</p>
+<p>An example would be the symmetric group \(S_n\): on its own, \(S_n\) as a group turns permutations into other permutations. However, we can view \(S_n\) as a group acting on any ordered list \(X\) of \(n\) elements, where the group action permutes the list according to the permutation element. As we will see later, in the setting of CSIDH, we have ideal (classes) acting on certain elliptic curves. This means we roughly have a commutative group action</p>
+<p>\[
+\alpha : \{ \mathrm{ideals} \} \times \mathcal{Ell} \to \mathcal{Ell}
+\]</p>
+<p>From the definition of group action, we see that it behaves quite similarly to normal groups. Most importantly, we notice that we can adapt the commutative group-based Diffie-Hellman \((g^a)^b = (g^b)^a\) into a commutative group action-based Diffie-Hellman \(\alpha(b, \alpha(a, g)) = \alpha(a, \alpha(b, g))\). This is what CSIDH is based on, and thus for the remaining of this post we will investigate (1) what \(G\) and \(X\) is in the definition \(\alpha : G \times X \to X\), and (2) how to evaluate this group action. This is the power of group actions: it is a generic abstract framework that allows us to build primitives on top of.</p>
+<h1 id="frobenius-endomorphism">Frobenius Endomorphism</h1>
+<p>Before we begin our actual journey, we first have to introduce the Frobenius <span class="hint--html hint--top">
+<span class="hint__element">endomorphism</span>
+<span class="hint__content">
+A map from a structure to itself </span>
+</span>. Consider any finite field \(K = \mathbb{F}_q\). We define the <em>Frobenius endomorphism</em> to be the map \(\pi : \overline{\mathbb{F}_q} \to \overline{\mathbb{F}_q}\), defined by \(\pi(x) = x^q\). Let \(x \in \mathbb{F}_q\) be any element. By considering the case \(x = 0\) separately and looking at the unit group order, we can see that for any \(x\), we have \(x^q = x\). This means that \(\pi\) actually fixes \(K\). Of course, this is not true for elements \(x \in \overline{\mathbb{F}_q} \setminus \mathbb{F}_q\). Another property we need is that for elements \(x, y \in \mathbb{F}_q\), we have \(\pi(x) + \pi(y) = \pi(x + y)\). This is often called the <a href="https://www.wikiwand.com/en/Freshman's_dream">Freshman&rsquo;s Dream</a>, but nowadays it should be updated to middle schooler&rsquo;s dream, and proves that \(\pi\) is indeed a homomorphism.</p>
+<p>Furthermore, this definition extends naturally to points on elliptic curves. Let \(E\) be an elliptic curve over a finite field \(K = \mathbb{F}_q\). Then, for \(P = (x, y) \in E(K)\), we also have \(\pi(y)^2 = \pi(x)^3 + a\pi(x) + b\), meaning that the map \((x, y) \mapsto (x^q, y^q)\) is an endomorphism too. We also call this the Frobenius endomorphism. This endomorphism serves an immense amount of importance in isogeny-based cryptography, or even in Mathematics. For example, to compute the quantity \(|E(K)|\), instead of counting the points (which is hard to control), we can compute the number of <span class="hint--html hint--top">
+<span class="hint__element">fixed points</span>
+<span class="hint__content">
+More specifically, we can write this as \(|E(K)| = |\ker(1 - \pi)|\) and apply tools from algebraic topology etc. </span>
+</span> of \(\pi\) on \(E\). This allows all kinds of Mathematical tools to be applied, see e.g. <a href="https://yx7.cc/docs/tum/thesis_monsky-washnitzer.pdf">Lorenz&rsquo;s Masters thesis</a>.</p>
+<p>Before we move on, we have to introduce this important theorem about the Frobenius endomorphism:</p>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p>Let \(E\) be an elliptic curve over a finite field \(K = \mathbb{F}_q\), and let \(\pi\) be the Frobenius endomorphism of \(E\).</p>
+<ol>
+<li>There exists an integer \(t\) such that \(\pi^2 - t\pi + q = 0\), where multiplications is composition and addition / subtraction is performed pointwise</li>
+<li>\(\Delta = t^2 - 4q \leq 0\)</li>
+<li>If \(E\) is supersingular, then \(t = 0\).</li>
+</ol></div>
+<p>This suggests a connection between the Frobenius endomorphism and imaginary quadratic fields.</p>
+<h1 id="describing-the-group-action">Describing the Group Action</h1>
+<p>To describe the group action, it is simplest to quote directly from the <a href="https://eprint.iacr.org/2018/383.pdf">CSIDH paper, Theorem 7</a>:</p>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p>Let \(p\) be a prime, \(\mathcal{O}\) be an order in an imaginary quadratic field, \(\pi \in \mathcal{O}\) be an element, and \(\mathcal{Ell}_p(\mathcal{O}, \pi)\) be the set of elliptic curves \(E\) with \(\mathbb{F}_p\)-endomorphism ring \(\mathrm{End}_{\mathbb{F}_p}(E) \cong \mathcal{O}\) and Frobenius endomorphism corresponding to \(\pi\). Then, the ideal class group \(\mathrm{Cl}(\mathcal{O})\) acts on the set \(\mathcal{Ell}_p(\mathcal{O}, \pi)\) via the map</p>
+<p>\begin{align*}
+\mathrm{Cl}(\mathcal{O}) \times \mathcal{Ell}_p(\mathcal{O}, \pi) &amp;\mapsto \mathcal{Ell}_p(\mathcal{O}, \pi) \\
+([\mathfrak{a}], E) &amp;\mapsto E / \mathfrak{a}
+\end{align*}</p></div>
+<div class="notice error" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#error-notice"></use></svg></span>[ERROR] 唉屌又error</p><p><!-- TODO -->
+<p>Those are meaningless words, I should explain them.</p></p></div>
+<h1 id="group-action-where-are-isogenies">Group Action? Where are Isogenies?</h1>
+<p>From here, we can finally begin to describe CSIDH. As the name suggests, we will be basing our key exchange protocol on a commutative group action, acting on certain supersingular elliptic curves. We first determine in &ldquo;Parameter Choice 1&rdquo; an appropriate \(p\) (which determines \(\pi\) via \(\pi^2 + p = 0\)) and an imaginary quadratic order \(\mathcal{O}\), along with a public starting curve \(E_0 \in \mathcal{Ell}_p(\mathcal{O}, \pi)\). With these parameters, we then look at when the group action \((\mathfrak{a}], E) \mapsto E / \mathfrak{a}\) is efficiently computable. We will discover a link with the so-called <em>Elkies primes</em>, which will lead us to the parameter choice of the acting <del>set</del> generators \(X \subseteq \mathrm{Cl}(\mathcal{O})\).</p>
+<hr>
+<h1 id="parameter-choice-1">Parameter Choice 1</h1>
+<hr>
+<h1 id="elkies-primes">Elkies Primes</h1>
+<hr>
+<h1 id="parameter-choice-2">Parameter Choice 2</h1>
+
+</article>
+
+
+
+</html>
+
+<footer class="footer">
+
+</footer>
+</div>
+
+</body>
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+
+</html>
+
