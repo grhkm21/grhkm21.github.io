@@ -1051,11 +1051,8 @@
 
 .hint__content {
   display: table;
-  left: unset !important;
-  right: unset;
-  margin-left: 0;
-  margin-right: 0;
-  border: 1px solid limegreen;
+  width: 120px;
+  border: 1px solid green;
   font-size: 0.7em; }
   .hint__content .hint--title {
     display: block;
@@ -1065,5 +1062,8 @@
 
 .hint__element {
   display: inline;
-  text-decoration: underline dotted cyan;
+  text-decoration: underline dotted magenta;
   cursor: pointer; }
+
+.hint--html .hint__content {
+  position: absolute; }

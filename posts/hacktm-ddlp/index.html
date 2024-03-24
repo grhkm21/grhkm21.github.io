@@ -186,8 +186,7 @@ ECDLP passed
 Time taken: 0.076 seconds
 </code></pre><h1 id="running-time">Running Time</h1>
 <p>(This is just an excuse for me to share my knowledge in analytic number theory) Let&rsquo;s say our computer is a potato and can only perform discrete logarithm when the largest prime factor of \(p - 1\) is less than \(2^{32}\). What is the probability that a random integer less than \(X\) is \(2^{32}\)-smooth? As it turns out, this prolbem has been studied by <span class="hint--html hint--top">
-<span class="hint__element">Karl Dickman
-</span>
+<span class="hint__element">Karl Dickman</span>
 <span class="hint__content">
 Apparently he was an actuary and only published one math paper </span>
 </span>, and the answer can be expressed in terms of the <a href="https://www.wikiwand.com/en/Dickman_function">Dickman function</a> \(\rho\). He proved that asymptotically, the proportion of numbers below \(X\) that are \(B\)-smooth tends to \(\rho\left(\frac{\log X}{\log B}\right)\), where \(\rho\) satisfies the delayed differential equation \(u\rho&rsquo;(u) + \rho(u - 1) = 0\), with initial conditions \(\rho(u) = 1\) for \(0 \leq u \leq 1\). With this, we can recursively compute analytic functions \(\rho_n\) that matches with \(\rho\) on the interval \([n - 1, n]\). In our scenario, we want to compute the probability that an integer below \((p - 1) / X \sim 2^{276 - 120}\) is \(2^{32}\)-smooth. It can be approximated by \(\rho\left(\frac{156}{32}\right) \approx \frac{1}{2400}\). We can then use the Prime Number Theorem to approximate the probability that \((p - 1) / X\) is a prime, etc.</p>

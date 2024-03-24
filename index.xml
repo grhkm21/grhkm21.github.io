@@ -6,8 +6,15 @@
     <description>Recent content on Blog by grhkm</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Mon, 29 Jan 2024 23:08:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 Mar 2024 07:43:34 +0000</lastBuildDate>
     <atom:link href="https://grhkm21.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Isogenies 4: 🚢 Shipwrecked Lattices ⚓</title>
+      <link>https://grhkm21.github.io/isogenies/p4-shipwrecked-lattices/</link>
+      <pubDate>Sat, 23 Mar 2024 07:43:34 +0000</pubDate>
+      <guid>https://grhkm21.github.io/isogenies/p4-shipwrecked-lattices/</guid>
+      <description>In KalmarCTF 2024, there was a hard unsolved challenge called &amp;ldquo;Shipwrecked Lattices&amp;rdquo;, authored by jo_k_er (Jonathan). In the end, I spent ~16 hours on it and was the first person to solve it (post-contest).&#xA;On first galnce, it is just a challenge related to a mysterious group action and quaternions, but upon studying it carefully, one sees that it is closely related to isogeny theory of supersingular elliptic curves. In this post, we build on the material introduced in the previous three posts (SIDH 1, SIDH 2, CSIDH) to solve this challenge.</description>
+    </item>
     <item>
       <title>Hacktm Ddlp</title>
       <link>https://grhkm21.github.io/posts/hacktm-ddlp/</link>
