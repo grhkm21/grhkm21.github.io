@@ -56,9 +56,190 @@
     <h1>Isogenies 4: 🚢 Shipwrecked Lattices ⚓</h1>
     <time datetime="2024-03-23T07:43:34Z">March 23, 2024</time>
   </header>
-  <p>In KalmarCTF 2024, there was a hard unsolved challenge called &ldquo;Shipwrecked Lattices&rdquo;, authored by <code>jo_k_er</code> (Jonathan). In the end, I spent ~16 hours on it and was the first person to solve it (post-contest).</p>
-<p>On first galnce, it is just a challenge related to a mysterious group action and quaternions, but upon studying it carefully, one sees that it is closely related to isogeny theory of supersingular elliptic curves. In this post, we build on the material introduced in the previous three posts (<a href="/isogenies/p1-intro-sidh">SIDH 1</a>, <a href="/isogenies/p2-impl-sidh">SIDH 2</a>, <a href="/isogenies/p3-csidh">CSIDH</a>) to solve this challenge.</p>
+  <p>In KalmarCTF 2024, there was a hard unsolved challenge called &ldquo;Shipwrecked Lattices&rdquo;, authored by <code>jo_k_er</code> (Jonathan). In the end, I spent ~16 hours on it and was the first person to solve it (post-contest). There was one hint released post-contest (but pre-solve) which pulled me out of a deep rabbit hole. It can be found below Problem Statement.</p>
+<p>At first galnce, it is just a challenge related to a mysterious group action and quaternions, but upon studying it carefully, one sees that it is closely related to isogeny theory of supersingular elliptic curves. In this post, we will go through how to solve the challenge itself without too much explanation into the theory itself - that will have to wait for the next posts. This post will build on the material introduced in the previous three posts (<a href="/isogenies/p1-intro-sidh">SIDH 1</a>, <a href="/isogenies/p2-impl-sidh">SIDH 2</a>, <a href="/isogenies/p3-csidh">CSIDH*</a>) to solve this challenge.</p>
+<p>In this post, for a quaternion ideal \(I\) we write \(\mathcal{O}_L(I)\) and \(\mathcal{O}_R(I)\) to be its left and right order, respectively. Also, given a quaternion order \(\mathcal{O}\), we write \(I(\mathcal{O})\) for its unit ideal. The precise definitions for these terms can be found in <a href="https://math.dartmouth.edu/~jvoight/quat-book.pdf">Voight, Chapter 10</a> or my next post.</p>
+<p>As always, we won&rsquo;t pay too much attention into details like &ldquo;up to isomorphism&rdquo; and &ldquo;ideal classes vs ideals&rdquo;.</p>
 <p>A brief writeup can be found at <a href="https://gist.github.com/grhkm21/28db7238cc0dfb002654eec2ae0f1cf8">this Gist</a>.</p>
+<hr>
+<h1 id="some-thoughts">Some Thoughts</h1>
+<p>I truly believe this challenge, along with <code>not-csidh</code> by <code>yx7</code> (Lorenz), are the two peaks of my 3 years of CTF journey thusfar. These two challenges pushed me through a ton of pressure and obstacles, but in the end the experience is 100% worth it. I gained so much knowledge in so little time just by feeling miserable and Googling around (especially under time pressure), without a CTF environment or at least someone pushing me, it is hard to replicate this level of learning. In the end, I am very very proud that I solved the two challenges, <code>not-csidh</code> with Rémy&rsquo;s help and this with just a small hint. Thanks to both problem authors 💖</p>
+<hr>
+<h1 id="problem-statement">Problem Statement</h1>
+<p>We are given a challenge Sage file and an output file. The Sage file contains two main blobs of code:</p>
+<ol>
+<li>A Diffie-Hellman exchange based on the <code>GroupAction</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> ... <span style="color:#f92672">import</span> invariant, encrypt_flag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> next_prime(<span style="color:#ae81ff">2</span><span style="color:#f92672">**</span><span style="color:#ae81ff">512</span>)
+</span></span><span style="display:flex;"><span>B <span style="color:#f92672">=</span> QuaternionAlgebra(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span>p)
+</span></span><span style="display:flex;"><span>i, j, k <span style="color:#f92672">=</span> B<span style="color:#f92672">.</span>gens()
+</span></span><span style="display:flex;"><span>O0 <span style="color:#f92672">=</span> B<span style="color:#f92672">.</span>maximal_order()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>omega <span style="color:#f92672">=</span> <span style="color:#ae81ff">820</span><span style="color:#f92672">*</span>i <span style="color:#f92672">+</span> <span style="color:#ae81ff">362</span><span style="color:#f92672">*</span>j <span style="color:#f92672">+</span> <span style="color:#ae81ff">153</span><span style="color:#f92672">*</span>k
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>ZZ(omega<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> is_prime(d)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> omega <span style="color:#f92672">in</span> O0
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> omega)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> O0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>O0_oriented <span style="color:#f92672">=</span> (O0, omega)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ells <span style="color:#f92672">=</span> [ell <span style="color:#66d9ef">for</span> ell <span style="color:#f92672">in</span> Primes()[:<span style="color:#ae81ff">150</span>] <span style="color:#66d9ef">if</span> kronecker(<span style="color:#f92672">-</span>d, ell) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>gens <span style="color:#f92672">=</span> [ZZ(mod(<span style="color:#f92672">-</span>d, ell)<span style="color:#f92672">.</span>sqrt()) <span style="color:#66d9ef">for</span> ell <span style="color:#f92672">in</span> ells]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>alice_secret <span style="color:#f92672">=</span> [randint(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(ells))]
+</span></span><span style="display:flex;"><span>bob_secret <span style="color:#f92672">=</span> [randint(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(ells))]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>O_A <span style="color:#f92672">=</span> GroupAction(O0_oriented, alice_secret, ells, gens)
+</span></span><span style="display:flex;"><span>O_B <span style="color:#f92672">=</span> GroupAction(O0_oriented, bob_secret, ells, gens)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> O_A[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">in</span> O_A[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> O_B[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">in</span> O_B[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Alice&#39;s public key:&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;O_A = </span><span style="color:#e6db74">{</span>O_A[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>basis()<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">omega_a = </span><span style="color:#e6db74">{</span>O_A[<span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">Bob&#39;s public key:&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;O_B = </span><span style="color:#e6db74">{</span>O_B[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>basis()<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">omega_b = </span><span style="color:#e6db74">{</span>O_B[<span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>O_BA <span style="color:#f92672">=</span> GroupAction(O_B, alice_secret, ells, gens)
+</span></span><span style="display:flex;"><span>O_AB <span style="color:#f92672">=</span> GroupAction(O_A, bob_secret, ells, gens)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> invariant(O_BA[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">==</span> invariant(O_BA[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>shared_secret <span style="color:#f92672">=</span> invariant(O_BA[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>iv, ct <span style="color:#f92672">=</span> encrypt_flag(shared_secret)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">Encrypted flag: iv = </span><span style="color:#e6db74">{</span>iv<span style="color:#e6db74">}</span><span style="color:#e6db74">, ct = </span><span style="color:#e6db74">{</span>ct<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><ol start="2">
+<li>A <code>GroupAction</code> function</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> ... <span style="color:#f92672">import</span> reduceHeight
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">GroupAction</span>(O_oriented, es_in, ells, gens):
+</span></span><span style="display:flex;"><span>    O, omega <span style="color:#f92672">=</span> O_oriented
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    es <span style="color:#f92672">=</span> es_in<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>    O_i <span style="color:#f92672">=</span> O
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#f92672">not</span> all([e <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> es]):
+</span></span><span style="display:flex;"><span>        frak_l <span style="color:#f92672">=</span> O_i<span style="color:#f92672">*</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(es)):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> es[i] <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> es[i] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                    gen <span style="color:#f92672">=</span> (gens[i] <span style="color:#f92672">+</span> omega)
+</span></span><span style="display:flex;"><span>                    es[i] <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    gen <span style="color:#f92672">=</span> (gens[i] <span style="color:#f92672">-</span> omega)
+</span></span><span style="display:flex;"><span>                    es[i] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                frak_l <span style="color:#f92672">=</span> frak_l<span style="color:#f92672">.</span>intersection(O_i<span style="color:#f92672">*</span>gen <span style="color:#f92672">+</span> O_i<span style="color:#f92672">*</span>ells[i])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        O_i <span style="color:#f92672">=</span> frak_l<span style="color:#f92672">.</span>right_order()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        O_i, beta <span style="color:#f92672">=</span> reduceHeight(O_i)
+</span></span><span style="display:flex;"><span>        omega <span style="color:#f92672">=</span> beta<span style="color:#f92672">*</span>omega<span style="color:#f92672">*</span>beta<span style="color:#f92672">^</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> O_i, omega
+</span></span></code></pre></div><hr>
+<h1 id="hint">Hint</h1>
+<p>After the competition, there was a bounty on first blood for this problem. A hint was given:</p>
+<blockquote>
+<p>All isogeny based cryptosystems break when you leak the endomorphism ring, but not necessarily because of KLPT.</p>
+</blockquote>
+<p>As you can guess, this hint was targetted to me, as I was banging my head trying to figure out why KLPT wasn&rsquo;t working - I was trying to use KLPT to recover a smooth norm ideal, from which I can read off the norm for the secret exponent. There&rsquo;s approximately 20 reasons why this won&rsquo;t work, but I will defer this self-deprecation process to the next post. But hey, at least I know what KLPT does now.</p>
+<hr>
+<h1 id="initial-analysis">Initial Analysis</h1>
+<p>Let us first analyse the input and output of the function.</p>
+<p>Input:</p>
+<ul>
+<li>An oriented quaternion order \((\mathcal{O}, \omega)\) with \(\omega^2 + d = 0\),</li>
+<li>A list of \(75\) Elkies primes \(\ell_i\) such that \(\left(\frac{-d}{\ell_i}\right) = 1\),</li>
+<li>A list of \(75\) generators \(g_i\) such that \(g_i^2 + d \equiv 0 \pmod{\ell_i}\),</li>
+<li>A secret vector \(\vec{s} \in [-3, 3]^{75}\).</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>An oriented quaternion order \((\mathcal{O}&rsquo;, \omega&rsquo;)\) still with \(\omega&rsquo;^2 + d = 0\).</li>
+</ul>
+<p>Just from the inputs and outputs, we see the close connection between this and CSIDH. In fact, the line <code>frak_l = frak_l.intersection(O_i*gen + O_i*ells[i])</code> should set off alarms immediately as the derivation of the CSIDH action by Elkies primes. For now, let&rsquo;s pretend that \(\omega&rsquo; = \omega\) is unchanged throughout the algorithm, and see how we can make the correspondence between CSIDH and the provided <code>GroupAction</code> precise. Below, we write \([\star]\) to indicate a group action, not a plain group multiplication.</p>
+<p>Recall that in the setting of CSIDH, we have an <span style="color:lime">imaginary quadratic order \(\mathcal{O} = \mathbb{Z}[\sqrt{-p}]\)</span>, and the ideal class group \(\mathrm{Cl}(\mathcal{O})\) acts on <span style="color:magenta">supersingular elliptic curves \(E\)</span> with \(\mathcal{O}\) as their <span style="color:pink">\(\mathbb{F}_p\)-endomorphism ring</span>, where <span style="color:lime">\(\pi = \sqrt{-p}\)</span> is fixed, which also means <span style="color:lime">\(\mathcal{O} = \mathbb{Z}[\pi]\)</span>. We then take <span style="color:gold">Elkies primes \(\ell_i\) such that \(\pi^2 \equiv 1 \pmod{\ell_i}\)</span>. This is because Elkies primes split nicely in \(\mathcal{O}\) - we have \(\ell_i\mathcal{O} = \mathfrak{l}_i\overline{\mathfrak{l}_i}\), where <span style="color:orange">\(\mathfrak{l}_i = \langle \ell, \pi + 1 \rangle\)</span> and <span style="color:orange">\(\overline{\mathfrak{l}_i} = \langle \ell, \pi - 1 \rangle\)</span> are prime ideals whose action on \(E\) is easy to compute - it is a low degree isogeny. From there, we proceed as usual according to group action-based Diffie-Hellman, and the result of the group action is \(\underbrace{\left[\prod_i \mathfrak{l}_i^{\vec{s}_i}\right]}_{\subseteq \mathbb{Z}[\sqrt{-p}]} E_0\).</p>
+<p>From the inputs and outputs, we can guess which part of CSIDH match up with what in <code>GroupAction</code> already. For example, in our case we have <span style="color:lime">\(\mathcal{O}_0 = \mathbb{Z}[\sqrt{-d}] = \mathbb{Z}[\omega]\)</span>, where some group (presumably also a class group) acts on <span style="color:magenta">oriented quaternion orders \((\mathcal{O}, \omega)\)</span> with \(\mathcal{O}_0\) as their <span style="color:pink">orientation</span>. We then take <span style="color:gold">Elkies primes \(\ell_i\) and generators \(g_i\) such that \(g_i^2 \equiv -d \pmod{\ell_i}\)</span>. This is because Elkies primes split nicely in \(\mathcal{O}_0\) - we have \(\ell_i\mathcal{O}_0 = \mathfrak{l}_i\overline{\mathfrak{l}_i}\), where <span style="color:orange">\(\mathfrak{l}_i = \langle \ell, \omega + g_i \rangle\)</span> and <span style="color:orange">\(\overline{\mathfrak{l}_i} = \langle \ell, \omega - g_i \rangle\)</span> are prime ideals whose action on \(E\) is easy to compute - it is an order intersection. From there, we proceed as usual according to group action-based Diffie-Hellman, and the result of the group action <span class="hint--html hint--top">
+<span class="hint__element">is</span>
+<span class="hint__content">
+Might not be entirely accurate, especially concerning the exponent, but whatever. </span>
+</span> \(\mathcal{O}_R\left(\underbrace{\left[\prod_i \mathfrak{l}_i^{\vec{s}_i}\right]}_{\subseteq \mathbb{Z}[\sqrt{-d}]} I(\mathcal{O})\right)\).</p>
+<p>Hence, we have identified a connection between the CSIDH group action and the provided quaternion group action.</p>
+<h1 id="theorising-attack-directions">Theorising Attack Directions</h1>
+<p>But wait&hellip; isn&rsquo;t that a bad thing? I mean, as far as we know, CSIDH is secure, so this should imply that the given quaternion group action is secure too. This means there must be something special about the <span style="color:magenta">oriented quaternion orders</span> that is not applicable to <span style="color:magenta">supersingular elliptic curves</span>! Let&rsquo;s look at the result of the group action again.</p>
+<p>For CSIDH, the ideal class group acts on elliptic curves, sending \(E_0 \mapsto E_1 \coloneqq \left[\prod_i \mathfrak{l}_i^{\vec{s}_i}\right]E_0\). The reason why this is secure is because from an attacker perspective, all you are given is \((E_0, E_1, E_2) = (E_0, [\mathfrak{a}]E_0, [\mathfrak{b}]E_0)\), and would like to compute \([\mathfrak{a}\mathfrak{b}]E_0\). Is this possible? No, this is a hard problem for isogenies.</p>
+<!-- TODO: Add Reference ^^ -->
+<p>What about our quaternion group action? Similar to CSIDH, we also have a group action acting on oriented quaternion orders, sending \((\mathcal{O}, \omega) \mapsto \left(\mathcal{O}_A \coloneqq \mathcal{O}_R\left([\mathfrak{a}] I(\mathcal{O})\right), \omega\right)\). As an attacker, now we are given \((\mathcal{O}, \mathcal{O}_A, \mathcal{O}_B) = (\mathcal{O}, \mathcal{O}_R([\mathfrak{a}]I(\mathcal{O})), \mathcal{O}_R([\mathfrak{b}]I(\mathcal{O})))\). From here, it is possible to recover \([\mathfrak{a}]\) and \([\mathfrak{b}]\) directly. However, to understand this, we must study the quaternion group action closer.</p>
+<h1 id="quaternion-group-action">Quaternion Group Action</h1>
+<p>In our Initial Analysis, we understood the majority of the problem by simply comparing it with CSIDH and performing pattern matching. However, this is not sufficient, both for our curiosity and for getting the flag. In particular, we want to understand how the group action \([\mathfrak{a}]I\) works, for a imaginary quadratic ideal \(\mathfrak{a} \subseteq \mathbb{Z}[\sqrt{-d}]\) and a quaternion ideal \(I \subseteq \mathcal{O}\) works. Fortunately, we can refer back to the code for answers.</p>
+<p>The following line is the key (again):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># gen = gens[i] ± omega</span>
+</span></span><span style="display:flex;"><span>frak_l <span style="color:#f92672">=</span> frak_l<span style="color:#f92672">.</span>intersection(O_i<span style="color:#f92672">*</span>gen <span style="color:#f92672">+</span> O_i<span style="color:#f92672">*</span>ells[i])
+</span></span></code></pre></div><p>As we can see, for a imaginary quadratic ideal \(\mathfrak{a} = \langle \ell_i, \omega \pm g_i \rangle\), we would have \([\mathfrak{a}]I = I \cap {\color{gold} (\mathcal{O} \cdot (\omega + g_i) + \mathcal{O} \cdot \ell_i) }\). Not surprisingly, we have \(\sqrt{-d} \in \mathbb{Z}[\sqrt{-d}] \mapsto \omega \in \mathcal{O}\). This is an example of a <em>quaternion embedding</em>, but we won&rsquo;t even need this terminology in this blog. An important property to note here is that since \(\mathfrak{a} \subseteq \mathbb{Z}[\sqrt{-d}]\), its <span style="color:gold">action ideal</span> (i.e. its embedding) will live inside \(\mathcal{O} + \mathcal{O} \cdot \omega\).</p>
+<h1 id="attack-idea">Attack Idea</h1>
+<p>Before we switched to studying the quaternion group action, we were considering the scenario where the attackers are given \((\mathcal{O}, \mathcal{O}_R([\mathfrak{a}]I(\mathcal{O})), \mathcal{O}_R([\mathfrak{b}]I(\mathcal{O})))\), where \(\mathfrak{a}, \mathfrak{b} \subseteq \mathbb{Z}[\sqrt{-d}]\). Since \([\mathfrak{a}] \subseteq \mathbb{Z}[\sqrt{-d}] \hookrightarrow I(\mathcal{O})\), we can simplify \([\mathfrak{a}]I(\mathcal{O})\) to simply \([\mathfrak{a}]\), understood as the image of the embedding \(\sqrt{-d} \mapsto \omega\). Since I know the answer already, I will further simplify the problem by forgetting about \(\mathfrak{b}\) altogether, arriving at the following problem:</p>
+<div class="notice info" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#info-notice"></use></svg></span>[INFO] 李家超提提你</p><p>Given two quaternion orders \(\mathcal{O}\) and \(\mathcal{O}_A\), find an imaginary quadratic ideal \(\mathfrak{a} \subseteq \mathbb{Z}[\sqrt{-d}] \hookrightarrow \mathcal{O}\) such that \(\mathcal{O}_R([\mathfrak{a}]) = \mathcal{O}_A\).</p></div>
+<p>Is this easy?</p>
+<div class="notice success" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#success-notice"></use></svg></span>[SUCCESS] 搞掂!</p><p>Yes, by computing a <em>connecting ideal</em> between \(\mathcal{O}\) and \(\mathcal{O}_A\).</p></div>
+<h1 id="connecting-ideals">Connecting Ideals</h1>
+<p>In some sense, group actions &ldquo;connect&rdquo; elements in the set being acted on together. For example, the CSIDH group action \([\mathfrak{a}]\) is concretely an isogeny \(\varphi_{\mathfrak{a}}\), so e.g. \(E_1 = [\mathfrak{a}]E_0\) corresponds to \(\varphi_{\mathfrak{a}} : E_0 \to E_1 \). In the same way, our quaternion group action also connects quaternion orders in the same way.</p>
+<p>Let \(I\) be a quaternion ideal with left order \(\mathcal{O}_0 = \mathcal{O}_L(I)\) and right order \(\mathcal{O}_1 = \mathcal{O}_R(I)\). We say that \(\mathcal{O}_0\) and \(\mathcal{O}_1\) are <em>connected</em> by \(I\), and \(I\) is the <em>connecting ideal</em> from \(\mathcal{O}_0\) to \(\mathcal{O}_1\).</p>
+<p>Curiously, the challenge code contains a function <code>connectingIdeal</code>, which simply returns <code>(I := O1 * O2) * I.norm().denominator()</code>. It is quite interesting to see why it works:</p>
+<div class="notice error" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#error-notice"></use></svg></span>[ERROR] 唉屌又error</p><p><del>TODO</del> <del>Does it even matter?</del> This will appear in the next post!</p></div>
+<p>Now that we have a connecting ideal \(I\) with left order \(\mathcal{O}\) and right order \(\mathcal{O}_A\), we still have to find an imaginary quadratic ideal \(\mathfrak{a}\) in \(\mathbb{Z}[\sqrt{-d}]\) that embeds to \(I\). However, this is simple: We can simply take the elements in \(I\) that lies in \(\mathrm{span}_{\mathbb{Z}}\{1, \omega\}\). That is, take \(\mathfrak{a} = I \cap \mathrm{span}_{\mathbb{Z}}\{1, \omega\}\).</p>
+<p>We are very close to finishing the challenge, as once we have recovered \(\mathfrak{a}\), the rest is simply applying it to \(\mathcal{O}_B = [\mathfrak{b}]\mathcal{O}_0\) to derive the shared secret. However, we glossed over some details above, namely the orientation \(\omega\) and \(\omega&rsquo;\).</p>
+<h1 id="adjusting-orientations">Adjusting Orientations</h1>
+<p>Back in our Initial Analysis, we pretended that \(\omega&rsquo; = \omega\) is unchanged throughout the algorithm. However, if you run the <code>GroupAction</code> in a REPL a few times, you will see that the assumption is clearly wrong. The reason is that <code>reduceHeight</code> attempts to multiply everything by a scalar in the quaternion algebra to reduce the height, somewhat like a change of basis. However, this will also move \(\omega\) around, which is undesirable. Indeed, we can see that after <code>reduceHeight</code> returns a scalar element \(\beta\), the operation \(\omega \mapsto \beta\omega\beta^{-1}\) is performed. Hence, we would like to &ldquo;undo&rdquo; this by finding \(\beta\) such that \(\beta\omega&rsquo;\beta^{-1} = \omega\), i.e. \(\beta\omega&rsquo; = \omega\beta\).</p>
+<p>Write \(\beta = a + bi + cj + dk\). Since we know \(\omega\), we have \(\omega\beta = a\omega + b(i\omega) + c(j\omega) + d(k\omega)\). We can also do the same for \(\beta\omega&rsquo;\) on the left hand side. Expanding and rearranging, we notice that we obtain an equation of the form \(A + Bi + Cj + Dk = 0\), where \(A, B, C, D\) are all linear combinations of \(a, b, c, d\). As a result, we obtain a set of linear equations in \(a, b, c, d\), and can recover a plausible \(\beta\). Apparently Jonathan was involved in a <a href="https://github.com/Jonathke/Computing-Optimal-Embeddings/blob/main/helpers.py#L260">project</a> which implemented the function as <code>findIsom</code> already. However, I provided my implementation below too, which is slower but easier to understand.</p>
+<h1 id="partial-solve-script">Partial Solve Script</h1>
+<p>First, let&rsquo;s import the variables and outputs.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sage" data-lang="sage"><span style="display:flex;"><span>p <span style="color:#f92672">=</span> next_prime(<span style="color:#ae81ff">2</span><span style="color:#f92672">**</span><span style="color:#ae81ff">512</span>)
+</span></span><span style="display:flex;"><span>B <span style="color:#f92672">=</span> QuaternionAlgebra(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span>p)
+</span></span><span style="display:flex;"><span>i, j, k <span style="color:#f92672">=</span> B<span style="color:#f92672">.</span>gens()
+</span></span><span style="display:flex;"><span>O0 <span style="color:#f92672">=</span> B<span style="color:#f92672">.</span>maximal_order()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>omega <span style="color:#f92672">=</span> <span style="color:#ae81ff">820</span><span style="color:#f92672">*</span>i <span style="color:#f92672">+</span> <span style="color:#ae81ff">362</span><span style="color:#f92672">*</span>j <span style="color:#f92672">+</span> <span style="color:#ae81ff">153</span><span style="color:#f92672">*</span>k
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>ZZ(omega<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>ells <span style="color:#f92672">=</span> [ell <span style="color:#66d9ef">for</span> ell <span style="color:#f92672">in</span> Primes()[:<span style="color:#ae81ff">150</span>] <span style="color:#66d9ef">if</span> kronecker(<span style="color:#f92672">-</span>d, ell) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>gens <span style="color:#f92672">=</span> [ZZ(mod(<span style="color:#f92672">-</span>d, ell)<span style="color:#f92672">.</span>sqrt()) <span style="color:#66d9ef">for</span> ell <span style="color:#f92672">in</span> ells]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> open(<span style="color:#e6db74">&#34;output.txt&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>)<span style="color:#f92672">.</span>readlines()[:<span style="color:#ae81ff">4</span>]:
+</span></span><span style="display:flex;"><span>    exec(preparse(line<span style="color:#f92672">.</span>strip()))
+</span></span></code></pre></div><p>Next, we adjust the oriented quaternion orders such that the initial \(\omega\) and \(\omega_A, \omega_B\) agree.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sage" data-lang="sage"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">findIsom</span>(omega1, omega2):
+</span></span><span style="display:flex;"><span>    mat1 <span style="color:#f92672">=</span> Matrix([list(b <span style="color:#f92672">*</span> omega1) <span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> [<span style="color:#ae81ff">1</span>, i, j, k]])
+</span></span><span style="display:flex;"><span>    mat2 <span style="color:#f92672">=</span> Matrix([list(omega2 <span style="color:#f92672">*</span> b) <span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> [<span style="color:#ae81ff">1</span>, i, j, k]])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> B((mat1 <span style="color:#f92672">-</span> mat2)<span style="color:#f92672">.</span>left_kernel()<span style="color:#f92672">.</span>basis()[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OA_ <span style="color:#f92672">=</span> B<span style="color:#f92672">.</span>quaternion_order(O_A)
+</span></span><span style="display:flex;"><span>alpha <span style="color:#f92672">=</span> findIsom(omega_a, omega)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> alpha <span style="color:#f92672">*</span> omega_a <span style="color:#f92672">*</span> alpha<span style="color:#f92672">^-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> omega
+</span></span><span style="display:flex;"><span>OA <span style="color:#f92672">=</span> B<span style="color:#f92672">.</span>quaternion_order([alpha <span style="color:#f92672">*</span> b <span style="color:#f92672">*</span> alpha<span style="color:#f92672">^-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> OA_<span style="color:#f92672">.</span>basis()])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OB_ <span style="color:#f92672">=</span> B<span style="color:#f92672">.</span>quaternion_order(O_B)
+</span></span><span style="display:flex;"><span>alpha <span style="color:#f92672">=</span> findIsom(omega_b, omega)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">assert</span> alpha <span style="color:#f92672">*</span> omega_b <span style="color:#f92672">*</span> alpha<span style="color:#f92672">^-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">==</span> omega
+</span></span><span style="display:flex;"><span>OB <span style="color:#f92672">=</span> B<span style="color:#f92672">.</span>quaternion_order([alpha <span style="color:#f92672">*</span> b <span style="color:#f92672">*</span> alpha<span style="color:#f92672">^-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> OB_<span style="color:#f92672">.</span>basis()])
+</span></span></code></pre></div><p>Then, we follow the Attack Idea by computing a connecting ideal from \(O_0\) to \(O_A\), then intersecting it with \(\mathrm{span}_{\mathbb{Z}}\{1, \omega\}\).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sage" data-lang="sage"><span style="display:flex;"><span>I <span style="color:#f92672">=</span> connectingIdeal(O0, OA)
+</span></span><span style="display:flex;"><span>M <span style="color:#f92672">=</span> Matrix(ZZ, [list(B(<span style="color:#ae81ff">1</span>)), list(B(omega))])
+</span></span><span style="display:flex;"><span>M1 <span style="color:#f92672">=</span> I<span style="color:#f92672">.</span>free_module()
+</span></span><span style="display:flex;"><span>M2 <span style="color:#f92672">=</span> (ZZ<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span>)<span style="color:#f92672">.</span>span(M)
+</span></span><span style="display:flex;"><span>_gens <span style="color:#f92672">=</span> M<span style="color:#f92672">.</span>solve_left((M1 <span style="color:#f92672">&amp;</span> M2)<span style="color:#f92672">.</span>basis_matrix())
+</span></span></code></pre></div><p>Now, we can transfer this <em>imaginary quadratic ideal</em> \(\mathfrak{a}\) onto \(O_B\)!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sage" data-lang="sage"><span style="display:flex;"><span>frak <span style="color:#f92672">=</span> OB <span style="color:#f92672">*</span> (_gens[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> _gens[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> omega) <span style="color:#f92672">+</span> OB <span style="color:#f92672">*</span> (_gens[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> _gens[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> omega)
+</span></span><span style="display:flex;"><span>OAB <span style="color:#f92672">=</span> frak<span style="color:#f92672">.</span>right_order()
+</span></span></code></pre></div><p>The rest is decrypting the flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sage" data-lang="sage"><span style="display:flex;"><span>shared_secret <span style="color:#f92672">=</span> invariant(OAB)
+</span></span><span style="display:flex;"><span>key <span style="color:#f92672">=</span> SHA256<span style="color:#f92672">.</span>new(data<span style="color:#f92672">=</span>str(shared_secret)<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>digest()[:<span style="color:#ae81ff">128</span>]
+</span></span><span style="display:flex;"><span>AES<span style="color:#f92672">.</span>new(key, AES<span style="color:#f92672">.</span>MODE_CBC, iv)<span style="color:#f92672">.</span>decrypt(ct)
+</span></span></code></pre></div><p>Flag: <code>kalmar{1s_th1s_l4tt1c3_b4s3d_crypt0?_meme.jpg}</code></p>
 
 </article>
 

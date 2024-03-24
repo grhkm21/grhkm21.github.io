@@ -13,7 +13,28 @@
       <link>https://grhkm21.github.io/isogenies/p4-shipwrecked-lattices/</link>
       <pubDate>Sat, 23 Mar 2024 07:43:34 +0000</pubDate>
       <guid>https://grhkm21.github.io/isogenies/p4-shipwrecked-lattices/</guid>
-      <description>In KalmarCTF 2024, there was a hard unsolved challenge called &amp;ldquo;Shipwrecked Lattices&amp;rdquo;, authored by jo_k_er (Jonathan). In the end, I spent ~16 hours on it and was the first person to solve it (post-contest).&#xA;On first galnce, it is just a challenge related to a mysterious group action and quaternions, but upon studying it carefully, one sees that it is closely related to isogeny theory of supersingular elliptic curves. In this post, we build on the material introduced in the previous three posts (SIDH 1, SIDH 2, CSIDH) to solve this challenge.</description>
+      <description>In KalmarCTF 2024, there was a hard unsolved challenge called &amp;ldquo;Shipwrecked Lattices&amp;rdquo;, authored by jo_k_er (Jonathan). In the end, I spent ~16 hours on it and was the first person to solve it (post-contest). There was one hint released post-contest (but pre-solve) which pulled me out of a deep rabbit hole. It can be found below Problem Statement.&#xA;At first galnce, it is just a challenge related to a mysterious group action and quaternions, but upon studying it carefully, one sees that it is closely related to isogeny theory of supersingular elliptic curves.</description>
+    </item>
+    <item>
+      <title>Isogenies 3: 🏖️ Vacation by the seaside 🌊! And an introduction to CSIDH</title>
+      <link>https://grhkm21.github.io/isogenies/p3-csidh/</link>
+      <pubDate>Sat, 23 Mar 2024 07:43:33 +0000</pubDate>
+      <guid>https://grhkm21.github.io/isogenies/p3-csidh/</guid>
+      <description>[WARNING] 即係唔係error&#xA;I know that there are many great resources and blogs on CSIDH - in fact, I believe the original paper is the most detailed and best explained resource. However, in this blog, I would like to contribute by accompanying the abstract explanation with some Sage code, albeit a limited amount (since we are lacking non-maximal ideals).&#xA;[ERROR] 唉屌又error&#xA;grhkm is sleepy. grhkm wants sleep. grhkm will finish when they wake.</description>
+    </item>
+    <item>
+      <title>Isogenies 2: So... what are isogenies again? (in Sage this time)</title>
+      <link>https://grhkm21.github.io/isogenies/p2-impl-sidh/</link>
+      <pubDate>Sat, 23 Mar 2024 07:43:32 +0000</pubDate>
+      <guid>https://grhkm21.github.io/isogenies/p2-impl-sidh/</guid>
+      <description>Heya! Welcome to my second isogeny post. In this blog post, I will demonstrate claims I made in the previous post with code in Sage. Personally, I find experimenting in Sage incredibly useful, especially since there are a few isogenists actively working on improving its functionalities. The main target audience is for beginner isogenists, but on the other hand, if you are an experienced isogenist with less Sage experience, maybe this blog will help too!</description>
+    </item>
+    <item>
+      <title>Isogenies 1: What are isogenies? And a brief introduction to SIDH</title>
+      <link>https://grhkm21.github.io/isogenies/p1-intro-sidh/</link>
+      <pubDate>Thu, 21 Mar 2024 14:15:13 +0000</pubDate>
+      <guid>https://grhkm21.github.io/isogenies/p1-intro-sidh/</guid>
+      <description>Disclaimer Disclaimer [WARNING] 即係唔係error&#xA;After writing the entire thing, I realised that I explained the concepts quite poorly, and isn&amp;rsquo;t technically accurate either&amp;hellip; I don&amp;rsquo;t really care though! If you want a better introduction, see Maria&amp;rsquo;s blog. Also, blog #2 should clarify many of the concepts introduced here.&#xA;[WARNING] 即係唔係error&#xA;Something something separable isogenies.&#xA;[WARNING] 即係唔係error&#xA;After writing the entire blog I learned about Craig&amp;rsquo;s Supersingular Isogeny Key Exchange for Beginners.</description>
     </item>
     <item>
       <title>Hacktm Ddlp</title>
