@@ -6,8 +6,15 @@
     <description>Recent content in Isogenies on Blog by grhkm</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
-    <lastBuildDate>Sat, 23 Mar 2024 07:43:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 Mar 2024 09:23:07 +0000</lastBuildDate>
     <atom:link href="https://grhkm21.github.io/isogenies/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Change Log</title>
+      <link>https://grhkm21.github.io/isogenies/errata/</link>
+      <pubDate>Mon, 25 Mar 2024 09:23:07 +0000</pubDate>
+      <guid>https://grhkm21.github.io/isogenies/errata/</guid>
+      <description>March 24: Publish first 4 posts (SIDH 1/2, CSIDH, Shipwrecked Lattices 1; CSIDH unfinished) March 25: Add information about \(n\)-torsion points</description>
+    </item>
     <item>
       <title>Isogenies 4: 🚢 Shipwrecked Lattices ⚓</title>
       <link>https://grhkm21.github.io/isogenies/p4-shipwrecked-lattices/</link>
